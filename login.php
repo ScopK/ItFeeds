@@ -13,11 +13,11 @@
 			    overflow: hidden;
 			}
 			#invalid{
-				display: none;
 				position:fixed;
-				top:0;left:0;right:0;
-				background-color: rgba(250,50,0,0.8);
+				top:-50px;left:0;right:0;
+				background-color: rgba(250,50,0,0.3);
 				border-bottom: 2px solid #000;
+				transition: top 0.4s;
 			}
 			#invalid p{
 				text-align: center;
@@ -28,7 +28,8 @@
         	#dialog{
         		position:fixed;
         		margin:auto;top:0;bottom:100px;left:0;right:0;
-        		width: 250px; height: 150px;
+        		width: 255px; height: 155px;
+        		padding-bottom:5px;
         			
         		background-color:#fff;
         		border: 2px solid #000;
@@ -53,7 +54,7 @@
 				padding: 5px;
 				border: 2px solid #000;
 			}
-			button:focus{ background-color: #aaa; }
+			button:focus{ background-color: #ffdead; }
 
         </style>
         <script>
@@ -78,10 +79,13 @@
 
 			xmlhttp.onreadystatechange=function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-					document.getElementById("invalid").style.display = "none";
+					document.getElementById("invalid").style.top = "-50px";
 					window.location = ".";
 				} else if (xmlhttp.readyState==4 && xmlhttp.status==502) {
-					document.getElementById("invalid").style.display = "initial";
+					document.getElementById("invalid").style.top = "0";
+					setTimeout(function(){
+						document.getElementById("invalid").style.top = "-50px";
+					},3000);
 				}
 			}
 			xmlhttp.open("POST","ajax/login.php",true);
