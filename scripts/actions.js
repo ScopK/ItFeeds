@@ -28,38 +28,17 @@ function getFoldersTags(){
 	});
 }
 
-function displayFoldersTags(){
-	$("#lateral_menu").html("");
-	var html = '<div id="folders">';
-	var nullHtml = "";
-	var index=0;
-	$.each(folders,function(){
-		if (this.name == "null"){
-			$.each(this.feeds,function(){
-				var unread=""
-				if (this.unread > 0)
-					unread = ' <span class="count">('+this.unread+')</span>'
+function toogleViewFeeds(me){
+	var hid = $(me).html();
 
-				nullHtml += '<div class="feed" idxFeed="'+index+'"><div class="feedTitle">'+(this.name)+unread+'</div></div>'
-			});
-			return true;	// continue;
-		}
-
-		var unread=""
-		if (this.unread > 0)
-			unread = ' <span class="count">('+this.unread+')</span>'
-		html += '<div class="folder" idxFolder="'+index+'"><div class="folderTitle">'+(this.name)+unread+'</div>'
-
-		$.each(this.feeds,function(){
-			var unread=""
-			if (this.unread > 0)
-				unread = ' <span class="count">('+this.unread+')</span>'
-			html += '<div class="feed" idxFeed="'+index+'"><div class="feedTitle">'+(this.name)+unread+'</div></div>'
-		});
-
-
-		html += '</div>'
-	});
-	$("#lateral_menu").html(html);
-	$("#lateral_menu").append(nullHtml);
+	if (hid == '+'){
+		$(me).closest(".folder").find(".folderfeeds").slideDown();
+		$(me).attr("hidd","0");
+		$(me).html("-");
+	} else {
+		$(me).closest(".folder").find(".folderfeeds").slideUp();
+		$(me).attr("hidd","1");
+		$(me).html("+");
+	}	
 }
+

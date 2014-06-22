@@ -16,16 +16,16 @@ button::-moz-focus-inner {
 #page {
 	display:none;
 	position:relative;
-	background-color: rgba(255,255,255,0.6);
+	background-color: rgba(255,255,255,0.8);
 	margin: auto;
-	width:100%;
+	width:1300px;
 	overflow:hidden;
+	border-bottom: 4px solid #000;
 }
 
 #lateral_menu{
 	height:100%;
-	background-color: rgba(255,255,255,0.4);
-	border-right: 2px dotted rgba(0,0,0,0.5);
+	background-color: #fff;
 	padding: 10px;
 	width: 300px;
 	float:left;
@@ -48,6 +48,15 @@ button::-moz-focus-inner {
 	text-align:right;
 }
 
+#options_panel{
+	background-color: #000;
+	padding-bottom: 15px;
+	margin: -10px -10px 10px;
+	text-align: center;
+	vertical-align: middle;
+	padding: 10px 0;
+}
+
 
 
 
@@ -58,27 +67,79 @@ button::-moz-focus-inner {
 	margin-bottom: 5px;
 	padding-bottom: 5px;
 	border-bottom: 1px dotted rgba(0,0,0,0.5);
+	cursor:pointer;
+	overflow:hidden;
 }
 
 .folder .feed{
 	margin-left: 10px;
 }
 
-.feed{
+.folderfeeds{
+	display: none;
+}
+
+.feed, .tag{
+	cursor:pointer;
+	color: #333;
 	padding: 2px 5px;
-	transition: background-color 1s;
 }
 
-.feed:hover{
-	background-color: #aaa;
+.feed:hover, .tag:hover{
+	background-color: #ddd;
 }
 
-.count{
-	color: #666;
+.feed.unread{
+	font-weight:bold;
+}
+
+.feed .count, .folder .count{
+	color: #777;
 	font-weight: bold;
 }
 
-.folderTitle{
+.tag .count{
+	color: #777;
+}
+
+.folderHeader{
+	display:inherit;
 	font-size: 14px;
 	font-weight:bold;
+	width: 100%;
+}
+
+.folderHeader:hover{
+	background-color: #aaa;
+}
+
+.folderTitle{
+	transition: margin 0.3s;
+}
+.folder:hover .folderTitle{
+	margin-left: 5px;
+}
+
+.expander{
+	display: inline-table;
+	text-align: center;
+	background-color: rgba(0,0,0,0.0);
+	margin: 1px 5px 1px 1px;
+	padding: 2px 6px;
+	font-size: 13.5px;
+	border-width: 0;
+	width: 30px;
+	background-color: #fff;
+	border: 1px solid #fff;
+}
+
+.expander:hover{
+	background-color: #eee;
+	border-color: #ddd;
+}
+
+#tags{
+	border-top: 2px solid #888;
+	padding-top: 10px;
+	margin-top: 10px;
 }
