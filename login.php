@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+    	<title>Fydeph Login</title>
+    	<link rel="shortcut icon" href="imgs/icon.png" />
         <style>
 			body {
 			    font-size: small;

@@ -119,8 +119,8 @@ CREATE TABLE IF NOT EXISTS `tags` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
-  `hidden_pass` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_bin NOT NULL,
+  `hidden_pass` varchar(255) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 

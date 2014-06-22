@@ -2,6 +2,7 @@ div.loading{
     position: fixed;
     display: none;
     background: rgba(0,0,0,0.7);
+    z-index: 10;
     /*animation-timing-function: linear;*/
     animation-iteration-count: infinite;
     animation-play-state: paused; /*paused*/

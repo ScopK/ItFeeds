@@ -9,10 +9,12 @@
 <html>
     <head>
         <title>Fydeph - <?=$_SESSION['log_user']?></title>
+        <link rel="shortcut icon" href="imgs/icon.png" />
         <link rel="stylesheet" type="text/css" href="style/anims.css">
         <link rel="stylesheet" type="text/css" href="style/style.css">
-        <script src="scripts/jsanims.js"></script>
         <script src="scripts/jquery.min.js"></script>
+        <script src="scripts/jsanims.js"></script>
+        <script src="scripts/actions.js"></script>
         <script>
         $(document).ready(function(){
             loading_run();

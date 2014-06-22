@@ -1,7 +1,7 @@
 /** LOADING ANIMATIONS CONTROL **/
 function loading_stop() {
     $(".loading").css("animation-play-state","paused");
-    $(".loading").hide();
+    $(".loading").fadeOut();
 }
 
 

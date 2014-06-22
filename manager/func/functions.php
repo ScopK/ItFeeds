@@ -4,9 +4,8 @@
 		die("HTTP/1.1 403 Forbidden");
 	}
 	
-	function getTags($con,$user,$depth){
-		global $ad_hidden;
-		if ($ad_hidden)
+	function getTags($con,$user,$depth,$showHidden){
+		if ($showHidden)
 			$tags = mysqli_query($con,"SELECT * FROM tags WHERE user='$user' ORDER BY tag_name");
 		else
 			$tags = mysqli_query($con,"SELECT * FROM tags WHERE user='$user' AND hidden='0' ORDER BY tag_name");
@@ -32,9 +31,8 @@
 		return $lista;
 	}
 
-	function getFolders($con,$user,$depth){
-		global $ad_hidden;
-		if ($ad_hidden)
+	function getFolders($con,$user,$depth,$showHidden){
+		if ($showHidden)
 			$folders = mysqli_query($con,"SELECT * FROM folders WHERE user='$user' ORDER BY name");
 		else
 			$folders = mysqli_query($con,"SELECT * FROM folders WHERE user='$user' AND hidden='0' ORDER BY name");
@@ -184,19 +182,21 @@
 	}
 
 	function checkUserPassword($con,$user,$pass){
-		$sql = "SELECT count(*) FROM users WHERE username=? AND password=?";
+		$sql = "SELECT username FROM users WHERE username=? AND password=?";
 		$stmt=mysqli_stmt_init($con);
 		if (mysqli_stmt_prepare($stmt,$sql)){
 
 			mysqli_stmt_bind_param($stmt,"ss", $user, $pass); // Bind parameters
 			mysqli_stmt_execute($stmt); // Execute query
 
-			mysqli_stmt_bind_result($stmt,$count); // Bind result variables
+			mysqli_stmt_bind_result($stmt,$username); // Bind result variables
 			mysqli_stmt_fetch($stmt); // Fetch value
 
 			mysqli_stmt_close($stmt); // Close statement
 		}
-		return ($count == 1);
+		if(isset($username))
+			return $username;
+		return false;
 	}
 
 	function checkUserHiddenPassword($con,$user,$pass){
