@@ -12,6 +12,9 @@ body {
 button::-moz-focus-inner {
    border: 0;
 }
+:focus{
+    outline:0;
+}
 
 #page {
 	display:none;
@@ -20,17 +23,19 @@ button::-moz-focus-inner {
 	margin: auto;
 	width:1300px;
 	overflow:hidden;
-	border-bottom: 4px solid #000;
 }
 
 #lateral_menu{
-	height:100%;
+	position:fixed;
+	top:0; bottom:0;
+
 	background-color: #fff;
 	padding: 10px;
 	width: 300px;
 	float:left;
 	font-size: 12.5px;
-	transition: margin 0.4s;
+	transition: margin-left 0.4s;
+	overflow-y: auto;
 }
 
 #content{
@@ -142,4 +147,28 @@ button::-moz-focus-inner {
 	border-top: 2px solid #888;
 	padding-top: 10px;
 	margin-top: 10px;
+}
+
+#options_panel a, #options_panel button{
+    font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;
+	background-color: #555;
+	padding: 5px;
+	border: 2px solid black;
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+	cursor:pointer;
+	font-size: 13px;
+	transition: border-color 0.2s,background-color 0.3s;
+}
+
+#options_panel a:hover, #options_panel button:hover{
+	border-color: #888;
+	background-color: #888;
+}
+
+#options_panel a:active,
+#options_panel button:active{
+	border-color: #e6bb7b;
+	background-color: #e6bb7b;
 }

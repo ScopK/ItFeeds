@@ -1,8 +1,17 @@
-div.loading{
-    position: fixed;
+div#loading_panel{
     display: none;
-    background: rgba(0,0,0,0.7);
+    position: fixed;
+    width: 31px;
+    height: 31px;
+    left: 18px; bottom: 18px;
+    /*background-color: white;
+    border: 10px solid white;*/
     z-index: 10;
+}
+
+div.loading{
+    position: absolute;
+    background: rgba(0,0,0,0.7);
     /*animation-timing-function: linear;*/
     animation-iteration-count: infinite;
     animation-play-state: paused; /*paused*/
@@ -30,17 +39,17 @@ div#bigBall.loading {
 }
 
 @keyframes smallRound {
-    0%   {left:20px;bottom:20px;}
-    25%  {left:20px;bottom:40px;}
-    50%  {left:40px;bottom:40px;}
-    75%  {left:40px;bottom:20px;}
-    100% {left:20px;bottom:20px;}
+    0%   {left:2px;bottom:2px;}
+    25%  {left:2px;bottom:22px;}
+    50%  {left:22px;bottom:22px;}
+    75%  {left:22px;bottom:2px;}
+    100% {left:2px;bottom:2px;}
 }
 
 @keyframes bigRound {
-    0%   {left:18px;bottom:18px;}
-    25%  {left:18px;bottom:38px;}
-    50%  {left:38px;bottom:38px;}
-    75%  {left:38px;bottom:18px;}
-    100% {left:18px;bottom:18px;}
+    0%   {left:0px;bottom:0px;}
+    25%  {left:0px;bottom:20px;}
+    50%  {left:20px;bottom:20px;}
+    75%  {left:20px;bottom:0px;}
+    100% {left:0px;bottom:0px;}
 }

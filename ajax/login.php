@@ -1,7 +1,7 @@
 <?php
 	$isServer=true;
-	include "../manager/func/initind.php";
-	include "../manager/func/functions.php";
+	include "../scripts/manager/func/initind.php";
+	include "../scripts/manager/func/functions.php";
 
 	$user = $_POST['user'];
 	$pass = $_POST['pass'];

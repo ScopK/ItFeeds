@@ -5,12 +5,14 @@ var idxFeed;
 var idxTag;
 $(document).ready(function(){
 	getFoldersTags();
+
+	$("#page").css("min-height",$(window).height());
 });
 
 function getFoldersTags(){
 	$("#page").fadeOut();
 	$.ajax({
-		url: "./manager/ajax/get_user_info.php",
+		url: "./scripts/manager/ajax/get_user_info.php",
 		type: "GET",
 		dataType : "json",
 		success: function(result){

@@ -1,13 +1,13 @@
 /** LOADING ANIMATIONS CONTROL **/
 function loading_stop() {
     $(".loading").css("animation-play-state","paused");
-    $(".loading").fadeOut();
+    $("#loading_panel").fadeOut();
 }
 
 
 function loading_run() {
     $(".loading").css("animation-play-state","running");
-    $(".loading").show();
+    $("#loading_panel").show();
 }
 
 function loading_toggle(){
@@ -20,7 +20,8 @@ function loading_toggle(){
 var lateral_width;
 function hideLateralMenu(){
 	lateral_width = $("#lateral_menu").outerWidth();
-	$("#lateral_menu").css("margin-left",-lateral_width+"px");
+    var left = $("#lateral_menu").position().left;
+	$("#lateral_menu").css("margin-left",-(left+lateral_width)+"px");
 	$("#content").css("margin-left","0");
 	
 }

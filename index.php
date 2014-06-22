@@ -3,12 +3,15 @@
 
     if (!isset($_SESSION['log_user'])){
         header('Location: ./login.php');
+    } else {
+        $log_user = $_SESSION['log_user'];
+        $hidClass = (isset($_SESSION['hid_user']))?"set":"";
     }
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Fydeph - <?=$_SESSION['log_user']?></title>
+        <title>Fydeph - <?=$log_user?></title>
         <link rel="shortcut icon" href="imgs/icon.png" />
         <link rel="stylesheet" type="text/css" href="style/anims.css">
         <link rel="stylesheet" type="text/css" href="style/style.css">
@@ -16,19 +19,19 @@
         <script src="scripts/jsanims.js"></script>
         <script src="scripts/actions.js"></script>
         <script src="scripts/lateral_scripts.js"></script>
+
         <script>
         $(document).ready(function(){
             loading_run();
         });
+
         </script>
     </head>
     <body>
-        <div class="loading" id="smallBall"></div>
-        <div class="loading" id="bigBall"></div>
         <div id="page">
             <div id="lateral_menu">
                 <div id="options_panel">
-                    <button>Manager</button>
+                    <a href="./manager.php">Manager</a>
                     <button>Hidden</button>
                     <button>+</button>
                 </div>
@@ -39,6 +42,10 @@
                 </div>
                     content
             </div>
+        </div>
+        <div id="loading_panel">
+            <div class="loading" id="smallBall"></div>
+            <div class="loading" id="bigBall"></div>
         </div>
     </body>
 </html>
