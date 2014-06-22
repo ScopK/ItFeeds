@@ -2,6 +2,7 @@
 	if (!isset($_POST['hiddenPass']))
 		die("No pass entered");
 
+	$isServer=true;
 	include "../func/classes.php";
 	include "../func/functions.php";
 	include "../func/initind.php";

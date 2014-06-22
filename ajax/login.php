@@ -1,4 +1,5 @@
 <?php
+	$isServer=true;
 	include "../manager/func/initind.php";
 	include "../manager/func/functions.php";
 

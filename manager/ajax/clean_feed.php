@@ -1,4 +1,5 @@
 <?php
+	$isServer=true;
 	include "../func/initind.php";
 	
 	$days = $_POST['days'];

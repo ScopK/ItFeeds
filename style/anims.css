@@ -1,0 +1,45 @@
+div.loading{
+    position: fixed;
+    display: none;
+    background: rgba(0,0,0,0.7);
+    /*animation-timing-function: linear;*/
+    animation-iteration-count: infinite;
+    animation-play-state: paused; /*paused*/
+    /*animation-direction: reverse;*/ /*alternate*/
+}
+
+div#smallBall.loading {
+    bottom: 20px; left: 20px;
+    width: 7px;
+    height: 7px;
+
+    animation-name: smallRound;
+    animation-duration: 0.3s;
+    animation-delay: 0s;
+}
+
+div#bigBall.loading {
+    bottom: 18px; left: 18px;
+    width: 11px;
+    height: 11px;
+
+    animation-name: bigRound;
+    animation-duration: 0.32s;
+    animation-delay: 0.15s;
+}
+
+@keyframes smallRound {
+    0%   {left:20px;bottom:20px;}
+    25%  {left:20px;bottom:40px;}
+    50%  {left:40px;bottom:40px;}
+    75%  {left:40px;bottom:20px;}
+    100% {left:20px;bottom:20px;}
+}
+
+@keyframes bigRound {
+    0%   {left:18px;bottom:18px;}
+    25%  {left:18px;bottom:38px;}
+    50%  {left:38px;bottom:38px;}
+    75%  {left:38px;bottom:18px;}
+    100% {left:18px;bottom:18px;}
+}

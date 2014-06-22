@@ -2,6 +2,7 @@
 	if (!isset($_REQUEST['user']))
 		die("No user entered");
 
+	$isServer=true;
 	include "../func/classes.php";
 	include "../func/functions.php";
 	include "../func/initind.php";

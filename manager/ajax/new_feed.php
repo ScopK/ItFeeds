@@ -1,7 +1,4 @@
 <?php
-	include "../func/classes.php";
-	include "../func/functions.php";
-
 	$name = $_POST['fname'];
 	$folderId = $_POST['folderId'];
 	$rssLink = $_POST['rlink'];
@@ -17,12 +14,13 @@
 		die('HTTP/1.1 502 Not rss link');
 	}
 
+	$isServer=true;
+	include "../func/initind.php";
+	include "../func/classes.php";
+	include "../func/functions.php";
+
 	if ($link=="")
 		$link=$rssLink;
-
-    $con = mysqli_connect("localhost","root","admin","fydepdb");
-    if (mysqli_connect_errno())
-      die("Failed to connect to MySQL: " . mysqli_connect_error());
 
 	$id = getUUID();
 

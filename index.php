@@ -1,29 +1,37 @@
 <?php
     session_start();
-    session_destroy();
-    session_start();
 
     if (!isset($_SESSION['log_user'])){
         header('Location: ./login.php');
     }
 ?>
-
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="anims3.css">
-        <script src="jsanims.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <title>Fydeph - <?=$_SESSION['log_user']?></title>
+        <link rel="stylesheet" type="text/css" href="style/anims.css">
+        <link rel="stylesheet" type="text/css" href="style/style.css">
+        <script src="scripts/jsanims.js"></script>
+        <script src="scripts/jquery.min.js"></script>
         <script>
-            function loading_stop(){
-                var status = $("#loading_icon").css("animation-play-state");
-                if (status == "paused") loading_run();
-                else                    loading_stop();
-            }
+        $(document).ready(function(){
+            loading_run();
+        });
         </script>
     </head>
     <body>
-        <button onclick="stop()" value="STTOP">stop</button>
-        <div id="loading_icon"></div>
+        <div class="loading" id="smallBall"></div>
+        <div class="loading" id="bigBall"></div>
+        <div id="page">
+            <div id="lateral_menu">
+                lateral here iam
+            </div>
+            <div id="content">
+                <div id="actions_panel">
+                    options here
+                </div>
+                    content
+            </div>
+        </div>
     </body>
 </html>

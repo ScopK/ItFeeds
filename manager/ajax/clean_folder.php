@@ -1,4 +1,5 @@
 <?php
+	$isServer=true;
 	include "../func/classes.php";
 	include "../func/functions.php";
 	include "../func/initind.php";

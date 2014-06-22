@@ -1,4 +1,5 @@
-<?php
+<?php   
+    $isServer=true;
     include "func/initind.php";
 
     $users = mysqli_query($con,"SELECT * FROM users");
@@ -39,7 +40,7 @@
                 <button class="logoutButton" onclick="$('#user_list').fadeIn(100);">User</button>
             </div>
             <div id="header">
-                <h2 id="titleuser" onclick=''>Folders</h2>
+                <h2 id="titleuser" onclick=''>+ Folders</h2>
             </div>
 
             <div id="folder_list"></div>
@@ -154,7 +155,7 @@
                 <button class="logoutButton" onclick="$('#user_list').fadeIn(100);">User</button>
             </div>
             <div id="header">
-                <h2 id="titletags" onclick=''>Tags</h2>
+                <h2 id="titletags" onclick=''>+ Tags</h2>
             </div>
 
             <div id="tag_list"></div>

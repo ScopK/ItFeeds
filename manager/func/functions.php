@@ -1,4 +1,9 @@
 <?php
+	if(!isset($isServer) || !$isServer){
+		header("HTTP/1.1 403 Forbidden");
+		die("HTTP/1.1 403 Forbidden");
+	}
+	
 	function getTags($con,$user,$depth){
 		global $ad_hidden;
 		if ($ad_hidden)

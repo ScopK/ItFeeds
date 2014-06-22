@@ -55,7 +55,6 @@
 				border: 2px solid #000;
 			}
 			button:focus{ background-color: #ffdead; }
-
         </style>
         <script>
         window.onload=function(){
