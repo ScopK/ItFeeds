@@ -1,7 +1,7 @@
 <?php
 	$isServer=true;
-	include "../func/classes.php";
-	include "../func/initind.php";
+	include "../../func/classes.php";
+	include "../../func/initind.php";
 
 	$folderId = $_POST['folderId'];
 	$name = $_POST['fname'];

@@ -1,6 +1,6 @@
 <?php
 	$isServer=true;
-	include "../func/initind.php";
+	include "../../func/initind.php";
 	
 	$days = $_POST['days'];
 	$feedId = $_POST['feedId'];

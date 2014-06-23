@@ -1,7 +1,7 @@
 <?php
 	$isServer=true;
-	include "../func/classes.php";
-	include "../func/initind.php";
+	include "../../func/classes.php";
+	include "../../func/initind.php";
 
 	$feedId = $_POST['feedId'];
 	$name = $_POST['fname'];

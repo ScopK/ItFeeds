@@ -15,7 +15,7 @@ $(document).ready(function(){
 function getFoldersTags(){
 	$("#page").fadeOut();
 	$.ajax({
-		url: "./scripts/manager/ajax/get_user_info.php",
+		url: "./ajax/get_user_info.php",
 		type: "GET",
 		dataType : "json",
 		success: function(result){

@@ -1,8 +1,8 @@
 <?php
 	$isServer=true;
-	include "../func/classes.php";
-	include "../func/functions.php";
-	include "../func/initind.php";
+	include "../../func/classes.php";
+	include "../../func/functions.php";
+	include "../../func/initind.php";
 
 	$days = $_POST['days'];
 	$folderId = $_POST['folderId'];

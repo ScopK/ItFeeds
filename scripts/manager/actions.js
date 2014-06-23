@@ -13,7 +13,7 @@ function loadFolders(user){
 	folders = "";
 
 	$.ajax({
-		url: "./scripts/manager/ajax/get_user_info.php",
+		url: "./ajax/get_user_info.php",
 		type: "GET",
 		dataType : "json",
 		success: function(result){
@@ -38,7 +38,7 @@ function cleanFeed(){
 	loading_run();
 	var cleanForm = $(this).closest("form").serialize();
 	$.ajax({
-		url: "./scripts/manager/ajax/clean_feed.php",
+		url: "./ajax/manager/clean_feed.php",
 		type: "POST",
 		data: cleanForm,
 		dataType : "json",
@@ -68,7 +68,7 @@ function editFeed(){
 	loading_run();
 	var editForm = $(this).closest("form").serialize();
 	$.ajax({
-		url: "./scripts/manager/ajax/edit_feed.php",
+		url: "./ajax/manager/edit_feed.php",
 		type: "POST",
 		data: editForm,
 		dataType : "json",
@@ -97,7 +97,7 @@ function editFolder(){
 	loading_run();
 	var editForm = $(this).closest("form").serialize();
 	$.ajax({
-		url: "./scripts/manager/ajax/edit_folder.php",
+		url: "./ajax/manager/edit_folder.php",
 		type: "POST",
 		data: editForm,
 		dataType : "json",
@@ -122,7 +122,7 @@ function cleanFolder(){
 	loading_run();
 	var cleanForm = $(this).closest("form").serialize();
 	$.ajax({
-		url: "./scripts/manager/ajax/clean_folder.php",
+		url: "./ajax/manager/clean_folder.php",
 		type: "POST",
 		data: cleanForm,
 		dataType : "json",
@@ -146,7 +146,7 @@ function addFeed(){
 	var addForm = $(this).closest("form").serialize();
 
 	$.ajax({
-		url: "./scripts/manager/ajax/new_feed.php",
+		url: "./ajax/manager/new_feed.php",
 		type: "POST",
 		data: addForm,
 		dataType : "json",
@@ -177,7 +177,7 @@ function deleteFeed(){
 	var feddelFeed = $(this).closest("form").serialize();
 
 	$.ajax({
-		url: "./scripts/manager/ajax/delete_feed.php",
+		url: "./ajax/manager/delete_feed.php",
 		type: "POST",
 		data: feddelFeed,
 		//dataType : "json",
@@ -214,7 +214,7 @@ function unlockHidden(){
 	var hidd = $(this).closest("form").serialize();
 	loading_run();
 	$.ajax({
-		url: "./scripts/manager/ajax/login_hidden.php",
+		url: "./ajax/login_hidden.php",
 		type: "POST",
 		data: hidd,
 		dataType : "json",

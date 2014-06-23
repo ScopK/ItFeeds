@@ -1,6 +1,6 @@
 <?php
 	$isServer=true;
-	include "../func/initind.php";
+	include "../../func/initind.php";
 
 	$feedId = $_POST['feedId'];
 	if (!isset($feedId))

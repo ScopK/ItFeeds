@@ -15,9 +15,9 @@
 	}
 
 	$isServer=true;
-	include "../func/initind.php";
-	include "../func/classes.php";
-	include "../func/functions.php";
+	include "../../func/initind.php";
+	include "../../func/classes.php";
+	include "../../func/functions.php";
 
 	if ($link=="")
 		$link=$rssLink;

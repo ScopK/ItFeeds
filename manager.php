@@ -147,6 +147,20 @@
 
                 </div>
             </div></div>
+
+            <div class="inside_dialog" id="addFolder"><div class="dialog_container">
+                <h3>CREATE FOLDER</h3>
+                <div class="message">
+                    <form action="" method="POST">
+                        <input type="hidden" name="feedId"/>
+                        <div class="dialog_buttons">
+                            <p>Are you sure you want to create a folder?<p><br/>
+                            <button class="createFolder" onclick="return false;">CreateFolder</button>
+                            <button class="cancel" onclick="return false;">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div></div>
         </div>
         <div id="content_tags" class="disabled">
             <div id="extrabuttons">
@@ -160,6 +174,20 @@
             </div>
 
             <div id="tag_list"></div>
+
+            <div class="inside_dialog" id="addTag"><div class="dialog_container">
+                <h3>CREATE TAG</h3>
+                <div class="message">
+                    <form action="" method="POST">
+                        <input type="hidden" name="feedId"/>
+                        <div class="dialog_buttons">
+                            <p>Are you sure you want to create a tag?<p><br/>
+                            <button class="createTag" onclick="return false;">CreateTag</button>
+                            <button class="cancel" onclick="return false;">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div></div>
         </div>
 
 
