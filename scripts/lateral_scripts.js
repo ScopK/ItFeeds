@@ -1,6 +1,4 @@
 function displayFoldersTags(){
-	//$("#lateral_menu").html("");
-
 	$('#options_panel').nextAll().remove();
 
 	var html = '<div id="folders">';
@@ -24,6 +22,8 @@ function displayFoldersTags(){
 	html += getHTMLTags(tags);
 	html += '</div>';
 	$("#lateral_menu").append(html);
+
+	setContentActions();
 }
 
 function getHTMLFolder(folder,idx){
@@ -75,3 +75,6 @@ function getHTMLTags(tag_list){
 	});
 	return html;
 }
+
+
+

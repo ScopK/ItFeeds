@@ -11,13 +11,13 @@
 			$tags = mysqli_query($con,"SELECT * FROM tags WHERE user='$user' AND hidden='0' ORDER BY tag_name");
 
 		$lista = array();
-		while($tag = mysqli_fetch_array($tags)) {
+		while($tag = array_map('utf8_encode',mysqli_fetch_assoc($tags))) {
 			$e = new Tag();
 			$e->id = $tag['id'];
 			$e->name = $tag['tag_name'];
 			$e->user = $user;
 			$e->hidden = $tag['hidden'];
-			$e->posts = getPostsTag($con, $e->id,$depth);
+			$e->posts = array(); //getPostsTag($con, $e->id,$depth);
 
 			$sql = "SELECT count(*) AS c FROM post_tags p WHERE p.id_tag='".$e->id."'";
 			$res = mysqli_query($con,$sql);
@@ -38,7 +38,8 @@
 			$folders = mysqli_query($con,"SELECT * FROM folders WHERE user='$user' AND hidden='0' ORDER BY name");
 
 		$lista = array();
-		while($folder = mysqli_fetch_array($folders)) {
+
+		while($folder = array_map('utf8_encode',mysqli_fetch_assoc($folders))) {
 			$e = new Folder();
 			$e->id = $folder['id'];
 			$e->name = $folder['name'];
@@ -64,7 +65,8 @@
 		$folders = mysqli_query($con,"SELECT * FROM folders WHERE id='$foldId'");
 
 		$e = new Folder();
-		if ($folder = mysqli_fetch_array($folders)) {
+
+		if ($folder = array_map('utf8_encode',mysqli_fetch_assoc($folders))) {
 
 			$e->id = $folder['id'];
 			$e->name = $folder['name'];
@@ -88,9 +90,10 @@
 		if ($depth < 1)
 			return array();
 
-		$feeds = mysqli_query($con,"SELECT * FROM feeds WHERE id_folder='$folderId' ORDER BY name");
+		$feeds = mysqli_query($con,"SELECT * FROM feeds WHERE id_folder='$folderId' ORDER BY name ASC");
 		$lista = array();
-		while($feed = mysqli_fetch_array($feeds)) {
+
+		while($feed = array_map('utf8_encode',mysqli_fetch_assoc($feeds))) {
 			$e = new Feed();
 			$e->id = $feed['id'];
 			$e->name = $feed['name'];
@@ -104,7 +107,7 @@
 
 			$e->enabled = $feed['enabled'];
 			$e->deleted = $feed['deleted'];
-			$e->posts = getPostsFeed($con, $e->id,$depth);
+			$e->posts = array(); //getPostsFeed($con, $e->id,$depth);
 
 			$sql = "SELECT count(*) AS c, IFNULL(sum(p.unread), 0) AS u FROM posts p WHERE p.id_feed='".$e->id."'";
 			$res = mysqli_query($con,$sql);
@@ -119,7 +122,7 @@
 		return $lista;
 	}
 
-
+/*
 	function getPostsFeed($con, $feedId,$depth){
 		if ($depth < 2)
 			return array();
@@ -172,7 +175,7 @@
 
 		return $lista;
 	}
-
+*/
 	function getUUID(){
 		return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
 	        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
@@ -214,4 +217,190 @@
 		}
 		return ($count == 1);
 	}
+
+
+
+
+
+
+ 	/**
+
+			GET POSTS FUNCTIONS
+
+ 	*//*
+	function getIDFeed($con, $folderIdx, $feedIdx, $showHidden){
+		$folderId = getIDFolder($con,$folderIdx, $showHidden);
+		$sql = "SELECT name FROM feeds WHERE id_folder=? ORDER BY name LIMIT ?,1";
+		$stmt=mysqli_stmt_init($con);
+		if (mysqli_stmt_prepare($stmt,$sql)){
+
+			mysqli_stmt_bind_param($stmt,"ss", $folderId, $feedIdx); // Bind parameters
+			mysqli_stmt_execute($stmt); // Execute query
+
+			mysqli_stmt_bind_result($stmt,$id); // Bind result variables
+			mysqli_stmt_fetch($stmt); // Fetch value
+
+			mysqli_stmt_close($stmt); // Close statement
+		}
+		return $id;
+
+	}
+
+	function getIDFolder($con, $folderIdx, $showHidden){
+		if ($showHidden)
+			$sql = "SELECT id FROM folders ORDER BY name LIMIT ?,1";
+		else
+			$sql = "SELECT id FROM folders WHERE hidden='0' ORDER BY name LIMIT ?,1";		
+
+		$stmt=mysqli_stmt_init($con);
+		if (mysqli_stmt_prepare($stmt,$sql)){
+
+			mysqli_stmt_bind_param($stmt,"s", $folderIdx); // Bind parameters
+			mysqli_stmt_execute($stmt); // Execute query
+
+			mysqli_stmt_bind_result($stmt,$id); // Bind result variables
+			mysqli_stmt_fetch($stmt); // Fetch value
+
+			mysqli_stmt_close($stmt); // Close statement
+		}
+		return $id;
+	}*/
+
+
+	function getPostsFeed($con, $user, $feedId, $favs, $unread, $sort, $page, $postspage){
+		$user = mysqli_real_escape_string($con,$user);
+		$feedId = mysqli_real_escape_string($con,$feedId);
+		$favs = mysqli_real_escape_string($con,$favs);
+		$unread = mysqli_real_escape_string($con,$unread);
+		$sort = mysqli_real_escape_string($con,$sort);
+		$page = mysqli_real_escape_string($con,$page);
+		$postspage = mysqli_real_escape_string($con,$postspage);
+
+		$sql = "SELECT * FROM posts WHERE id_feed='$feedId' AND unread='$unread' AND favorite='$favs' ORDER BY `date` $sort LIMIT $page,$postspage";
+
+		$posts = mysqli_query($con,$sql);
+		$lista = array();
+
+
+		while($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
+			$e = new Post();
+			$e->id = $post['id'];
+			$e->feedId = $feedId;
+
+			$e->title = $post['title'];
+			$e->description = $post['description'];
+			$e->link = $post['link'];
+			$e->unread = $post['unread'];
+			$e->favorite = $post['favorite'];
+			$e->date = $post['date'];
+
+			$lista[] = $e;
+		}
+		
+		mysqli_free_result($posts);
+		return $lista;
+	}
+
+	function getPostsFolder($con, $user, $folderId, $favs, $unread, $sort, $page, $postspage){
+		$user = mysqli_real_escape_string($con,$user);
+		$folderId = mysqli_real_escape_string($con,$folderId);
+		$favs = mysqli_real_escape_string($con,$favs);
+		$unread = mysqli_real_escape_string($con,$unread);
+		$sort = mysqli_real_escape_string($con,$sort);
+		$page = mysqli_real_escape_string($con,$page);
+		$postspage = mysqli_real_escape_string($con,$postspage);
+
+		$sql = "SELECT * FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') AND unread='$unread' AND favorite='$favs' ORDER BY `date` $sort LIMIT $page,$postspage";
+
+		$posts = mysqli_query($con,$sql);
+		$lista = array();
+
+		while($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
+			$e = new Post();
+			$e->id = $post['id'];
+			$e->feedId = $post['id_feed'];
+
+			$e->title = $post['title'];
+			$e->description = $post['description'];
+			$e->link = $post['link'];
+			$e->unread = $post['unread'];
+			$e->favorite = $post['favorite'];
+			$e->date = $post['date'];
+
+			$lista[] = $e;
+		}
+		
+		mysqli_free_result($posts);
+		return $lista;
+	}
+
+	function getPostsTag($con, $user, $tagId, $favs, $unread, $sort, $page, $postspage){
+		$user = mysqli_real_escape_string($con,$user);
+		$tagId = mysqli_real_escape_string($con,$tagId);
+		$favs = mysqli_real_escape_string($con,$favs);
+		$unread = mysqli_real_escape_string($con,$unread);
+		$sort = mysqli_real_escape_string($con,$sort);
+		$page = mysqli_real_escape_string($con,$page);
+		$postspage = mysqli_real_escape_string($con,$postspage);
+
+		$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') AND unread='$unread' AND favorite='$favs' ORDER BY `date` $sort LIMIT $page,$postspage";
+
+		$posts = mysqli_query($con,$sql);
+		$lista = array();
+
+		while($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
+			$e = new Post();
+			$e->id = $post['id'];
+			$e->feedId = $post['id_feed'];
+
+			$e->title = $post['title'];
+			$e->description = $post['description'];
+			$e->link = $post['link'];
+			$e->unread = $post['unread'];
+			$e->favorite = $post['favorite'];
+			$e->date = $post['date'];
+
+			$lista[] = $e;
+		}
+		
+		mysqli_free_result($posts);
+		return $lista;
+	}
+
+	function getPostsAll($con, $user, $favs, $unread, $sort, $page, $postspage){
+		$user = mysqli_real_escape_string($con,$user);
+		$favs = mysqli_real_escape_string($con,$favs);
+		$unread = mysqli_real_escape_string($con,$unread);
+		$sort = mysqli_real_escape_string($con,$sort);
+		$page = mysqli_real_escape_string($con,$page);
+		$postspage = mysqli_real_escape_string($con,$postspage);
+
+		$sql = "SELECT * FROM posts WHERE id_feed IN ("+
+					"SELECT id FROM feeds WHERE id_folder IN ("+
+						"SELECT id FROM folders WHERE user='$user')) "+
+				"AND unread='$unread' AND favorite='$favs' ORDER BY `date` $sort LIMIT $page,$postspage";
+
+		$posts = mysqli_query($con,$sql);
+		$lista = array();
+
+		while($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
+			$e = new Post();
+			$e->id = $post['id'];
+			$e->feedId = $post['id_feed'];
+
+			$e->title = $post['title'];
+			$e->description = $post['description'];
+			$e->link = $post['link'];
+			$e->unread = $post['unread'];
+			$e->favorite = $post['favorite'];
+			$e->date = $post['date'];
+
+			$lista[] = $e;
+		}
+		
+		mysqli_free_result($posts);
+		return $lista;
+	}
+
 ?>
+

@@ -40,17 +40,22 @@ button::-moz-focus-inner {
 
 #content{
 	position:relative;
-	margin-left: 322px;
-	padding: 20px;
+	margin-left: 320px;
+	padding: 0px;
 	transition: margin 0.4s;
 }
 
 #actions_panel{
-	/*position:absolute;
-	right:0; left:0; top:0;*/
-	background-color: rgba(0,255,0,0.4);
-	height: 32px;
-	text-align:right;
+	z-index: 1;
+	position:absolute;
+	top:0; right:0;
+	margin: 0;
+	padding: 10px;
+	background-color: rgba(0,0,0,0.2);
+	border-width: 0 0 2px 2px;
+
+	color:white;
+	font-weight: bold;
 }
 
 #options_panel{
@@ -63,10 +68,10 @@ button::-moz-focus-inner {
 }
 
 
-
-
-
-
+/*############################################################################################################
+LATERAL MENU FOLDER STYLES
+##############################################################################################################
+############################################################################################################*/
 
 .folder {
 	margin-bottom: 5px;
@@ -194,4 +199,63 @@ button::-moz-focus-inner {
 #options_panel button:active{
 	border-color: #e6bb7b;
 	background-color: #e6bb7b;
+}
+
+
+/*############################################################################################################
+POSTS
+##############################################################################################################
+############################################################################################################*/
+
+#posts_panel{
+	padding-top: 0px;
+	margin: 0;
+}
+
+.post .header{
+	position:relative;
+	background-color: rgba(255,255,255,0.2);
+	border-bottom: 1px dotted #000;
+	border-top: 1px dotted #000;
+	margin: 0;
+	height: 38px;
+}
+
+.post .title{
+	position:absolute;
+	top: 4px;
+	left:15px; right: 300px;
+	
+	overflow:hidden;
+}
+
+.post .subtitle{
+	position:absolute;
+	top: 22px;
+	left:15px; right: 300px;
+	overflow:hidden;
+	font-size: 9px;
+}
+
+.post .header a{
+	color: #333;
+	font-weight: bold;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.post .header a:hover{
+	color: #000;
+	text-decoration: underline
+}
+
+.post .header .subtitle{
+	color: #555;
+	font-weight: bold;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.post .description{
+	margin: 25px 25px 50px;
 }

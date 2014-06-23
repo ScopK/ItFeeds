@@ -11,6 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
         <title>Fydeph - <?=$log_user?></title>
         <link rel="shortcut icon" href="imgs/icon.png" />
         <link rel="stylesheet" type="text/css" href="style/anims.css">
@@ -19,6 +20,7 @@
         <script src="scripts/jsanims.js"></script>
         <script src="scripts/actions.js"></script>
         <script src="scripts/lateral_scripts.js"></script>
+        <script src="scripts/main_scripts.js"></script>
 
         <script>
         $(document).ready(function(){
@@ -40,7 +42,9 @@
                 <div id="actions_panel">
                     more options here
                 </div>
+                <div id="posts_panel">
                     content
+                </div>
             </div>
         </div>
         <div id="loading_panel">

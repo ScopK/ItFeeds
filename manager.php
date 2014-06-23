@@ -11,6 +11,7 @@
 ?><!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
         <title>Fydeph Manager</title>
         <link rel="shortcut icon" href="imgs/icon.png" />
 

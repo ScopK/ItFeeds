@@ -9,4 +9,7 @@
     $con = mysqli_connect("localhost","root","admin","fydepdb");
     if (mysqli_connect_errno())
       die("Failed to connect to MySQL: " . mysqli_connect_error());
+
+	mysqli_query("SET NAMES utf8");
+	mysqli_set_charset('utf8');
 ?>
