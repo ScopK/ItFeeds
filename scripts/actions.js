@@ -6,6 +6,9 @@ var idxTag;
 $(document).ready(function(){
 	getFoldersTags();
 
+	$(window).resize(function(){
+		$("#page").css("min-height",$(window).height());
+	});
 	$("#page").css("min-height",$(window).height());
 });
 

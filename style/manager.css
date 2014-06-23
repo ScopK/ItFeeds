@@ -123,10 +123,10 @@ p.disabled{
 }
 
 h3.hidden{
-	background-color: #DDD;
+	background-color: #eee;
 	padding: 6px !important;
-	border: 1px solid #999;
-	color:black;
+
+	color:#444;
 }
 
 #folder_list, #tag_list{

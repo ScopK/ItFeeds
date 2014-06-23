@@ -31,8 +31,10 @@ function getHTMLFolder(folder,idx){
 	if (folder.unread > 0)
 		unread = ' <span class="count">('+folder.unread+')</span>';
 
+
+
 	html = '<div class="folder" idxFolder="'+idx+'">'+
-				'<div class="folderHeader">'+
+				'<div class="folderHeader'+((folder.hidden==1)?" hidden":"")+'">'+
 					'<button class="expander" onclick="toogleViewFeeds(this)">+</button>'+
 					'<span class="folderTitle">'+(folder.name)+unread+'</span>'+
 				'</div>'+
@@ -65,7 +67,9 @@ function getHTMLTags(tag_list){
 		var count="";
 		if (this.count > 0)
 			count = ' <span class="count">('+this.count+')</span>';
-		html += '<div class="tag" idxTag="'+index+'">'+(this.name)+count+'</div>';
+
+
+		html += '<div class="tag'+((this.hidden==1)?" hidden":"")+'" idxTag="'+index+'">'+(this.name)+count+'</div>';
 		index++;
 
 	});

@@ -21,7 +21,7 @@ button::-moz-focus-inner {
 	position:relative;
 	background-color: rgba(255,255,255,0.8);
 	margin: auto;
-	width:1300px;
+	max-width:1300px;
 	overflow:hidden;
 }
 
@@ -90,6 +90,22 @@ button::-moz-focus-inner {
 	padding: 2px 5px;
 }
 
+.tag{
+	margin: 1px;
+	display: inline-block;
+}
+
+#tags{
+	border-top: 2px solid #888;
+	padding-top: 10px;
+	margin-top: 10px;
+}
+
+.tag.hidden{
+	background-color: #eee;
+	color: #444;
+}
+
 .feed:hover, .tag:hover{
 	background-color: #ddd;
 }
@@ -112,6 +128,18 @@ button::-moz-focus-inner {
 	font-size: 14px;
 	font-weight:bold;
 	width: 100%;
+}
+
+.folderHeader.hidden .folderTitle{
+	background-color: #eee;
+	color: #777;
+	padding: 2px 4px 1px;
+}
+
+.folderHeader.hidden:hover .folderTitle{
+	background-color: unset;
+	color: #777;
+	padding: 2px 4px 1px;
 }
 
 .folderHeader:hover{
@@ -143,11 +171,6 @@ button::-moz-focus-inner {
 	border-color: #ddd;
 }
 
-#tags{
-	border-top: 2px solid #888;
-	padding-top: 10px;
-	margin-top: 10px;
-}
 
 #options_panel a, #options_panel button{
     font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;
