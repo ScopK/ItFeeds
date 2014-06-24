@@ -1,4 +1,4 @@
-function displayFoldersTags(){
+function displayFoldersAndTags(){
 	$('#options_panel').nextAll().remove();
 
 	var html = '<div id="folders">';
@@ -30,8 +30,6 @@ function getHTMLFolder(folder,idx){
 	var unread="";
 	if (folder.unread > 0)
 		unread = ' <span class="count">('+folder.unread+')</span>';
-
-
 
 	html = '<div class="folder" idxFolder="'+idx+'">'+
 				'<div class="folderHeader'+((folder.hidden==1)?" hidden":"")+'">'+

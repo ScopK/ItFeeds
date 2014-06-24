@@ -3,8 +3,12 @@ var tags;
 var idxFolder;
 var idxFeed;
 var idxTag;
+
+var get;
+readGetParameters();
+
 $(document).ready(function(){
-	getFoldersTags();
+	initialize();
 
 	$(window).resize(function(){
 		$("#page").css("min-height",$(window).height());
@@ -12,7 +16,7 @@ $(document).ready(function(){
 	$("#page").css("min-height",$(window).height());
 });
 
-function getFoldersTags(){
+function initialize(){
 	$("#page").fadeOut();
 	$.ajax({
 		url: "./ajax/get_user_info.php",
@@ -21,14 +25,17 @@ function getFoldersTags(){
 		success: function(result){
 			folders = result.folders;
 			tags = result.tags;
-			displayFoldersTags();
-			loading_stop();
-			$("#page").fadeIn();
+			displayFoldersAndTags();
+
+			loadPosts();
 		},
 		error: function(result){
 			alert("Unknown error 0x001");
-			loading_stop();
 			$("#page").fadeIn();
+		},
+		complete: function(){
+			$("#page").fadeIn();
+			loading_stop();
 		}
 	});
 }
@@ -47,3 +54,24 @@ function toogleViewFeeds(me){
 	}	
 }
 
+function readGetParameters(){
+	get = [];
+	location.search.replace('?', '').split('&').forEach(function (val) {
+	    split = val.split("=", 2);
+	    get[split[0]] = split[1];
+	});
+}
+function updateUrl(){
+	var args = "";
+	var first=1;
+	$.each(Object.keys(get),function(){
+		if (get[this]==undefined) return true;
+		if (first)
+			first = undefined;
+		else
+			args+="&";
+		args+=this+"="+get[this];
+	});
+	var page = "/Fydeph/index.php?"+args;
+	window.history.pushState("", "", page);
+}

@@ -19,6 +19,7 @@
         <script src="scripts/jquery.min.js"></script>
         <script src="scripts/jsanims.js"></script>
         <script src="scripts/actions.js"></script>
+        <script src="scripts/search.js"></script>
         <script src="scripts/lateral_scripts.js"></script>
         <script src="scripts/main_scripts.js"></script>
 

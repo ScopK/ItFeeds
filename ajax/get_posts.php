@@ -42,14 +42,16 @@
 			echo json_encode($posts);
 			break;
 		case 1:
-			echo "folder";
+			$posts = getPostsFolder($con, $_SESSION['log_user'], $folderId, $favorites, $unread, $sort, $page*$postsPage, $postsPage);
+			echo json_encode($posts);
 			break;
 		case 2:
-			echo "tag";
+			$posts = getPostsTag($con, $_SESSION['log_user'], $tagId, $favorites, $unread, $sort, $page*$postsPage, $postsPage);
+			echo json_encode($posts);
 			break;
-
 		case 3:
-			echo "all";
+			$posts = getPostsAll($con, $_SESSION['log_user'], $_SESSION['hid_user'], $favorites, $unread, $sort, $page*$postsPage, $postsPage);
+			echo json_encode($posts);
 			break;
 		default:
 			die("No reachable point");

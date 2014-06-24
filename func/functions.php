@@ -367,7 +367,7 @@
 		return $lista;
 	}
 
-	function getPostsAll($con, $user, $favs, $unread, $sort, $page, $postspage){
+	function getPostsAll($con, $user, $hidden, $favs, $unread, $sort, $page, $postspage){
 		$user = mysqli_real_escape_string($con,$user);
 		$favs = mysqli_real_escape_string($con,$favs);
 		$unread = mysqli_real_escape_string($con,$unread);
@@ -375,10 +375,17 @@
 		$page = mysqli_real_escape_string($con,$page);
 		$postspage = mysqli_real_escape_string($con,$postspage);
 
-		$sql = "SELECT * FROM posts WHERE id_feed IN ("+
-					"SELECT id FROM feeds WHERE id_folder IN ("+
-						"SELECT id FROM folders WHERE user='$user')) "+
+		if ($hidden) {
+		$sql = "SELECT * FROM posts WHERE id_feed IN (".
+					"SELECT id FROM feeds WHERE id_folder IN (".
+						"SELECT id FROM folders WHERE user='$user')) ".
 				"AND unread='$unread' AND favorite='$favs' ORDER BY `date` $sort LIMIT $page,$postspage";
+		} else{ 
+		$sql = "SELECT * FROM posts WHERE id_feed IN (".
+					"SELECT id FROM feeds WHERE id_folder IN (".
+						"SELECT id FROM folders WHERE user='$user' AND hidden='0')) ".
+				"AND unread='$unread' AND favorite='$favs' ORDER BY `date` $sort LIMIT $page,$postspage";
+		}
 
 		$posts = mysqli_query($con,$sql);
 		$lista = array();
