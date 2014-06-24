@@ -3,7 +3,7 @@
 	$postsPage = $_REQUEST['postspage'];
 	$page = $_REQUEST['page'];
 
-	$favorites = $_REQUEST['favs'];
+	$favorites = $_REQUEST['fav'];
 	$unread = $_REQUEST['unread'];
 
 	$feedId = $_REQUEST['feed'];
@@ -30,6 +30,7 @@
 	if (!isset($page) || !is_numeric($page) || $page<0) $page=0;
 	if (!isset($favorites)) $favorites = 0;
 	if (!isset($unread)) $unread = 1;
+	if ($favorites==1) $unread = 0;
 
 	$isServer=true;
 	include "../func/initind.php";

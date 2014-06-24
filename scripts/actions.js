@@ -14,6 +14,11 @@ $(document).ready(function(){
 		$("#page").css("min-height",$(window).height());
 	});
 	$("#page").css("min-height",$(window).height());
+
+	$(document).scroll(function() {
+		var pos = $(document).scrollTop();
+		$("#actions_panel").css("top",pos);
+	});
 });
 
 function initialize(){

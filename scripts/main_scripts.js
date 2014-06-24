@@ -23,6 +23,10 @@ function setContentActions(){
 	$(".folderTitle").click(function(){
 		loadFolder($(this).closest(".folder").attr("idxfolder"));
 	});
+
+	$(".tag").click(function(){
+		loadTag($(this).attr("idxtag"));
+	});
 }
 
 function loadFeed(indexFo, indexFe){
@@ -61,17 +65,39 @@ function loadFolder(indexFo){
 	ajaxPosts("folder="+id);
 }
 
+function loadTag(indexTa){
+	var id = tags[indexTa].id;
+	get.feed = undefined;
+	get.folder = undefined;
+	get.tag = id;
+	updateUrl();
+
+	$(".feed, .tag, .folder").removeClass("selected");
+	var object = $(".tag[idxtag='"+indexTa+"']");
+	object.addClass("selected");
+
+	ajaxPosts("tag="+id);
+}
+
 function loadAll(){
 	$(".feed, .tag").removeClass("selected");
 	ajaxPosts("");
 }
 
 function ajaxPosts(args){
+	var params = "";
+	if (get.unread!=undefined)	params+="unread="+get.unread+"&";
+	if (get.fav != undefined)	params+="fav="+get.fav+"&";
+	if (get.postspage != undefined)	params+="postspage="+get.postspage+"&";
+	if (get.page != undefined)	params+="page="+get.page+"&";
+	if (get.sort != undefined)	params+="sortBy="+get.sort+"&";
+	params += args;
+
 	loading_run();
 	$.ajax({
 		url: "./ajax/get_posts.php",
 		type: "GET",
-		data: args,
+		data: params,
 		dataType : "json",
 		success: function(result){
 			$('#posts_panel').html("");

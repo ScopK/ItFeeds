@@ -34,9 +34,10 @@
         <div id="page">
             <div id="lateral_menu">
                 <div id="options_panel">
+                    <button>{--</button>
                     <a href="./manager.php">Manager</a>
-                    <button>Hidden</button>
-                    <button>+</button>
+                    <button>Favs</button>
+                    <button>Unread</button>
                 </div>
             </div>
             <div id="content">
