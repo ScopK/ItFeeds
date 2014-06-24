@@ -56,7 +56,8 @@ function toogleViewFeeds(me){
 		$(me).closest(".folder").find(".folderfeeds").slideUp();
 		$(me).attr("hidd","1");
 		$(me).html("+");
-	}	
+	}
+	stopPropagation();
 }
 
 function readGetParameters(){

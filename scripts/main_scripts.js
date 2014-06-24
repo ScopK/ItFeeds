@@ -17,14 +17,28 @@ function loadPosts(){
 
 function setContentActions(){
 	$(".feed").click(function(){
+		$(".folderfeeds").slideUp();
+		$(".expander").attr("hidd","1");
+		$(".expander").html("+");
 		loadFeed($(this).attr("idxfolder"), $(this).attr("idxfeed"));
 	});
 
-	$(".folderTitle").click(function(){
-		loadFolder($(this).closest(".folder").attr("idxfolder"));
+	$(".folder").click(function(event){
+
+		if ($(event.target).is(".folderHeader,.folderTitle")){
+			var button = $(".folder").not(this).find("button");
+			button.closest(".folder").find(".folderfeeds").slideUp();
+			button.attr("hidd","1");
+			button.html("+");
+
+			loadFolder($(this).attr("idxfolder"));
+		}
 	});
 
 	$(".tag").click(function(){
+		$(".folderfeeds").slideUp();
+		$(".expander").attr("hidd","1");
+		$(".expander").html("+");
 		loadTag($(this).attr("idxtag"));
 	});
 }
@@ -58,7 +72,7 @@ function loadFolder(indexFo){
 	var object = $(".folder[idxFolder='"+indexFo+"']");
 	object.addClass("selected");
 	var button = object.closest(".folder").find("button");
-	button.closest(".folder").find(".folderfeeds").show();
+	button.closest(".folder").find(".folderfeeds").slideDown();
 	button.attr("hidd","0");
 	button.html("-");
 
