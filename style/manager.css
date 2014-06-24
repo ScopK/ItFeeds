@@ -122,27 +122,14 @@ p.disabled{
 	color: #f00;
 }
 
-h3.hidden{
-	background-color: #eee;
-	padding: 6px !important;
-
-	color:#444;
-}
-
 #folder_list, #tag_list{
 	border-top: 2px solid #000;
 	border-left: 22px solid #000;
 	background-color: #fff;
 }
 
-
-#folder_list .folder, #tag_list .tag{
-	position: relative;
-	padding: 10px 40px;
-	transition: background-color 1s;
-}
-
 #tag_list .tag{
+	position: relative;
 	font-size: 12px;
 	transition: background-color 0.5s, color 1s ,font-size 0.2s;
 }
@@ -153,61 +140,37 @@ h3.hidden{
 	font-size: 18px;
 }
 
-
-#folder_list .folder h3{
-	padding: 10px 0;
+#folder_list .folder{
+	padding: 10px 40px;
+	transition: background-color 1s;
+	border-bottom: 1px dotted #888;
 }
 
 
-
-#folder_list h3, #folder_list p{
-	display: inline;
+.folder h3, .feed p{
+	transition: background-color 0.5s;
 }
 
-#folder_list .folder:hover{
-	background-color: #ffefbe;
+.folder h3{
+	margin: 0;
+	padding: 10px;
 }
 
-#folder_list .feed{
-	padding: 10px 30px;
+.folder h3.hidden{
+	background-color: #eee;
+	color:#444;
 }
 
-/* controls */
-.control_panel{
-	position: absolute;
-	left: 0; top: 0; bottom: 0;
-	width: 0px;
-	background-color: #ffcd82;
-	border: solid #000;
-	border-width: 2px 2px 2px 20px;
-	margin: -1px 0 -1px -22px;
-	transition: width 0.1s, margin 0.1s;
-	overflow: hidden;
-}
-
-#folder_list .folder:hover .control_panel{
-	width: 100px;
-	margin-left: -122px;
-}
-
-.control_panel .folder_controls, .control_panel .feed_controls{
-	text-align: center;
-	width: 100px;
-}
-
-.control_panel .folder_controls img{
-	margin: 6px 3px 0px;
-	height: 25px;
+.folder h3:hover, .feed p:hover{
 	cursor: pointer;
+	background-color: #ddd;
 }
 
-.control_panel .feed_controls img{
-	margin: 1px 3px 12px;
-	height: 20px;
-	cursor: pointer;
+.feed p{
+	font-size: 12.5px;
+	margin: 0 10px;
+	padding: 5px 10px;
 }
-
-
 
 /* user dialog */
 #user_list, #login_hidden{
@@ -359,6 +322,7 @@ h3.hidden{
 	background-color: #aaa;
 }
 
+
 #clean_feed{
 	height: 380px;
 }
@@ -374,4 +338,47 @@ h3.hidden{
 
 .showHiddenButton.set{
 	background-color:rgba(200,0,0,0.8)!important;
+}
+
+#tools_folder, #tools_feed{
+	background-color: #eee;
+	height: 200px;
+}
+
+#tools_folder span, #tools_feed span{
+	display:inline-table;
+	padding: auto;
+}
+
+#tools_folder .message, #tools_feed .message{
+	text-align:center;
+	width: 100%;
+}
+
+
+
+
+
+#tools_folder button, #tools_feed button {
+    width:105px;
+    height:105px;
+    background-color: initial;
+    border-width: 0;
+    margin: 0 20px;
+}
+
+button.optionsIcon{
+    background-image: url("../imgs/opts.png");
+}
+
+button.addIcon{
+    background-image: url("../imgs/add.png");
+}
+
+button.deleteIcon{
+    background-image: url("../imgs/del.png");
+}
+
+button.backIcon{
+    background-image: url("../imgs/goback.png");
 }

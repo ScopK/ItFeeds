@@ -17,7 +17,7 @@ function loadPosts(){
 
 function setContentActions(){
 	$(".feed").click(function(){
-		$(".folderfeeds").slideUp();
+		$(".folderfeeds").not($(this).closest(".folderfeeds")).slideUp();
 		$(".expander").attr("hidd","1");
 		$(".expander").html("+");
 		loadFeed($(this).attr("idxfolder"), $(this).attr("idxfeed"));

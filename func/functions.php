@@ -90,7 +90,7 @@
 		if ($depth < 1)
 			return array();
 
-		$feeds = mysqli_query($con,"SELECT * FROM feeds WHERE id_folder='$folderId' ORDER BY name ASC");
+		$feeds = mysqli_query($con,"SELECT * FROM feeds WHERE id_folder='$folderId' AND deleted='0' ORDER BY name ASC");
 		$lista = array();
 
 		while($feed = array_map('utf8_encode',mysqli_fetch_assoc($feeds))) {

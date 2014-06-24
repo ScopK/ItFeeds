@@ -15,6 +15,16 @@ $(document).ready(function(){
 	$("button.unlockHidden").click(unlockHidden);
 	$("button.logoutButton").click(logoutButton);
 
+	$("button#folderConfig").click(showCleanFolder);
+	$("button#folderDelete").click(showDeleteFolder);
+	$("button#feedAdd").click(showAddFeed);
+	$("button#feedConfig").click(showCleanFeed);
+	$("button#feedDelete").click(showDeleteFeed);
+
+	$("input[name='days']").on("focus",function(){
+	    $("button.cleanFolder, button.cleanFeed").prop('disabled',false);    
+	});
+
 	$(document).scroll(function() {
 		var pos = $(document).scrollTop()+
 		         ($(window).height()/2)-
@@ -39,7 +49,6 @@ function load(flds){
 		var line = '<div class="folder" idFolder="'+this.id+'" idxFolder="'+index+'"><h3'+style+'>'+this.name+' <span class="counter">('+this.unread+'/'+this.count+')</span></h3>';
 		index++;
 
-		var panel = '<div class="folder_controls"></div>'
 		var indexFeed=0;
 
 		$.each(this.feeds, function() {
@@ -48,32 +57,19 @@ function load(flds){
 				var style = ' class="disabled"';
 
 			line += '<div class="feed" idFeed="'+this.id+'" idxFeed="'+indexFeed+'"><p'+style+'>'+this.name+' <span class="counter">('+this.unread+'/'+this.count+')</span></p></div>';
-			panel += '<div class="feed_controls" idFeed="'+this.id+'" idxFeed="'+indexFeed+'"></div>';
 			indexFeed++;
 		});
 
-		line += '<div class="control_panel">'+panel+'</div></div>';
+		line += '</div>';
 		$("#folder_list").append(line);
 	});
 
-	// LOAD ICONS
-	$(".folder_controls").append('<img class="delFoImg" src="imgs/del.png"/>');
-	$(".folder_controls").append('<img class="setFoImg" src="imgs/sets.png"/>');
-	$(".folder_controls").append('<img class="addFImg" src="imgs/add.png"/>');
-
-	$(".feed_controls").append('<img class="delFImg" src="imgs/del.png"/>');
-	$(".feed_controls").append('<img class="setFImg" src="imgs/sets.png"/>');
-
-	$(".delFoImg").click(showDeleteFolder);
-	$(".setFoImg").click(showCleanFolder);
-	$(".addFImg").click(showAddFeed);
-	$(".delFImg").click(showDeleteFeed);
-	$(".setFImg").click(showCleanFeed);
+	$(".folder h3").click(showFolderTools);
+	$(".feed p").click(showFeedTools);
 	$("#folder_list").show();
 }
 
 function loadTags(tags){
-
 	$("#tag_list").html("");
 
 	var indexTag=0;
@@ -107,22 +103,20 @@ function gotoFolders(){
 	}, 300);
 }
 
-function showDeleteFolder(){
+
+function showFolderTools(){
 	idxFolder = $(this).closest(".folder").attr("idxFolder");
 	var folder = folders[idxFolder];
 
-	$("#confdel_folder h3").html(folder['name']);
-
-	$("#confdel_folder").find("input[name='folderId']").val(folder['id']);
-
-	$(".control_panel").hide();
-	$("#confdel_folder").addClass("active");
+	$("#tools_folder h3").html(folder['name']+" - Options");
+	$("#tools_folder").find("button").attr("folderidx",idxFolder);
+	$("#tools_folder").addClass("active");
 }
 
 function showCleanFolder(){
-	idxFolder = $(this).closest(".folder").attr("idxFolder");
+	$("#tools_folder").removeClass("active");
+	idxFolder = $(this).attr("folderidx");
 	var folder = folders[idxFolder];
-	
 
 	$("#clean_folder h3").html(folder['name']);
 
@@ -133,12 +127,26 @@ function showCleanFolder(){
 	$("#clean_folder").find("input[name='days']").val(3);
 	$("#clean_folder").find("input[name='unread']").prop('checked',false);
 
-	$(".control_panel").hide();
+	$("button.cleanFolder").prop('disabled',true);
+
 	$("#clean_folder").addClass("active");
 }
 
+function showDeleteFolder(){
+	$("#tools_folder").removeClass("active");
+	idxFolder = $(this).attr("folderidx");
+	var folder = folders[idxFolder];
+
+	$("#confdel_folder h3").html(folder['name']);
+
+	$("#confdel_folder").find("input[name='folderId']").val(folder['id']);
+
+	$("#confdel_folder").addClass("active");
+}
+
 function showAddFeed(){
-	idxFolder = $(this).closest(".folder").attr("idxFolder");
+	$("#tools_folder").removeClass("active");
+	idxFolder = $(this).attr("folderidx");
 	var folder = folders[idxFolder];
 	
 	$("#confadd_feed h3").html(folder['name']);
@@ -148,26 +156,25 @@ function showAddFeed(){
 	$("#confadd_feed").find("input[name='rlink']").val("");
 	$("#confadd_feed").find("input[name='link']").val("");
 	
-	$(".control_panel").hide();
 	$("#confadd_feed").addClass("active");
 }
 
-function showDeleteFeed(){
+
+function showFeedTools(){
 	idxFolder = $(this).closest(".folder").attr("idxFolder");
-	idxFeed = $(this).closest(".feed_controls").attr("idxFeed");
+	idxFeed = $(this).closest(".feed").attr("idxfeed");
 	var feed = folders[idxFolder].feeds[idxFeed];
 
-	$("#confdel_feed h3").html(feed['name']);
-
-	$("#confdel_feed").find("input[name='feedId']").val(feed['id']);
-
-	$(".control_panel").hide();
-	$("#confdel_feed").addClass("active");
+	$("#tools_feed h3").html(feed['name']+" - Options");
+	$("#tools_feed").find("button").attr("folderidx",idxFolder);
+	$("#tools_feed").find("button").attr("feedidx",idxFeed);
+	$("#tools_feed").addClass("active");
 }
 
 function showCleanFeed(){
-	idxFolder = $(this).closest(".folder").attr("idxFolder");
-	idxFeed = $(this).closest(".feed_controls").attr("idxFeed");
+	$("#tools_feed").removeClass("active");
+	idxFolder = $(this).attr("folderidx");
+	idxFeed = $(this).attr("feedidx");
 	var feed = folders[idxFolder].feeds[idxFeed];
 
 	$("#clean_feed h3").html(feed['name']);
@@ -185,12 +192,25 @@ function showCleanFeed(){
 	$("#clean_feed #goLink a").attr("href",feed['link']);
 	$("#clean_feed #goRss a").attr("href",feed['rss_link']);
 
-	$(".control_panel").hide();
+	$("button.cleanFeed").prop('disabled',true);
+
 	$("#clean_feed").addClass("active");
 }
 
+function showDeleteFeed(){
+	$("#tools_feed").removeClass("active");
+	idxFolder = $(this).attr("folderidx");
+	idxFeed = $(this).attr("feedidx");
+	var feed = folders[idxFolder].feeds[idxFeed];
+
+	$("#confdel_feed h3").html(feed['name']);
+
+	$("#confdel_feed").find("input[name='feedId']").val(feed['id']);
+
+	$("#confdel_feed").addClass("active");
+}
+
 function closeDialogs(){
-	$(".control_panel").show();
 	$(".inside_dialog").removeClass("active");
 }
 

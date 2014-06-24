@@ -46,6 +46,24 @@
 
             <div id="folder_list"></div>
 
+            <div class="inside_dialog" id="tools_folder"><div class="dialog_container">
+                <h3>TOOLS FOLDER</h3>
+                <div class="message">
+                    <span><button id="folderConfig" class="optionsIcon"></button><p>Folder settings</p></span>
+                    <span><button id="feedAdd" class="addIcon"></button><p>Add feed</p></span>
+                    <span><button id="folderDelete" class="deleteIcon"></button><p>Delete folder</p></span>
+                    <span><button class="cancel backIcon"></button><p>Cancel</p></span>
+                </div>
+            </div></div>
+
+            <div class="inside_dialog" id="tools_feed"><div class="dialog_container">
+                <h3>TOOLS FEED</h3>
+                <div class="message">
+                    <span><button id="feedConfig" class="optionsIcon"></button><p>Feed settings</p></span>
+                    <span><button id="feedDelete" class="deleteIcon"></button><p>Delete feed</p></span>
+                    <span><button class="cancel backIcon"></button><p>Cancel</p></span>
+                </div>
+            </div></div>
 
             <div class="inside_dialog" id="confdel_folder"><div class="dialog_container">
                 <h3>DELETE FOLDER</h3>

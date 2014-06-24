@@ -47,13 +47,16 @@
 		mysqli_stmt_bind_param($stmt,"s", $feedId); // Bind parameters
 		mysqli_stmt_execute($stmt); // Execute query
 
-		mysqli_stmt_bind_result($stmt,$taggCount); // Bind result variables
-		mysqli_stmt_fetch($stmt); // Fetch value
+		$done = mysqli_affected_rows($con);
 
 		mysqli_stmt_close($stmt); // Close statement
 	}
 
 	mysqli_close($con);
-	echo "oK";
-
+	if ($done == 1)
+		echo "oK";
+	elseif($done > 1)
+		echo "Deleted more than 1 element!!";
+	else
+		echo "Element not found";
 ?>

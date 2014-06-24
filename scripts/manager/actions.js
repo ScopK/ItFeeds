@@ -186,7 +186,8 @@ function deleteFeed(){
 				folders[prevIdxFolder].feeds.splice(prevIdxFeed,1);
 				load(folders);
 				loading_stop();
-			}
+			} else
+				alert(result);
 		},
 		error: function (request, status, error){
 			alert("Unknown error 0x007");
