@@ -1,8 +1,17 @@
 var FEED=0;var FOLDER=1;var TAG=2;var ALL=3;
 
 
-function loadPosts(){
-	sel = [];
+function executeParams(){
+	if (get.fav) $("#favsTButton").addClass("marked");
+	else		 $("#favsTButton").removeClass("marked");
+
+	if (get.unread) $("#unreadTButton").removeClass("marked");
+	else		    $("#unreadTButton").addClass("marked");
+
+	if (get.sortby) $("#sortTButton").html("Older");
+	else		  	$("#sortTButton").html("Newer");
+
+
 	if (get.feed != undefined){
 		var ixs = findFeedIndex(get.feed);
 		loadFeed(ixs[0],ixs[1]);
@@ -104,7 +113,7 @@ function ajaxPosts(args){
 	if (get.fav != undefined)	params+="fav="+get.fav+"&";
 	if (get.postspage != undefined)	params+="postspage="+get.postspage+"&";
 	if (get.page != undefined)	params+="page="+get.page+"&";
-	if (get.sort != undefined)	params+="sortBy="+get.sort+"&";
+	if (get.sortby != undefined)	params+="sortBy="+get.sortby+"&";
 	params += args;
 
 	loading_run();

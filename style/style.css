@@ -20,8 +20,8 @@ button::-moz-focus-inner {
 	display:none;
 	position:relative;
 	background-color: rgba(255,255,255,0.8);
-	margin: auto;
-	max-width:1300px;
+	margin: auto 40px;
+
 	overflow:hidden;
 }
 
@@ -34,8 +34,13 @@ button::-moz-focus-inner {
 	width: 300px;
 	float:left;
 	font-size: 12.5px;
-	transition: margin-left 0.4s;
 	overflow-y: auto;
+	transition: margin-left 0.4s, border 0.4s;
+	border-right: 0px solid #000;
+}
+
+#lateral_menu.hidden{
+	border-right-width: 40px;
 }
 
 #content{
@@ -198,6 +203,7 @@ LATERAL MENU FOLDER STYLES
 	transition: border-color 0.2s,background-color 0.3s;
 }
 
+
 #options_panel a:hover, #options_panel button:hover{
 	border-color: #888;
 	background-color: #888;
@@ -205,8 +211,24 @@ LATERAL MENU FOLDER STYLES
 
 #options_panel a:active,
 #options_panel button:active{
-	border-color: #e6bb7b;
-	background-color: #e6bb7b;
+	border-color: #e67b7b;
+	background-color: #e67b7b;
+}
+
+#options_panel .marked{
+	background-color: #AAA;
+		border-color: #AAA;
+	transition: border-color 0.2s,background-color 0.3s;
+}
+
+#options_panel .marked:hover{
+	border-color: black;
+	background-color: #404040;
+}
+
+#options_panel .marked:active{
+	border-color: black;
+	background-color: #652020;
 }
 
 

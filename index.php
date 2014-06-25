@@ -34,10 +34,11 @@
         <div id="page">
             <div id="lateral_menu">
                 <div id="options_panel">
-                    <button>{--</button>
+                    <button onclick="hideLateralMenu()">&#10094; </button>
                     <a href="./manager.php">Manager</a>
-                    <button>Favs</button>
-                    <button>Unread</button>
+                    <button id="favsTButton" onclick="toggleFavs(this)">Favs</button>
+                    <button id="unreadTButton" onclick="toggleUnread(this)">Unread</button>
+                    <button id="sortTButton" onclick="toggleSort(this)"></button>
                 </div>
             </div>
             <div id="content">

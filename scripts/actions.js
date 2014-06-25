@@ -32,7 +32,7 @@ function initialize(){
 			tags = result.tags;
 			displayFoldersAndTags();
 
-			loadPosts();
+			executeParams();
 		},
 		error: function(result){
 			alert("Unknown error 0x001");
@@ -80,4 +80,29 @@ function updateUrl(){
 	});
 	var page = "/Fydeph/index.php?"+args;
 	window.history.pushState("", "", page);
+}
+
+
+function toggleFavs(me){
+	if (!get.fav)	get.fav = "1";
+	else			get.fav = undefined;
+
+	updateUrl();
+	executeParams();
+}
+
+
+function toggleUnread(me){
+	if (!get.unread) get.unread = "0";
+	else 			 get.unread = undefined;
+
+	updateUrl();
+	executeParams();
+}
+
+function toggleSort(me){
+	if (!get.sortby) get.sortby = "0";
+	else 			 get.sortby = undefined;
+	updateUrl();
+	executeParams();
 }

@@ -22,11 +22,17 @@ function hideLateralMenu(){
 	lateral_width = $("#lateral_menu").outerWidth();
     var left = $("#lateral_menu").position().left;
 	$("#lateral_menu").css("margin-left",-(left+lateral_width)+"px");
+    $("#lateral_menu").addClass("hidden");
 	$("#content").css("margin-left","0");
-	
+
+    setTimeout(function(){
+        $("#lateral_menu").bind("mouseover", showLateralMenu);
+    },500);
 }
 
 function showLateralMenu(){
+    $('#lateral_menu').unbind('mouseover');
 	$("#content").css("margin-left",lateral_width+"px");
+    $("#lateral_menu").removeClass("hidden");
 	$("#lateral_menu").css("margin-left","0");
 }
