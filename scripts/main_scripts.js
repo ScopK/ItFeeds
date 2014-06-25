@@ -26,29 +26,45 @@ function executeParams(){
 
 function setContentActions(){
 	$(".feed").click(function(){
-		$(".folderfeeds").not($(this).closest(".folderfeeds")).slideUp();
-		$(".expander").attr("hidd","1");
-		$(".expander").html("+");
-		loadFeed($(this).attr("idxfolder"), $(this).attr("idxfeed"));
+		var index1 = $(this).attr("idxfolder");
+		var index2 = $(this).attr("idxfeed");
+		if (folders[index1].feeds[index2].id == get.feed){
+			loadAll();
+		} else {
+			$(".folderfeeds").not($(this).closest(".folderfeeds")).slideUp();
+			$(".expander").attr("hidd","1");
+			$(".expander").html("+");
+			loadFeed(index1, index2);
+		}
 	});
 
 	$(".folder").click(function(event){
-
 		if ($(event.target).is(".folderHeader,.folderTitle")){
-			var button = $(".folder").not(this).find("button");
-			button.closest(".folder").find(".folderfeeds").slideUp();
-			button.attr("hidd","1");
-			button.html("+");
+			var index = $(this).attr("idxfolder");
+			if (folders[index].id == get.folder){
+				loadAll();
+			} else {
+				var button = $(".folder").not(this).find("button");
+				button.closest(".folder").find(".folderfeeds").slideUp();
+				button.attr("hidd","1");
+				button.html("+");
 
-			loadFolder($(this).attr("idxfolder"));
+				loadFolder(index);
+			}
 		}
 	});
 
 	$(".tag").click(function(){
-		$(".folderfeeds").slideUp();
-		$(".expander").attr("hidd","1");
-		$(".expander").html("+");
-		loadTag($(this).attr("idxtag"));
+		var index = $(this).attr("idxtag");
+
+		if (tags[index].id == get.tag) {
+			loadAll();
+		} else {
+			$(".folderfeeds").slideUp();
+			$(".expander").attr("hidd","1");
+			$(".expander").html("+");
+			loadTag(index);
+		}
 	});
 }
 
@@ -103,7 +119,11 @@ function loadTag(indexTa){
 }
 
 function loadAll(){
-	$(".feed, .tag").removeClass("selected");
+	get.feed = undefined;
+	get.folder = undefined;
+	get.tag = undefined;
+	updateUrl();
+	$(".feed, .tag, .folder").removeClass("selected");
 	ajaxPosts("");
 }
 

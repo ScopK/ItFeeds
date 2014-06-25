@@ -44,9 +44,9 @@
                 <div id="navopts_bottom" class="options_panel">
                     <button onclick="hideLateralMenu()">&#10094; </button>
                     <a href="./manager.php">Manager</a>
-                    <button onclick="toggleFavs(this)">Favs</button>
-                    <button onclick="toggleUnread(this)">Unread</button>
-                    <button onclick="toggleSort(this)"></button>
+                    <button onclick="toggleFavs(this)">Prev</button>
+                    <button onclick="toggleUnread(this)">777</button>
+                    <button onclick="toggleSort(this)">Next</button>
                 </div>
             </div>
             <div id="content">
