@@ -40,7 +40,6 @@ function initialize(){
 		},
 		complete: function(){
 			$("#page").fadeIn();
-			loading_stop();
 		}
 	});
 }
@@ -78,7 +77,10 @@ function updateUrl(){
 			args+="&";
 		args+=this+"="+get[this];
 	});
-	var page = "/Fydeph/index.php?"+args;
+	if (args.length>0)
+		var page = "/Fydeph/index.php?"+args;
+	else
+		var page = "/Fydeph/index.php";
 	window.history.pushState("", "", page);
 }
 

@@ -27,7 +27,7 @@
 	if (!isset($postsPage) || !is_numeric($postsPage) || $postsPage<0) $postsPage=10;
 	else $postsPage=($postsPage>100)?100:$postsPage;
 
-	if (!isset($page) || !is_numeric($page) || $page<0) $page=0;
+	if (!isset($page) || !is_numeric($page) || $page<1) $page=1;
 	if (!isset($favorites)) $favorites = 0;
 	if (!isset($unread)) $unread = 1;
 	if ($favorites==1) $unread = 0;
@@ -37,21 +37,22 @@
 	include "../func/functions.php";
 	include "../func/classes.php";
 
+	//usleep(400000);
 	switch($mode){
 		case 0:
-			$posts = getPostsFeed($con, $_SESSION['log_user'], $feedId, $favorites, $unread, $sort, $page*$postsPage, $postsPage);
+			$posts = getPostsFeed($con, $_SESSION['log_user'], $feedId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
 			echo json_encode($posts);
 			break;
 		case 1:
-			$posts = getPostsFolder($con, $_SESSION['log_user'], $folderId, $favorites, $unread, $sort, $page*$postsPage, $postsPage);
+			$posts = getPostsFolder($con, $_SESSION['log_user'], $folderId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
 			echo json_encode($posts);
 			break;
 		case 2:
-			$posts = getPostsTag($con, $_SESSION['log_user'], $tagId, $favorites, $unread, $sort, $page*$postsPage, $postsPage);
+			$posts = getPostsTag($con, $_SESSION['log_user'], $tagId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
 			echo json_encode($posts);
 			break;
 		case 3:
-			$posts = getPostsAll($con, $_SESSION['log_user'], $_SESSION['hid_user'], $favorites, $unread, $sort, $page*$postsPage, $postsPage);
+			$posts = getPostsAll($con, $_SESSION['log_user'], $_SESSION['hid_user'], $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
 			echo json_encode($posts);
 			break;
 		default:
