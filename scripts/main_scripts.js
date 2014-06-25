@@ -77,7 +77,7 @@ function setContentActions(){
 	});
 
 	$(".folder").click(function(event){
-		if ($(event.target).is(".folderHeader,.folderTitle")){
+		if ($(event.target).is(".folderHeader,.folderTitle,.count")){
 			get.page=undefined;
 			var index = $(this).attr("idxfolder");
 
