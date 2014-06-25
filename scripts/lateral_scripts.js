@@ -1,5 +1,5 @@
 function displayFoldersAndTags(){
-	$('#options_panel').nextAll().remove();
+	$('#navigation_panel').html("");
 
 	var html = '<div id="folders">';
 	var nullHtml = '';
@@ -14,14 +14,14 @@ function displayFoldersAndTags(){
 		}
 		index++;
 	});
-	$("#lateral_menu").append(html);
-	$("#lateral_menu").append(nullHtml);
+	$("#navigation_panel").append(html);
+	$("#navigation_panel").append(nullHtml);
 
 
 	html = '<div id="tags">';
 	html += getHTMLTags(tags);
 	html += '</div>';
-	$("#lateral_menu").append(html);
+	$("#navigation_panel").append(html);
 
 	setContentActions();
 }

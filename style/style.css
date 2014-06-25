@@ -34,7 +34,6 @@ button::-moz-focus-inner {
 	width: 300px;
 	float:left;
 	font-size: 12.5px;
-	overflow-y: auto;
 	transition: margin-left 0.4s, border 0.4s;
 	border-right: 0px solid #000;
 }
@@ -63,13 +62,31 @@ button::-moz-focus-inner {
 	font-weight: bold;
 }
 
-#options_panel{
+#navopts_top{
 	background-color: #000;
-	padding-bottom: 15px;
-	margin: -10px -10px 10px;
 	text-align: center;
-	vertical-align: middle;
+	height: 30px;
+	margin: -10px -10px 10px;
 	padding: 10px 0;
+}
+
+#navopts_bottom{
+	position:absolute;
+	bottom:0;
+	width:100%;
+	background-color: #000;
+	text-align: center;
+	height: 30px;
+	margin: 0 -10px;
+	padding: 10px 0;
+}
+
+#navigation_panel{
+	position:absolute;
+	overflow-y: auto;
+	padding-top: 10px;
+	top:50px;
+	bottom: 50px;
 }
 
 
@@ -190,7 +207,7 @@ LATERAL MENU FOLDER STYLES
 }
 
 
-#options_panel a, #options_panel button{
+.options_panel a, .options_panel button{
     font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;
 	background-color: #555;
 	padding: 5px;
@@ -204,29 +221,29 @@ LATERAL MENU FOLDER STYLES
 }
 
 
-#options_panel a:hover, #options_panel button:hover{
+.options_panel a:hover, .options_panel button:hover{
 	border-color: #888;
 	background-color: #888;
 }
 
-#options_panel a:active,
-#options_panel button:active{
+.options_panel a:active,
+.options_panel button:active{
 	border-color: #e67b7b;
 	background-color: #e67b7b;
 }
 
-#options_panel .marked{
+.options_panel .marked{
 	background-color: #AAA;
 		border-color: #AAA;
 	transition: border-color 0.2s,background-color 0.3s;
 }
 
-#options_panel .marked:hover{
+.options_panel .marked:hover{
 	border-color: black;
 	background-color: #404040;
 }
 
-#options_panel .marked:active{
+.options_panel .marked:active{
 	border-color: black;
 	background-color: #652020;
 }
@@ -288,4 +305,5 @@ POSTS
 
 .post .description{
 	margin: 25px 25px 50px;
+	overflow-x: auto;
 }
