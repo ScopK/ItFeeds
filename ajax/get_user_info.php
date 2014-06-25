@@ -25,7 +25,6 @@
 	//usleep(400000);
 	$data = array("folders" => $folders, "tags" => $tags);
 
-
 	echo json_encode($data);
 
 	mysqli_close($con);

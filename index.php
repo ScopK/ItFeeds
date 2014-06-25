@@ -42,11 +42,11 @@
                 </div>
                 <div id="navigation_panel" style="overflow-y: auto;"></div>
                 <div id="navopts_bottom" class="options_panel">
-                    <button onclick="hideLateralMenu()">&#10094; </button>
-                    <a href="./manager.php">Manager</a>
-                    <button onclick="toggleFavs(this)">Prev</button>
-                    <button onclick="toggleUnread(this)">777</button>
-                    <button onclick="toggleSort(this)">Next</button>
+                    <button id="prevPage" onclick="prevPage()" disabled>Prev</button>
+                    <span id="pages">
+                        <span id="pageNumber">1</span><span id="totalPages">/1(10)</span>
+                    </span>
+                    <button id="nextPage" onclick="nextPage()">Next</button>
                 </div>
             </div>
             <div id="content">

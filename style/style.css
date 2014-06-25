@@ -81,6 +81,7 @@ button::-moz-focus-inner {
 	padding: 10px 0;
 }
 
+
 #navigation_panel{
 	position:absolute;
 	overflow-y: auto;
@@ -232,6 +233,16 @@ LATERAL MENU FOLDER STYLES
 	background-color: #e67b7b;
 }
 
+.options_panel a.disabled,
+.options_panel button:disabled{
+	color: #333;
+}
+.options_panel a.disabled:hover,
+.options_panel button:disabled:hover{
+	background-color: #555;
+	border: 2px solid black;
+} 
+
 .options_panel .marked{
 	background-color: #AAA;
 		border-color: #AAA;
@@ -306,4 +317,21 @@ POSTS
 .post .description{
 	margin: 25px 25px 50px;
 	overflow-x: auto;
+}
+
+
+
+/*############################################################################################################
+PAGES
+##############################################################################################################
+############################################################################################################*/
+
+#pages {
+	display: inline-block;
+	margin-top: 5px;
+}
+
+#pages span{
+	color:white;
+	font-weight: bold;
 }

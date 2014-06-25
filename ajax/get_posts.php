@@ -15,11 +15,8 @@
 // CHECK INPUTS
 	if (isset($feedId))	$mode=0;
 	elseif (isset($folderId)) $mode=1;
-	elseif (isset($tagId)) {
-		$unread = 0;
-		$favorites = 0;
-		$mode=2;
-	} else $mode=3;
+	elseif (isset($tagId)) $mode=2;
+	else $mode=3;
 
 	if (!isset($sort)) $sort="DESC";
 	else $sort=($sort==1)?"DESC":"ASC";
@@ -39,19 +36,19 @@
 
 	//usleep(400000);
 	switch($mode){
-		case 0:
+		case 0: // feeds
 			$posts = getPostsFeed($con, $_SESSION['log_user'], $feedId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
 			echo json_encode($posts);
 			break;
-		case 1:
+		case 1: // folder
 			$posts = getPostsFolder($con, $_SESSION['log_user'], $folderId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
 			echo json_encode($posts);
 			break;
-		case 2:
+		case 2: // tags
 			$posts = getPostsTag($con, $_SESSION['log_user'], $tagId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
 			echo json_encode($posts);
 			break;
-		case 3:
+		case 3: // all
 			$posts = getPostsAll($con, $_SESSION['log_user'], $_SESSION['hid_user'], $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
 			echo json_encode($posts);
 			break;

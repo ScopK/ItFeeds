@@ -1,17 +1,54 @@
-var FEED=0;var FOLDER=1;var TAG=2;var ALL=3;
+var postSelected;
+var totalPages;
+var totalPosts;
 
+$(document).ready(function(){
+        $(document).bind('keydown', function(e) {
+	        if (e.ctrlKey || e.altKey || e.shiftKey) return;
+	        if ($("input").is(":focus")) return;
 
-function executeParams(){
-	if (get.fav) $("#favsTButton").addClass("marked");
-	else		 $("#favsTButton").removeClass("marked");
+	        switch (e.which) {
+	            case 32: //space
+	                alert("space");
+	                break;
+	            case 99: //f
+	                alert("f");
+	                break;
+	            case 98: //b
+	                alert("b");
+	                break;
+	            case 100: //d
+	                alert("d");
+	                break;
+	            case 102: //f
+	            case 115: //s
+	                alert("f/s");
+	                break;
+	            case 109: //m  
+	            case 110: //n
+	                alert("m/n");
+	                break;
+	            case 106: //j
+	                alert("j");
+	                break;
+	            case 107: //k
+	                alert("k");
+	                break;
+	            case 116: //t
+	                alert("t");
+	                break;
+	            case 118: //v
+	                alert("v");
+	                break;
+	            case 0:
+	                break;
+	            default:
+	                alert(e.which);
+	        }
+    });
+});
 
-	if (get.unread) $("#unreadTButton").removeClass("marked");
-	else		    $("#unreadTButton").addClass("marked");
-
-	if (get.sortby) $("#sortTButton").html("Older");
-	else		  	$("#sortTButton").html("Newer");
-
-
+function reloadPosts(){
 	if (get.feed != undefined){
 		var ixs = findFeedIndex(get.feed);
 		loadFeed(ixs[0],ixs[1]);
@@ -26,6 +63,7 @@ function executeParams(){
 
 function setContentActions(){
 	$(".feed").click(function(){
+		get.page=undefined;
 		var index1 = $(this).attr("idxfolder");
 		var index2 = $(this).attr("idxfeed");
 		if (folders[index1].feeds[index2].id == get.feed){
@@ -40,7 +78,9 @@ function setContentActions(){
 
 	$(".folder").click(function(event){
 		if ($(event.target).is(".folderHeader,.folderTitle")){
+			get.page=undefined;
 			var index = $(this).attr("idxfolder");
+
 			if (folders[index].id == get.folder){
 				loadAll();
 			} else {
@@ -55,11 +95,14 @@ function setContentActions(){
 	});
 
 	$(".tag").click(function(){
+		get.page=undefined;
 		var index = $(this).attr("idxtag");
 
 		if (tags[index].id == get.tag) {
 			loadAll();
 		} else {
+			get.unread="0";
+			get.fav=undefined;
 			$(".folderfeeds").slideUp();
 			$(".expander").attr("hidd","1");
 			$(".expander").html("+");
@@ -91,7 +134,6 @@ function loadFolder(indexFo){
 	get.feed = undefined;
 	get.folder = id;
 	get.tag = undefined;
-	updateUrl();
 
 	$(".feed, .tag, .folder").removeClass("selected");
 	var object = $(".folder[idxFolder='"+indexFo+"']");
@@ -109,7 +151,6 @@ function loadTag(indexTa){
 	get.feed = undefined;
 	get.folder = undefined;
 	get.tag = id;
-	updateUrl();
 
 	$(".feed, .tag, .folder").removeClass("selected");
 	var object = $(".tag[idxtag='"+indexTa+"']");
@@ -122,13 +163,14 @@ function loadAll(){
 	get.feed = undefined;
 	get.folder = undefined;
 	get.tag = undefined;
-	updateUrl();
+
 	$(".feed, .tag, .folder").removeClass("selected");
 	ajaxPosts("");
 }
 
 function ajaxPosts(args){
 	var params = "";
+	executeParams();
 	if (get.unread!=undefined)	params+="unread="+get.unread+"&";
 	if (get.fav != undefined)	params+="fav="+get.fav+"&";
 	if (get.postspage != undefined)	params+="postspage="+get.postspage+"&";
@@ -144,7 +186,13 @@ function ajaxPosts(args){
 		dataType : "json",
 		success: function(result){
 			$('#posts_panel').html("");
-			$.each(result,function(){
+			totalPages = Math.ceil((get.postspage)?result.total/get.postspage:result.total/10);
+			totalPosts = result.total;
+			$("#totalPages").html("/"+totalPages+"("+totalPosts+")");
+
+			$("#nextPage").prop('disabled',(((get.page)?get.page:1) >= totalPages));
+			
+			$.each(result.posts,function(){
 				var ixs = findFeedIndex(this.feedId);
 				var subtitle="";
 				if (ixs.length==2){
@@ -168,4 +216,29 @@ function ajaxPosts(args){
 			loading_stop();
 		}
 	});
+}
+
+
+function executeParams(){
+	if (get.fav) $("#favsTButton").addClass("marked");
+	else		 $("#favsTButton").removeClass("marked");
+
+	if (get.unread) $("#unreadTButton").removeClass("marked");
+	else		    $("#unreadTButton").addClass("marked");
+
+	if (get.sortby) $("#sortTButton").html("Older");
+	else		  	$("#sortTButton").html("Newer");
+
+	if (get.sortby) $("#sortTButton").html("Older");
+	else		  	$("#sortTButton").html("Newer");
+
+	var page = (get.page)? (get.page):1;
+
+	$("#pageNumber").html(page);
+	$("#prevPage").prop('disabled',(page <= 1));
+
+	$("#nextPage").prop('disabled',true);
+
+
+	updateUrl();
 }

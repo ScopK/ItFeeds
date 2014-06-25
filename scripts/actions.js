@@ -32,7 +32,7 @@ function initialize(){
 			tags = result.tags;
 			displayFoldersAndTags();
 
-			executeParams();
+			reloadPosts();
 		},
 		error: function(result){
 			alert("Unknown error 0x001");
@@ -86,25 +86,48 @@ function updateUrl(){
 
 
 function toggleFavs(me){
-	if (!get.fav)	get.fav = "1";
-	else			get.fav = undefined;
+	if (!get.fav) { get.fav = "1";
+		get.unread = "0";
+	} else			get.fav = undefined;
 
-	updateUrl();
-	executeParams();
+	reloadPosts();
 }
 
 
 function toggleUnread(me){
 	if (!get.unread) get.unread = "0";
-	else 			 get.unread = undefined;
+	else { 			 get.unread = undefined;
+				get.fav = undefined;
+	}
 
-	updateUrl();
-	executeParams();
+	reloadPosts();
 }
 
 function toggleSort(me){
 	if (!get.sortby) get.sortby = "0";
 	else 			 get.sortby = undefined;
-	updateUrl();
-	executeParams();
+	reloadPosts();
+}
+
+function prevPage(){
+	if (get.page) var page = get.page;
+	else var page = 1;
+	page--;
+	if (page<1) page=1;
+	if (page == 1) get.page=undefined;
+	else get.page=page;
+
+	reloadPosts();
+}
+
+function nextPage(){
+	if (get.page) var page = get.page;
+	else var page = 1;
+	page++;
+
+
+
+	get.page=page;
+
+	reloadPosts();
 }

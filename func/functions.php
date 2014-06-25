@@ -270,17 +270,17 @@
 	function getPostsFeed($con, $user, $feedId, $favs, $unread, $sort, $page, $postspage){
 		$user = mysqli_real_escape_string($con,$user);
 		$feedId = mysqli_real_escape_string($con,$feedId);
-		$favs = mysqli_real_escape_string($con,$favs);
-		$unread = mysqli_real_escape_string($con,$unread);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$page = mysqli_real_escape_string($con,$page);
 		$postspage = mysqli_real_escape_string($con,$postspage);
 
-		$sql = "SELECT * FROM posts WHERE id_feed='$feedId' AND unread='$unread' AND favorite='$favs' ORDER BY `date` $sort LIMIT $page,$postspage";
+		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
+		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
+
+		$sql = "SELECT * FROM posts WHERE id_feed='$feedId' $unreadSQL $favsSQL ORDER BY `date` $sort LIMIT $page,$postspage";
 
 		$posts = mysqli_query($con,$sql);
 		$lista = array();
-
 
 		while($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
 			$e = new Post();
@@ -296,21 +296,29 @@
 
 			$lista[] = $e;
 		}
-		
 		mysqli_free_result($posts);
-		return $lista;
+
+		$query = "SELECT count(*) AS c FROM posts WHERE id_feed='$feedId' $unreadSQL $favsSQL";
+		$result = mysqli_query($con,$query);
+		$rows = mysqli_fetch_assoc($result);
+
+		$data = array("posts" => $lista, "total" => $rows['c']);
+
+		mysqli_free_result($result);
+		return $data;
 	}
 
 	function getPostsFolder($con, $user, $folderId, $favs, $unread, $sort, $page, $postspage){
 		$user = mysqli_real_escape_string($con,$user);
 		$folderId = mysqli_real_escape_string($con,$folderId);
-		$favs = mysqli_real_escape_string($con,$favs);
-		$unread = mysqli_real_escape_string($con,$unread);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$page = mysqli_real_escape_string($con,$page);
 		$postspage = mysqli_real_escape_string($con,$postspage);
 
-		$sql = "SELECT * FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') AND unread='$unread' AND favorite='$favs' ORDER BY `date` $sort LIMIT $page,$postspage";
+		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
+		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
+
+		$sql = "SELECT * FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') $unreadSQL $favsSQL ORDER BY `date` $sort LIMIT $page,$postspage";
 
 		$posts = mysqli_query($con,$sql);
 		$lista = array();
@@ -329,21 +337,31 @@
 
 			$lista[] = $e;
 		}
-		
 		mysqli_free_result($posts);
-		return $lista;
+
+		$query = "SELECT count(*) AS c FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') $unreadSQL $favsSQL";
+		$result = mysqli_query($con,$query);
+		$rows = mysqli_fetch_assoc($result);
+
+		$data = array("posts" => $lista, "total" => $rows['c']);
+
+		mysqli_free_result($result);
+		return $data;
 	}
 
 	function getPostsTag($con, $user, $tagId, $favs, $unread, $sort, $page, $postspage){
 		$user = mysqli_real_escape_string($con,$user);
 		$tagId = mysqli_real_escape_string($con,$tagId);
-		$favs = mysqli_real_escape_string($con,$favs);
-		$unread = mysqli_real_escape_string($con,$unread);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$page = mysqli_real_escape_string($con,$page);
 		$postspage = mysqli_real_escape_string($con,$postspage);
 
-		$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') AND unread='$unread' AND favorite='$favs' ORDER BY `date` $sort LIMIT $page,$postspage";
+		// uncomment to don't use favorites and unread vars
+		//$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') ORDER BY `date` $sort LIMIT $page,$postspage";
+
+		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
+		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
+		$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') $unreadSQL $favsSQL ORDER BY `date` $sort LIMIT $page,$postspage";
 
 		$posts = mysqli_query($con,$sql);
 		$lista = array();
@@ -362,9 +380,17 @@
 
 			$lista[] = $e;
 		}
-		
 		mysqli_free_result($posts);
-		return $lista;
+
+		//$query = "SELECT count(*) AS c FROM post_tags WHERE id_tag='$tagId'";
+		$query = "SELECT count(*) AS c FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') $unreadSQL $favsSQL";
+		$result = mysqli_query($con,$query);
+		$rows = mysqli_fetch_assoc($result);
+
+		$data = array("posts" => $lista, "total" => $rows['c']);
+
+		mysqli_free_result($result);
+		return $data;
 	}
 
 	function getPostsAll($con, $user, $hidden, $favs, $unread, $sort, $page, $postspage){
@@ -375,17 +401,14 @@
 		$page = mysqli_real_escape_string($con,$page);
 		$postspage = mysqli_real_escape_string($con,$postspage);
 
-		if ($hidden) {
+		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
+		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
+		$hiddenSQL = ($hidden)? "" : "AND hidden='0'";
+
 		$sql = "SELECT * FROM posts WHERE id_feed IN (".
 					"SELECT id FROM feeds WHERE id_folder IN (".
-						"SELECT id FROM folders WHERE user='$user')) ".
-				"AND unread='$unread' AND favorite='$favs' ORDER BY `date` $sort LIMIT $page,$postspage";
-		} else{ 
-		$sql = "SELECT * FROM posts WHERE id_feed IN (".
-					"SELECT id FROM feeds WHERE id_folder IN (".
-						"SELECT id FROM folders WHERE user='$user' AND hidden='0')) ".
-				"AND unread='$unread' AND favorite='$favs' ORDER BY `date` $sort LIMIT $page,$postspage";
-		}
+						"SELECT id FROM folders WHERE user='$user' $hiddenSQL)) ".
+				"$unreadSQL $favsSQL ORDER BY `date` $sort LIMIT $page,$postspage";
 
 		$posts = mysqli_query($con,$sql);
 		$lista = array();
@@ -404,9 +427,19 @@
 
 			$lista[] = $e;
 		}
-		
 		mysqli_free_result($posts);
-		return $lista;
+
+		$query = "SELECT count(*) AS c FROM posts WHERE id_feed IN (".
+					"SELECT id FROM feeds WHERE id_folder IN (".
+						"SELECT id FROM folders WHERE user='$user' $hiddenSQL)) ".
+				"$unreadSQL $favsSQL";
+		$result = mysqli_query($con,$query);
+		$rows = mysqli_fetch_assoc($result);
+
+		$data = array("posts" => $lista, "total" => $rows['c']);
+
+		mysqli_free_result($result);
+		return $data;
 	}
 
 ?>
