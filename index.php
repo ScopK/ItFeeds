@@ -22,6 +22,7 @@
         <script src="scripts/search.js"></script>
         <script src="scripts/lateral_scripts.js"></script>
         <script src="scripts/main_scripts.js"></script>
+        <script src="scripts/posts_control.js"></script>
 
         <script>
         $(document).ready(function(){
@@ -56,6 +57,7 @@
                 <div id="posts_panel">
                     content
                 </div>
+                <div id="blankspace" style="height: 100px; width: 100px;"></div>
             </div>
         </div>
         <div id="loading_panel">

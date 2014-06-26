@@ -269,6 +269,10 @@ POSTS
 	padding-top: 0px;
 	margin: 0;
 }
+/*
+.post{
+	background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6))!important;
+}*/
 
 .post .header{
 	position:relative;
@@ -277,6 +281,14 @@ POSTS
 	border-top: 1px dotted #000;
 	margin: 0;
 	height: 38px;
+}
+
+.post.unread .header{
+	background-color: rgba(255,255,100,0.3);
+}
+
+.post.selected .header{
+	background-color: rgba(255,170,100,0.5);
 }
 
 .post .title{
@@ -315,7 +327,8 @@ POSTS
 }
 
 .post .description{
-	margin: 25px 25px 50px;
+	margin: 25px 25px 0px;
+	padding-bottom:50px;
 	overflow-x: auto;
 }
 

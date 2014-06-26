@@ -1,52 +1,3 @@
-var postSelected;
-var totalPages;
-var totalPosts;
-
-$(document).ready(function(){
-        $(document).bind('keydown', function(e) {
-	        if (e.ctrlKey || e.altKey || e.shiftKey) return;
-	        if ($("input").is(":focus")) return;
-
-	        switch (e.which) {
-	            case 32: //space
-	                alert("space");
-	                break;
-	            case 99: //f
-	                alert("f");
-	                break;
-	            case 98: //b
-	                alert("b");
-	                break;
-	            case 100: //d
-	                alert("d");
-	                break;
-	            case 102: //f
-	            case 115: //s
-	                alert("f/s");
-	                break;
-	            case 109: //m  
-	            case 110: //n
-	                alert("m/n");
-	                break;
-	            case 106: //j
-	                alert("j");
-	                break;
-	            case 107: //k
-	                alert("k");
-	                break;
-	            case 116: //t
-	                alert("t");
-	                break;
-	            case 118: //v
-	                alert("v");
-	                break;
-	            case 0:
-	                break;
-	            default:
-	                alert(e.which);
-	        }
-    });
-});
 
 function reloadPosts(){
 	if (get.feed != undefined){
@@ -192,6 +143,7 @@ function ajaxPosts(args){
 
 			$("#nextPage").prop('disabled',(((get.page)?get.page:1) >= totalPages));
 			
+			var index = 0;
 			$.each(result.posts,function(){
 				var ixs = findFeedIndex(this.feedId);
 				var subtitle="";
@@ -199,7 +151,8 @@ function ajaxPosts(args){
 					var feed = folders[ixs[0]].feeds[ixs[1]];
 					subtitle = '<div class="subtitle">[ <a target="_blank" href="'+feed.link+'">'+feed.name+'</a> ] '+this.date+'</div>';
 				}
-				html ='<div class="post">';
+				var unreadl=(this.unread==1)? "unread":"";
+				html ='<div class="post '+unreadl+'" idxpost="'+(++index)+'">';
 				html += '<div class="header">'+
 							'<div class="title"><a target="_blank" href="'+this.link+'">'+this.title+'</a></div>'+subtitle+
 						'</div>';
@@ -208,6 +161,7 @@ function ajaxPosts(args){
 
 				$("#posts_panel").append(html);
 			});
+			postsInit();
 		},
 		error: function (request, status, error){
 			alert(error+" 0x001");
@@ -238,7 +192,6 @@ function executeParams(){
 	$("#prevPage").prop('disabled',(page <= 1));
 
 	$("#nextPage").prop('disabled',true);
-
 
 	updateUrl();
 }

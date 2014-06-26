@@ -1,3 +1,6 @@
+var totalPages;
+var totalPosts;
+
 function displayFoldersAndTags(){
 	$('#navigation_panel').html("");
 

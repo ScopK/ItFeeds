@@ -11,9 +11,10 @@ $(document).ready(function(){
 	initialize();
 
 	$(window).resize(function(){
-		$("#page").css("min-height",$(window).height());
+		$("#blankspace").css("height",$(window).height());
 	});
-	$("#page").css("min-height",$(window).height());
+	$("#blankspace").css("height",$(window).height());
+
 
 	$(document).scroll(function() {
 		var pos = $(document).scrollTop();
@@ -112,22 +113,20 @@ function toggleSort(me){
 function prevPage(){
 	if (get.page) var page = get.page;
 	else var page = 1;
-	page--;
-	if (page<1) page=1;
-	if (page == 1) get.page=undefined;
-	else get.page=page;
-
-	reloadPosts();
+	if (page > 1){
+		page--;
+		if (page == 1) get.page=undefined;
+		else get.page=page;
+		reloadPosts();
+	}
 }
 
 function nextPage(){
 	if (get.page) var page = get.page;
 	else var page = 1;
-	page++;
-
-
-
-	get.page=page;
-
-	reloadPosts();
+	if (page < totalPages){
+		page++;
+		get.page=page;
+		reloadPosts();
+	}
 }
