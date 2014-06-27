@@ -106,6 +106,10 @@ function selectPost(idx){
 	$(".post[idxpost='"+postIdxSelected+"']").removeClass("selected");
 	postIdxSelected = idx;
 	$(".post[idxpost='"+postIdxSelected+"']").addClass("selected");
+	updateControlTags();
+}
+
+function updateControlTags(){
 	var tags = posts[postIdxSelected-1].tags;
 	if (tags.length > 0){
 		var html="";
@@ -129,18 +133,22 @@ function enableControls(){
 }
 
 function addTag(){
-	var tag = $("#newtagField").val();
+	var tag = encodeURIComponent($("#newtagField").val());
 	if (tag.length > 0) {
 		//TODO: check if tag has spaces
-		var postId = posts[postIdxSelected-1].id;
+		var post = posts[postIdxSelected-1];
 		loading_run();
 		$.ajax({
 			url: "./ajax/add_tag.php",
 			type: "POST",
-			data: "postid="+postId+"&tagname="+tag,
+			data: "postid="+post.id+"&tagname="+tag,
 			//dataType : "json",
 			success: function(result){
-				alert(result);
+				var tagInfo = Array();
+				tagInfo["id"] = result;
+				tagInfo["tag_name"] = tag;
+				post.tags.push(tagInfo);
+				updateControlTags();
 			},
 			error: function (request, status, error){
 				alert(error+" 0x001");

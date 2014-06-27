@@ -44,3 +44,16 @@ function findTagIndex(id){
 	});
 	return index;
 }
+
+function findTagIndexByName(name){
+	var index = -1;
+	var ta = 0;
+	$.each(tags,function(){
+		if (this.name == name){
+			index = ta;
+			return;
+		}
+		ta++;
+	});
+	return index;
+}
