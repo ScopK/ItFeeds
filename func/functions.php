@@ -267,7 +267,7 @@
 	}*/
 
 
-	function getPostsFeed($con, $user, $feedId, $favs, $unread, $sort, $page, $postspage){
+	function getPostsFeed($con, $user, $hidden, $feedId, $favs, $unread, $sort, $page, $postspage){
 		$user = mysqli_real_escape_string($con,$user);
 		$feedId = mysqli_real_escape_string($con,$feedId);
 		$sort = mysqli_real_escape_string($con,$sort);
@@ -278,37 +278,12 @@
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 
 		$sql = "SELECT * FROM posts WHERE id_feed='$feedId' $unreadSQL $favsSQL ORDER BY `date` $sort LIMIT $page,$postspage";
+		$countsql = "SELECT count(*) AS c FROM posts WHERE id_feed='$feedId' $unreadSQL $favsSQL";
 
-		$posts = mysqli_query($con,$sql);
-		$lista = array();
-
-		while($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
-			$e = new Post();
-			$e->id = $post['id'];
-			$e->feedId = $feedId;
-
-			$e->title = $post['title'];
-			$e->description = $post['description'];
-			$e->link = $post['link'];
-			$e->unread = $post['unread'];
-			$e->favorite = $post['favorite'];
-			$e->date = $post['date'];
-
-			$lista[] = $e;
-		}
-		mysqli_free_result($posts);
-
-		$query = "SELECT count(*) AS c FROM posts WHERE id_feed='$feedId' $unreadSQL $favsSQL";
-		$result = mysqli_query($con,$query);
-		$rows = mysqli_fetch_assoc($result);
-
-		$data = array("posts" => $lista, "total" => $rows['c']);
-
-		mysqli_free_result($result);
-		return $data;
+		return getPosts($con, $sql, $countsql, $hidden);
 	}
 
-	function getPostsFolder($con, $user, $folderId, $favs, $unread, $sort, $page, $postspage){
+	function getPostsFolder($con, $user, $hidden, $folderId, $favs, $unread, $sort, $page, $postspage){
 		$user = mysqli_real_escape_string($con,$user);
 		$folderId = mysqli_real_escape_string($con,$folderId);
 		$sort = mysqli_real_escape_string($con,$sort);
@@ -319,37 +294,12 @@
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 
 		$sql = "SELECT * FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') $unreadSQL $favsSQL ORDER BY `date` $sort LIMIT $page,$postspage";
+		$countsql = "SELECT count(*) AS c FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') $unreadSQL $favsSQL";
 
-		$posts = mysqli_query($con,$sql);
-		$lista = array();
-
-		while($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
-			$e = new Post();
-			$e->id = $post['id'];
-			$e->feedId = $post['id_feed'];
-
-			$e->title = $post['title'];
-			$e->description = $post['description'];
-			$e->link = $post['link'];
-			$e->unread = $post['unread'];
-			$e->favorite = $post['favorite'];
-			$e->date = $post['date'];
-
-			$lista[] = $e;
-		}
-		mysqli_free_result($posts);
-
-		$query = "SELECT count(*) AS c FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') $unreadSQL $favsSQL";
-		$result = mysqli_query($con,$query);
-		$rows = mysqli_fetch_assoc($result);
-
-		$data = array("posts" => $lista, "total" => $rows['c']);
-
-		mysqli_free_result($result);
-		return $data;
+		return getPosts($con, $sql, $countsql, $hidden);
 	}
 
-	function getPostsTag($con, $user, $tagId, $favs, $unread, $sort, $page, $postspage){
+	function getPostsTag($con, $user, $hidden, $tagId, $favs, $unread, $sort, $page, $postspage){
 		$user = mysqli_real_escape_string($con,$user);
 		$tagId = mysqli_real_escape_string($con,$tagId);
 		$sort = mysqli_real_escape_string($con,$sort);
@@ -358,39 +308,14 @@
 
 		// uncomment to don't use favorites and unread vars
 		//$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') ORDER BY `date` $sort LIMIT $page,$postspage";
+		//$countsql = "SELECT count(*) AS c FROM post_tags WHERE id_tag='$tagId'";
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 		$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') $unreadSQL $favsSQL ORDER BY `date` $sort LIMIT $page,$postspage";
+		$countsql = "SELECT count(*) AS c FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') $unreadSQL $favsSQL";
 
-		$posts = mysqli_query($con,$sql);
-		$lista = array();
-
-		while($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
-			$e = new Post();
-			$e->id = $post['id'];
-			$e->feedId = $post['id_feed'];
-
-			$e->title = $post['title'];
-			$e->description = $post['description'];
-			$e->link = $post['link'];
-			$e->unread = $post['unread'];
-			$e->favorite = $post['favorite'];
-			$e->date = $post['date'];
-
-			$lista[] = $e;
-		}
-		mysqli_free_result($posts);
-
-		//$query = "SELECT count(*) AS c FROM post_tags WHERE id_tag='$tagId'";
-		$query = "SELECT count(*) AS c FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') $unreadSQL $favsSQL";
-		$result = mysqli_query($con,$query);
-		$rows = mysqli_fetch_assoc($result);
-
-		$data = array("posts" => $lista, "total" => $rows['c']);
-
-		mysqli_free_result($result);
-		return $data;
+		return getPosts($con, $sql, $countsql, $hidden);
 	}
 
 	function getPostsAll($con, $user, $hidden, $favs, $unread, $sort, $page, $postspage){
@@ -410,10 +335,20 @@
 						"SELECT id FROM folders WHERE user='$user' $hiddenSQL)) ".
 				"$unreadSQL $favsSQL ORDER BY `date` $sort LIMIT $page,$postspage";
 
+		$countsql = "SELECT count(*) AS c FROM posts WHERE id_feed IN (".
+					"SELECT id FROM feeds WHERE id_folder IN (".
+						"SELECT id FROM folders WHERE user='$user' $hiddenSQL)) ".
+				"$unreadSQL $favsSQL";
+
+		return getPosts($con, $sql, $countsql, $hidden);
+	}
+
+	function getPosts($con, $sql, $countsql, $hidden){
 		$posts = mysqli_query($con,$sql);
 		$lista = array();
 
 		while($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
+
 			$e = new Post();
 			$e->id = $post['id'];
 			$e->feedId = $post['id_feed'];
@@ -425,21 +360,35 @@
 			$e->favorite = $post['favorite'];
 			$e->date = $post['date'];
 
+			$e->tags = getPostTags($con, $e->id, $hidden);
 			$lista[] = $e;
 		}
 		mysqli_free_result($posts);
 
-		$query = "SELECT count(*) AS c FROM posts WHERE id_feed IN (".
-					"SELECT id FROM feeds WHERE id_folder IN (".
-						"SELECT id FROM folders WHERE user='$user' $hiddenSQL)) ".
-				"$unreadSQL $favsSQL";
-		$result = mysqli_query($con,$query);
+		$result = mysqli_query($con,$countsql);
 		$rows = mysqli_fetch_assoc($result);
 
 		$data = array("posts" => $lista, "total" => $rows['c']);
 
 		mysqli_free_result($result);
 		return $data;
+	}
+
+
+
+	function getPostTags($con, $postid, $hidden){
+
+		$hiddenSQL = ($hidden)? "" : "AND t.hidden='0'";
+		$sql = "SELECT id,tag_name FROM tags t JOIN post_tags pt ON pt.id_tag=t.id WHERE pt.id_post='$postid' $hiddenSQL";
+
+		$tags = mysqli_query($con,$sql);
+		$lista = array();
+
+		while($tag = array_map('utf8_encode',mysqli_fetch_assoc($tags))) {
+			$lista[] = array("id" => $tag['id'], "tag_name" => $tag['tag_name']);
+		}
+		mysqli_free_result($tags);
+		return $lista;
 	}
 
 ?>

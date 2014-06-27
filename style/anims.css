@@ -4,8 +4,8 @@ div#loading_panel{
     width: 31px;
     height: 31px;
     left: 18px; bottom: 18px;
-    /*background-color: white;
-    border: 10px solid white;*/
+    background-color: rgba(255,255,255,0.3);
+    border: 5px solid rgba(255,255,255,0);
     z-index: 10;
 }
 

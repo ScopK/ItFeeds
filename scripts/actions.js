@@ -20,6 +20,13 @@ $(document).ready(function(){
 		var pos = $(document).scrollTop();
 		$("#actions_panel").css("top",pos);
 	});
+
+	$("button").mousedown(function(e){
+		if (e.button == 1){
+			window.open(window.location.pathname+window.location.search, '_blank', '');
+			return true; // to allow the browser to know that we handled it.
+		}
+	});
 });
 
 function initialize(){

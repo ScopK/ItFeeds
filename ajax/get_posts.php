@@ -35,21 +35,23 @@
 	include "../func/classes.php";
 
 	//usleep(400000);
+	$user = $_SESSION['log_user'];
+	$hidd = (isset($_SESSION['hid_user']))?checkUserHiddenPassword($con, $user,$_SESSION['hid_user']):false;
 	switch($mode){
 		case 0: // feeds
-			$posts = getPostsFeed($con, $_SESSION['log_user'], $feedId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
+			$posts = getPostsFeed($con, $user, $hidd, $feedId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
 			echo json_encode($posts);
 			break;
 		case 1: // folder
-			$posts = getPostsFolder($con, $_SESSION['log_user'], $folderId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
+			$posts = getPostsFolder($con, $user, $hidd, $folderId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
 			echo json_encode($posts);
 			break;
 		case 2: // tags
-			$posts = getPostsTag($con, $_SESSION['log_user'], $tagId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
+			$posts = getPostsTag($con, $user, $hidd, $tagId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
 			echo json_encode($posts);
 			break;
 		case 3: // all
-			$posts = getPostsAll($con, $_SESSION['log_user'], $_SESSION['hid_user'], $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
+			$posts = getPostsAll($con, $user, $hidd, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
 			echo json_encode($posts);
 			break;
 		default:

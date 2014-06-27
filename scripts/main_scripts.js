@@ -1,3 +1,4 @@
+var posts;
 
 function reloadPosts(){
 	if (get.feed != undefined){
@@ -28,7 +29,7 @@ function setContentActions(){
 	});
 
 	$(".folder").click(function(event){
-		if ($(event.target).is(".folderHeader,.folderTitle,.count")){
+		if ($(event.target).is(".folderHeader,.folderTitle,.folderTitle .count")){
 			get.page=undefined;
 			var index = $(this).attr("idxfolder");
 
@@ -142,9 +143,9 @@ function ajaxPosts(args){
 			$("#totalPages").html("/"+totalPages+"("+totalPosts+")");
 
 			$("#nextPage").prop('disabled',(((get.page)?get.page:1) >= totalPages));
-			
+			posts = result.posts;
 			var index = 0;
-			$.each(result.posts,function(){
+			$.each(posts,function(){
 				var ixs = findFeedIndex(this.feedId);
 				var subtitle="";
 				if (ixs.length==2){

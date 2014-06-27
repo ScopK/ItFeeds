@@ -52,7 +52,12 @@
             </div>
             <div id="content">
                 <div id="actions_panel">
-                    more options here
+                    <div id="control_panel">
+                    <button disabled>Fav</button>
+                    <button disabled>Unread</button>
+                    <button disabled onclick="$('#add_tag').fadeIn(100);return false;">Tags</button>
+                    </div>
+                    <div id="tagList"></div>
                 </div>
                 <div id="posts_panel">
                     content
@@ -64,5 +69,17 @@
             <div class="loading" id="smallBall"></div>
             <div class="loading" id="bigBall"></div>
         </div>
+
+        <div id="add_tag"><div id="add_tag_content">
+            <form action="" method="POST">
+                <table><tr><th colspan="2">Add tag</th></tr>
+                <tr><td><input id="newtagField" type="text" name="newtagname" autocomplete="off" /></td></tr>
+                <tr><td colspan="2" class="dialog_buttons">
+                    <button class="addTag" onclick="addTag(); return false;">Add</button>
+                    <button class="cancelAddTag" onclick="$('#add_tag').fadeOut(100);return false;">Cancel</button>
+                </td></tr>
+                </table>
+            </form>
+        </div></div>
     </body>
 </html>

@@ -54,5 +54,6 @@
 		public $unread = true;
 		public $favorite = false;
 		public $date = "";
+		public $tags = array();
 	}
 ?>
