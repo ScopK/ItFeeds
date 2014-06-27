@@ -16,14 +16,14 @@
         <link rel="shortcut icon" href="imgs/icon.png" />
         <link rel="stylesheet" type="text/css" href="style/anims.css">
         <link rel="stylesheet" type="text/css" href="style/style.css">
-        <script src="scripts/jquery.min.js"></script>
-        <script src="scripts/jsanims.js"></script>
+        <script src="scripts/lib/jquery.min.js"></script>
+        <script src="scripts/lib/jsanims.js"></script>
+        <script src="scripts/updateandload.js"></script>
         <script src="scripts/actions.js"></script>
         <script src="scripts/search.js"></script>
-        <script src="scripts/lateral_scripts.js"></script>
         <script src="scripts/main_scripts.js"></script>
         <script src="scripts/posts_control.js"></script>
-
+        <script src="scripts/init.js"></script>
         <script>
         $(document).ready(function(){
             loading_run();
@@ -41,7 +41,11 @@
                     <button id="unreadTButton" onclick="toggleUnread(this)">Unread</button>
                     <button id="sortTButton" onclick="toggleSort(this)"></button>
                 </div>
-                <div id="navigation_panel" style="overflow-y: auto;"></div>
+                <div id="navigation_panel" style="overflow-y: auto;">
+                    <div id="folders"></div>
+                    <div id="feeds"></div>
+                    <div id="tags"></div>
+                </div>
                 <div id="navopts_bottom" class="options_panel">
                     <button id="prevPage" onclick="prevPage()" disabled>Prev</button>
                     <span id="pages">

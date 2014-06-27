@@ -31,6 +31,30 @@
 		return $lista;
 	}
 
+	function getTag($con,$tagId){
+		$tagId = mysqli_real_escape_string($con,$tagId);
+		$tags = mysqli_query($con,"SELECT * FROM tags WHERE id='$tagId'");
+
+		$e = new Tag();
+
+		if ($tag = array_map('utf8_encode',mysqli_fetch_assoc($tags))) {
+			$e->id = $tag['id'];
+			$e->name = $tag['tag_name'];
+			$e->user = $user;
+			$e->hidden = $tag['hidden'];
+			$e->posts = array(); //getPostsTag($con, $e->id,$depth);
+
+			$sql = "SELECT count(*) AS c FROM post_tags p WHERE p.id_tag='".$e->id."'";
+			$res = mysqli_query($con,$sql);
+			$countQ = mysqli_fetch_array($res);
+			$e->count = $countQ['c'];
+
+			mysqli_free_result($res);
+		}
+		mysqli_free_result($tags);
+		return $e;
+	}
+
 	function getFolders($con,$user,$depth,$showHidden){
 		if ($showHidden)
 			$folders = mysqli_query($con,"SELECT * FROM folders WHERE user='$user' ORDER BY name");
@@ -374,8 +398,6 @@
 		return $data;
 	}
 
-
-
 	function getPostTags($con, $postid, $hidden){
 
 		$hiddenSQL = ($hidden)? "" : "AND t.hidden='0'";
@@ -385,11 +407,10 @@
 		$lista = array();
 
 		while($tag = array_map('utf8_encode',mysqli_fetch_assoc($tags))) {
-			$lista[] = array("id" => $tag['id'], "tag_name" => $tag['tag_name']);
+			$lista[] = array("id" => $tag['id'], "name" => $tag['tag_name']);
 		}
 		mysqli_free_result($tags);
 		return $lista;
 	}
-
 ?>
 

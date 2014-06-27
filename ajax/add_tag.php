@@ -2,6 +2,7 @@
 	$isServer=true;
 	include "../func/initind.php";
 	include "../func/functions.php";
+	include "../func/classes.php";
 
 	$postid = $_REQUEST['postid'];
 	$tag = $_REQUEST['tagname'];
@@ -73,5 +74,5 @@
 		header('HTTP/1.1 500 Error tagging post');
 		die('HTTP/1.1 500 Error tagging post');
 	}
-	echo $idobt;
+	echo json_encode(getTag($con,$idobt));
 ?>

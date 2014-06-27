@@ -1,5 +1,4 @@
-var postIdxSelected = 0;
-var preselectPost = 0;
+
 
 $(document).ready(function(){
     $(document).bind('keydown', function(e) {
@@ -114,8 +113,7 @@ function updateControlTags(){
 	if (tags.length > 0){
 		var html="";
 		$.each(tags, function(){
-			html += '<div class="tagname" idtag="'+this.id+'">'+this.tag_name+'<button>delele</button></div>';
-			html += '<div class="tagname" idtag="'+this.id+'">'+this.tag_name+'<button>delele</button></div>';
+			html += '<div class="tagname" idtag="'+this.id+'">'+this.name+'<button>delele</button></div>';
 		});
 		$("#tagList").html(html);
 		$("#tagList").show();
@@ -142,13 +140,17 @@ function addTag(){
 			url: "./ajax/add_tag.php",
 			type: "POST",
 			data: "postid="+post.id+"&tagname="+tag,
-			//dataType : "json",
+			dataType : "json",
 			success: function(result){
 				var tagInfo = Array();
-				tagInfo["id"] = result;
-				tagInfo["tag_name"] = tag;
+				tagInfo["id"] = result.id;
+				tagInfo["name"] = result.name;
+				tags.push(result);
+				tags.sort(nameSort);
 				post.tags.push(tagInfo);
+				post.tags.sort(nameSort);
 				updateControlTags();
+				displayTags();
 			},
 			error: function (request, status, error){
 				alert(error+" 0x001");

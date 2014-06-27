@@ -1,113 +1,122 @@
-var posts;
-
 function reloadPosts(){
 	if (get.feed != undefined){
-		var ixs = findFeedIndex(get.feed);
-		loadFeed(ixs[0],ixs[1]);
+		loadFeed(get.feed);
 	} else if (get.folder != undefined){
-		loadFolder(findFolderIndex(get.folder));
+		loadFolder(get.folder);
 	} else if (get.tag != undefined){
-		loadTag(findTagIndex(get.tag));
+		loadTag(get.tag);
 	} else {
 		loadAll();
 	}
 }
 
-function setContentActions(){
+function setFeedsActions(){
 	$(".feed").click(function(){
-		get.page=undefined;
-		var index1 = $(this).attr("idxfolder");
-		var index2 = $(this).attr("idxfeed");
-		if (folders[index1].feeds[index2].id == get.feed){
+		get.page = undefined;
+		get.folder = undefined;
+		get.tag = undefined;
+
+		$(".feed, .tag, .folder").not(this).removeClass("selected");
+
+		var idf = $(this).attr("idFeed");
+		if (idf == get.feed){
+			get.feed = undefined;
+			updateUrl();
+
+			$(this).removeClass("selected");
+			$(".folderfeeds").slideUp();
+			$(".expander").html("+");
+
 			loadAll();
 		} else {
-			$(".folderfeeds").not($(this).closest(".folderfeeds")).slideUp();
-			$(".expander").attr("hidd","1");
-			$(".expander").html("+");
-			loadFeed(index1, index2);
+			get.feed = idf;
+			updateUrl();
+
+			var button = $(this).closest(".folder").find("button");
+			var obuttons = $(".expander").not(button);
+			obuttons.closest(".folder").find(".folderfeeds").slideUp();
+			obuttons.html("+");
+			button.closest(".folder").find(".folderfeeds").slideDown();
+			button.html("-");
+
+			$(this).addClass("selected");
+
+			loadFeed(idf);
 		}
 	});
 
 	$(".folder").click(function(event){
 		if ($(event.target).is(".folderHeader,.folderTitle,.folderTitle .count")){
-			get.page=undefined;
-			var index = $(this).attr("idxfolder");
+			get.page = undefined;
+			get.feed = undefined;
+			get.tag = undefined;
 
-			if (folders[index].id == get.folder){
+			$(".feed, .tag, .folder").not(this).removeClass("selected");
+
+			var idf = $(this).attr("idFolder");
+			if (idf == get.folder){
+				get.folder = undefined;
+				updateUrl();
+
+				$(this).removeClass("selected");
+				$(".folderfeeds").slideUp();
+				$(".expander").html("+");
+
 				loadAll();
 			} else {
-				var button = $(".folder").not(this).find("button");
-				button.closest(".folder").find(".folderfeeds").slideUp();
-				button.attr("hidd","1");
-				button.html("+");
+				get.folder = idf;
+				updateUrl();
 
-				loadFolder(index);
+				var button = $(this).find("button");
+				var obuttons = $(".expander").not(button);
+				obuttons.closest(".folder").find(".folderfeeds").slideUp();
+				obuttons.html("+");
+				button.closest(".folder").find(".folderfeeds").slideDown();
+				button.html("-");
+				$(this).addClass("selected");
+
+				loadFolder(idf);
 			}
 		}
 	});
+}
 
+function setTagsActions(){
 	$(".tag").click(function(){
-		get.page=undefined;
-		var index = $(this).attr("idxtag");
+		get.page = undefined;
+		get.feed = undefined;
+		get.folder = undefined;
 
-		if (tags[index].id == get.tag) {
+		$(".feed, .tag, .folder").not(this).removeClass("selected");
+		$(".folderfeeds").slideUp();
+		$(".expander").html("+");
+
+		var idt = $(this).attr("idTag");
+		if (idt == get.tag) {
+			get.tag = undefined;
+			updateUrl();
+			$(this).removeClass("selected");
 			loadAll();
 		} else {
+			get.tag = idt;
+			get.fav = undefined;
 			get.unread="0";
-			get.fav=undefined;
-			$(".folderfeeds").slideUp();
-			$(".expander").attr("hidd","1");
-			$(".expander").html("+");
-			loadTag(index);
+			updateUrl();
+			$(this).addClass("selected");
+			loadTag(idt);
 		}
 	});
 }
 
-function loadFeed(indexFo, indexFe){
-	var id = folders[indexFo].feeds[indexFe].id;
-	get.feed = id;
-	get.folder = undefined;
-	get.tag = undefined;
-	updateUrl();
-
-	$(".feed, .tag, .folder").removeClass("selected");
-	var object = $(".feed[idxFolder='"+indexFo+"'][idxFeed='"+indexFe+"']");
-	object.addClass("selected");
-	var button = object.closest(".folder").find("button");
-	button.closest(".folder").find(".folderfeeds").show();
-	button.attr("hidd","0");
-	button.html("-");
-
+function loadFeed(id){
 	ajaxPosts("feed="+id);
 }
 
-function loadFolder(indexFo){
-	var id = folders[indexFo].id;
-	get.feed = undefined;
-	get.folder = id;
-	get.tag = undefined;
-
-	$(".feed, .tag, .folder").removeClass("selected");
-	var object = $(".folder[idxFolder='"+indexFo+"']");
-	object.addClass("selected");
-	var button = object.closest(".folder").find("button");
-	button.closest(".folder").find(".folderfeeds").slideDown();
-	button.attr("hidd","0");
-	button.html("-");
-
+function loadFolder(id){
 	ajaxPosts("folder="+id);
 }
 
-function loadTag(indexTa){
-	var id = tags[indexTa].id;
-	get.feed = undefined;
-	get.folder = undefined;
-	get.tag = id;
-
-	$(".feed, .tag, .folder").removeClass("selected");
-	var object = $(".tag[idxtag='"+indexTa+"']");
-	object.addClass("selected");
-
+function loadTag(id){
 	ajaxPosts("tag="+id);
 }
 
@@ -116,13 +125,12 @@ function loadAll(){
 	get.folder = undefined;
 	get.tag = undefined;
 
-	$(".feed, .tag, .folder").removeClass("selected");
 	ajaxPosts("");
 }
 
 function ajaxPosts(args){
 	var params = "";
-	executeParams();
+	updateNavigationElements();
 	if (get.unread!=undefined)	params+="unread="+get.unread+"&";
 	if (get.fav != undefined)	params+="fav="+get.fav+"&";
 	if (get.postspage != undefined)	params+="postspage="+get.postspage+"&";
@@ -174,7 +182,7 @@ function ajaxPosts(args){
 }
 
 
-function executeParams(){
+function updateNavigationElements(){
 	if (get.fav) $("#favsTButton").addClass("marked");
 	else		 $("#favsTButton").removeClass("marked");
 
@@ -193,6 +201,4 @@ function executeParams(){
 	$("#prevPage").prop('disabled',(page <= 1));
 
 	$("#nextPage").prop('disabled',true);
-
-	updateUrl();
 }
