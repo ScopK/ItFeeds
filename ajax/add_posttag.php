@@ -75,4 +75,5 @@
 		die('HTTP/1.1 500 Error tagging post');
 	}
 	echo json_encode(getTag($con,$idobt));
+	mysqli_close($con);
 ?>

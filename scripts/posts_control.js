@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
     $(document).bind('keydown', function(e) {
         if (e.ctrlKey || e.altKey || e.shiftKey) return;
@@ -40,7 +38,7 @@ $(document).ready(function(){
             case 123: //f12
             	break;
             default:
-                alert(e.which);
+                alert(e.which+" - "+e.key);
         }
     });
 });
@@ -113,7 +111,7 @@ function updateControlTags(){
 	if (tags.length > 0){
 		var html="";
 		$.each(tags, function(){
-			html += '<div class="tagname" idtag="'+this.id+'">'+this.name+'<button>delele</button></div>';
+			html += '<div class="tagname" idTag="'+this.id+'">'+this.name+'<button onclick="deleteTag(this);">delele</button></div>';
 		});
 		$("#tagList").html(html);
 		$("#tagList").show();
@@ -137,7 +135,7 @@ function addTag(){
 		var post = posts[postIdxSelected-1];
 		loading_run();
 		$.ajax({
-			url: "./ajax/add_tag.php",
+			url: "./ajax/add_posttag.php",
 			type: "POST",
 			data: "postid="+post.id+"&tagname="+tag,
 			dataType : "json",
@@ -145,8 +143,17 @@ function addTag(){
 				var tagInfo = Array();
 				tagInfo["id"] = result.id;
 				tagInfo["name"] = result.name;
-				tags.push(result);
-				tags.sort(nameSort);
+				var found = -1;
+				$.each(tags, function(i){
+					found = (this.name == tag)?i:-1;
+					return (found == -1);
+				});
+				if (found == -1){
+					tags.push(result);
+					tags.sort(nameSort);
+				} else {
+					tags[found].count++;
+				}
 				post.tags.push(tagInfo);
 				post.tags.sort(nameSort);
 				updateControlTags();
@@ -163,4 +170,35 @@ function addTag(){
 		$("#newtagField").val("");
 		$('#add_tag').fadeOut(100);
 	}
+}
+
+function deleteTag(me){
+	var idTag = $(me).parent().attr("idTag");
+	var post = posts[postIdxSelected-1];
+	loading_run();
+	$.ajax({
+		url: "./ajax/delete_posttag.php",
+		type: "POST",
+		data: "postid="+post.id+"&tag="+idTag,
+		success: function(result){
+			post.tags = $.grep(post.tags,function(el,i){
+			    return (el.id != idTag);	// delete
+			});
+			tags = $.grep(tags,function(el,i){
+			    if (el.id == idTag){
+			    	el.count--;
+			    	return (el.count > 0); // delete if 0
+			    }
+			    return true; //keep
+			});
+			updateControlTags();
+			displayTags();
+		},
+		error: function (request, status, error){
+			alert(error+" 0x001");
+		},
+		complete: function(){
+			loading_stop();
+		}
+	});
 }

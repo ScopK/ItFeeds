@@ -1,13 +1,12 @@
 <?php
     session_start();
-
+    
     if (!isset($_SESSION['log_user'])){
         header('Location: ./login.php');
     } else {
         $log_user = $_SESSION['log_user'];
         $hidClass = (isset($_SESSION['hid_user']))?"set":"";
     }
-
 ?><!DOCTYPE html>
 <html>
     <head>
@@ -28,7 +27,6 @@
         $(document).ready(function(){
             loading_run();
         });
-
         </script>
     </head>
     <body>
@@ -59,13 +57,11 @@
                     <div id="control_panel">
                     <button disabled>Fav</button>
                     <button disabled>Unread</button>
-                    <button disabled onclick="$('#add_tag').fadeIn(100);return false;">Tags</button>
+                    <button disabled onclick="$('#add_tag').fadeIn(100);$('#newtagField').focus();return false;">Tags</button>
                     </div>
                     <div id="tagList"></div>
                 </div>
-                <div id="posts_panel">
-                    content
-                </div>
+                <div id="posts_panel"></div>
                 <div id="blankspace" style="height: 100px; width: 100px;"></div>
             </div>
         </div>
@@ -73,7 +69,6 @@
             <div class="loading" id="smallBall"></div>
             <div class="loading" id="bigBall"></div>
         </div>
-
         <div id="add_tag"><div id="add_tag_content">
             <form action="" method="POST">
                 <table><tr><th colspan="2">Add tag</th></tr>

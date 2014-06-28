@@ -2,14 +2,12 @@
 function displayFolders() {
 	var html = '';
 	var feedHtml = '';
-	var index=0;
-	$.each(folders,function(){
+	$.each(folders,function(index){
 		if (this.name == "null"){
 			feedHtml += getHTMLFeeds(this.feeds,index);
 		} else {
 			html += getHTMLFolder(this,index);
 		}
-		index++;
 	});
 	$("#folders").html(html);
 	$("#feeds").html(feedHtml);
@@ -48,9 +46,8 @@ function getHTMLFolder(folder,idx){
 }
 
 function getHTMLFeeds(feed_list,indexFolder){
-	var indexFeed=0;
 	var html="";
-	$.each(feed_list,function(){
+	$.each(feed_list,function(indexFeed){
 		var unread="";
 		if (this.unread > 0)
 			unread = ' <span class="count">('+this.unread+')</span>';
@@ -59,15 +56,13 @@ function getHTMLFeeds(feed_list,indexFolder){
 		html += '<div class="feed'+((selected)?' selected':'')+((unread=="")?"":" unread")+'" idxFolder="'+indexFolder+'" idxFeed="'+indexFeed+'" idFeed="'+this.id+'">'+
 					'<div class="feedTitle">'+(this.name)+unread+'</div>'+
 				'</div>';
-		indexFeed++;
 	});
 	return html;
 }
 
 function getHTMLTags(tag_list){
 	var html = "";
-	var index = 0;
-	$.each(tags,function(){
+	$.each(tags,function(index){
 		var count="";
 		if (this.count > 0)
 			count = ' ';
@@ -76,7 +71,6 @@ function getHTMLTags(tag_list){
 
 		html += '<div class="tag'+((selected)?' selected':'')+((this.hidden==1)?" hidden":"")+'" idxTag="'+index+'" idTag="'+this.id+'">'+
 					'<span class="name">'+(this.name)+'</span> <span class="count">('+this.count+')</span></div>';
-		index++;
 
 	});
 	return html;
