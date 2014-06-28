@@ -111,7 +111,7 @@ function updateControlTags(){
 	if (tags.length > 0){
 		var html="";
 		$.each(tags, function(){
-			html += '<div class="tagname" idTag="'+this.id+'">'+this.name+'<button onclick="deleteTag(this);">delele</button></div>';
+			html += '<div class="tagname" idTag="'+this.id+'">'+this.name+'<button onclick="deleteTag(this);"></button></div>';
 		});
 		$("#tagList").html(html);
 		$("#tagList").show();
@@ -122,9 +122,11 @@ function updateControlTags(){
 
 function disableControls(){
 	$("#actions_panel button").prop('disabled',true);
+	$("#actions_panel").addClass('disabled');
 }
 
 function enableControls(){
+	$("#actions_panel").removeClass('disabled');
 	$("#actions_panel button").prop('disabled',false);
 }
 

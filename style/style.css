@@ -57,26 +57,38 @@ button::-moz-focus-inner {
 	padding: 0;
 	border-width: 0 0 2px 2px;
 
-	color:white;
+	font-size: 10px;
 	font-weight: bold;
 
+	width: 200px;
+
 	background-color: initial;
-	opacity:0.2;
-	transition:opacity 0.5s, background-color 0.5s;
+	opacity:0.1;
+	transition:opacity 1s, background-color 0.2s;
+}
+
+#actions_panel.disabled:hover{
+	opacity:0;
+}
+
+#actions_panel.disabled{
+	opacity:0;
 }
 
 #actions_panel:hover{
 	opacity:1;
 	transition-delay:0s;
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(255,255,255,0.5);
 }
 
 #control_panel{
-	padding: 10px;
+	text-align: center;
+	padding: 7px 10px;
 }
 
 #tagList{
 	display:none;
+	text-align: right;
 }
 
 #actions_panel:hover #tagList{
@@ -317,7 +329,7 @@ POSTS
 .post .title{
 	position:absolute;
 	top: 4px;
-	left:15px; right: 300px;
+	left:15px; right: 200px;
 	
 	overflow:hidden;
 }
@@ -413,4 +425,59 @@ Tags
 }
 #add_tag_content td{
 	padding: 10px 0px;
+}
+
+
+
+/*###########################################################################################################
+CONTROL PANEL
+##############################################################################################################
+############################################################################################################*/
+
+
+#actions_panel button{
+	width: 25px;
+	height: 25px;
+	border: 0px;
+	background-size: 100% 100%;
+	background-color: transparent;
+	transition: background-color 0.3s;
+}
+
+#control_panel button{
+	margin: 0 3px;
+}
+
+#actions_panel button:disabled{
+	opacity: 0.5;
+}
+
+#actions_panel button:hover{
+	background-color: rgba(0,0,0,0.1);
+	cursor: pointer;
+}
+
+#control_panel button.addTag{
+	background-image: url("../imgs/addTag.png");
+}
+
+#control_panel button.setUnread{
+	background-image: url("../imgs/read.png");
+}
+
+#control_panel button.setFav{
+	background-image: url("../imgs/starOff.png");
+}
+
+div.tagname button{	
+	background-image: url("../imgs/remTag.png");
+}
+
+#tagList .tagname{
+	margin: 10px 10px;
+}
+
+#tagList .tagname button{
+	margin-left: 10px;
+	vertical-align: middle;
 }

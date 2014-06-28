@@ -55,9 +55,9 @@
             <div id="content">
                 <div id="actions_panel">
                     <div id="control_panel">
-                    <button disabled>Fav</button>
-                    <button disabled>Unread</button>
-                    <button disabled onclick="$('#add_tag').fadeIn(100);$('#newtagField').focus();return false;">Tags</button>
+                    <button class="setUnread" disabled></button>
+                    <button class="setFav" disabled></button>
+                    <button class="addTag" disabled onclick="$('#add_tag').fadeIn(100);$('#newtagField').focus();return false;"></button>
                     </div>
                     <div id="tagList"></div>
                 </div>
