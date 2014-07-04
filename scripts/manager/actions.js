@@ -31,7 +31,6 @@ function loadFolders(user){
 	});
 }
 
-
 function cleanFeed(){
 	var prevIdxFolder = idxFolder;
 	var prevIdxFeed = idxFeed;
@@ -90,7 +89,6 @@ function editFeed(){
 	});
 	closeDialogs();
 }
-
 
 function editFolder(){
 	var prevIdxFolder = idxFolder;
@@ -242,7 +240,6 @@ function unlockHidden(){
 		}
 	});
 }
-
 
 function logoutButton(){
 	loading_run();
