@@ -129,6 +129,7 @@ function loadAll(){
 }
 
 function ajaxPosts(args){
+	postIdxSelected = 0;
 	var params = "";
 	updateNavigationElements();
 	if (get.unread!=undefined)	params+="unread="+get.unread+"&";
@@ -157,8 +158,10 @@ function ajaxPosts(args){
 				var ixs = findFeedIndex(this.feedId);
 				var subtitle="";
 				if (ixs.length==2){
-					var feed = folders[ixs[0]].feeds[ixs[1]];
-					subtitle = '<div class="subtitle">[ <a target="_blank" href="'+feed.link+'">'+feed.name+'</a> ] '+this.date+'</div>';
+					var folder = folders[ixs[0]];
+					var folderInfo = (folder.name == "null")?"":folder.name+" | ";
+					var feed = folder.feeds[ixs[1]];
+					subtitle = '<div class="subtitle">[ '+folderInfo+'<a target="_blank" href="'+feed.link+'">'+feed.name+'</a> ] '+this.date+'</div>';
 				}
 				var unreadl=(this.unread==1)? "unread":"";
 				html ='<div class="post '+unreadl+'" idxpost="'+(++index)+'">';

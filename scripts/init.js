@@ -23,10 +23,11 @@ $(document).ready(function(){
 	$("#blankspace").css("height",$(window).height());
 
 	//################# Auto position post controls
+	/*
 	$(document).scroll(function() {
 		var pos = $(document).scrollTop();
 		$("#actions_panel").css("top",pos);
-	});
+	});*/
 
 	//################# Middle click on button will open new page
 	$("button").mousedown(function(e){

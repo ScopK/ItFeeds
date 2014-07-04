@@ -42,9 +42,13 @@ function toggleFavs(me){
 	if (!get.fav) {
 		get.fav = "1";
 		get.unread = "0";
+		get.feed = undefined;
+		get.folder = undefined;
+		get.tag = undefined;
+		$(".feed, .tag, .folder").removeClass("selected");
 	} else 
 		get.fav = undefined;
-
+	updateUrl();
 	reloadPosts();
 }
 
@@ -56,7 +60,7 @@ function toggleUnread(me){
 		get.unread = undefined;
 		get.fav = undefined;
 	}
-
+	updateUrl();
 	reloadPosts();
 }
 
@@ -65,6 +69,7 @@ function toggleSort(me){
 		get.sortby = "0";
 	else 
 		get.sortby = undefined;
+	updateUrl();
 	reloadPosts();
 }
 

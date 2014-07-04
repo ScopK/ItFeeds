@@ -55,8 +55,8 @@
             <div id="content">
                 <div id="actions_panel">
                     <div id="control_panel">
-                    <button class="setUnread" disabled></button>
-                    <button class="setFav" disabled></button>
+                    <button class="setUnread" disabled onclick="toogleUnreadPost()"></button>
+                    <button class="setFav" disabled onclick="toogleFavPost()"></button>
                     <button class="addTag" disabled onclick="$('#add_tag').fadeIn(100);$('#newtagField').focus();return false;"></button>
                     </div>
                     <div id="tagList"></div>

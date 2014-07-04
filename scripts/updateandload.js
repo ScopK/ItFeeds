@@ -30,7 +30,7 @@ function displayTags() {
 function getHTMLFolder(folder,idx){
 	var unread="";
 	if (folder.unread > 0)
-		unread = ' <span class="count">('+folder.unread+')</span>';
+		unread = ' <span class="count">(<span class="num">'+folder.unread+'</span>)</span>';
 
 	var selected = (get.folder == folder.id);
 	html = '<div class="folder'+((selected)?' selected':'')+'" idxFolder="'+idx+'" idFolder="'+folder.id+'">'+
@@ -50,7 +50,7 @@ function getHTMLFeeds(feed_list,indexFolder){
 	$.each(feed_list,function(indexFeed){
 		var unread="";
 		if (this.unread > 0)
-			unread = ' <span class="count">('+this.unread+')</span>';
+			unread = ' <span class="count">(<span class="num">'+this.unread+'</span>)</span>';
 		
 		var selected = (get.feed == this.id);
 		html += '<div class="feed'+((selected)?' selected':'')+((unread=="")?"":" unread")+'" idxFolder="'+indexFolder+'" idxFeed="'+indexFeed+'" idFeed="'+this.id+'">'+

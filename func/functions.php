@@ -412,5 +412,30 @@
 		mysqli_free_result($tags);
 		return $lista;
 	}
+
+	function getPost($con,$postId){
+		$postId = mysqli_real_escape_string($con,$postId);
+		$posts = mysqli_query($con,"SELECT * FROM posts WHERE id='$postId'");
+
+		$e = new Post();
+
+		if ($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
+			
+			$e->id = $post['id'];
+			$e->feedId = $post['id_feed'];
+
+			$e->title = $post['title'];
+			$e->description = $post['description'];
+			$e->link = $post['link'];
+			$e->unread = $post['unread'];
+			$e->favorite = $post['favorite'];
+			$e->date = $post['date'];
+
+			$e->tags = getPostTags($con, $e->id, $hidden);
+
+		}
+		mysqli_free_result($posts);
+		return $e;
+	}	
 ?>
 
