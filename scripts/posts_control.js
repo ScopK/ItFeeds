@@ -1,35 +1,46 @@
 $(document).ready(function(){
-    $(document).bind('keydown', function(e) {
-    	if ($(".loading").css("animation-play-state") != "paused") return;
-        if (e.ctrlKey || e.altKey || e.shiftKey) return;
-        if ($("input").is(":focus")) return;
-        switch (e.which) {
-            case 83: //s
-                toogleFavPost();
-                break;
-            case 77: //m  
-                toogleUnreadPost();
-                break;
-            case 74: //j
-                nextPost();
-                break;
-            case 75: //k
-                prevPost();
-                break;
-            case 32: //space
-            case 66: //b
-            case 68: //d
-            case 70: //f
-            case 78: //n
-            case 84: //t
-            case 86: //v
-            case 116: //f5
-            case 123: //f12
-            default: return;
-                //alert(e.which+" - "+e.key);
-        }
-    });
+    var allowed;
+	$(document).keydown(function(e) { 
+		if (!allowed) return;
+		allowed = false;
+		if ($(".loading").css("animation-play-state") != "paused") return;
+		if (e.ctrlKey || e.altKey || e.shiftKey) return;
+		if ($("input").is(":focus")) return;
+		switch (e.which) {
+		    case 83: //s
+		        toogleFavPost();
+		        break;
+		    case 77: //m  
+		        toogleUnreadPost();
+		        break;
+		    case 74: //j
+		        nextPost();
+		        break;
+		    case 75: //k
+		        prevPost();
+		        break;
+		    case 32: //space
+		        var body = $("html, body");
+		        body.animate({scrollTop: body.scrollTop() + 200}, {duration: 200, easing: 'linear', queue: false});
+		        break;
+		    case 66: //b
+		    case 68: //d
+		    case 70: //f
+		    case 78: //n
+		    case 84: //t
+		    case 86: //v
+		    case 116: //f5
+		    case 123: //f12
+		    default: return;
+		        //alert(e.which+" - "+e.key);
+		}
+	});
+
+	$(document).keyup(function(e) { 
+		allowed = true;
+	});
 });
+
 
 function postsInit(){
 	$(".post").click(function(){
@@ -56,8 +67,6 @@ function postsInit(){
 	}
 }
 
-
-
 function nextPost(){
 	if (postIdxSelected < ((get.postspage)?get.postspage:10)){
 		var idx = postIdxSelected;
@@ -69,7 +78,6 @@ function nextPost(){
 		nextPage();
 	}
 }
-
 
 function prevPost(){
 	if (postIdxSelected > 1){
@@ -84,7 +92,7 @@ function prevPost(){
 }
 
 function focusPost(post,speed){
-	$('html,body').animate({scrollTop: post.offset().top}, speed); 
+	$('html,body').animate({scrollTop: Math.round(post.offset().top)}, speed); 
 }
 
 function selectPost(idx){
