@@ -79,7 +79,6 @@ function nextPage(){
 	if (page < totalPages){
 		page++;
 		get.page=page;
-		useLast = true;
 		updateUrl();
 		reloadPosts();
 	}
@@ -92,7 +91,6 @@ function prevPage(){
 		page--;
 		if (page == 1) get.page=undefined;
 		else get.page=page;
-		useLast = true;
 		updateUrl();
 		reloadPosts();
 	}

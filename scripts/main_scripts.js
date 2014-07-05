@@ -132,18 +132,12 @@ function ajaxPosts(args){
 	postIdxSelected = 0;
 	var params = "";
 	updateNavigationElements();
+	if (get.unread!=undefined)	params+="unread="+get.unread+"&";
+	if (get.fav != undefined)	params+="fav="+get.fav+"&";
 	if (get.postspage != undefined)	params+="postspage="+get.postspage+"&";
 	if (get.page != undefined)	params+="page="+get.page+"&";
-
-	if (useLast){
-		params += "useLast=1";
-		useLast = undefined;
-	} else {
-		if (get.unread!=undefined)	params+="unread="+get.unread+"&";
-		if (get.fav != undefined)	params+="fav="+get.fav+"&";
-		if (get.sortby != undefined)	params+="sortBy="+get.sortby+"&";
-		params += args;
-	}
+	if (get.sortby != undefined)	params+="sortBy="+get.sortby+"&";
+	params += args;
 
 	loading_run();
 	$.ajax({
