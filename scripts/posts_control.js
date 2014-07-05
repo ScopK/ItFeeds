@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var allowed;
+    var allowed = true;
 	$(document).keydown(function(e) { 
 		if (!allowed) return;
 		allowed = false;

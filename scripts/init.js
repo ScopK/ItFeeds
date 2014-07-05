@@ -4,10 +4,8 @@ var posts;
 
 var preselectPost = 0;
 var postIdxSelected = 0;
-//var idxFolder;
-//var idxFeed;
-//var idxTag;
 
+var useLast = undefined;
 var totalPages;
 var totalPosts;
 
