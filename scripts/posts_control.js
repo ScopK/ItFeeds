@@ -22,17 +22,21 @@ $(document).ready(function(){
 		    case 32: //space
 		        var body = $("html, body");
 		        body.animate({scrollTop: body.scrollTop() + 200}, {duration: 200, easing: 'linear', queue: false});
+		        allowed = true;
 		        break;
+		    case 70: //f
+		    	toggleLateralMenu();
+		    	break;
 		    case 66: //b
 		    case 68: //d
-		    case 70: //f
 		    case 78: //n
 		    case 84: //t
 		    case 86: //v
 		    case 116: //f5
 		    case 123: //f12
-		    default: return;
+		    default:
 		        //alert(e.which+" - "+e.key);
+		        return;
 		}
 	});
 

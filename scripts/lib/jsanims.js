@@ -36,3 +36,10 @@ function showLateralMenu(){
     $("#lateral_menu").removeClass("hidden");
 	$("#lateral_menu").css("margin-left","0");
 }
+
+function toggleLateralMenu(){
+    if ($("#lateral_menu").hasClass("hidden"))
+        showLateralMenu();
+    else
+        hideLateralMenu();
+}
