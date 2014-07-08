@@ -73,6 +73,7 @@ function postsInit(){
 
 function nextPost(){
 	if (postIdxSelected < ((get.postspage)?get.postspage:10)){
+		$(".post[idxpost='"+postIdxSelected+"']").addClass("minimized");
 		var idx = postIdxSelected;
 		selectPost(++idx);
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
@@ -85,6 +86,7 @@ function nextPost(){
 
 function prevPost(){
 	if (postIdxSelected > 1){
+		$(".post[idxpost='"+postIdxSelected+"']").addClass("minimized");
 		var idx = postIdxSelected;
 		selectPost(--idx);
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
@@ -108,6 +110,7 @@ function selectPost(idx){
 	$(".post[idxpost='"+postIdxSelected+"']").removeClass("selected");
 	postIdxSelected = idx;
 	$(".post[idxpost='"+postIdxSelected+"']").addClass("selected");
+	$(".post[idxpost='"+postIdxSelected+"']").removeClass("minimized");
 
 	if (posts[idx-1].unread == 1)
 		markPost(0, 0, idx);

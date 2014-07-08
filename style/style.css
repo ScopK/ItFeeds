@@ -496,3 +496,16 @@ div.tagname button{
 	margin-left: 10px;
 	vertical-align: middle;
 }
+
+
+
+
+.post.minimized .description{
+	display:none;
+}
+
+.post.minimized .header{
+	border-color: rgba(0,0,0,0.5);
+	border-width: 0 0 1px;
+	border-style:dotted;
+}
