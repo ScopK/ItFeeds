@@ -96,3 +96,7 @@ function prevPage(){
 	}
 }
 
+function loadMore(){
+	console.log("load more");
+}
+

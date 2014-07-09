@@ -2,11 +2,10 @@ var folders;
 var tags;
 var posts;
 
-var preselectPost = 0;
+var preselectPost = 0;	//toDeleteWhenFinished
 var postIdxSelected = 0;
-//var idxFolder;
-//var idxFeed;
-//var idxTag;
+var postCount;
+var pagesLoaded;
 
 var totalPages;
 var totalPosts;
@@ -23,11 +22,10 @@ $(document).ready(function(){
 	$("#blankspace").css("height",$(window).height());
 
 	//################# Auto position post controls
-	/*
 	$(document).scroll(function() {
 		var pos = $(document).scrollTop();
 		$("#actions_panel").css("top",pos);
-	});*/
+	});
 
 	//################# Middle click on button will open new page
 	$("button").mousedown(function(e){

@@ -1,13 +1,8 @@
 function reloadPosts(){
-	if (get.feed != undefined){
-		loadFeed(get.feed);
-	} else if (get.folder != undefined){
-		loadFolder(get.folder);
-	} else if (get.tag != undefined){
-		loadTag(get.tag);
-	} else {
-		loadAll();
-	}
+	if (get.feed != undefined)			ajaxPosts("feed="+get.feed);
+	else if (get.folder != undefined)	ajaxPosts("folder="+get.folder);
+	else if (get.tag != undefined)		ajaxPosts("tag="+get.tag);
+	else								ajaxPosts("");
 }
 
 function setFeedsActions(){
@@ -27,7 +22,7 @@ function setFeedsActions(){
 			$(".folderfeeds").slideUp();
 			$(".expander").html("+");
 
-			loadAll();
+			ajaxPosts("");
 		} else {
 			get.feed = idf;
 			updateUrl();
@@ -41,7 +36,7 @@ function setFeedsActions(){
 
 			$(this).addClass("selected");
 
-			loadFeed(idf);
+			ajaxPosts("feed="+idf);
 		}
 	});
 
@@ -62,7 +57,7 @@ function setFeedsActions(){
 				$(".folderfeeds").slideUp();
 				$(".expander").html("+");
 
-				loadAll();
+				ajaxPosts("");
 			} else {
 				get.folder = idf;
 				updateUrl();
@@ -75,7 +70,7 @@ function setFeedsActions(){
 				button.html("-");
 				$(this).addClass("selected");
 
-				loadFolder(idf);
+				ajaxPosts("folder="+idf);
 			}
 		}
 	});
@@ -96,90 +91,14 @@ function setTagsActions(){
 			get.tag = undefined;
 			updateUrl();
 			$(this).removeClass("selected");
-			loadAll();
+			ajaxPosts("");
 		} else {
 			get.tag = idt;
 			get.fav = undefined;
 			get.unread="0";
 			updateUrl();
 			$(this).addClass("selected");
-			loadTag(idt);
-		}
-	});
-}
-
-function loadFeed(id){
-	ajaxPosts("feed="+id);
-}
-
-function loadFolder(id){
-	ajaxPosts("folder="+id);
-}
-
-function loadTag(id){
-	ajaxPosts("tag="+id);
-}
-
-function loadAll(){
-	get.feed = undefined;
-	get.folder = undefined;
-	get.tag = undefined;
-
-	ajaxPosts("");
-}
-
-function ajaxPosts(args){
-	postIdxSelected = 0;
-	var params = "";
-	updateNavigationElements();
-	if (get.unread!=undefined)	params+="unread="+get.unread+"&";
-	if (get.fav != undefined)	params+="fav="+get.fav+"&";
-	if (get.postspage != undefined)	params+="postspage="+get.postspage+"&";
-	if (get.page != undefined)	params+="page="+get.page+"&";
-	if (get.sortby != undefined)	params+="sortBy="+get.sortby+"&";
-	params += args;
-
-	loading_run();
-	$.ajax({
-		url: "./ajax/get_posts.php",
-		type: "GET",
-		data: params,
-		dataType : "json",
-		success: function(result){
-			$('#posts_panel').html("");
-			totalPages = Math.ceil((get.postspage)?result.total/get.postspage:result.total/10);
-			totalPosts = result.total;
-			$("#totalPages").html("/"+totalPages+"("+totalPosts+")");
-
-			$("#nextPage").prop('disabled',(((get.page)?get.page:1) >= totalPages));
-			posts = result.posts;
-			var index = 0;
-			$.each(posts,function(){
-				var ixs = findFeedIndex(this.feedId);
-				var subtitle="";
-				if (ixs.length==2){
-					var folder = folders[ixs[0]];
-					var folderInfo = (folder.name == "null")?"":folder.name+" | ";
-					var feed = folder.feeds[ixs[1]];
-					subtitle = '<div class="subtitle">[ '+folderInfo+'<a target="_blank" href="'+feed.link+'">'+feed.name+'</a> ] '+this.date+'</div>';
-				}
-				var unreadl=(this.unread==1)? "unread":"";
-				html ='<div class="post '+unreadl+'" idxpost="'+(++index)+'">';
-				html += '<div class="header">'+
-							'<div class="title"><a target="_blank" href="'+this.link+'">'+this.title+'</a></div>'+subtitle+
-						'</div>';
-				html += '<div class="description">'+this.description+'</div>';
-				html +='</div>';
-
-				$("#posts_panel").append(html);
-			});
-			postsInit();
-		},
-		error: function (request, status, error){
-			alert(error+" 0x001");
-		},
-		complete: function(){
-			loading_stop();
+			ajaxPosts("tag="+idt);
 		}
 	});
 }

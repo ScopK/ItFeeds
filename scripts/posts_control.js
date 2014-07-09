@@ -102,9 +102,6 @@ function focusPost(post,speed){
 }
 
 function selectPost(idx){
-	var pos = $(".post[idxpost='"+idx+"']").offset().top;
-	$("#actions_panel").css("top",pos);
-
 	if (postIdxSelected == idx) return;
 
 	$(".post[idxpost='"+postIdxSelected+"']").removeClass("selected");
@@ -114,6 +111,10 @@ function selectPost(idx){
 
 	if (posts[idx-1].unread == 1)
 		markPost(0, 0, idx);
+
+	var postspage = (get.postspage)?get.postspage:10;
+	if (postIdxSelected == pagesLoaded*postspage)
+		loadMore();
 
 	enableControls();
 	updateControlTags();

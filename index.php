@@ -50,6 +50,7 @@
                         <span id="pageNumber">1</span><span id="totalPages">/1(10)</span>
                     </span>
                     <button id="nextPage" onclick="nextPage()">Next</button>
+                    <button id="loadMore" onclick="loadMore()">++</button>
                 </div>
             </div>
             <div id="content">
