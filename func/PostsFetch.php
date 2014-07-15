@@ -15,7 +15,8 @@
 			mysqli_query($this->con,"SET NAMES utf8");
 			mysqli_set_charset($this->con,'utf8');
 
-			//mysqli_query($this->con,"delete from posts");
+			//mysqli_query($this->con,"DELETE FROM posts");
+			//mysqli_query($this->con,"UPDATE feeds SET last_date_post='2000-01-01 00:00:00'");
 		}
 
 		public function __destruct() {
@@ -24,7 +25,7 @@
 
 		public function fetchAll(){
 			$fr = new FeedReader();
-
+			
 			$sql = "SELECT * FROM feeds";
 			$feeds = mysqli_query($this->con,$sql);
 			foreach($feeds as $feed){
@@ -33,15 +34,39 @@
 				$link = $feed['rss_link'];
 
 				$fr->setUrl($link);
-				$posts = $fr->getFeeds();
 
+				try {
+					$posts = $fr->getFeeds();
+				} catch (Exception $e) {
+				    echo $e->getMessage();
+				    continue;
+				}
+
+				$feedDate = new DateTime($feed['last_date_post']);
+				$mostRecentDate = $feedDate;
 				foreach($posts as $post)
+				{
 					$this->addIfPosible($feed,$post);			
+					$date = new DateTime($post->date);
+					if ($mostRecentDate < $date) $mostRecentDate = $date;
+				}
+				if ($mostRecentDate != $feedDate)
+				{
+					$dateChangeSql = "UPDATE feeds SET last_date_post='";
+					$dateChangeSql.= date("Y-m-d H:i:s", $mostRecentDate->format('U'))."' WHERE id='";
+					$dateChangeSql.= $feed['id']."'";
+					mysqli_query($this->con,$dateChangeSql);
+				}
+
+				
 			}
 			mysqli_free_result($feeds);
 		}
 
 		private function addIfPosible($feed,$post){
+			if (new DateTime($post->date) <= new DateTime($feed['last_date_post']))
+				return;
+
 			$sql = "SELECT id,title,description FROM posts WHERE id_feed=? AND link=?";
 			$stmt=mysqli_stmt_init($this->con);
 			if (mysqli_stmt_prepare($stmt,$sql)){
@@ -52,6 +77,7 @@
 				mysqli_stmt_fetch($stmt);
 			}
 			if ($id){
+				/*
 				if ($description != $post->description) {
 					$sql = "UPDATE posts SET title=?,description=? WHERE id=?";
 					if (mysqli_stmt_prepare($stmt,$sql)){
@@ -61,8 +87,7 @@
 					}
 					if ($done == 1)
 						echo "Updated\n";
-				}
-				
+				}*/
 			} else {
 				$sql = "INSERT INTO posts VALUES(UUID(),?,?,?,?,?,?,?)";
 				$stmt=mysqli_stmt_init($this->con);
@@ -71,8 +96,13 @@
 					mysqli_stmt_execute($stmt);
 					$done = mysqli_affected_rows($this->con);
 				}
-				if ($done != 1)
+				if ($done != 1){
 					echo "Error\n";
+					echo $feed['id'].",".$post->title.",".$post->link.",".$post->unread.",".$post->favorite.",".$post->date;
+					echo "\n";
+					echo $post->description;
+					echo "\n";
+				}
 			}
 			mysqli_stmt_close($stmt);
 		}

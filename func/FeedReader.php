@@ -15,7 +15,12 @@
 		}
 
 		public function getFeeds(){
-			$this->xmlDoc->load($this->url);
+			$error = @$this->xmlDoc->load($this->url);
+
+			if ($error === false){
+				throw new Exception("Error loading page: ".$this->url."\n");
+			}
+
 			//$xmlDoc->save("xml.xml");
 
 			$source = $this->xmlDoc->getElementsByTagName('channel')->item(0);
@@ -80,7 +85,7 @@
 			if ($val = $node->getElementsByTagName($tagname)->item(0))
 				return $val->nodeValue;
 			else
-				return $val;
+				return "";
 		}
 	}
 
