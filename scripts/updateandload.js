@@ -184,7 +184,7 @@ function getHTMLPost(post,indexPost){
 		var feed = folder.feeds[ixs[1]];
 		subtitle = '<div class="subtitle">[ '+folderInfo+'<a target="_blank" href="'+feed.link+'">'+feed.name+'</a> ] '+post.date+'</div>';
 	}
-	var unreadl=(this.unread==1)? "unread":"";
+	var unreadl=(post.unread==1)? "unread":"";
 	html ='<div class="post '+unreadl+'" idxpost="'+indexPost+'">';
 	html += '<div class="header">'+
 				'<div class="title"><a target="_blank" href="'+post.link+'">'+post.title+'</a></div>'+subtitle+

@@ -119,8 +119,8 @@ button::-moz-focus-inner {
 	position:absolute;
 	overflow-y: auto;
 	padding-top: 10px;
-	top:50px;
-	bottom: 50px;
+	top:50px; bottom: 50px;
+	left: 10px; right:10px;
 }
 
 
