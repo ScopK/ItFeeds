@@ -1,8 +1,6 @@
 <?php
-
-	$fr = new FeedReader();
-	$fr->setUrl("http://rss");
-	$fr->getFeeds();
+	$isServer=1;
+	require_once "classes.php";
 
 	class FeedReader{
 		private $xmlDoc;
@@ -21,48 +19,68 @@
 			//$xmlDoc->save("xml.xml");
 
 			$source = $this->xmlDoc->getElementsByTagName('channel')->item(0);
-			if ($source) {
-				$this->rssFeed($source);
-				return;
-			}
+			if ($source)
+				return $this->rssFeed($source);
 
 			$source = $this->xmlDoc->getElementsByTagName('feed')->item(0);
-			if ($source) {
-				$this->atomFeed($source);
-				return;
-			}
+			if ($source)
+				return $this->atomFeed($source);
 		}
 
 		private function rssFeed($channel){
-			$channel_title = $channel->getElementsByTagName('title')->item(0)->nodeValue;
-			$channel_desc = $channel->getElementsByTagName('description')->item(0)->nodeValue;
-
+			//$channel_title = $this->getNodeValueByTagName($channel,'title');
+			//$channel_desc = $this->getNodeValueByTagName($channel,'description');
+			$posts = array();
 			$items = $this->xmlDoc->getElementsByTagName('item');
-			foreach ($items as $item){ 
-				$item_link = $item->getElementsByTagName('link')->item(0)->nodeValue;
-				$item_title = $item->getElementsByTagName('title')->item(0)->nodeValue;
-				$item_pubdate = $item->getElementsByTagName('pubDate')->item(0)->nodeValue;
-				$item_desc = $item->getElementsByTagName('description')->item(0)->nodeValue;
+			foreach ($items as $item){
+				$p = new Post();
+				$p->date = $this->getNodeValueByTagName($item,'pubDate');
+				$time = new DateTime($p->date);
+				date_default_timezone_set('Europe/Madrid');
+				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
+
+				$p->link = $this->getNodeValueByTagName($item,'link');
+				$p->title = $this->getNodeValueByTagName($item,'title');
+				$p->description = $this->getNodeValueByTagName($item,'description');
+				$posts[] = $p;
 			}
+			return $posts;
 		}
 
 		private function atomFeed($feed){
-			$feed_title = $feed->getElementsByTagName('title')->item(0)->nodeValue;
-			$feed_subtitle = $feed->getElementsByTagName('subtitle')->item(0)->nodeValue;
-
+			//$feed_title = $this->getNodeValueByTagName($feed,'title');
+			//$feed_subtitle = $this->getNodeValueByTagName($feed,'subtitle');
+			$posts = array();
 			$entries = $this->xmlDoc->getElementsByTagName('entry');
 			foreach ($entries as $entry){ 
+				$p = new Post();
+
 				$entry_links = $entry->getElementsByTagName('link');
-				$entry_link = $entry_links->item(0)->getAttribute("href");
+				$p->link = $entry_links->item(0)->getAttribute("href");
 				foreach($entry_links as $link) {
 				    if($link->getAttribute('rel') =='alternate') {
-				        $entry_link = $link->getAttribute("href");
+				        $p->link = $link->getAttribute("href");
 				        break;
-				}   }  
-				$entry_title = $entry->getElementsByTagName('title')->item(0)->nodeValue;
-				$entry_pubdate = $entry->getElementsByTagName('published')->item(0)->nodeValue;
-				$entry_cont = $entry->getElementsByTagName('content')->item(0)->nodeValue;
+				}   }
+
+				$p->date = $this->getNodeValueByTagName($entry,'published');
+				$time = new DateTime($p->date);
+				date_default_timezone_set('Europe/Madrid');
+				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
+
+				$p->title = $this->getNodeValueByTagName($entry,'title');
+				$p->description = $this->getNodeValueByTagName($entry,'content');
+
+				$posts[] = $p;
 			}
+			return $posts;
+		}
+
+		private function getNodeValueByTagName($node,$tagname){
+			if ($val = $node->getElementsByTagName($tagname)->item(0))
+				return $val->nodeValue;
+			else
+				return $val;
 		}
 	}
 
