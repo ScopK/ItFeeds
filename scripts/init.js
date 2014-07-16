@@ -6,6 +6,7 @@ var preselectPost = 0;	//toDeleteWhenFinished
 var postIdxSelected = 0;
 var postCount;
 var pagesLoaded;
+var nextPostId;
 
 var totalPages;
 var totalPosts;

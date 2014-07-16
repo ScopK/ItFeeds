@@ -117,10 +117,4 @@ function updateNavigationElements(){
 	if (get.sortby) $("#sortTButton").html("Older");
 	else		  	$("#sortTButton").html("Newer");
 
-	var page = (get.page)? (get.page):1;
-
-	$("#pageNumber").html(page);
-	$("#prevPage").prop('disabled',(page <= 1));
-
-	$("#nextPage").prop('disabled',true);
 }

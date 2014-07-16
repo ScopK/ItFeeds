@@ -384,10 +384,10 @@ PAGES
 #pages {
 	display: inline-block;
 	margin-top: 5px;
+	color:white;
 }
 
-#pages span{
-	color:white;
+#pages #totalPages{
 	font-weight: bold;
 }
 

@@ -66,21 +66,18 @@ function postsInit(){
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,0);
 	} else {
-		$('html,body').animate({scrollTop: 0},0); 
+		//$('html,body').animate({scrollTop: 0},0); 
 		disableControls();
 	}
 }
 
 function nextPost(){
-	if (postIdxSelected < ((get.postspage)?get.postspage:10)){
+	if (postIdxSelected < posts.length){
 		$(".post[idxpost='"+postIdxSelected+"']").addClass("minimized");
 		var idx = postIdxSelected;
 		selectPost(++idx);
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,100);
-	} else {
-		preselectPost = 1;
-		nextPage();
 	}
 }
 
@@ -91,9 +88,6 @@ function prevPost(){
 		selectPost(--idx);
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,100);
-	} else {
-		preselectPost = (get.postspage)? -get.postspage:-10;
-		prevPage();
 	}
 }
 

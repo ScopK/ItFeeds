@@ -84,6 +84,13 @@
 					document.getElementById("invalid").style.top = "-50px";
 					window.location = ".";
 				} else if (xmlhttp.readyState==4 && xmlhttp.status==502) {
+					document.getElementById("invalid").childNodes[1].innerHTML = "Invalid username or password, please, try again or register";
+					document.getElementById("invalid").style.top = "0";
+					setTimeout(function(){
+						document.getElementById("invalid").style.top = "-50px";
+					},3000);
+				} else if (xmlhttp.readyState==4) {
+					document.getElementById("invalid").childNodes[1].innerHTML = xmlhttp.status+": "+xmlhttp.statusText;
 					document.getElementById("invalid").style.top = "0";
 					setTimeout(function(){
 						document.getElementById("invalid").style.top = "-50px";

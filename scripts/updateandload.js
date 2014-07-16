@@ -104,17 +104,20 @@ function ajaxPosts(args){
 		data: params,
 		dataType : "json",
 		success: function(result){
+			nextPostId = result.nextid;
 			postIdxSelected = 0;
 			postCount = 1;
 			pagesLoaded = 1;
 
 			$('#posts_panel').html("");
 
-			totalPages = Math.ceil((get.postspage)?result.total/get.postspage:result.total/10);
-			totalPosts = result.total;
-			$("#totalPages").html("/"+totalPages+"("+totalPosts+")");
+			var page = (get.page)?get.page:1;
+			var postspage = (get.postspage)?get.postspage:10;
+			totalPages = Math.ceil((get.postspage)?result.total/get.postspage:result.total/10)-(page-1);
+			totalPosts = result.total-((page-1)*postspage);
+			$("#totalPages").html(totalPosts);
+			$("#percentSeen").html(pagesLoaded+"/"+totalPages);
 
-			$("#nextPage").prop('disabled',(((get.page)?get.page:1) >= totalPages));
 			posts = result.posts;
 			$.each(posts,function(){
 				var ixs = findFeedIndex(this.feedId);
@@ -132,9 +135,9 @@ function ajaxPosts(args){
 	});
 }
 
-
 function ajaxMorePosts(args){
-	var params = "";
+	if (!nextPostId) return;
+	var params = "nextid="+nextPostId+"&";
 	updateNavigationElements();
 
 	if (get.feed != undefined)			params += "feed="+get.feed+"&";
@@ -144,22 +147,24 @@ function ajaxMorePosts(args){
 	if (get.unread != undefined)		params+="unread="+get.unread+"&";
 	if (get.fav != undefined)			params+="fav="+get.fav+"&";
 	if (get.postspage != undefined)		params+="postspage="+get.postspage+"&";
-	if (get.page != undefined)			params+="page="+get.page+"&";
 	if (get.sortby != undefined)		params+="sortBy="+get.sortby+"&";
 	params += args;
 
 	loading_run();
 	$.ajax({
-		url: "./ajax/get_posts.php",
+		url: "./ajax/get_nextPosts.php",
 		type: "GET",
 		data: params,
 		dataType : "json",
 		success: function(result){
-			$.each(posts,function(){
+			nextPostId = result.nextid;
+			$.each(result.posts,function(){
 				posts.push(this);
 				var html = getHTMLPost(this,postCount++);
 				$("#posts_panel").append(html);
 			});
+			pagesLoaded++;
+			$("#percentSeen").html(pagesLoaded+"/"+totalPages);
 			postsInit();
 		},
 		error: function (request, status, error){

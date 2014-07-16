@@ -73,30 +73,7 @@ function toggleSort(me){
 	reloadPosts();
 }
 
-function nextPage(){
-	if (get.page) var page = get.page;
-	else var page = 1;
-	if (page < totalPages){
-		page++;
-		get.page=page;
-		updateUrl();
-		reloadPosts();
-	}
-}
-
-function prevPage(){
-	if (get.page) var page = get.page;
-	else var page = 1;
-	if (page > 1){
-		page--;
-		if (page == 1) get.page=undefined;
-		else get.page=page;
-		updateUrl();
-		reloadPosts();
-	}
-}
-
 function loadMore(){
-	console.log("load more");
+	ajaxMorePosts("");
 }
 

@@ -45,11 +45,9 @@
                     <div id="tags"></div>
                 </div>
                 <div id="navopts_bottom" class="options_panel">
-                    <button id="prevPage" onclick="prevPage()" disabled>Prev</button>
                     <span id="pages">
-                        <span id="pageNumber">1</span><span id="totalPages">/1(10)</span>
+                        <span id="totalPages">10</span> (<span id="percentSeen">0</span>)
                     </span>
-                    <button id="nextPage" onclick="nextPage()">Next</button>
                     <button id="loadMore" onclick="loadMore()">++</button>
                 </div>
             </div>
