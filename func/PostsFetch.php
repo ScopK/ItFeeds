@@ -51,9 +51,10 @@
 
 			$feedDate = new DateTime($feed['last_date_post']);
 			$mostRecentDate = $feedDate;
+			$count = 0;
 			foreach($posts as $post)
 			{
-				$this->addIfPosible($feed,$post);			
+				$count += $this->addIfPosible($feed,$post);			
 				$date = new DateTime($post->date);
 				if ($mostRecentDate < $date) $mostRecentDate = $date;
 			}
@@ -64,6 +65,8 @@
 				$dateChangeSql.= $feed['id']."'";
 				mysqli_query($this->con,$dateChangeSql);
 			}
+			if ($count>0)
+				echo "$count added to:".$feed['rss_link']."\n";
 		}
 
 		private function addIfPosible($feed,$post){
@@ -99,7 +102,10 @@
 					mysqli_stmt_execute($stmt);
 					$done = mysqli_affected_rows($this->con);
 				}
-				if ($done != 1){
+				if ($done == 1){
+					mysqli_stmt_close($stmt);
+					return 1;
+				} else {
 					echo "Error\n";
 					echo $feed['id'].",".$post->title.",".$post->link.",".$post->unread.",".$post->favorite.",".$post->date;
 					echo "\n";
@@ -108,6 +114,7 @@
 				}
 			}
 			mysqli_stmt_close($stmt);
+			return 0;
 		}
 
 	}

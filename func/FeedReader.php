@@ -21,8 +21,6 @@
 				throw new Exception("Error loading page: ".$this->url."\n");
 			}
 
-			//$xmlDoc->save("xml.xml");
-
 			$source = $this->xmlDoc->getElementsByTagName('channel')->item(0);
 			if ($source)
 				return $this->rssFeed($source);
@@ -46,9 +44,9 @@
 
 				$p->link = $this->getNodeValueByTagName($item,'link');
 				$p->description = $this->getNodeValueByTagName($item,'description');
-				$p->title = $this->getNodeValueByTagName($item,'title');
+				$p->title = htmlentities($this->getNodeValueByTagName($item,'title'));
 				if ($p->title == "")
-					$p->title = $this->getNodeValueByTagName($channel,'title');
+					$p->title = htmlentities($this->getNodeValueByTagName($channel,'title'));
 				$posts[] = $p;
 			}
 			return $posts;
@@ -76,9 +74,9 @@
 				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
 
 				$p->description = $this->getNodeValueByTagName($entry,'content');
-				$p->title = $this->getNodeValueByTagName($entry,'title');
+				$p->title = htmlentities($this->getNodeValueByTagName($entry,'title'));
 				if ($p->title == "")
-					$p->title = $this->getNodeValueByTagName($feed,'title');
+					$p->title = htmlentities($this->getNodeValueByTagName($feed,'title'));
 
 				$posts[] = $p;
 			}
