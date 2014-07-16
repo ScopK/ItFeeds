@@ -21,7 +21,10 @@ $(document).ready(function(){
 	$("button#feedConfig").click(showCleanFeed);
 	$("button#feedDelete").click(showDeleteFeed);
 
-	$("input[name='days']").on("focus",function(){
+	$("#content_folders #header").click(showAddFolder);
+	$("button.addFolder").click(addFolder);
+
+	$("input[name='days'],input[name='unread']").on("focus",function(){
 	    $("button.cleanFolder, button.cleanFeed").prop('disabled',false);    
 	});
 
@@ -44,7 +47,15 @@ function load(flds){
 	$.each(flds, function() {
 		var style="";
 		if (this.hidden == 1)
-			var style = ' class="hidden"';
+			style = 'hidden ';
+
+		if (nullFolder = (this.name=="null")){
+			this.name = "- NO FOLDER -";
+			style += 'nullFolder';
+		} else if (nullFolder = (this.name=="- NO FOLDER -")){
+			style += 'nullFolder';
+		}
+		style = (style.length > 0)? ' class="'+style+'"':"";
 
 		var line = '<div class="folder" idFolder="'+this.id+'" idxFolder="'+index+'"><h3'+style+'>'+this.name+' <span class="counter">('+this.unread+'/'+this.count+')</span></h3>';
 		index++;
@@ -61,7 +72,10 @@ function load(flds){
 		});
 
 		line += '</div>';
-		$("#folder_list").append(line);
+		if (nullFolder)
+			$("#folder_list").prepend(line);
+		else
+			$("#folder_list").append(line);
 	});
 
 	$(".folder h3").click(showFolderTools);
@@ -128,6 +142,10 @@ function showCleanFolder(){
 	$("#clean_folder").find("input[name='unread']").prop('checked',false);
 
 	$("button.cleanFolder").prop('disabled',true);
+	if (folder.name == "- NO FOLDER -")
+		$("#clean_folder form").first().find("input, button").prop('disabled',true);
+	else
+		$("#clean_folder form").first().find("input, button").prop('disabled',false);
 
 	$("#clean_folder").addClass("active");
 }
@@ -140,6 +158,7 @@ function showDeleteFolder(){
 	$("#confdel_folder h3").html(folder['name']);
 
 	$("#confdel_folder").find("input[name='folderId']").val(folder['id']);
+	$("#confdel_folder").find("input[name='pass']").val("");
 
 	$("#confdel_folder").addClass("active");
 }
@@ -208,6 +227,11 @@ function showDeleteFeed(){
 	$("#confdel_feed").find("input[name='feedId']").val(feed['id']);
 
 	$("#confdel_feed").addClass("active");
+}
+
+function showAddFolder(){
+	$("#add_folder").find("input[name='foldername']").val("").focus();
+	$("#add_folder").addClass("active");
 }
 
 function closeDialogs(){

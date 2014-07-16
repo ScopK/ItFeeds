@@ -71,7 +71,8 @@
                     <form action="" method="POST">
                         <input type="hidden" name="folderId"/>
                         <div class="dialog_buttons">
-                            <p>Are you sure you want to delete this folder?<p><br/>
+                            <p>Enter password to remove this folder:<p>
+                            <input type="password" name="pass" autocomplete="off" style="display:block;width:70%;margin:10px auto;"/>
                             <button class="deleteFolder" onclick="return false;">Yes</button>
                             <button class="cancel" onclick="return false;">No</button>
                         </div>
@@ -105,7 +106,7 @@
                         <input type="hidden" name="folderId"/>
                         <table style="width:auto">
                         <tr><td style="text-align:left;padding-right:10px">Folder name</td><td><input type="text" name="fname" style="width:150px" autocomplete="off"/></td></tr>
-                        <tr><td style="text-align:left;padding-right:10px">Hidden</td><td align="left"><input type="checkbox" name="hid"/></td></tr>
+                        <tr><td style="text-align:left;padding-right:10px"><label style="cursor:pointer" for="hidfolcheckbox">Hidden</label></td><td align="left"><input id="hidfolcheckbox" type="checkbox" name="hid" style="cursor:pointer"/></td></tr>
                         </table>
                         <div class="dialog_buttons">
                             <button class="editFolder" onclick="return false;">Edit configuration</button>
@@ -115,7 +116,7 @@
                         <div class="dialog_buttons">
                             <input type="hidden" name="folderId"/>
                             Delete posts older than <input type="text" name="days" style="width: 30px; text-align:center" autocomplete="off"/> days<br/>
-                            <input id="foldhidcheck" type="checkbox" name="unread"/><label for="foldhidcheck">Delete unread</label><br/><br/>
+                            <input id="foldhidcheck" type="checkbox" name="unread" style="cursor:pointer"/><label style="cursor:pointer" for="foldhidcheck">Delete unread</label><br/><br/>
                         
                             <button class="cleanFolder" onclick="return false;">Clean</button>
                             <button class="cancel" onclick="return false;">Cancel</button>
@@ -147,7 +148,7 @@
                         <tr><td>RssLink</td><td><input type="text" name="rlink" style="width:97%" autocomplete="off"/></td><td id="goRss"><a target="_blank">&#65515;</a></td></tr>
                         <tr><td>Link</td><td><input type="text" name="link" style="width:97%" autocomplete="off"/></td><td id="goLink"><a target="_blank">&#65515;</a></td></tr>
                         <tr><td>Update time</td><td colspan="2"><input type="text" name="uptime" style="width:40px" autocomplete="off"/></td></tr>
-                        <tr><td>Enabled</td><td colspan="2"><input type="checkbox" name="ena"/></td></tr>
+                        <tr><td><label style="cursor:pointer" for="enabfeedcheck">Enabled</label></td><td colspan="2"><input id="enabfeedcheck" type="checkbox" name="ena" style="cursor:pointer"/></td></tr>
                         </table>
                         <div class="dialog_buttons">
                             <button class="editFeed" onclick="return false;">Edit configuration</button>
@@ -157,7 +158,7 @@
                         <div class="dialog_buttons">
                             <input type="hidden" name="feedId"/>
                             Delete posts older than <input type="text" name="days" style="width: 30px; text-align:center" autocomplete="off"/> days<br/>
-                            <input id="feedhidcheck" type="checkbox" name="unread"/><label for="feedhidcheck">Delete unread</label><br/><br/>
+                            <input id="feedhidcheck" type="checkbox" name="unread" style="cursor:pointer"/><label style="cursor:pointer" for="feedhidcheck">Delete unread</label><br/><br/>
 
                             <button class="cleanFeed" onclick="return false;">Clean</button>
                             <button class="cancel" onclick="return false;">Cancel</button>
@@ -167,14 +168,14 @@
                 </div>
             </div></div>
 
-            <div class="inside_dialog" id="addFolder"><div class="dialog_container">
+            <div class="inside_dialog" id="add_folder"><div class="dialog_container">
                 <h3>CREATE FOLDER</h3>
                 <div class="message">
                     <form action="" method="POST">
-                        <input type="hidden" name="feedId"/>
                         <div class="dialog_buttons">
-                            <p>Are you sure you want to create a folder?<p><br/>
-                            <button class="createFolder" onclick="return false;">CreateFolder</button>
+                            <p>Folder name:<p>
+                            <input type="text" name="foldername" autocomplete="off" style="display:block;width:70%;margin:10px auto;"/>
+                            <button class="addFolder" onclick="return false;">Create folder</button>
                             <button class="cancel" onclick="return false;">Cancel</button>
                         </div>
                     </form>
@@ -193,7 +194,7 @@
             </div>
 
             <div id="tag_list"></div>
-
+            <!--
             <div class="inside_dialog" id="addTag"><div class="dialog_container">
                 <h3>CREATE TAG</h3>
                 <div class="message">
@@ -207,6 +208,7 @@
                     </form>
                 </div>
             </div></div>
+            -->
         </div>
 
 
