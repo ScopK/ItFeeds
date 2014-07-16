@@ -8,7 +8,7 @@
   	$pf = new PostsFetch();
   	$pf->setConnection($con);
 
-	$sql = "SELECT * FROM feeds";
+	$sql = "SELECT * FROM feeds WHERE enabled='1' AND deleted='0'";
 	$feeds = mysqli_query($con,$sql);
 	$times = array();
 	$timesLeft = array();

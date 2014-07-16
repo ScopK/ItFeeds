@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `link` varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
   `unread` tinyint(1) NOT NULL,
   `favorite` tinyint(1) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `posts_ibfk_1` (`id_feed`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
