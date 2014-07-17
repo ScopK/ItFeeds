@@ -146,6 +146,37 @@
 		return $lista;
 	}
 
+	function getFeed($con, $feedId){
+		$feeds = mysqli_query($con,"SELECT * FROM feeds WHERE id='$feedId'");
+		$e = new Feed();
+
+		if ($feed = array_map('utf8_encode',mysqli_fetch_assoc($feeds))) {
+			$e->id = $feed['id'];
+			$e->name = $feed['name'];
+
+			$e->folderId = $folderId;
+			$e->upd_time = $feed['upd_time'];
+			$e->last_date_post = $feed['last_date_post'];
+
+			$e->link = $feed['link'];
+			$e->rss_link = $feed['rss_link'];
+
+			$e->enabled = $feed['enabled'];
+			$e->deleted = $feed['deleted'];
+			$e->posts = array();
+/*
+			$sql = "SELECT count(*) AS c, IFNULL(sum(p.unread), 0) AS u FROM posts p WHERE p.id_feed='".$e->id."'";
+			$res = mysqli_query($con,$sql);
+			$countQ = mysqli_fetch_array($res);
+			$e->unread = $countQ['u'];
+			$e->count = $countQ['c'];*/
+
+			mysqli_free_result($res);
+		}
+		mysqli_free_result($feeds);
+		return $e;
+	}
+
 /*
 	function getPostsFeed($con, $feedId,$depth){
 		if ($depth < 2)
@@ -436,7 +467,6 @@
 			$e->date = $post['date'];
 
 			$e->tags = getPostTags($con, $e->id, $hidden);
-
 		}
 		mysqli_free_result($posts);
 		return $e;

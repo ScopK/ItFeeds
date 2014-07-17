@@ -1,0 +1,88 @@
+body {
+    font-size: small;
+    font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;
+    margin: 0;
+
+    background-image: url("../imgs/back.jpg");
+    background-attachment: fixed;
+    background-size: 100% 100%;
+
+    overflow-y: scroll;
+}
+
+#feedBar a, #titleBar a {
+	text-decoration: none;
+	color: white;
+	transition: padding 0.2s, color 1s;
+	display:block;
+}
+
+#titleBar p {
+	display:inline;
+	color: #333;
+}
+
+#content {
+	position: relative;
+	background-color: rgba(255,255,255,0.8);
+	text-align: center;
+	display: table;
+	margin: 20px auto;
+	border: 1px solid black;
+	/*min-width: 750px;*/
+	max-width: 900px;
+}
+
+#feedBar{
+	background-color: rgba(0,0,0,0.8);
+	text-align: left;
+	font-weight: bolder;
+}
+
+#feedBar a{
+	padding: 14px 30px;
+	font-size: 20px;
+}
+
+#feedBar a:hover{
+	padding: 14px 20px 14px 40px;
+	color: #777;
+}
+
+#titleBar{
+	background-color: rgba(0,0,0,0.5);
+	text-align: left;
+	font-weight: bold;
+	padding-bottom: 5px;
+}
+
+#titleBar a{
+	padding: 5px 30px 0px;
+}
+
+#titleBar a:hover{
+	padding: 5px 20px 0px 40px;
+	color: #ccc;
+}
+
+#description{
+	padding: 20px 90px 30px;
+	text-align: left;
+}
+
+#tags{
+	display:inline;
+	float:right;
+}
+
+#date{
+	font-weight: normal;
+	font-size: 11px;
+	padding: 0 30px;
+}
+
+#tags p{
+	font-weight: normal;
+	font-size: 11px;
+	margin-right: 5px;
+}

@@ -30,10 +30,16 @@ $(document).ready(function(){
 		    case 84: //t
 			    showAddTagsDialog();
 			    return false;
+		    case 86: //v
+		    	if (postIdxSelected>0){
+		    		var post = posts[postIdxSelected-1];
+		    		//window.open('url', 'window name', 'window settings');
+		    		window.open('post.php?id='+post.id, '_black', '');
+		    	}
+		    	break;
 		    case 66: //b
 		    case 68: //d
 		    case 78: //n
-		    case 86: //v
 		    case 116: //f5
 		    case 123: //f12
 		    default:
