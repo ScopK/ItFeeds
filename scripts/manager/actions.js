@@ -77,6 +77,7 @@ function editFeed(){
 			feed['link'] = result['link'];
 			feed['enabled'] = result['enabled'];
 			feed['upd_time'] = result['upd_time'];
+			folders[prevIdxFolder].feeds.sort(nameSort);
 
 			load(folders);
 			loading_stop();
@@ -102,6 +103,7 @@ function editFolder(){
 			var folder = folders[prevIdxFolder];
 			folder['name'] = result['name'];
 			folder['hidden'] = result['hidden'];
+			folders.sort(nameSort);
 
 			load(folders);
 			loading_stop();
@@ -148,7 +150,7 @@ function addFeed(){
 		dataType : "json",
 		success: function(result){
 			folders[prevIdxFolder].feeds.push(result);
-
+			folders[prevIdxFolder].feeds.sort(nameSort);
 			load(folders);
 			loading_stop();
 			closeDialogs();

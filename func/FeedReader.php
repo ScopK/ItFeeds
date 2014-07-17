@@ -44,7 +44,7 @@
 
 				$p->link = $this->getNodeValueByTagName($item,'link');
 				$p->description = utf8_decode($this->getNodeValueByTagName($item,'description'));
-				$p->title = utf8_decode($this->getNodeValueByTagName($item,'title'));
+				$p->title = htmlentities($this->getNodeValueByTagName($item,'title'));
 				if ($p->title == "")
 					$p->title = utf8_decode($this->getNodeValueByTagName($channel,'title'));
 				$posts[] = $p;
@@ -74,7 +74,7 @@
 				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
 
 				$p->description = utf8_decode($this->getNodeValueByTagName($entry,'content'));
-				$p->title = utf8_decode($this->getNodeValueByTagName($entry,'title'));
+				$p->title = htmlentities($this->getNodeValueByTagName($entry,'title'));
 				if ($p->title == "")
 					$p->title = utf8_decode($this->getNodeValueByTagName($feed,'title'));
 

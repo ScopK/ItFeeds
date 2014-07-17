@@ -494,7 +494,7 @@
 //	$tempSQL = "CREATE TEMPORARY TABLE IF NOT EXISTS
 		$tempSQL = "CREATE TEMPORARY TABLE tt AS (SELECT (@cnt:=@cnt+1) AS idx, p.* FROM posts AS p CROSS JOIN (SELECT @cnt := 0) AS x WHERE id_feed='$feedId' $unreadSQL $favsSQL ORDER BY p.date $sort)";
 
-		return getPostsNext($con, $tempSQL, $nextId, $postspage);
+		return getPostsNext($con, $tempSQL, $hidden, $nextId, $postspage);
 	}
 
 	function getPostsNextFolder($con, $user, $hidden, $folderId, $favs, $unread, $sort, $postspage, $nextId){
@@ -509,7 +509,7 @@
 
 		$tempSQL = "CREATE TEMPORARY TABLE tt AS (SELECT (@cnt:=@cnt+1) AS idx, p.* FROM posts AS p CROSS JOIN (SELECT @cnt := 0) AS x WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') $unreadSQL $favsSQL ORDER BY p.date $sort)";
 
-		return getPostsNext($con, $tempSQL, $nextId, $postspage);
+		return getPostsNext($con, $tempSQL, $hidden, $nextId, $postspage);
 	}
 
 	function getPostsNextTag($con, $user, $hidden, $tagId, $favs, $unread, $sort, $postspage, $nextId){
@@ -528,7 +528,7 @@
 
 		$tempSQL = "CREATE TEMPORARY TABLE tt AS (SELECT (@cnt:=@cnt+1) AS idx, p.* FROM posts AS p CROSS JOIN (SELECT @cnt := 0) AS x WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') $unreadSQL $favsSQL ORDER BY p.date $sort)";
 
-		return getPostsNext($con, $tempSQL, $nextId, $postspage);
+		return getPostsNext($con, $tempSQL, $hidden, $nextId, $postspage);
 	}
 
 	function getPostsNextAll($con, $user, $hidden, $favs, $unread, $sort, $postspage, $nextId){
@@ -547,10 +547,10 @@
 
 		$tempSQL = "CREATE TEMPORARY TABLE tt AS (SELECT (@cnt:=@cnt+1) AS idx, p.* FROM posts AS p CROSS JOIN (SELECT @cnt := 0) AS x WHERE $whereSql ORDER BY p.date $sort)";
 
-		return getPostsNext($con, $tempSQL, $nextId, $postspage);
+		return getPostsNext($con, $tempSQL, $hidden, $nextId, $postspage);
 	}
 
-	function getPostsNext($con, $tempSQL, $nextId, $postspage){
+	function getPostsNext($con, $tempSQL, $hidden, $nextId, $postspage){
 		mysqli_query($con,$tempSQL);
 
 		$idxres = mysqli_query($con,"SELECT idx FROM tt WHERE id='$nextId'");

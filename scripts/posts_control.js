@@ -34,10 +34,17 @@ $(document).ready(function(){
 		    	if (postIdxSelected>0){
 		    		var post = posts[postIdxSelected-1];
 		    		//window.open('url', 'window name', 'window settings');
-		    		window.open('post.php?id='+post.id, '_black', '');
+		    		allowed = true;
+		    		window.open(post.link, '_blank', '');
 		    	}
 		    	break;
 		    case 66: //b
+		    	if (postIdxSelected>0){
+		    		var post = posts[postIdxSelected-1];
+		    		allowed = true;
+		    		window.open('post.php?id='+post.id, '_blank', '');
+		    	}
+		    	break;
 		    case 68: //d
 		    case 78: //n
 		    case 116: //f5

@@ -171,7 +171,7 @@ LATERAL MENU FOLDER STYLES
 }
 
 .feed.selected, .tag.selected, .folder.selected{
-	background-color: #ffdead;
+	background-color: #addeff;
 }
 
 .feed.unread{
