@@ -407,15 +407,33 @@ Tags
 	z-index: 10;
 }
 
+#add_tag .taglist{
+	padding: 10px 40px;
+}
+
+#add_tag .taglist p{
+	display: inline-block;
+	padding: 0px 3px;
+	margin: 0 1px 1px 0;
+}
+
+#add_tag .taglist p:hover{
+	cursor:pointer;
+	background-color: #f4f4f4;
+}
+
+#add_tag .taglist p.selected{
+	background-color: #ddd;
+}
+
 #add_tag_content {
 	position: absolute;
 	width: 340px;
 	margin: auto;
-	right: 0; left: 0; top: 0; bottom: 0;
+	right: 0; left: 0; top: 30%;
 	background-color: #fff;
 	text-align:center;
 
-	height: 140px;
 	border: 2px solid #000;
 }
 

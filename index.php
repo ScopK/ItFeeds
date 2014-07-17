@@ -56,7 +56,7 @@
                     <div id="control_panel">
                     <button class="setUnread" disabled onclick="toogleUnreadPost()"></button>
                     <button class="setFav" disabled onclick="toogleFavPost()"></button>
-                    <button class="addTag" disabled onclick="$('#add_tag').fadeIn(100);$('#newtagField').focus();return false;"></button>
+                    <button class="addTag" disabled onclick="showAddTagsDialog();return false;"></button>
                     </div>
                     <div id="tagList"></div>
                 </div>
@@ -71,6 +71,7 @@
         <div id="add_tag"><div id="add_tag_content">
             <form action="" method="POST">
                 <table><tr><th colspan="2">Add tag</th></tr>
+                <tr><td class="taglist" colspan="2"></td></tr>
                 <tr><td><input id="newtagField" type="text" name="newtagname" autocomplete="off" /></td></tr>
                 <tr><td colspan="2" class="dialog_buttons">
                     <button class="addTag" onclick="addTag(); return false;">Add</button>

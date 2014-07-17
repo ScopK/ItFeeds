@@ -65,9 +65,8 @@ function postsInit(scrollTop){
 		preselectPost=0;
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,0);
-	} else {
-		if (scrollTop)
-			$('html,body').animate({scrollTop: 0},0); 
+	} else if (scrollTop) {
+		$('html,body').animate({scrollTop: 0},0); 
 		disableControls();
 	}
 }
@@ -148,8 +147,13 @@ function enableControls(){
 }
 
 function addTag(){
-	var tag = encodeURIComponent($("#newtagField").val());
-	if (tag.length > 0 && tag.indexOf('%20') < 0) {
+	var tag = "";
+	$("#add_tag .taglist p.selected").each(function(){
+		tag += " "+this.innerHTML;
+	});
+	tag += " "+$("#newtagField").val();
+	tag = encodeURIComponent(tag.substring(1));
+	if (tag.length > 0) {
 		var post = posts[postIdxSelected-1];
 		loading_run();
 		$.ajax({
@@ -158,21 +162,25 @@ function addTag(){
 			data: "postid="+post.id+"&tagname="+tag,
 			dataType : "json",
 			success: function(result){
-				var tagInfo = Array();
-				tagInfo["id"] = result.id;
-				tagInfo["name"] = result.name;
-				var found = -1;
-				$.each(tags, function(i){
-					found = (this.name == tag)?i:-1;
-					return (found == -1);
+				$.each(result,function(){
+					var tagname = this.name;
+					var tagInfo = Array();
+					tagInfo["id"] = this.id;
+					tagInfo["name"] = tagname;
+					var found = -1;
+					$.each(tags, function(i){
+						found = (this.name == tagname)?i:-1;
+						return (found == -1);
+					});
+
+					if (found == -1)
+						tags.push(this);
+					else
+						tags[found].count = this.count;//tags[found].count++;
+
+					post.tags.push(tagInfo);
 				});
-				if (found == -1){
-					tags.push(result);
-					tags.sort(nameSort);
-				} else {
-					tags[found].count++;
-				}
-				post.tags.push(tagInfo);
+				tags.sort(nameSort);
 				post.tags.sort(nameSort);
 				updateControlTags();
 				displayTags();

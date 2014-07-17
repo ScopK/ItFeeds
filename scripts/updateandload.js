@@ -23,6 +23,8 @@ function displayFolders() {
 function displayTags() {
 	var html = getHTMLTags(tags);
 	$("#tags").html(html);
+	html = getHTMLTagsSelector(tags);
+	$("#add_tag .taglist").html(html);
 
 	setTagsActions();
 }
@@ -72,6 +74,14 @@ function getHTMLTags(tag_list){
 		html += '<div class="tag'+((selected)?' selected':'')+((this.hidden==1)?" hidden":"")+'" idxTag="'+index+'" idTag="'+this.id+'">'+
 					'<span class="name">'+(this.name)+'</span> <span class="count">('+this.count+')</span></div>';
 
+	});
+	return html;
+}
+
+function getHTMLTagsSelector(tag_list){
+	var html = "";
+	$.each(tags,function(index){
+		html += '<p onclick="addSelectedTag(this)">'+(this.name)+'</p>';
 	});
 	return html;
 }

@@ -73,6 +73,17 @@ function toggleSort(me){
 	reloadPosts();
 }
 
+function showAddTagsDialog(){
+	$('#add_tag').fadeIn(100);
+	$('#add_tag p').removeClass("selected");
+	$('#newtagField').val("");
+	$('#newtagField').focus();
+}
+
+function addSelectedTag(element){
+	$(element).toggleClass("selected");
+}
+
 function loadMore(){
 	ajaxMorePosts("");
 }
