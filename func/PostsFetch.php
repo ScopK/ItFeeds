@@ -66,7 +66,7 @@
 				mysqli_query($this->con,$dateChangeSql);
 			}
 			if ($count>0)
-				echo "$count added to:".$feed['rss_link']."\n";
+				echo date('Y-d-m H:i:s', time()).": $count added to:".$feed['rss_link']."\n";
 		}
 
 		private function addIfPosible($feed,$post){

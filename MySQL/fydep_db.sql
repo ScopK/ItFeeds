@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `feeds` (
   `upd_time` smallint(6) NOT NULL DEFAULT '10',
   `link` varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
   `rss_link` varchar(500) COLLATE utf8_spanish_ci NOT NULL,
-  `last_date_post` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `last_date_post` timestamp NOT NULL DEFAULT "2000-01-01 00:00:00",
   `enabled` tinyint(1) NOT NULL,
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),

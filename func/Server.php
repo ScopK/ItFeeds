@@ -9,30 +9,38 @@
   	$pf->setConnection($con);
 
 	$sql = "SELECT * FROM feeds WHERE enabled='1' AND deleted='0'";
-	$feeds = mysqli_query($con,$sql);
-	$times = array();
 	$timesLeft = array();
-	foreach($feeds as $feed){
-		$times[$feed['id']] = $feed['upd_time'];
-		$timesLeft[$feed['id']] = 0;
-	}
 
 	$time = time();
 	while(true){
+		$feeds = mysqli_query($con,$sql);
 		foreach($feeds as $feed){
-			if ($timesLeft[$feed['id']] <= 0){
+			if (controlFeed($feed['id'],$feed['upd_time'])){
 				$pf->fetchFeed($feed);
-				$timesLeft[$feed['id']] = $times[$feed['id']];
-			} else {
-				$timesLeft[$feed['id']]--;
 			}
 		}
-
-		echo "\n";
+		mysqli_free_result($feeds);
 		$left = ($time+60)-time();
 		if ($left>0)
 			sleep($left);
 		$time+=60;
 	}
 
+	function controlFeed($id, $time){
+		global $timesLeft;
+		if (!isset($timesLeft[$id])){
+			$timesLeft[$id] = $time;
+			return true;
+		} else {
+ 			if ($timesLeft[$id] > $time)
+ 				$timesLeft[$id] = $time;
+			$timesLeft[$id]--;
+			if ($timesLeft[$id] <= 0){
+				$timesLeft[$id] = $time;
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
 ?>
