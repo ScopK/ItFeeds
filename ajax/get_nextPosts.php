@@ -1,7 +1,12 @@
 <?php
 	header("Content-Type: text/html;charset=utf-8");
+	$nextId = $_REQUEST['nextid'];
+	if (!isset($nextId) || $nextId==""){
+		header("HTTP/1.1 501 No next entered");
+		die("HTTP/1.1 501 No next entered");
+	}
+
 	$postsPage = $_REQUEST['postspage'];
-	$page = $_REQUEST['page'];
 
 	$favorites = $_REQUEST['fav'];
 	$unread = $_REQUEST['unread'];
@@ -24,7 +29,6 @@
 	if (!isset($postsPage) || !is_numeric($postsPage) || $postsPage<0) $postsPage=10;
 	else $postsPage=($postsPage>100)?100:$postsPage;
 
-	if (!isset($page) || !is_numeric($page) || $page<1) $page=1;
 	if (!isset($favorites)) $favorites = 0;
 	if (!isset($unread)) $unread = 1;
 	if ($favorites==1) $unread = 0;
@@ -39,19 +43,19 @@
 	$hidd = (isset($_SESSION['hid_user']))?checkUserHiddenPassword($con, $user,$_SESSION['hid_user']):false;
 	switch($mode){
 		case 0: // feeds
-			$posts = getPostsFeed($con, $user, $hidd, $feedId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
+			$posts = getPostsNextFeed($con, $user, $hidd, $feedId, $favorites, $unread, $sort, $postsPage, $nextId);
 			echo json_encode($posts);
 			break;
 		case 1: // folder
-			$posts = getPostsFolder($con, $user, $hidd, $folderId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
+			$posts = getPostsNextFolder($con, $user, $hidd, $folderId, $favorites, $unread, $sort, $postsPage, $nextId);
 			echo json_encode($posts);
 			break;
 		case 2: // tags
-			$posts = getPostsTag($con, $user, $hidd, $tagId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
+			$posts = getPostsNextTag($con, $user, $hidd, $tagId, $favorites, $unread, $sort, $postsPage, $nextId);
 			echo json_encode($posts);
 			break;
 		case 3: // all
-			$posts = getPostsAll($con, $user, $hidd, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage);
+			$posts = getPostsNextAll($con, $user, $hidd, $favorites, $unread, $sort, $postsPage, $nextId);
 			echo json_encode($posts);
 			break;
 		default:
@@ -60,4 +64,5 @@
 
 	}
 	mysqli_close($con);
+
 ?>

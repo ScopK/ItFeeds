@@ -1,8 +1,6 @@
 <?php
-
-	$fr = new FeedReader();
-	$fr->setUrl("http://rss");
-	$fr->getFeeds();
+	$isServer=true;
+	require_once "classes.php";
 
 	class FeedReader{
 		private $xmlDoc;
@@ -17,82 +15,79 @@
 		}
 
 		public function getFeeds(){
-			$this->xmlDoc->load($this->url);
-			//$xmlDoc->save("xml.xml");
+			$error = @$this->xmlDoc->load($this->url);
+
+			if ($error === false){
+				throw new Exception("Error loading page: ".$this->url."\n");
+			}
 
 			$source = $this->xmlDoc->getElementsByTagName('channel')->item(0);
-			if ($source) {
-				$this->rssFeed($source);
-				return;
-			}
+			if ($source)
+				return $this->rssFeed($source);
 
 			$source = $this->xmlDoc->getElementsByTagName('feed')->item(0);
-			if ($source) {
-				$this->atomFeed($source);
-				return;
-			}
+			if ($source)
+				return $this->atomFeed($source);
 		}
 
 		private function rssFeed($channel){
-			$channel_title = $channel->getElementsByTagName('title')->item(0)->nodeValue;
-			$channel_desc = $channel->getElementsByTagName('description')->item(0)->nodeValue;
-
+			//$channel_title = $this->getNodeValueByTagName($channel,'title');
+			//$channel_desc = $this->getNodeValueByTagName($channel,'description');
+			$posts = array();
 			$items = $this->xmlDoc->getElementsByTagName('item');
-			foreach ($items as $item){ 
-				$item_link = $item->getElementsByTagName('link')->item(0)->nodeValue;
-				$item_title = $item->getElementsByTagName('title')->item(0)->nodeValue;
-				$item_pubdate = $item->getElementsByTagName('pubDate')->item(0)->nodeValue;
-				$item_desc = $item->getElementsByTagName('description')->item(0)->nodeValue;
+			foreach ($items as $item){
+				$p = new Post();
+				$p->date = $this->getNodeValueByTagName($item,'pubDate');
+				$time = new DateTime($p->date);
+				date_default_timezone_set('Europe/Madrid');
+				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
+
+				$p->link = $this->getNodeValueByTagName($item,'link');
+				$p->description = $this->getNodeValueByTagName($item,'description');
+				$p->title = htmlentities($this->getNodeValueByTagName($item,'title'));
+				if ($p->title == "")
+					$p->title = htmlentities($this->getNodeValueByTagName($channel,'title'));
+				$posts[] = $p;
 			}
+			return $posts;
 		}
 
 		private function atomFeed($feed){
-			$feed_title = $feed->getElementsByTagName('title')->item(0)->nodeValue;
-			$feed_subtitle = $feed->getElementsByTagName('subtitle')->item(0)->nodeValue;
-
+			//$feed_title = $this->getNodeValueByTagName($feed,'title');
+			//$feed_subtitle = $this->getNodeValueByTagName($feed,'subtitle');
+			$posts = array();
 			$entries = $this->xmlDoc->getElementsByTagName('entry');
 			foreach ($entries as $entry){ 
+				$p = new Post();
+
 				$entry_links = $entry->getElementsByTagName('link');
-				$entry_link = $entry_links->item(0)->getAttribute("href");
+				$p->link = $entry_links->item(0)->getAttribute("href");
 				foreach($entry_links as $link) {
 				    if($link->getAttribute('rel') =='alternate') {
-				        $entry_link = $link->getAttribute("href");
+				        $p->link = $link->getAttribute("href");
 				        break;
-				}   }  
-				$entry_title = $entry->getElementsByTagName('title')->item(0)->nodeValue;
-				$entry_pubdate = $entry->getElementsByTagName('published')->item(0)->nodeValue;
-				$entry_cont = $entry->getElementsByTagName('content')->item(0)->nodeValue;
+				}   }
+
+				$p->date = $this->getNodeValueByTagName($entry,'published');
+				$time = new DateTime($p->date);
+				date_default_timezone_set('Europe/Madrid');
+				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
+
+				$p->description = $this->getNodeValueByTagName($entry,'content');
+				$p->title = htmlentities($this->getNodeValueByTagName($entry,'title'));
+				if ($p->title == "")
+					$p->title = htmlentities($this->getNodeValueByTagName($feed,'title'));
+
+				$posts[] = $p;
 			}
+			return $posts;
+		}
+
+		private function getNodeValueByTagName($node,$tagname){
+			if ($val = $node->getElementsByTagName($tagname)->item(0))
+				return $val->nodeValue;
+			else
+				return "";
 		}
 	}
-
-	// To test yet //
-    function rsstotime($rss_time) {
-        $day = substr($rss_time, 5, 2);
-        $month = substr($rss_time, 8, 3);
-        $month = date('m', strtotime("$month 1 2011"));
-        $year = substr($rss_time, 12, 4);
-        $hour = substr($rss_time, 17, 2);
-        $min = substr($rss_time, 20, 2);
-        $second = substr($rss_time, 23, 2);
-        $timezone = substr($rss_time, 26);
-
-        $timestamp = mktime($hour, $min, $second, $month, $day, $year);
-        date_default_timezone_set('CET');
-
-        if(is_numeric($timezone)) {
-            $hours_mod = $mins_mod = 0;
-            $modifier = substr($timezone, 0, 1);
-            $hours_mod = (int) substr($timezone, 1, 2);
-            $mins_mod = (int) substr($timezone, 3, 2);
-            $hour_label = $hours_mod>1 ? 'hours' : 'hour';
-            $strtotimearg = $modifier.$hours_mod.' '.$hour_label;
-            if($mins_mod) {
-                $mins_label = $mins_mod>1 ? 'minutes' : 'minute';
-                $strtotimearg .= ' '.$mins_mod.' '.$mins_label;
-            }
-            $timestamp = strtotime($strtotimearg, $timestamp);
-        }
-        return $timestamp;
-    }
-?> 
+?>

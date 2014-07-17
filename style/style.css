@@ -119,8 +119,8 @@ button::-moz-focus-inner {
 	position:absolute;
 	overflow-y: auto;
 	padding-top: 10px;
-	top:50px;
-	bottom: 50px;
+	top:50px; bottom: 50px;
+	left: 10px; right:10px;
 }
 
 
@@ -384,10 +384,10 @@ PAGES
 #pages {
 	display: inline-block;
 	margin-top: 5px;
+	color:white;
 }
 
-#pages span{
-	color:white;
+#pages #totalPages{
 	font-weight: bold;
 }
 
@@ -407,15 +407,33 @@ Tags
 	z-index: 10;
 }
 
+#add_tag .taglist{
+	padding: 10px 40px;
+}
+
+#add_tag .taglist p{
+	display: inline-block;
+	padding: 0px 3px;
+	margin: 0 1px 1px 0;
+}
+
+#add_tag .taglist p:hover{
+	cursor:pointer;
+	background-color: #f4f4f4;
+}
+
+#add_tag .taglist p.selected{
+	background-color: #ddd;
+}
+
 #add_tag_content {
 	position: absolute;
 	width: 340px;
 	margin: auto;
-	right: 0; left: 0; top: 0; bottom: 0;
+	right: 0; left: 0; top: 30%;
 	background-color: #fff;
 	text-align:center;
 
-	height: 140px;
 	border: 2px solid #000;
 }
 
@@ -495,4 +513,17 @@ div.tagname button{
 #tagList .tagname button{
 	margin-left: 10px;
 	vertical-align: middle;
+}
+
+
+
+
+.post.minimized .description{
+	display:none;
+}
+
+.post.minimized .header{
+	border-color: rgba(0,0,0,0.5);
+	border-width: 0 0 1px;
+	border-style:dotted;
 }

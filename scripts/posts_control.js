@@ -46,7 +46,7 @@ $(document).ready(function(){
 });
 
 
-function postsInit(){
+function postsInit(scrollTop){
 	$(".post").click(function(){
 		selectPost($(this).attr("idxpost"));/*
 		$(".post").removeClass("selected");
@@ -65,33 +65,29 @@ function postsInit(){
 		preselectPost=0;
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,0);
-	} else {
+	} else if (scrollTop) {
 		$('html,body').animate({scrollTop: 0},0); 
 		disableControls();
 	}
 }
 
 function nextPost(){
-	if (postIdxSelected < ((get.postspage)?get.postspage:10)){
+	if (postIdxSelected < posts.length){
+		$(".post[idxpost='"+postIdxSelected+"']").addClass("minimized");
 		var idx = postIdxSelected;
 		selectPost(++idx);
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,100);
-	} else {
-		preselectPost = 1;
-		nextPage();
 	}
 }
 
 function prevPost(){
 	if (postIdxSelected > 1){
+		//$(".post[idxpost='"+postIdxSelected+"']").addClass("minimized");
 		var idx = postIdxSelected;
 		selectPost(--idx);
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,100);
-	} else {
-		preselectPost = (get.postspage)? -get.postspage:-10;
-		prevPage();
 	}
 }
 
@@ -100,17 +96,19 @@ function focusPost(post,speed){
 }
 
 function selectPost(idx){
-	var pos = $(".post[idxpost='"+idx+"']").offset().top;
-	$("#actions_panel").css("top",pos);
-
 	if (postIdxSelected == idx) return;
 
 	$(".post[idxpost='"+postIdxSelected+"']").removeClass("selected");
 	postIdxSelected = idx;
 	$(".post[idxpost='"+postIdxSelected+"']").addClass("selected");
+	$(".post[idxpost='"+postIdxSelected+"']").removeClass("minimized");
 
 	if (posts[idx-1].unread == 1)
 		markPost(0, 0, idx);
+
+	var postspage = (get.postspage)?get.postspage:10;
+	if (postIdxSelected == pagesLoaded*postspage)
+		loadMore();
 
 	enableControls();
 	updateControlTags();
@@ -149,8 +147,13 @@ function enableControls(){
 }
 
 function addTag(){
-	var tag = encodeURIComponent($("#newtagField").val());
-	if (tag.length > 0 && tag.indexOf('%20') < 0) {
+	var tag = "";
+	$("#add_tag .taglist p.selected").each(function(){
+		tag += " "+this.innerHTML;
+	});
+	tag += " "+$("#newtagField").val();
+	tag = encodeURIComponent(tag.substring(1));
+	if (tag.length > 0) {
 		var post = posts[postIdxSelected-1];
 		loading_run();
 		$.ajax({
@@ -159,21 +162,25 @@ function addTag(){
 			data: "postid="+post.id+"&tagname="+tag,
 			dataType : "json",
 			success: function(result){
-				var tagInfo = Array();
-				tagInfo["id"] = result.id;
-				tagInfo["name"] = result.name;
-				var found = -1;
-				$.each(tags, function(i){
-					found = (this.name == tag)?i:-1;
-					return (found == -1);
+				$.each(result,function(){
+					var tagname = this.name;
+					var tagInfo = Array();
+					tagInfo["id"] = this.id;
+					tagInfo["name"] = tagname;
+					var found = -1;
+					$.each(tags, function(i){
+						found = (this.name == tagname)?i:-1;
+						return (found == -1);
+					});
+
+					if (found == -1)
+						tags.push(this);
+					else
+						tags[found].count = this.count;//tags[found].count++;
+
+					post.tags.push(tagInfo);
 				});
-				if (found == -1){
-					tags.push(result);
-					tags.sort(nameSort);
-				} else {
-					tags[found].count++;
-				}
-				post.tags.push(tagInfo);
+				tags.sort(nameSort);
 				post.tags.sort(nameSort);
 				updateControlTags();
 				displayTags();

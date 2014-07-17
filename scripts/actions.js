@@ -73,28 +73,18 @@ function toggleSort(me){
 	reloadPosts();
 }
 
-function nextPage(){
-	if (get.page) var page = get.page;
-	else var page = 1;
-	if (page < totalPages){
-		page++;
-		get.page=page;
-		useLast = true;
-		updateUrl();
-		reloadPosts();
-	}
+function showAddTagsDialog(){
+	$('#add_tag').fadeIn(100);
+	$('#add_tag p').removeClass("selected");
+	$('#newtagField').val("");
+	$('#newtagField').focus();
 }
 
-function prevPage(){
-	if (get.page) var page = get.page;
-	else var page = 1;
-	if (page > 1){
-		page--;
-		if (page == 1) get.page=undefined;
-		else get.page=page;
-		useLast = true;
-		updateUrl();
-		reloadPosts();
-	}
+function addSelectedTag(element){
+	$(element).toggleClass("selected");
+}
+
+function loadMore(){
+	ajaxMorePosts("");
 }
 

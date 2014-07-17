@@ -162,6 +162,12 @@ p.disabled{
 	color:#444;
 }
 
+.folder h3.nullFolder{
+	color:#888;
+	background-color: #f5f5f5;
+	font-weight: normal;
+}
+
 .folder h3:hover, .feed p:hover{
 	cursor: pointer;
 	background-color: #ddd;
@@ -305,16 +311,28 @@ p.disabled{
 }
 
 
-#confdel_folder, #confdel_feed{
+#confdel_feed{
 	height: 140px;
 	background-color: rgba(190,0,0,0.9);
 	font-weight: bold;
 }
+
+#confdel_folder{
+	background-color: rgba(90,0,0,0.9);
+	height: 160px;
+	font-weight: bold;
+}
+
+#confdel_folder h3{
+	color:white;
+	background-color: rgb(190,0,0);
+}
+
 #confdel_folder .message, #confdel_feed .message{
 	color:white;
 }
 
-#confadd_feed{
+#confadd_feed, #add_folder{
 	height: 210px;
 	background-color: #deffad;
 }

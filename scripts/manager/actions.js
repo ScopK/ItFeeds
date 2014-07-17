@@ -19,7 +19,6 @@ function loadFolders(user){
 		success: function(result){
 			folders = result.folders;
 			tags = result.tags;
-			console.log(tags);
 			load(folders);
 			loadTags(tags);
 			loading_stop();
@@ -126,7 +125,6 @@ function cleanFolder(){
 		dataType : "json",
 		success: function(result){
 			folders[prevIdxFolder] = result;
-			console.log(folders[prevIdxFolder]);
 			load(folders);
 			loading_stop();
 		},
@@ -165,7 +163,6 @@ function addFeed(){
 			loading_stop();
 		}
 	});
-
 }
 
 function deleteFeed(){
@@ -193,20 +190,64 @@ function deleteFeed(){
 		}
 	});
 
-
 	closeDialogs();
 }
 
 function deleteFolder(){
-	alert("NO, TOO DANGEROUS");
-	/*
 	var prevIdxFolder = idxFolder;
-
+	loading_run();
 	var foldelForm = $(this).closest("form").serialize();
-	alert(foldelForm);
-	*/
+
+	$.ajax({
+		url: "./ajax/manager/delete_folder.php",
+		type: "POST",
+		data: foldelForm,
+		//dataType : "json",
+		success: function(result){
+			if (result == "oK"){
+				folders.splice(prevIdxFolder,1);
+				load(folders);
+				loading_stop();
+			} else
+				alert(result);
+		},
+		error: function (request, status, error){
+			alert("Unknown error 0x007: "+request.statusText);
+			loading_stop();
+		}
+	});
+
 	closeDialogs();
 
+}
+
+function addFolder(){
+	loading_run();
+	var addForm = $(this).closest("form").serialize();
+
+	$.ajax({
+		url: "./ajax/manager/new_folder.php",
+		type: "POST",
+		data: addForm,
+		dataType : "json",
+		success: function(result){
+			folders.push(result);
+			folders.sort(nameSort);
+
+			load(folders);
+			loading_stop();
+			closeDialogs();
+		},
+		error: function (request, status, error){
+			if (request.status>500)
+				alert(error);
+			else {
+				alert("Unknown error 0x006");
+				closeDialogs();
+			}
+			loading_stop();
+		}
+	});
 }
 
 function unlockHidden(){
@@ -223,7 +264,6 @@ function unlockHidden(){
 
 			folders = result.folders;
 			tags = result.tags;
-			console.log(tags);
 			load(folders);
 			loadTags(tags);
 			loading_stop();
@@ -254,4 +294,10 @@ function logoutButton(){
 			loading_stop();
 		}
 	});
+}
+
+function nameSort(a, b){
+	var aName = a.name.toLowerCase();
+	var bName = b.name.toLowerCase(); 
+	return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
 }
