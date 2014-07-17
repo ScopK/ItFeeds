@@ -36,6 +36,17 @@ $(document).ready(function(){
 		}
 	});
 
+	//################# Mouse navigator
+	$('#mouse_nav').mousedown(function(event) {
+	    switch (event.which) {
+	        case 1:
+	            nextPost();
+	            break;
+	        case 3:
+	            prevPost();
+	            return false;
+	    }
+	});
 });
 
 function initialize(){

@@ -187,6 +187,10 @@ LATERAL MENU FOLDER STYLES
 	color: #777;
 }
 
+.count.hidden{
+	display:none;
+}
+
 .folderHeader{
 	display:inherit;
 	font-size: 14px;
@@ -202,7 +206,7 @@ LATERAL MENU FOLDER STYLES
 
 
 .folder.selected .folderHeader.hidden .folderTitle{
-	background-color: #f00;
+	background-color: initial;
 }
 
 .folderHeader.hidden:hover .folderTitle{
@@ -426,6 +430,10 @@ Tags
 	background-color: #ddd;
 }
 
+#add_tag .taglist p.hiddenTag{
+	color: rgba(0,0,0,0.4);
+}
+
 #add_tag_content {
 	position: absolute;
 	width: 340px;
@@ -515,9 +523,6 @@ div.tagname button{
 	vertical-align: middle;
 }
 
-
-
-
 .post.minimized .description{
 	display:none;
 }
@@ -526,4 +531,20 @@ div.tagname button{
 	border-color: rgba(0,0,0,0.5);
 	border-width: 0 0 1px;
 	border-style:dotted;
+}
+
+#mouse_nav{
+	z-index:2;
+	position:fixed;
+	width:100%;
+	background-color: transparent;
+	border: 0px;
+	bottom: 0; right: 0; left: 0;
+	height: 1px;
+}
+
+#mouse_nav:hover{
+	cursor:pointer;
+	background-color: black;
+	height: 10px;
 }

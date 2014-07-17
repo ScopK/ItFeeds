@@ -29,7 +29,7 @@
 	$stmt=mysqli_stmt_init($con);
 	if (mysqli_stmt_prepare($stmt,$sql)){
 
-		mysqli_stmt_bind_param($stmt,"ssss", $folderId, $name, $link, $rssLink); // Bind parameters
+		mysqli_stmt_bind_param($stmt,"ssss", $folderId, utf8_decode($name), $link, $rssLink); // Bind parameters
 		mysqli_stmt_execute($stmt); // Execute query
 
 		mysqli_stmt_close($stmt); // Close statement

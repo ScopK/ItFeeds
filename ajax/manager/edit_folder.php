@@ -11,7 +11,7 @@
 	$stmt=mysqli_stmt_init($con);
 	if (mysqli_stmt_prepare($stmt,"UPDATE folders SET name=? ,hidden=? WHERE id=?")){
 
-		mysqli_stmt_bind_param($stmt,"sss", $name, $hidden, $folderId); // Bind parameters
+		mysqli_stmt_bind_param($stmt,"sss", utf8_decode($name), $hidden, $folderId); // Bind parameters
 		mysqli_stmt_execute($stmt); // Execute query
 
 		mysqli_stmt_close($stmt); // Close statement

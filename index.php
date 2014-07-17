@@ -63,6 +63,7 @@
                 <div id="posts_panel"></div>
                 <div id="blankspace" style="height: 100px; width: 100px;"></div>
             </div>
+            <button id="mouse_nav" oncontextmenu="return false;"></button>
         </div>
         <div id="loading_panel">
             <div class="loading" id="smallBall"></div>

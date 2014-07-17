@@ -43,10 +43,10 @@
 				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
 
 				$p->link = $this->getNodeValueByTagName($item,'link');
-				$p->description = $this->getNodeValueByTagName($item,'description');
-				$p->title = htmlentities($this->getNodeValueByTagName($item,'title'));
+				$p->description = utf8_decode($this->getNodeValueByTagName($item,'description'));
+				$p->title = utf8_decode($this->getNodeValueByTagName($item,'title'));
 				if ($p->title == "")
-					$p->title = htmlentities($this->getNodeValueByTagName($channel,'title'));
+					$p->title = utf8_decode($this->getNodeValueByTagName($channel,'title'));
 				$posts[] = $p;
 			}
 			return $posts;
@@ -73,10 +73,10 @@
 				date_default_timezone_set('Europe/Madrid');
 				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
 
-				$p->description = $this->getNodeValueByTagName($entry,'content');
-				$p->title = htmlentities($this->getNodeValueByTagName($entry,'title'));
+				$p->description = utf8_decode($this->getNodeValueByTagName($entry,'content'));
+				$p->title = utf8_decode($this->getNodeValueByTagName($entry,'title'));
 				if ($p->title == "")
-					$p->title = htmlentities($this->getNodeValueByTagName($feed,'title'));
+					$p->title = utf8_decode($this->getNodeValueByTagName($feed,'title'));
 
 				$posts[] = $p;
 			}

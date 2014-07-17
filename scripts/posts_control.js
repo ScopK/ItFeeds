@@ -21,16 +21,18 @@ $(document).ready(function(){
 		        break;
 		    case 32: //space
 		        var body = $("html, body");
-		        body.animate({scrollTop: body.scrollTop() + 200}, {duration: 200, easing: 'linear', queue: false});
-		        allowed = true;
-		        break;
+		        body.animate({scrollTop: body.scrollTop() + 200}, {duration: 210, easing: 'linear', queue: false});
+		        setTimeout(function() {allowed = true;}, 200);
+		        return false;
 		    case 70: //f
 		    	toggleLateralMenu();
 		    	break;
+		    case 84: //t
+			    showAddTagsDialog();
+			    return false;
 		    case 66: //b
 		    case 68: //d
 		    case 78: //n
-		    case 84: //t
 		    case 86: //v
 		    case 116: //f5
 		    case 123: //f12
@@ -151,7 +153,8 @@ function addTag(){
 	$("#add_tag .taglist p.selected").each(function(){
 		tag += " "+this.innerHTML;
 	});
-	tag += " "+$("#newtagField").val();
+	if ($("#newtagField").val())
+		tag += " "+$("#newtagField").val();
 	tag = encodeURIComponent(tag.substring(1));
 	if (tag.length > 0) {
 		var post = posts[postIdxSelected-1];
@@ -257,14 +260,15 @@ function markPost(field, value, postidx){
 			var post = posts[postidx-1];
 			if (field==0){ // read/unread
 				var idx = findFeedIndex(post.feedId);
+				var folder = folders[idx[0]];
 				if (value==0) {
 					$(".post[idxpost='"+postidx+"']").removeClass("unread");
-					folders[idx[0]].unread--;
-					folders[idx[0]].feeds[idx[1]].unread--;
+					folder.unread--;
+					folder.feeds[idx[1]].unread--;
 				} else {
 					$(".post[idxpost='"+postidx+"']").addClass("unread");
-					folders[idx[0]].unread++;
-					folders[idx[0]].feeds[idx[1]].unread++;
+					folder.unread++;
+					folder.feeds[idx[1]].unread++;
 				}
 				updateCounts(idx);
 			} else {	// fav/unfav 
@@ -282,11 +286,22 @@ function markPost(field, value, postidx){
 }
 
 function updateCounts(idx){
-	if (folders[idx[0]].name != "null"){
+	var folder = folders[idx[0]];
+	var feed = folder.feeds[idx[1]];
+	if (folder.name != "null"){
 		var folderelem = $(".folder[idxfolder='"+idx[0]+"']");
-		folderelem.find(".folderTitle .count .num").html(folders[idx[0]].unread);
-		folderelem.find(".feed[idxfeed='"+idx[1]+"'] .feedTitle .count .num").html(folders[idx[0]].feeds[idx[1]].unread);
+		var folderCount = folderelem.find(".folderTitle .count");
+		folderCount.find(".num").html(folder.unread);
+		if (folder.unread==0) 	folderCount.addClass("hidden");
+		else 					folderCount.removeClass("hidden");
+		var feedCount = folderelem.find(".feed[idxfeed='"+idx[1]+"'] .feedTitle .count");
+		feedCount.find(".num").html(feed.unread);
+		if (feed.unread==0) 	feedCount.addClass("hidden");
+		else 					feedCount.removeClass("hidden");
 	} else {
-		$("#feeds").find(".feed[idxfeed='"+idx[1]+"'] .feedTitle .count .num").html(folders[idx[0]].feeds[idx[1]].unread);		
+		var feedCount = $("#feeds").find(".feed[idxfeed='"+idx[1]+"'] .feedTitle .count");
+		feedCount.find(".num").html(feed.unread);
+		if (feed.unread==0) 	feedCount.addClass("hidden");
+		else 					feedCount.removeClass("hidden");
 	}
 }

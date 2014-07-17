@@ -33,6 +33,8 @@ function getHTMLFolder(folder,idx){
 	var unread="";
 	if (folder.unread > 0)
 		unread = ' <span class="count">(<span class="num">'+folder.unread+'</span>)</span>';
+	else
+		unread = ' <span class="count hidden">(<span class="num">'+folder.unread+'</span>)</span>';
 
 	var selected = (get.folder == folder.id);
 	html = '<div class="folder'+((selected)?' selected':'')+'" idxFolder="'+idx+'" idFolder="'+folder.id+'">'+
@@ -53,7 +55,9 @@ function getHTMLFeeds(feed_list,indexFolder){
 		var unread="";
 		if (this.unread > 0)
 			unread = ' <span class="count">(<span class="num">'+this.unread+'</span>)</span>';
-		
+		else 
+			unread = ' <span class="count hidden">(<span class="num">'+this.unread+'</span>)</span>';
+
 		var selected = (get.feed == this.id);
 		html += '<div class="feed'+((selected)?' selected':'')+((unread=="")?"":" unread")+'" idxFolder="'+indexFolder+'" idxFeed="'+indexFeed+'" idFeed="'+this.id+'">'+
 					'<div class="feedTitle">'+(this.name)+unread+'</div>'+
@@ -81,7 +85,7 @@ function getHTMLTags(tag_list){
 function getHTMLTagsSelector(tag_list){
 	var html = "";
 	$.each(tags,function(index){
-		html += '<p onclick="addSelectedTag(this)">'+(this.name)+'</p>';
+		html += '<p '+((this.hidden==1)?'class="hiddenTag"':'')+' onclick="addSelectedTag(this)">'+(this.name)+'</p>';
 	});
 	return html;
 }

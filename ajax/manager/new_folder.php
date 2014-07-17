@@ -25,7 +25,7 @@
 	$stmt=mysqli_stmt_init($con);
 	if (mysqli_stmt_prepare($stmt,$sql)){
 
-		mysqli_stmt_bind_param($stmt,"ss", $name, $user); // Bind parameters
+		mysqli_stmt_bind_param($stmt,"ss", utf8_decode($name), $user); // Bind parameters
 		mysqli_stmt_execute($stmt); // Execute query
 
 		$done = mysqli_affected_rows($con);
