@@ -23,7 +23,7 @@ function loadFolders(user){
 			loadTags(tags);
 			loading_stop();
 		},
-		error: function(result){
+		error: function (request, status, error){
 			alert("Unknown error 0x001");
 			loading_stop();
 		}
@@ -52,7 +52,7 @@ function cleanFeed(){
 			load(folders);
 			loading_stop();
 		},
-		error: function(result){
+		error: function (request, status, error){
 			alert("Unknown error 0x002");
 			loading_stop();
 		}
@@ -81,7 +81,7 @@ function editFeed(){
 			load(folders);
 			loading_stop();
 		},
-		error: function(result){
+		error: function (request, status, error){
 			alert("Unknown error 0x003");
 			loading_stop();
 		}
@@ -106,7 +106,7 @@ function editFolder(){
 			load(folders);
 			loading_stop();
 		},
-		error: function(result){
+		error: function (request, status, error){
 			alert("Unknown error 0x004");
 			loading_stop();
 		}
@@ -128,7 +128,7 @@ function cleanFolder(){
 			load(folders);
 			loading_stop();
 		},
-		error: function(result){
+		error: function (request, status, error){
 			alert("Unknown error 0x005");
 			loading_stop();
 		}

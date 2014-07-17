@@ -141,7 +141,7 @@ function ajaxPosts(args){
 			postsInit(true);
 		},
 		error: function (request, status, error){
-			alert(error+" 0x001");
+			showMessage("Error getting posts<br/>"+error);
 		},
 		complete: function(){
 			loading_stop();
@@ -182,7 +182,7 @@ function ajaxMorePosts(args){
 			postsInit(false);
 		},
 		error: function (request, status, error){
-			alert(error+" 0x001");
+			showMessage("Error getting posts<br/>"+error);
 		},
 		complete: function(){
 			loading_stop();

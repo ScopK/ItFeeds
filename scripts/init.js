@@ -63,9 +63,8 @@ function initialize(){
 
 			reloadPosts();
 		},
-		error: function(result){
-			alert("Unknown error 0x001");
-			$("#page").fadeIn();
+		error: function (request, status, error){
+			showMessage("Couldn't get user info");
 		},
 		complete: function(){
 			$("#page").fadeIn();

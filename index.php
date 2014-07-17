@@ -81,5 +81,6 @@
                 </table>
             </form>
         </div></div>
+        <div id="top_message"><p></p></div>
     </body>
 </html>

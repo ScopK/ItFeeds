@@ -37,7 +37,7 @@ $(document).ready(function(){
 		    case 116: //f5
 		    case 123: //f12
 		    default:
-		        //alert(e.which+" - "+e.key);
+		        //showMessage("Key pressed:<br/>"+e.which+" - "+e.key,true);
 		        return;
 		}
 	});
@@ -50,10 +50,7 @@ $(document).ready(function(){
 
 function postsInit(scrollTop){
 	$(".post").click(function(){
-		selectPost($(this).attr("idxpost"));/*
-		$(".post").removeClass("selected");
-		postIdxSelected = $(this).attr("idxpost");
-		$(this).addClass("selected");*/
+		selectPost($(this).attr("idxpost"));
 	});
 
 	if (preselectPost > 0){
@@ -187,9 +184,10 @@ function addTag(){
 				post.tags.sort(nameSort);
 				updateControlTags();
 				displayTags();
+				showMessage("Tags added succesfully",true);
 			},
 			error: function (request, status, error){
-				alert(error+" 0x001");
+				showMessage("An error ocurred adding tags<br/>"+error);
 			},
 			complete: function(){
 				loading_stop();
@@ -222,9 +220,10 @@ function deleteTag(me){
 			});
 			updateControlTags();
 			displayTags();
+			showMessage("Tag deleted succesfully",true);
 		},
 		error: function (request, status, error){
-			alert(error+" 0x001");
+			showMessage("An error ocurred deleting tag<br/>"+error);
 		},
 		complete: function(){
 			loading_stop();
@@ -242,7 +241,6 @@ function toogleFavPost(){
 	var val = (posts[postIdxSelected-1].favorite == 1)?0:1;
 	markPost(1,val,postIdxSelected);
 }
-
 
 //  First param: 0-Read/unread  1-Favorite
 // Second param: 0-read/nofav   1-unread/favorite
@@ -277,7 +275,7 @@ function markPost(field, value, postidx){
 
 		},
 		error: function (request, status, error){
-			alert(error+" 0x001");
+			showMessage("An error ocurred marking post<br/>"+error);
 		},
 		complete: function(){
 			loading_stop();
