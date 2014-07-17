@@ -46,7 +46,7 @@ $(document).ready(function(){
 });
 
 
-function postsInit(){
+function postsInit(scrollTop){
 	$(".post").click(function(){
 		selectPost($(this).attr("idxpost"));/*
 		$(".post").removeClass("selected");
@@ -66,7 +66,8 @@ function postsInit(){
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,0);
 	} else {
-		//$('html,body').animate({scrollTop: 0},0); 
+		if (scrollTop)
+			$('html,body').animate({scrollTop: 0},0); 
 		disableControls();
 	}
 }
@@ -83,7 +84,7 @@ function nextPost(){
 
 function prevPost(){
 	if (postIdxSelected > 1){
-		$(".post[idxpost='"+postIdxSelected+"']").addClass("minimized");
+		//$(".post[idxpost='"+postIdxSelected+"']").addClass("minimized");
 		var idx = postIdxSelected;
 		selectPost(--idx);
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");

@@ -124,7 +124,7 @@ function ajaxPosts(args){
 				var html = getHTMLPost(this,postCount++);
 				$("#posts_panel").append(html);
 			});
-			postsInit();
+			postsInit(true);
 		},
 		error: function (request, status, error){
 			alert(error+" 0x001");
@@ -165,7 +165,7 @@ function ajaxMorePosts(args){
 			});
 			pagesLoaded++;
 			$("#percentSeen").html(pagesLoaded+"/"+totalPages);
-			postsInit();
+			postsInit(false);
 		},
 		error: function (request, status, error){
 			alert(error+" 0x001");
