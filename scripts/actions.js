@@ -100,6 +100,6 @@ function showMessage(msg, good){
 	hidemsgtimer = setTimeout(function(){
 		var hh = $("#top_message").outerHeight()+"px";
 		$("#top_message").css("top","-"+hh);
-	},2000);
+	},3000);
 }
 

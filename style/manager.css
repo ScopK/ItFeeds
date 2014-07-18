@@ -374,10 +374,6 @@ p.disabled{
 	width: 100%;
 }
 
-
-
-
-
 #tools_folder button, #tools_feed button {
     width:105px;
     height:105px;
@@ -407,3 +403,17 @@ button.deleteIcon{
 button.backIcon{
     background-image: url("../imgs/goback.png");
 }
+
+#goLink a,#goRss a{
+	font-size:18px;
+	text-decoration: none;
+}
+
+#goLink a:hover,#goRss a:hover{
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+#goLink a:visited,#goRss a:visited{
+	color:blue;
+} 

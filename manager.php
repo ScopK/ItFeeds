@@ -145,8 +145,8 @@
                         <input type="hidden" name="feedId"/>
                         <table>
                         <tr><td>Feed name</td><td><input type="text" name="fname" style="width:97%" autocomplete="off"/></td></tr>
-                        <tr><td>RssLink</td><td><input type="text" name="rlink" style="width:97%" autocomplete="off"/></td><td id="goRss"><a target="_blank">&#65515;</a></td></tr>
-                        <tr><td>Link</td><td><input type="text" name="link" style="width:97%" autocomplete="off"/></td><td id="goLink"><a target="_blank">&#65515;</a></td></tr>
+                        <tr><td>RssLink</td><td><input type="text" name="rlink" style="width:97%" autocomplete="off"/></td><td id="goRss"><a target="_blank">&#8611;</a></td></tr>
+                        <tr><td>Link</td><td><input type="text" name="link" style="width:97%" autocomplete="off"/></td><td id="goLink"><a target="_blank">&#8611;</a></td></tr>
                         <tr><td>Update time</td><td colspan="2"><input type="text" name="uptime" style="width:40px" autocomplete="off"/></td></tr>
                         <tr><td><label style="cursor:pointer" for="enabfeedcheck">Enabled</label></td><td colspan="2"><input id="enabfeedcheck" type="checkbox" name="ena" style="cursor:pointer"/></td></tr>
                         </table>
