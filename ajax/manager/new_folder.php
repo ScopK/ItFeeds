@@ -18,7 +18,7 @@
 		die('HTTP/1.1 501 Not logged user');
 	}
 
-	$id = getUUID();
+	$id = getNewID();
 
   	$sql ="INSERT INTO folders(id,name,user,hidden) VALUES('$id',?,?,0)";
 

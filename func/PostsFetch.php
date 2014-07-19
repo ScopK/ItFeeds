@@ -1,5 +1,6 @@
 <?php
 	require_once "FeedReader.php";
+	require_once "functions.php";
 
 	class PostsFetch{
 		private $con;
@@ -95,8 +96,10 @@
 						echo "Updated\n";
 				}*/
 			} else {
-				$sql = "INSERT INTO posts VALUES(UUID(),?,?,?,?,?,?,?)";
+				$nid = getNewID();
+				$sql = "INSERT INTO posts VALUES('$nid',?,?,?,?,?,?,?)";
 				$stmt=mysqli_stmt_init($this->con);
+				$done = 0;
 				if (mysqli_stmt_prepare($stmt,$sql)){
 					mysqli_stmt_bind_param($stmt,"sssssss",$feed['id'],$post->title,$post->description,$post->link,$post->unread,$post->favorite,$post->date);
 					mysqli_stmt_execute($stmt);

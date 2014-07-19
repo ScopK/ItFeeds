@@ -22,7 +22,7 @@
 	if ($link=="")
 		$link=$rssLink;
 
-	$id = getUUID();
+	$id = getNewID();
 
   	$sql ="INSERT INTO feeds(id,id_folder,name,link,rss_link,enabled,deleted) VALUES('$id',?,?,?,?,1,0)";
 

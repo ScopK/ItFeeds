@@ -31,8 +31,8 @@ USE `fydepdb`;
 
 DROP TABLE IF EXISTS `feeds`;
 CREATE TABLE IF NOT EXISTS `feeds` (
-  `id` varchar(36) COLLATE utf8_spanish_ci NOT NULL,
-  `id_folder` varchar(36) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `id` varchar(36) COLLATE utf8_bin NOT NULL,
+  `id_folder` varchar(36) COLLATE utf8_bin DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `upd_time` smallint(6) NOT NULL DEFAULT '10',
   `link` varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `feeds` (
 
 DROP TABLE IF EXISTS `folders`;
 CREATE TABLE IF NOT EXISTS `folders` (
-  `id` varchar(36) COLLATE utf8_spanish_ci NOT NULL,
+  `id` varchar(36) COLLATE utf8_bin NOT NULL,
   `name` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
   `user` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
   `hidden` tinyint(1) DEFAULT '0' NOT NULL,
@@ -68,8 +68,8 @@ CREATE TABLE IF NOT EXISTS `folders` (
 
 DROP TABLE IF EXISTS `post_tags`;
 CREATE TABLE IF NOT EXISTS `post_tags` (
-  `id_post` varchar(36) COLLATE utf8_spanish_ci NOT NULL,
-  `id_tag` varchar(36) COLLATE utf8_spanish_ci NOT NULL,
+  `id_post` varchar(36) COLLATE utf8_bin NOT NULL,
+  `id_tag` varchar(36) COLLATE utf8_bin NOT NULL,
   KEY `post_tags_ibfk_2` (`id_tag`),
   KEY `post_tags_ibfk_1` (`id_post`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -82,8 +82,8 @@ CREATE TABLE IF NOT EXISTS `post_tags` (
 
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (
-  `id` varchar(36) COLLATE utf8_spanish_ci NOT NULL,
-  `id_feed` varchar(36) COLLATE utf8_spanish_ci NOT NULL,
+  `id` varchar(36) COLLATE utf8_bin NOT NULL,
+  `id_feed` varchar(36) COLLATE utf8_bin NOT NULL,
   `title` text COLLATE utf8_spanish_ci NOT NULL,
   `description` text COLLATE utf8_spanish_ci NOT NULL,
   `link` varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
 
 DROP TABLE IF EXISTS `tags`;
 CREATE TABLE IF NOT EXISTS `tags` (
-  `id` varchar(36) COLLATE utf8_spanish_ci NOT NULL,
+  `id` varchar(36) COLLATE utf8_bin NOT NULL,
   `user` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
   `tag_name` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `hidden` tinyint(1) DEFAULT '0' NOT NULL,

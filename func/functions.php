@@ -239,6 +239,16 @@
 	        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ));
 	}
 
+	function getNewID($length = 36) {
+		//return getUUID();
+	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
+	    $randomString = '';
+	    for ($i = 0; $i < $length; $i++) {
+	        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+	    }
+	    return $randomString;
+	}
+
 	function checkUserPassword($con,$user,$pass){
 		$sql = "SELECT username FROM users WHERE username=? AND password=?";
 		$stmt=mysqli_stmt_init($con);

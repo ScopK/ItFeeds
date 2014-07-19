@@ -27,7 +27,7 @@
 			mysqli_stmt_fetch($stmt);
 		}
 		if (!$idobt){
-			$idobt = getUUID();
+			$idobt = getNewID();
 			$sql = "INSERT INTO tags VALUES(?,?,?,'0')";
 			if (mysqli_stmt_prepare($stmt,$sql)){
 
