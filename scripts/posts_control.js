@@ -5,7 +5,7 @@ $(document).ready(function(){
 		allowed = false;
 		if ($(".loading").css("animation-play-state") != "paused") return;
 		if (e.ctrlKey || e.altKey || e.shiftKey) return;
-		if ($("input").is(":focus")) return;
+		if ($("input").is(":focus:visible")) return;
 		switch (e.which) {
 		    case 83: //s
 		        toogleFavPost();
@@ -23,6 +23,7 @@ $(document).ready(function(){
 		        var body = $("html, body");
 		        body.animate({scrollTop: body.scrollTop() + 200}, {duration: 210, easing: 'linear', queue: false});
 		        setTimeout(function() {allowed = true;}, 200);
+		        $("button:focus").blur();
 		        return false;
 		    case 70: //f
 		    	toggleLateralMenu();
