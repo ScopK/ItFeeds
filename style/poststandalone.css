@@ -6,7 +6,7 @@ body {
     background-image: url("../imgs/back.jpg");
     background-attachment: fixed;
     background-size: 100% 100%;
-
+    background-color: #444;
     overflow-y: scroll;
 }
 

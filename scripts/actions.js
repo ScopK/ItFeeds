@@ -84,7 +84,10 @@ function addSelectedTag(element){
 }
 
 function loadMore(){
-	ajaxMorePosts("");
+	if (!$("#loadMore").prop('disabled')) {
+		$("#loadMore").prop('disabled',true);
+		ajaxMorePosts("");
+	}
 }
 
 var hidemsgtimer;

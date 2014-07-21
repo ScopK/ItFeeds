@@ -26,6 +26,14 @@
         <script>
         $(document).ready(function(){
             loading_run();
+            var hueSel = Math.random();
+            if (hueSel < 0.3)
+                var hue = 'rgb(255,' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+            else if (hueSel <= 0.6)
+                var hue = 'rgb(' + (Math.floor(Math.random() * 256)) + ',255,' + (Math.floor(Math.random() * 256)) + ')';
+            else
+                var hue = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',255)';
+            $("body").css("background-color",hue);
         });
         </script>
     </head>
@@ -48,7 +56,7 @@
                     <span id="pages">
                         <span id="totalPages">10</span> (<span id="percentSeen">0</span>)
                     </span>
-                    <button id="loadMore" onclick="loadMore()">++</button>
+                    <button id="loadMore" onclick="loadMore()">Load More</button>
                 </div>
             </div>
             <div id="content">

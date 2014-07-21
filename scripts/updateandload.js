@@ -180,6 +180,7 @@ function ajaxMorePosts(args){
 			pagesLoaded++;
 			$("#percentSeen").html(pagesLoaded+"/"+totalPages);
 			postsInit(false);
+			$("#loadMore").prop('disabled',false);
 		},
 		error: function (request, status, error){
 			showMessage("Error getting posts<br/>"+error);

@@ -6,7 +6,8 @@ body {
     background-image: url("../imgs/back2.jpg");
     background-attachment: fixed;
     background-size: 100% 100%;
-
+  	/*background-blend-mode: color-burn;
+    background-color:#f00;*/
     overflow-y: scroll;
 }
 button::-moz-focus-inner {
@@ -19,7 +20,7 @@ button::-moz-focus-inner {
 #page {
 	display:none;
 	position:relative;
-	background-color: rgba(255,255,255,0.8);
+	background-color: rgba(255,255,255,0.9);
 	margin: auto 40px;
 
 	overflow:hidden;
@@ -260,8 +261,8 @@ LATERAL MENU FOLDER STYLES
 
 
 .options_panel a:hover, .options_panel button:hover{
-	border-color: #888;
-	background-color: #888;
+	border-color: #404040;
+	background-color: #404040;
 }
 
 .options_panel a:active,
@@ -288,7 +289,7 @@ LATERAL MENU FOLDER STYLES
 
 .options_panel .marked:hover{
 	border-color: black;
-	background-color: #404040;
+	background-color: #888;
 }
 
 .options_panel .marked:active{
@@ -316,28 +317,21 @@ POSTS
 	border: solid transparent;
 	border-width: 1px 0 2px;
 	height: 38px;
-	background-color: rgba(0,0,0,0.1);
+	background-color: rgba(60,60,60,0.2);
 }
 
 .post.selected .header{
-	background-color: rgba(128,128,128,0.5);
 	border-color: rgba(0,0,0,0.5);
 }
-
+	
 .post.unread .header{
-	background-color: rgba(255,100,100,0.3);
-}
-
-.post.unread.selected .header{
-	background-color: rgba(255,100,100,0.7);
-	border-color: rgba(200,0,0,1);
+	background-color: rgba(255,255,255,0.7);
 }
 
 .post .title{
 	position:absolute;
 	top: 4px;
-	left:15px; right: 200px;
-	
+	left:15px; right: 110px;
 	overflow:hidden;
 }
 
