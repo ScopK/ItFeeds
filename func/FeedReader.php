@@ -43,7 +43,7 @@
 				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
 
 				$p->link = $this->getNodeValueByTagName($item,'link');
-				$p->description = utf8_decode($this->getNodeValueByTagName($item,'description'));
+				$p->description = repl(htmlentities($this->getNodeValueByTagName($item,'description')));
 				$p->title = htmlentities($this->getNodeValueByTagName($item,'title'));
 				if ($p->title == "")
 					$p->title = utf8_decode($this->getNodeValueByTagName($channel,'title'));
@@ -73,7 +73,7 @@
 				date_default_timezone_set('Europe/Madrid');
 				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
 
-				$p->description = utf8_decode($this->getNodeValueByTagName($entry,'content'));
+				$p->description = repl(htmlentities($this->getNodeValueByTagName($entry,'content')));
 				$p->title = htmlentities($this->getNodeValueByTagName($entry,'title'));
 				if ($p->title == "")
 					$p->title = utf8_decode($this->getNodeValueByTagName($feed,'title'));
@@ -89,5 +89,11 @@
 			else
 				return "";
 		}
+	}
+
+	function repl($str){
+		$aa = str_replace("&lt;","<",$str); 
+		$aa = str_replace("&quot;",'"',$aa); 
+		return str_replace("&gt;",">",$aa);
 	}
 ?>
