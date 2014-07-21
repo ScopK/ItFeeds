@@ -24,7 +24,7 @@ function loadFolders(user){
 			loading_stop();
 		},
 		error: function (request, status, error){
-			alert("Unknown error 0x001");
+			alert("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -53,7 +53,7 @@ function cleanFeed(){
 			loading_stop();
 		},
 		error: function (request, status, error){
-			alert("Unknown error 0x002");
+			alert("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -83,7 +83,7 @@ function editFeed(){
 			loading_stop();
 		},
 		error: function (request, status, error){
-			alert("Unknown error 0x003");
+			alert("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -109,7 +109,34 @@ function editFolder(){
 			loading_stop();
 		},
 		error: function (request, status, error){
-			alert("Unknown error 0x004");
+			alert("Error "+request.status+": "+request.statusText);
+			loading_stop();
+		}
+	});
+	closeDialogs();
+}
+
+function editTag(){
+	var prevIdxTag = idxTag;
+	loading_run();
+	var editForm = $(this).closest("form").serialize();
+
+	$.ajax({
+		url: "./ajax/manager/edit_tag.php",
+		type: "POST",
+		data: editForm,
+		dataType : "json",
+		success: function(result){
+			var tag = tags[prevIdxTag];
+			tag['name'] = result['name'];
+			tag['hidden'] = result['hidden'];
+			tags.sort(nameSort);
+
+			loadTags(tags);
+			loading_stop();
+		},
+		error: function (request, status, error){
+			alert("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -131,7 +158,7 @@ function cleanFolder(){
 			loading_stop();
 		},
 		error: function (request, status, error){
-			alert("Unknown error 0x005");
+			alert("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -156,12 +183,9 @@ function addFeed(){
 			closeDialogs();
 		},
 		error: function (request, status, error){
-			if (request.status>500)
-				alert(error);
-			else {
-				alert("Unknown error 0x006");
+			alert("Error "+request.status+": "+request.statusText);
+			if (request.status<=500)
 				closeDialogs();
-			}
 			loading_stop();
 		}
 	});
@@ -187,7 +211,7 @@ function deleteFeed(){
 				alert(result);
 		},
 		error: function (request, status, error){
-			alert("Unknown error 0x007");
+			alert("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -214,13 +238,40 @@ function deleteFolder(){
 				alert(result);
 		},
 		error: function (request, status, error){
-			alert("Unknown error 0x007: "+request.statusText);
+			alert("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
 
 	closeDialogs();
 
+}
+
+function deleteTag(){
+	var prevIdxTag = idxTag;
+	loading_run();
+	var tagdelForm = $(this).closest("form").serialize();
+
+	$.ajax({
+		url: "./ajax/manager/delete_tag.php",
+		type: "POST",
+		data: tagdelForm,
+		//dataType : "json",
+		success: function(result){
+			if (result == "oK"){
+				tags.splice(prevIdxTag,1);
+				loadTags(tags);
+				loading_stop();
+			} else
+				alert(result);
+		},
+		error: function (request, status, error){
+			alert("Error "+request.status+": "+request.statusText);
+			loading_stop();
+		}
+	});
+
+	closeDialogs();
 }
 
 function addFolder(){
@@ -241,12 +292,9 @@ function addFolder(){
 			closeDialogs();
 		},
 		error: function (request, status, error){
-			if (request.status>500)
-				alert(error);
-			else {
-				alert("Unknown error 0x006");
+			alert("Error "+request.status+": "+request.statusText);
+			if (request.status<=500) 
 				closeDialogs();
-			}
 			loading_stop();
 		}
 	});
@@ -277,7 +325,7 @@ function unlockHidden(){
 
 		},
 		error: function (request, status, error){
-			alert("Incorrect password or error");
+			alert("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -292,7 +340,7 @@ function logoutButton(){
 			window.location = "./login.php";
 		},
 		error: function (request, status, error){
-			alert("Error Logout'ing");
+			alert("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});

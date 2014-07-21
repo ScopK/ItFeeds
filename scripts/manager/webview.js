@@ -12,6 +12,8 @@ $(document).ready(function(){
 	$("button.addFeed").click(addFeed);
 	$("button.deleteFeed").click(deleteFeed);
 	$("button.deleteFolder").click(deleteFolder);
+	$("button.editTag").click(editTag);
+	$("button.deleteTag").click(deleteTag);
 	$("button.unlockHidden").click(unlockHidden);
 	$("button.logoutButton").click(logoutButton);
 
@@ -20,6 +22,8 @@ $(document).ready(function(){
 	$("button#feedAdd").click(showAddFeed);
 	$("button#feedConfig").click(showCleanFeed);
 	$("button#feedDelete").click(showDeleteFeed);
+	$("button#tagConfig").click(showConfigTag);
+	$("button#tagDelete").click(showDeleteTag);
 
 	$("#content_folders #header").click(showAddFolder);
 	$("button.addFolder").click(addFolder);
@@ -91,11 +95,13 @@ function loadTags(tags){
 		var style="";
 		if (this.hidden == 1)
 			var style = ' class="hidden"';
-		var line = '<div class="tag" idTag="'+this.id+'" idxFolder="'+indexTag+'"><h3'+style+'>'+this.name+' <span class="counter">('+this.count+')</span></h3>';
+		var line = '<div class="tag" idTag="'+this.id+'" idxTag="'+indexTag+'"><h3'+style+'>'+this.name+' <span class="counter">('+this.count+')</span></h3>';
 		indexTag++;
 
 		$("#tag_list").append(line);
 	});
+
+	$(".tag").click(showTagTools);
 	$("#tag_list").show();
 }
 
@@ -232,6 +238,40 @@ function showDeleteFeed(){
 function showAddFolder(){
 	$("#add_folder").find("input[name='foldername']").val("").focus();
 	$("#add_folder").addClass("active");
+}
+
+function showTagTools(){
+	idxTag = $(this).closest(".tag").attr("idxTag");
+	var tag = tags[idxTag];
+
+	$("#tools_tag h3").html(tag['name']+" - Options");
+	$("#tools_tag button").attr("tagidx",idxTag);
+	$("#tools_tag").addClass("active");
+}
+
+function showConfigTag() {
+	$("#tools_tag").removeClass("active");
+	idxTag = $(this).attr("tagidx");
+	var tag = tags[idxTag];
+
+	$("#editTag h3").html(tag['name']);
+
+	$("#editTag").find("input[name='tagId']").val(tag['id']);
+	$("#editTag").find("input[name='tagname']").val(tag['name']);
+	$("#editTag").find("input[name='hidden']").prop('checked',(tag['hidden'] == '1'));
+
+	$("#editTag").addClass("active");
+}
+
+function showDeleteTag() {
+	$("#tools_tag").removeClass("active");
+	idxTag = $(this).attr("tagidx");
+	var tag = tags[idxTag];
+
+	$("#confdel_tag h3").html(tag['name']);
+	$("#confdel_tag").find("input[name='tagId']").val(tag['id']);
+
+	$("#confdel_tag").addClass("active");
 }
 
 function closeDialogs(){

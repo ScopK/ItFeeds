@@ -194,21 +194,47 @@
             </div>
 
             <div id="tag_list"></div>
-            <!--
-            <div class="inside_dialog" id="addTag"><div class="dialog_container">
-                <h3>CREATE TAG</h3>
+
+
+            <div class="inside_dialog" id="tools_tag"><div class="dialog_container">
+                <h3>TOOLS TAG</h3>
+                <div class="message">
+                    <span><button id="tagConfig" class="optionsIcon"></button><p>Tag settings</p></span>
+                    <span><button id="tagDelete" class="deleteIcon"></button><p>Delete tag</p></span>
+                    <span><button class="cancel backIcon"></button><p>Cancel</p></span>
+                </div>
+            </div></div>
+
+            <div class="inside_dialog" id="editTag"><div class="dialog_container">
+                <h3>EDIT TAG</h3>
                 <div class="message">
                     <form action="" method="POST">
-                        <input type="hidden" name="feedId"/>
+                        <input type="hidden" name="tagId"/>
+                        <table style="width: 300px">
+                        <tr><td align="right"><label>Tag name:</label></td><td style="padding-left:10px"><input type="text" name="tagname" autocomplete="off"/></td></tr>
+                        <tr><td align="right"><label style="cursor:pointer" for="taghidcheck">Hidden:</label></td><td align="left" style="padding-left:10px"><input id="taghidcheck" type="checkbox" name="hidden" style="cursor:pointer"/></td></tr>
+                        </table>
                         <div class="dialog_buttons">
-                            <p>Are you sure you want to create a tag?<p><br/>
-                            <button class="createTag" onclick="return false;">CreateTag</button>
+                            <button class="editTag" onclick="return false;">Edit</button>
                             <button class="cancel" onclick="return false;">Cancel</button>
                         </div>
                     </form>
                 </div>
             </div></div>
-            -->
+
+            <div class="inside_dialog" id="confdel_tag"><div class="dialog_container">
+                <h3>DELETE TAG</h3>
+                <div class="message">
+                    <form action="" method="POST">
+                        <input type="hidden" name="tagId"/>
+                        <div class="dialog_buttons">
+                            <p>Are you sure you want to delete this tag?<p><br/>
+                            <button class="deleteTag" onclick="return false;">Yes</button>
+                            <button class="cancel" onclick="return false;">No</button>
+                        </div>
+                    </form>
+                </div>
+            </div></div>
         </div>
 
 
