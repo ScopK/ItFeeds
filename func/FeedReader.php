@@ -73,7 +73,7 @@
 				date_default_timezone_set('Europe/Madrid');
 				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
 
-				$p->description = repl(htmlentities($this->getNodeValueByTagName($entry,'content')));
+				$p->description = utf8_decode($this->getNodeValueByTagName($entry,'content'));
 				$p->title = htmlentities($this->getNodeValueByTagName($entry,'title'));
 				if ($p->title == "")
 					$p->title = utf8_decode($this->getNodeValueByTagName($feed,'title'));
