@@ -27,6 +27,7 @@
 				color:white;
 				font-weight: bold;
 				font-size: 14px;
+				margin: 1em 0px;
 			}
         	#dialog{
         		position:fixed;

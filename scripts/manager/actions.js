@@ -24,7 +24,7 @@ function loadFolders(user){
 			loading_stop();
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -43,7 +43,7 @@ function cleanFeed(){
 		success: function(result){
 			var folder = folders[prevIdxFolder];
 			var feed = folder.feeds[prevIdxFeed];
-
+			var cleaned = feed.count-result.feedCount;
 			feed.unread = result.feedUnread;
 			feed.count = result.feedCount;
 
@@ -51,9 +51,10 @@ function cleanFeed(){
 			folder.count = result.folderCount;
 			load(folders);
 			loading_stop();
+			showMessage("Cleaned "+cleaned+" posts",true);
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -81,9 +82,10 @@ function editFeed(){
 
 			load(folders);
 			loading_stop();
+			showMessage("Feed edited correctly",true);
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -107,9 +109,10 @@ function editFolder(){
 
 			load(folders);
 			loading_stop();
+			showMessage("Folder edited correctly",true);
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -134,9 +137,10 @@ function editTag(){
 
 			loadTags(tags);
 			loading_stop();
+			showMessage("Tag edited correctly",true);
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -153,12 +157,14 @@ function cleanFolder(){
 		data: cleanForm,
 		dataType : "json",
 		success: function(result){
+			var cleaned = folders[prevIdxFolder].count-result.count;
 			folders[prevIdxFolder] = result;
 			load(folders);
 			loading_stop();
+			showMessage("Cleaned "+cleaned+" posts",true);
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -181,9 +187,10 @@ function addFeed(){
 			load(folders);
 			loading_stop();
 			closeDialogs();
+			showMessage("Feed added correctly",true);
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			if (request.status<=500)
 				closeDialogs();
 			loading_stop();
@@ -207,11 +214,12 @@ function deleteFeed(){
 				folders[prevIdxFolder].feeds.splice(prevIdxFeed,1);
 				load(folders);
 				loading_stop();
+				showMessage("Feed deleted correctly",true);
 			} else
-				alert(result);
+				showMessage(result);
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -234,11 +242,12 @@ function deleteFolder(){
 				folders.splice(prevIdxFolder,1);
 				load(folders);
 				loading_stop();
+				showMessage("Folder deleted correctly",true);
 			} else
-				alert(result);
+				showMessage(result);
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -262,11 +271,12 @@ function deleteTag(){
 				tags.splice(prevIdxTag,1);
 				loadTags(tags);
 				loading_stop();
+				showMessage("Tag deleted correctly",true);
 			} else
-				alert(result);
+				showMessage(result);
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -290,9 +300,10 @@ function addFolder(){
 			load(folders);
 			loading_stop();
 			closeDialogs();
+			showMessage("Folder added correctly",true);
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			if (request.status<=500) 
 				closeDialogs();
 			loading_stop();
@@ -325,7 +336,7 @@ function unlockHidden(){
 
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
@@ -340,10 +351,28 @@ function logoutButton(){
 			window.location = "./login.php";
 		},
 		error: function (request, status, error){
-			alert("Error "+request.status+": "+request.statusText);
+			showMessage("Error "+request.status+": "+request.statusText);
 			loading_stop();
 		}
 	});
+}
+
+var hidemsgtimer;
+function showMessage(msg, good){
+	if (good)
+		$("#top_message").addClass("good");
+	else
+		$("#top_message").removeClass("good");
+	$("#top_message p").html(msg);
+	$("#top_message").css("top","0");
+	
+	clearTimeout(hidemsgtimer);
+	hidemsgtimer = setTimeout(hideMessage,3000);
+}
+
+function hideMessage() {
+	var hh = $("#top_message").outerHeight()+"px";
+	$("#top_message").css("top","-"+hh);
 }
 
 function nameSort(a, b){
