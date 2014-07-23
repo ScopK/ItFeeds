@@ -1,7 +1,7 @@
 $(document).ready(function(){
     var allowed = true;
 	$(document).keydown(function(e) { 
-		if (!allowed) return;
+		if (!allowed) return false;
 		allowed = false;
 		if ($(".loading").css("animation-play-state") != "paused") return;
 		if (e.ctrlKey || e.altKey || e.shiftKey) return;
@@ -86,9 +86,10 @@ function postsInit(scrollTop){
 
 function nextPost(){
 	if (postIdxSelected < posts.length){
-		$(".post[idxpost='"+postIdxSelected+"']").addClass("minimized");
+		//$(".post[idxpost='"+postIdxSelected+"']").addClass("minimized");
 		var idx = postIdxSelected;
 		selectPost(++idx);
+		$(".post[idxpost='"+postIdxSelected+"']").prevAll("div.post").addClass("minimized");
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,100);
 	}

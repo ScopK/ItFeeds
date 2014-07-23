@@ -20,7 +20,7 @@
 		unset($hidobt);
 		$sql = "SELECT id,hidden FROM tags WHERE user=? AND tag_name=?";
 		if (mysqli_stmt_prepare($stmt,$sql)){
-			mysqli_stmt_bind_param($stmt,"ss", $user, $tag);
+			mysqli_stmt_bind_param($stmt,"ss", $user, utf8_decode($tag));
 			mysqli_stmt_execute($stmt);
 
 			mysqli_stmt_bind_result($stmt,$idobt,$hidobt);
@@ -31,7 +31,7 @@
 			$sql = "INSERT INTO tags VALUES(?,?,?,'0')";
 			if (mysqli_stmt_prepare($stmt,$sql)){
 
-				mysqli_stmt_bind_param($stmt,"sss", $idobt, $user, $tag);
+				mysqli_stmt_bind_param($stmt,"sss", $idobt, $user, utf8_decode($tag));
 				mysqli_stmt_execute($stmt);
 
 				$done = mysqli_affected_rows($con);

@@ -43,6 +43,9 @@ $(document).ready(function(){
 	         ($(window).height()/2)-
 	         ($(".inside_dialog").height());
 	$(".inside_dialog").css("top",pos);
+
+	//################# Hide message when mouse over
+	$("#top_message").hover(hideMessage);
 });
 
 function load(flds){

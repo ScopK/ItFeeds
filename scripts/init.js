@@ -47,6 +47,9 @@ $(document).ready(function(){
 	            return false;
 	    }
 	});
+
+	//################# Hide message when mouse over
+	$("#top_message").hover(hideMessage);
 });
 
 function initialize(){

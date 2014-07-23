@@ -100,9 +100,11 @@ function showMessage(msg, good){
 	$("#top_message").css("top","0");
 	
 	clearTimeout(hidemsgtimer);
-	hidemsgtimer = setTimeout(function(){
-		var hh = $("#top_message").outerHeight()+"px";
-		$("#top_message").css("top","-"+hh);
-	},3000);
+	hidemsgtimer = setTimeout(hideMessage,3000);
+}
+
+function hideMessage() {
+	var hh = $("#top_message").outerHeight()+"px";
+	$("#top_message").css("top","-"+hh);
 }
 
