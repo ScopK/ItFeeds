@@ -43,10 +43,11 @@
 				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
 
 				$p->link = $this->getNodeValueByTagName($item,'link');
-				$p->description = repl(htmlentities($this->getNodeValueByTagName($item,'description')));
-				$p->title = htmlentities($this->getNodeValueByTagName($item,'title'));
+
+				$p->description = mb_htmlentities($this->getNodeValueByTagName($item,'description'));
+				$p->title = mb_htmlentities($this->getNodeValueByTagName($item,'title'));
 				if ($p->title == "")
-					$p->title = utf8_decode($this->getNodeValueByTagName($channel,'title'));
+					$p->title = mb_htmlentities($this->getNodeValueByTagName($channel,'title'));
 				$posts[] = $p;
 			}
 			return $posts;
@@ -73,10 +74,10 @@
 				date_default_timezone_set('Europe/Madrid');
 				$p->date = date("Y-m-d H:i:s", $time->format('U')); 
 
-				$p->description = utf8_decode($this->getNodeValueByTagName($entry,'content'));
-				$p->title = htmlentities($this->getNodeValueByTagName($entry,'title'));
+				$p->description = mb_htmlentities($this->getNodeValueByTagName($entry,'content'));
+				$p->title = mb_htmlentities($this->getNodeValueByTagName($entry,'title'));
 				if ($p->title == "")
-					$p->title = utf8_decode($this->getNodeValueByTagName($feed,'title'));
+					$p->title = mb_htmlentities($this->getNodeValueByTagName($feed,'title'));
 
 				$posts[] = $p;
 			}
@@ -95,5 +96,9 @@
 		$aa = str_replace("&lt;","<",$str); 
 		$aa = str_replace("&quot;",'"',$aa); 
 		return str_replace("&gt;",">",$aa);
+	}
+
+	function mb_htmlentities($str){
+		return mb_convert_encoding($str, "HTML-ENTITIES" ,"utf-8");
 	}
 ?>
