@@ -81,7 +81,7 @@
                     <div id="tagList"></div>
                 </div>
                 <div id="posts_panel"></div>
-                <div id="blankspace" style="height: 100px; width: 100px;"></div>
+                <div style="height:154px"><button id="loadMoreButton" onclick="loadMore()">LOAD MORE</button></div>
             </div>
             <button id="mouse_nav" oncontextmenu="return false;"></button>
         </div>

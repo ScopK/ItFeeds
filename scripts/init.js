@@ -18,9 +18,9 @@ $(document).ready(function(){
 	initialize();
 	//################# Blank space at the end of page
 	$(window).resize(function(){
-		$("#blankspace").css("height",$(window).height());
+		$("#content").css("min-height",$(window).height());
 	});
-	$("#blankspace").css("height",$(window).height());
+	$("#content").css("min-height",$(window).height());
 
 	//################# Auto position post controls
 	$(document).scroll(function() {

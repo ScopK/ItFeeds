@@ -87,6 +87,7 @@ function addSelectedTag(element){
 
 function loadMore(){
 	if (!$("#loadMore").prop('disabled')) {
+		$("#loadMoreButton").prop('disabled',true);
 		$("#loadMore").prop('disabled',true);
 		ajaxMorePosts("");
 	}

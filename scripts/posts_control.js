@@ -37,7 +37,6 @@ $(document).ready(function(){
 		    case 86: //v
 		    	if (postIdxSelected>0){
 		    		var post = posts[postIdxSelected-1];
-		    		//window.open('url', 'window name', 'window settings');
 		    		allowed = true;
 		    		window.open(post.link, '_blank', '');
 		    	}

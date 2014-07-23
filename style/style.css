@@ -560,3 +560,31 @@ div.tagname button{
 	font-size: 14px;
 	margin: 1em 0px;
 }
+
+#loadMoreButton {
+	position:absolute; bottom: 0;
+    background-image: url("../imgs/backPosts.png");
+    background-repeat: repeat-x;
+	background-color: rgba(0,0,0,0.1);
+	color: rgba(0,0,0,0.5);
+	width:100%;
+	margin: 0;
+	cursor:pointer;
+
+	border: 0;
+	width:100%;
+	margin: 0;
+	font-weight: bold;
+	font-size: 30px;
+	padding: 60px 0;
+	transition: background-color 0.4s;
+}
+
+#loadMoreButton:hover{
+	background-color: rgba(0,0,0,0.2);
+}
+
+#loadMoreButton:disabled{
+	background-color: rgba(0,0,0,0.1);
+	color: rgba(0,0,0,0.1);
+}
