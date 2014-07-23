@@ -73,10 +73,12 @@ function toggleSort(me){
 }
 
 function showAddTagsDialog(){
-	$('#add_tag').fadeIn(100);
-	$('#add_tag p').removeClass("selected");
-	$('#newtagField').val("");
-	$('#newtagField').focus();
+	if (postIdxSelected>0) {
+		$('#add_tag').fadeIn(100);
+		$('#add_tag p').removeClass("selected");
+		$('#newtagField').val("");
+		$('#newtagField').focus();
+	}
 }
 
 function addSelectedTag(element){

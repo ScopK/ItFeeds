@@ -1,15 +1,24 @@
 $(document).ready(function(){
     var allowed = true;
 	$(document).keydown(function(e) { 
+		if (e.ctrlKey || e.altKey || e.shiftKey) return;
+    	if (e.which == 27 && $("#add_tag").is(":visible")) $('#add_tag').fadeOut(100);
+		if ($("input").is(":focus:visible")) return;
 		if (!allowed) return false;
 		allowed = false;
+		if (e.which == 32){	// space
+	        var body = $("html, body");
+	        body.animate({scrollTop: body.scrollTop() + 200}, {duration: 210, easing: 'linear', queue: false});
+	        setTimeout(function() {allowed = true;}, 200);
+	        $("button:focus").blur();
+	        return false;
+		}
 		if ($(".loading").css("animation-play-state") != "paused") return;
-		if (e.ctrlKey || e.altKey || e.shiftKey) return;
-		if ($("input").is(":focus:visible")) return;
 		switch (e.which) {
 		    case 83: //s
 		        toogleFavPost();
 		        break;
+		    case 78: //n
 		    case 77: //m  
 		        toogleUnreadPost();
 		        break;
@@ -19,12 +28,6 @@ $(document).ready(function(){
 		    case 75: //k
 		        prevPost();
 		        break;
-		    case 32: //space
-		        var body = $("html, body");
-		        body.animate({scrollTop: body.scrollTop() + 200}, {duration: 210, easing: 'linear', queue: false});
-		        setTimeout(function() {allowed = true;}, 200);
-		        $("button:focus").blur();
-		        return false;
 		    case 70: //f
 		    	toggleLateralMenu();
 		    	break;
@@ -47,7 +50,6 @@ $(document).ready(function(){
 		    	}
 		    	break;
 		    case 68: //d
-		    case 78: //n
 		    case 116: //f5
 		    case 123: //f12
 		    default:
