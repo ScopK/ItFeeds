@@ -86,8 +86,8 @@ function addSelectedTag(element){
 }
 
 function loadMore(){
-	if (!$("#loadMore").prop('disabled')) {
-		$("#loadMoreButton").prop('disabled',true);
+	if (!$("#loadMoreLabel").hasClass('disabled')) {
+		$("#loadMoreLabel").addClass('disabled');
 		$("#loadMore").prop('disabled',true);
 		ajaxMorePosts("");
 	}

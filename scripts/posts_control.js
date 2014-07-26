@@ -212,7 +212,8 @@ function addTag(){
 
 		$("#newtagField").val("");
 		$('#add_tag').fadeOut(100);
-	}
+	} else
+		showMessage("Select or write a tag");
 }
 
 function deleteTag(me){

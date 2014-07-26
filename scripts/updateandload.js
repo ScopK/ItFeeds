@@ -139,6 +139,13 @@ function ajaxPosts(args){
 				$("#posts_panel").append(html);
 			});
 			postsInit(true);
+			if (totalPages <= pagesLoaded){
+				$("#loadMoreLabel").addClass('disabled');
+				$("#loadMore").prop('disabled',true);
+			} else {
+				$("#loadMoreLabel").removeClass('disabled');
+				$("#loadMore").prop('disabled',false);
+			}
 		},
 		error: function (request, status, error){
 			showMessage("Error getting posts<br/>"+error);
@@ -180,8 +187,10 @@ function ajaxMorePosts(args){
 			pagesLoaded++;
 			$("#percentSeen").html(pagesLoaded+"/"+totalPages);
 			postsInit(false);
-			$("#loadMore").prop('disabled',false);
-			$("#loadMoreButton").prop('disabled',false);
+			if (totalPages > pagesLoaded){
+				$("#loadMore").prop('disabled',false);
+				$("#loadMoreLabel").removeClass('disabled');
+			}
 		},
 		error: function (request, status, error){
 			showMessage("Error getting posts<br/>"+error);

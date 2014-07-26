@@ -402,11 +402,11 @@ Tags
 	width: 100%;
 	background-color: rgba(0,0,0,0.8);
 
-	z-index: 10;
+	z-index: 2;
 }
 
 #add_tag .taglist{
-	padding: 10px 40px;
+	padding: 10px;
 }
 
 #add_tag .taglist p{
@@ -526,7 +526,7 @@ div.tagname button{
 }
 
 #mouse_nav{
-	z-index:2;
+	z-index:1;
 	position:fixed;
 	width:100%;
 	background-color: transparent;
@@ -542,6 +542,7 @@ div.tagname button{
 }
 
 #top_message{
+	z-index: 3;
 	position:fixed;
 	top:-50px;left:0;right:0;
 	background-color: rgba(230,46,0,0.9);
@@ -561,7 +562,7 @@ div.tagname button{
 	margin: 1em 0px;
 }
 
-#loadMoreButton {
+#loadMoreLabel {
 	position:absolute; bottom: 0;
     background-image: url("../imgs/backPosts.png");
     background-repeat: repeat-x;
@@ -570,21 +571,28 @@ div.tagname button{
 	width:100%;
 	margin: 0;
 	cursor:pointer;
+	height: inherit;
 
-	border: 0;
-	width:100%;
-	margin: 0;
 	font-weight: bold;
 	font-size: 30px;
-	padding: 60px 0;
+	padding: 60px 0 0;
 	transition: background-color 0.4s;
+	text-align:center;
+
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+	/* Rules below not implemented in browsers yet */
+	-o-user-select: none;
+	user-select: none;
 }
 
-#loadMoreButton:hover{
+#loadMoreLabel:hover{
 	background-color: rgba(0,0,0,0.2);
 }
 
-#loadMoreButton:disabled{
+#loadMoreLabel.disabled{
 	background-color: rgba(0,0,0,0.1);
-	color: rgba(0,0,0,0.1);
+	color: transparent;
+	cursor: default;
 }
