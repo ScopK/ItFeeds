@@ -83,7 +83,9 @@
 			xmlhttp.onreadystatechange=function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					document.getElementById("invalid").style.top = "-50px";
-					window.location = ".";
+					var data = "<?=http_build_query($_REQUEST);?>";
+					if (data.indexOf("manager=1")>=0)	window.location = "manager.php";
+					else	window.location = "index.php?"+data;
 				} else if (xmlhttp.readyState==4 && xmlhttp.status==502) {
 					document.getElementById("invalid").childNodes[1].innerHTML = "Invalid username or password, please, try again or register";
 					document.getElementById("invalid").style.top = "0";
