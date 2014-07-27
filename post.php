@@ -10,7 +10,7 @@
     require_once "func/functions.php";
     require_once "func/classes.php";
 
-    $post = getPost($con,$id);
+    $post = getPost($con,$id,false);
 
     $feed = getFeed($con,$post->feedId);
 ?><!DOCTYPE html>

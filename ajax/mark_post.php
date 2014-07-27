@@ -28,6 +28,7 @@
 		mysqli_stmt_close($stmt);
 	}
 
-	echo json_encode(getPost($con,$postid));
+	$hidden = checkUserHiddenPassword($con, $_SESSION['log_user'],$_SESSION['hid_user']);
+	echo json_encode(getPost($con,$postid,$hidden));
 	mysqli_close($con);
 ?>

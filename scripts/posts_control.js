@@ -275,17 +275,24 @@ function markPost(field, value, postidx){
 			var post = posts[postidx-1];
 			if (field==0){ // read/unread
 				var idx = findFeedIndex(post.feedId);
-				var folder = folders[idx[0]];
-				if (value==0) {
-					$(".post[idxpost='"+postidx+"']").removeClass("unread");
-					folder.unread--;
-					folder.feeds[idx[1]].unread--;
+				if (idx.length>0){
+					var folder = folders[idx[0]];
+					if (value==0) {
+						$(".post[idxpost='"+postidx+"']").removeClass("unread");
+						folder.unread--;
+						folder.feeds[idx[1]].unread--;
+					} else {
+						$(".post[idxpost='"+postidx+"']").addClass("unread");
+						folder.unread++;
+						folder.feeds[idx[1]].unread++;
+					}
+					updateCounts(idx);
 				} else {
-					$(".post[idxpost='"+postidx+"']").addClass("unread");
-					folder.unread++;
-					folder.feeds[idx[1]].unread++;
+					if (value==0)
+						$(".post[idxpost='"+postidx+"']").removeClass("unread");
+					else
+						$(".post[idxpost='"+postidx+"']").addClass("unread");
 				}
-				updateCounts(idx);
 			} else {	// fav/unfav 
 			}
 			enableControls();

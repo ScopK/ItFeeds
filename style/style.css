@@ -533,9 +533,11 @@ div.tagname button{
 	border: 0px;
 	bottom: 0; right: 0; left: 0;
 	height: 1px;
+	transition: height 0.3s, background-color 0s 0.3s;
 }
 
 #mouse_nav:hover{
+	transition-delay:0s;
 	cursor:pointer;
 	background-color: black;
 	height: 16px;

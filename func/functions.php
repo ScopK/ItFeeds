@@ -458,7 +458,7 @@
 		return $lista;
 	}
 
-	function getPost($con,$postId){
+	function getPost($con,$postId,$hidden){
 		$postId = mysqli_real_escape_string($con,$postId);
 		$posts = mysqli_query($con,"SELECT * FROM posts WHERE id='$postId'");
 
