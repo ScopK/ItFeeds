@@ -395,7 +395,7 @@ Tags
 ############################################################################################################*/
 
 #add_tag{
-	display: none;
+	display:table;
 	position: fixed;
 	top:0; left:0;
 	height: 100%;
@@ -429,10 +429,8 @@ Tags
 }
 
 #add_tag_content {
-	position: absolute;
 	width: 340px;
 	margin: auto;
-	right: 0; left: 0; top: 30%;
 	background-color: #fff;
 	text-align:center;
 

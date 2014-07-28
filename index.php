@@ -26,27 +26,9 @@
         <script src="scripts/init.js"></script>
         <script>
         $(document).ready(function(){
+            $("#add_tag").hide();
             loading_run();
-
-            function randomColors(){
-                var hueSel = Math.random();
-                if (hueSel < 0.3)
-                    var hue = 'rgb(255,'+ (Math.floor(Math.random()*155)+100) +','+ (Math.floor(Math.random()*155)+100) +')';
-                else if (hueSel <= 0.6)
-                    var hue = 'rgb('+ (Math.floor(Math.random()*155)+100) +',255,'+ (Math.floor(Math.random()*155)+100) +')';
-                else
-                    var hue = 'rgb('+ (Math.floor(Math.random()*100)+155) +','+ (Math.floor(Math.random()*100)+155) +',255)';
-                //$("body").css("background-color",hue);
-                $.each(document.styleSheets[1].cssRules, function(){
-                    if (this.selectorText == ".feed.selected, .tag.selected, .folder.selected")
-                        this.style.backgroundColor = hue;
-                    else if (this.selectorText == ".post.unread .header")
-                        this.style.backgroundColor = hue;
-                });
-                //setTimeout(randomColors,2000);
-            }
             randomColors();
-
         });
         </script>
     </head>
@@ -90,7 +72,7 @@
             <div class="loading" id="smallBall"></div>
             <div class="loading" id="bigBall"></div>
         </div>
-        <div id="add_tag"><div id="add_tag_content">
+        <div id="add_tag"><div style="display:table-cell;vertical-align:middle;"><div id="add_tag_content">
             <form action="" method="POST">
                 <table><tr><th colspan="2">Add tag</th></tr>
                 <tr><td class="taglist" colspan="2"></td></tr>
@@ -101,7 +83,7 @@
                 </td></tr>
                 </table>
             </form>
-        </div></div>
+        </div></div></div>
         <div id="top_message"><p></p></div>
     </body>
 </html>

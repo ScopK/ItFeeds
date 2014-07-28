@@ -53,7 +53,7 @@ $(document).ready(function(){
 });
 
 function initialize(){
-	$("#page").fadeOut();
+	$("#page").hide();
 	$.ajax({
 		url: "./ajax/get_user_info.php",
 		type: "GET",
@@ -70,7 +70,25 @@ function initialize(){
 			showMessage("Couldn't get user info");
 		},
 		complete: function(){
-			$("#page").fadeIn();
+			$("#page").show();
 		}
 	});
+}
+
+function randomColors(){
+    var hueSel = Math.random();
+    if (hueSel < 0.3)
+        var hue = 'rgb(255,'+ (Math.floor(Math.random()*155)+100) +','+ (Math.floor(Math.random()*155)+100) +')';
+    else if (hueSel <= 0.6)
+        var hue = 'rgb('+ (Math.floor(Math.random()*155)+100) +',255,'+ (Math.floor(Math.random()*155)+100) +')';
+    else
+        var hue = 'rgb('+ (Math.floor(Math.random()*100)+155) +','+ (Math.floor(Math.random()*100)+155) +',255)';
+    //$("body").css("background-color",hue);
+    $.each(document.styleSheets[1].cssRules, function(){
+        if (this.selectorText == ".feed.selected, .tag.selected, .folder.selected")
+            this.style.backgroundColor = hue;
+        else if (this.selectorText == ".post.unread .header")
+            this.style.backgroundColor = hue;
+    });
+    //setTimeout(randomColors,2000);
 }

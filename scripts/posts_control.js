@@ -48,8 +48,11 @@ $(document).ready(function(){
 		    		window.open('post.php?id='+post.id, '_blank', '');
 		    	}
 		    	break;
-		    case 68: //d
 		    case 116: //f5
+		    	initialize();
+		    	randomColors();
+		    	return false;
+		    case 68: //d
 		    case 123: //f12
 		    default:
 		        //showMessage("Key pressed:<br/>"+e.which+" - "+e.key,true);
