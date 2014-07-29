@@ -4,7 +4,7 @@ var idxFolder;
 var idxFeed;
 var idxTag;
 
-function loadFolders(user){
+function loadFolders(){
 	$("#user_list").fadeOut(200);
 	loading_run();
 	$("#folder_list").hide();
@@ -28,6 +28,26 @@ function loadFolders(user){
 			loading_stop();
 		}
 	});
+}
+
+function cleanAll(){
+	loading_run();
+	var cleanForm = $(this).closest("form").serialize();
+	$.ajax({
+		url: "./ajax/manager/clean_all.php",
+		type: "POST",
+		data: cleanForm,
+		dataType : "json",
+		success: function(result){
+			showMessage("Cleaned "+result.postsDeleted+" posts",true);
+			loadFolders();
+		},
+		error: function (request, status, error){
+			showMessage("Error "+request.status+": "+request.statusText);
+			loading_stop();
+		}
+	});
+	closeDialogs();
 }
 
 function cleanFeed(){

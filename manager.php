@@ -23,7 +23,7 @@
         <script src="scripts/manager/webview.js"></script>
         <script>
         $(document).ready(function(){
-            loadFolders("<?=$log_user?>");
+            loadFolders();
         });
         </script>
     </head>
@@ -39,12 +39,28 @@
                 <button onclick="gotoTags()">Tags</button>
                 <button class="showHiddenButton <?=$hidClass?>" onclick="showHiddenDialog();">Set hidden</button>
                 <button class="logoutButton" onclick="return false">Logout</button>
+                <button onclick="showCleanAll();">Clean All</button>
             </div>
             <div id="header">
                 <h2 id="titleuser" onclick=''>+ Folders</h2>
             </div>
 
             <div id="folder_list"></div>
+
+            <div class="inside_dialog" id="clean_all"><div class="dialog_container">
+                <h3>Clean All Posts</h3>
+                <div class="message">   
+                    <form action="" method="POST">
+                        <div class="dialog_buttons">
+                            Delete posts older than <input type="text" name="days" style="width: 30px; text-align:center" autocomplete="off"/> days<br/>
+                            <input id="allhidcheck" type="checkbox" name="unreadDIS" style="cursor:pointer"/><label style="cursor:pointer" for="allhidcheck">Delete unread</label><br/><br/>
+
+                            <button class="cleanAll" onclick="return false;">Clean</button>
+                            <button class="cancel" onclick="return false;">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div></div>
 
             <div class="inside_dialog" id="tools_folder"><div class="dialog_container">
                 <h3>TOOLS FOLDER</h3>

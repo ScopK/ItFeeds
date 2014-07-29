@@ -382,6 +382,11 @@ p.disabled{
 	height: 200px;
 }
 
+#clean_all{
+	background-color: #eee;
+	height: 160px;
+}
+
 #tools_folder span, #tools_feed span, #tools_tag span{
 	display:inline-table;
 	padding: auto;

@@ -1,9 +1,5 @@
 $(document).ready(function(){
-	$(".user_field").click(function(){
-		var userSelected = $(this).html();
-		loadFolders(userSelected);
-	});
-
+	$("button.cleanAll").click(cleanAll);
 	$("button.cancel").click(closeDialogs);
 	$("button.editFeed").click(editFeed);
 	$("button.cleanFeed").click(cleanFeed);
@@ -29,7 +25,7 @@ $(document).ready(function(){
 	$("button.addFolder").click(addFolder);
 
 	$("input[name='days'],input[name='unread']").on("focus",function(){
-	    $("button.cleanFolder, button.cleanFeed").prop('disabled',false);    
+	    $("button.cleanFolder, button.cleanFeed, button.cleanAll").prop('disabled',false);    
 	});
 
 	$(document).scroll(function() {
@@ -134,6 +130,15 @@ function showFolderTools(){
 	$("#tools_folder h3").html(folder['name']+" - Options");
 	$("#tools_folder").find("button").attr("folderidx",idxFolder);
 	$("#tools_folder").addClass("active");
+}
+
+function showCleanAll(){
+	$("#clean_all").find("input[name='days']").val(3);
+	$("#clean_all").find("input[name='unread']").prop('checked',false);
+
+	$("button.cleanAll").prop('disabled',true);
+
+	$("#clean_all").addClass("active");
 }
 
 function showCleanFolder(){
