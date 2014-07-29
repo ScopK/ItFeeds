@@ -31,6 +31,9 @@ $(document).ready(function(){
 		    case 70: //f
 		    	toggleLateralMenu();
 		    	break;
+		    case 71: //g
+		    	$(".post").addClass("minimized");
+		    	return false;
 		    case 84: //t
 			    showAddTagsDialog();
 			    return false;

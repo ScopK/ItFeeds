@@ -54,6 +54,7 @@ $(document).ready(function(){
 
 function initialize(){
 	$("#page").hide();
+	loading_run();
 	$.ajax({
 		url: "./ajax/get_user_info.php",
 		type: "GET",
