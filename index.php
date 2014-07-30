@@ -27,6 +27,7 @@
         <script>
         $(document).ready(function(){
             $("#add_tag").hide();
+            $("#managerLink").attr("href","./manager.php"+location.search);
             loading_run();
             randomColors();
         });
@@ -37,7 +38,7 @@
             <div id="lateral_menu">
                 <div id="navopts_top" class="options_panel">
                     <button onclick="hideLateralMenu()">&#10094; </button>
-                    <a href="./manager.php">Manager</a>
+                    <a id="managerLink" href="./manager.php">Manager</a>
                     <button id="favsTButton" onclick="toggleFavs(this)">Favs</button>
                     <button id="unreadTButton" onclick="toggleUnread(this)">Unread</button>
                     <button id="sortTButton" onclick="toggleSort(this)"></button>

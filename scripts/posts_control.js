@@ -32,7 +32,7 @@ $(document).ready(function(){
 		    	toggleLateralMenu();
 		    	break;
 		    case 71: //g
-		    	$(".post").addClass("minimized");
+		    	$(".post").not(".selected").addClass("minimized");
 		    	return false;
 		    case 84: //t
 			    showAddTagsDialog();

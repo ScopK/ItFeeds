@@ -17,10 +17,13 @@ function updateUrl(){
 			args+="&";
 		args+=this+"="+get[this];
 	});
-	if (args.length>0)
+	if (args.length>0){
 		var page = "/Fydeph/index.php?"+args;
-	else
+		$("#managerLink").attr("href","./manager.php?"+args);
+	} else {
 		var page = "/Fydeph/index.php";
+		$("#managerLink").attr("href","./manager.php");
+	}
 	window.history.pushState("", "", page);
 }
 

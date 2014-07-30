@@ -81,6 +81,18 @@ function load(flds){
 			$("#folder_list").append(line);
 	});
 
+	location.search.replace('?', '').split('&').every(function (val) {
+	    split = val.split("=", 2);
+	    if (split[0]=="folder"){
+	    	showFolderTools.call($(".folder[idFolder='"+split[1]+"'] h3")[0]);
+	    	return false;
+	    }
+	    if (split[0]=="feed"){
+	    	showFeedTools.call($(".feed[idFeed='"+split[1]+"'] p")[0]);
+	    	return false;
+	    }
+	    return true;
+	});
 	$(".folder h3").click(showFolderTools);
 	$(".feed p").click(showFeedTools);
 	$("#folder_list").show();
@@ -100,6 +112,15 @@ function loadTags(tags){
 		$("#tag_list").append(line);
 	});
 
+	location.search.replace('?', '').split('&').every(function (val) {
+	    split = val.split("=", 2);
+	    if (split[0]=="tag"){
+	    	gotoTags();
+	    	showTagTools.call($(".tag[idTag='"+split[1]+"'] h3")[0]);
+	    	return false;
+	    }
+	    return true;
+	});
 	$(".tag").click(showTagTools);
 	$("#tag_list").show();
 }
@@ -122,19 +143,18 @@ function gotoFolders(){
 	}, 300);
 }
 
-
 function showFolderTools(){
 	idxFolder = $(this).closest(".folder").attr("idxFolder");
 	var folder = folders[idxFolder];
 
 	$("#tools_folder h3").html(folder['name']+" - Options");
-	$("#tools_folder").find("button").attr("folderidx",idxFolder);
+	$("#tools_folder button").attr("folderidx",idxFolder);
 	$("#tools_folder").addClass("active");
 }
 
 function showCleanAll(){
-	$("#clean_all").find("input[name='days']").val(3);
-	$("#clean_all").find("input[name='unread']").prop('checked',false);
+	$("#clean_all input[name='days']").val(3);
+	$("#clean_all input[name='unread']").prop('checked',false);
 
 	$("button.cleanAll").prop('disabled',true);
 
@@ -148,12 +168,12 @@ function showCleanFolder(){
 
 	$("#clean_folder h3").html(folder['name']);
 
-	$("#clean_folder").find("input[name='folderId']").val(folder['id']);
-	$("#clean_folder").find("input[name='fname']").val(folder['name']);
-	$("#clean_folder").find("input[name='hid']").prop('checked',(folder['hidden'] == '1'));
+	$("#clean_folder input[name='folderId']").val(folder['id']);
+	$("#clean_folder input[name='fname']").val(folder['name']);
+	$("#clean_folder input[name='hid']").prop('checked',(folder['hidden'] == '1'));
 
-	$("#clean_folder").find("input[name='days']").val(3);
-	$("#clean_folder").find("input[name='unread']").prop('checked',false);
+	$("#clean_folder input[name='days']").val(3);
+	$("#clean_folder input[name='unread']").prop('checked',false);
 
 	$("button.cleanFolder").prop('disabled',true);
 	if (folder.name == "- NO FOLDER -")
@@ -171,8 +191,8 @@ function showDeleteFolder(){
 
 	$("#confdel_folder h3").html(folder['name']);
 
-	$("#confdel_folder").find("input[name='folderId']").val(folder['id']);
-	$("#confdel_folder").find("input[name='pass']").val("");
+	$("#confdel_folder input[name='folderId']").val(folder['id']);
+	$("#confdel_folder input[name='pass']").val("");
 
 	$("#confdel_folder").addClass("active");
 }
@@ -184,23 +204,23 @@ function showAddFeed(){
 	
 	$("#confadd_feed h3").html(folder['name']);
 
-	$("#confadd_feed").find("input[name='folderId']").val(folder['id']);
-	$("#confadd_feed").find("input[name='fname']").val("");
-	$("#confadd_feed").find("input[name='rlink']").val("");
-	$("#confadd_feed").find("input[name='link']").val("");
+	$("#confadd_feed input[name='folderId']").val(folder['id']);
+	$("#confadd_feed input[name='fname']").val("");
+	$("#confadd_feed input[name='rlink']").val("");
+	$("#confadd_feed input[name='link']").val("");
 	
 	$("#confadd_feed").addClass("active");
 }
 
-
 function showFeedTools(){
+	console.log(this);
 	idxFolder = $(this).closest(".folder").attr("idxFolder");
 	idxFeed = $(this).closest(".feed").attr("idxfeed");
 	var feed = folders[idxFolder].feeds[idxFeed];
 
 	$("#tools_feed h3").html(feed['name']+" - Options");
-	$("#tools_feed").find("button").attr("folderidx",idxFolder);
-	$("#tools_feed").find("button").attr("feedidx",idxFeed);
+	$("#tools_feed button").attr("folderidx",idxFolder);
+	$("#tools_feed button").attr("feedidx",idxFeed);
 	$("#tools_feed").addClass("active");
 }
 
@@ -212,15 +232,15 @@ function showCleanFeed(){
 
 	$("#clean_feed h3").html(feed['name']);
 
-	$("#clean_feed").find("input[name='feedId']").val(feed['id']);
-	$("#clean_feed").find("input[name='fname']").val(feed['name']);
-	$("#clean_feed").find("input[name='rlink']").val(feed['rss_link']);
-	$("#clean_feed").find("input[name='link']").val(feed['link']);
-	$("#clean_feed").find("input[name='uptime']").val(feed['upd_time']);
-	$("#clean_feed").find("input[name='ena']").prop('checked',(feed['enabled'] == '1'));
+	$("#clean_feed input[name='feedId']").val(feed['id']);
+	$("#clean_feed input[name='fname']").val(feed['name']);
+	$("#clean_feed input[name='rlink']").val(feed['rss_link']);
+	$("#clean_feed input[name='link']").val(feed['link']);
+	$("#clean_feed input[name='uptime']").val(feed['upd_time']);
+	$("#clean_feed input[name='ena']").prop('checked',(feed['enabled'] == '1'));
 
-	$("#clean_feed").find("input[name='days']").val(3);
-	$("#clean_feed").find("input[name='unread']").prop('checked',false);
+	$("#clean_feed input[name='days']").val(3);
+	$("#clean_feed input[name='unread']").prop('checked',false);
 
 	$("#clean_feed #goLink a").attr("href",feed['link']);
 	$("#clean_feed #goRss a").attr("href",feed['rss_link']);
@@ -238,13 +258,13 @@ function showDeleteFeed(){
 
 	$("#confdel_feed h3").html(feed['name']);
 
-	$("#confdel_feed").find("input[name='feedId']").val(feed['id']);
+	$("#confdel_feed input[name='feedId']").val(feed['id']);
 
 	$("#confdel_feed").addClass("active");
 }
 
 function showAddFolder(){
-	$("#add_folder").find("input[name='foldername']").val("").focus();
+	$("#add_folder input[name='foldername']").val("").focus();
 	$("#add_folder").addClass("active");
 }
 
@@ -264,9 +284,9 @@ function showConfigTag() {
 
 	$("#editTag h3").html(tag['name']);
 
-	$("#editTag").find("input[name='tagId']").val(tag['id']);
-	$("#editTag").find("input[name='tagname']").val(tag['name']);
-	$("#editTag").find("input[name='hidden']").prop('checked',(tag['hidden'] == '1'));
+	$("#editTag input[name='tagId']").val(tag['id']);
+	$("#editTag input[name='tagname']").val(tag['name']);
+	$("#editTag input[name='hidden']").prop('checked',(tag['hidden'] == '1'));
 
 	$("#editTag").addClass("active");
 }
@@ -277,7 +297,7 @@ function showDeleteTag() {
 	var tag = tags[idxTag];
 
 	$("#confdel_tag h3").html(tag['name']);
-	$("#confdel_tag").find("input[name='tagId']").val(tag['id']);
+	$("#confdel_tag input[name='tagId']").val(tag['id']);
 
 	$("#confdel_tag").addClass("active");
 }

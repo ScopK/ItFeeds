@@ -23,6 +23,7 @@
         <script src="scripts/manager/webview.js"></script>
         <script>
         $(document).ready(function(){
+            $("#mainpageLink").attr("href","./index.php"+location.search);
             loadFolders();
         });
         </script>
@@ -35,7 +36,7 @@
 
         <div id="content_folders">
             <div id="extrabuttons">
-                <a href="./">Main page</a>
+                <a id="mainpageLink" href="./">Main page</a>
                 <button onclick="gotoTags()">Tags</button>
                 <button class="showHiddenButton <?=$hidClass?>" onclick="showHiddenDialog();">Set hidden</button>
                 <button class="logoutButton" onclick="return false">Logout</button>
