@@ -11,7 +11,7 @@
 		}
 
 		public function initConnection(){
-		    $this->con = mysqli_connect("localhost","root","admin","fydepdb");
+		    $this->con = mysqli_connect("localhost","fydep_u","4syouwI5h","fydepdb");
 		    if (mysqli_connect_errno())
 		      die("Failed to connect to MySQL: " . mysqli_connect_error());
 

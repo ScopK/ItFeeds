@@ -19,9 +19,13 @@ SET time_zone = "+00:00";
 --
 -- Database: `fydepdb`
 --
+
 DROP DATABASE IF EXISTS `fydepdb`;
 CREATE DATABASE `fydepdb` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 USE `fydepdb`;
+
+CREATE USER 'fydep_u'@'localhost' IDENTIFIED BY '4syouwI5h';
+GRANT ALL PRIVILEGES ON fydepdb.* TO 'fydep_u'@'localhost';
 
 -- --------------------------------------------------------
 

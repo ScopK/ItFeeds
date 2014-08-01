@@ -3,7 +3,7 @@
 	//SELECT * FROM feeds WHERE deleted='1' AND id NOT IN (SELECT id_feed FROM posts WHERE favorite='1') AND id NOT IN (SELECT id_feed FROM posts WHERE id IN (SELECT id_post FROM post_tags))
 	require_once "PostsFetch.php";
 
-    $con = mysqli_connect("localhost","root","admin","fydepdb");
+    $con = mysqli_connect("localhost","fydep_u","4syouwI5h","fydepdb");
     if (mysqli_connect_errno())
       die("Failed to connect to MySQL: " . mysqli_connect_error());
 
