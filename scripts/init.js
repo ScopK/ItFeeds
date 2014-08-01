@@ -68,7 +68,7 @@ function initialize(){
 			reloadPosts();
 		},
 		error: function (request, status, error){
-			showMessage("Couldn't get user info");
+			showMessage("Couldn't get user info<br/>Error "+request.status+": "+request.responseText);
 		},
 		complete: function(){
 			$("#page").show();

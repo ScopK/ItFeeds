@@ -11,7 +11,7 @@
 			$tags = mysqli_query($con,"SELECT * FROM tags WHERE user='$user' AND hidden='0' ORDER BY tag_name");
 
 		$lista = array();
-		while($tag = array_map('utf8_encode',mysqli_fetch_assoc($tags))) {
+		while($tag = @array_map('utf8_encode',mysqli_fetch_assoc($tags))) {
 			$e = new Tag();
 			$e->id = $tag['id'];
 			$e->name = $tag['tag_name'];
@@ -37,10 +37,9 @@
 
 		$e = new Tag();
 
-		if ($tag = array_map('utf8_encode',mysqli_fetch_assoc($tags))) {
+		if ($tag = @array_map('utf8_encode',mysqli_fetch_assoc($tags))) {
 			$e->id = $tag['id'];
 			$e->name = $tag['tag_name'];
-			$e->user = $user;
 			$e->hidden = $tag['hidden'];
 			$e->posts = array(); //getPostsTag($con, $e->id,$depth);
 
@@ -63,7 +62,7 @@
 
 		$lista = array();
 
-		while($folder = array_map('utf8_encode',mysqli_fetch_assoc($folders))) {
+		while($folder = @array_map('utf8_encode',mysqli_fetch_assoc($folders))) {
 			$e = new Folder();
 			$e->id = $folder['id'];
 			$e->name = $folder['name'];
@@ -90,7 +89,7 @@
 
 		$e = new Folder();
 
-		if ($folder = array_map('utf8_encode',mysqli_fetch_assoc($folders))) {
+		if ($folder = @array_map('utf8_encode',mysqli_fetch_assoc($folders))) {
 
 			$e->id = $folder['id'];
 			$e->name = $folder['name'];
@@ -117,7 +116,7 @@
 		$feeds = mysqli_query($con,"SELECT * FROM feeds WHERE id_folder='$folderId' AND deleted='0' ORDER BY name ASC");
 		$lista = array();
 
-		while($feed = array_map('utf8_encode',mysqli_fetch_assoc($feeds))) {
+		while($feed = @array_map('utf8_encode',mysqli_fetch_assoc($feeds))) {
 			$e = new Feed();
 			$e->id = $feed['id'];
 			$e->name = $feed['name'];
@@ -150,7 +149,7 @@
 		$feeds = mysqli_query($con,"SELECT * FROM feeds WHERE id='$feedId'");
 		$e = new Feed();
 
-		if ($feed = array_map('utf8_encode',mysqli_fetch_assoc($feeds))) {
+		if ($feed = @array_map('utf8_encode',mysqli_fetch_assoc($feeds))) {
 			$e->id = $feed['id'];
 			$e->name = $feed['name'];
 
@@ -412,7 +411,7 @@
 		$posts = mysqli_query($con,$sql);
 		$lista = array();
 
-		while($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
+		while($post = @array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
 			$e = new Post();
 			$e->id = $post['id'];
 			$e->feedId = $post['id_feed'];
@@ -451,7 +450,7 @@
 		$tags = mysqli_query($con,$sql);
 		$lista = array();
 
-		while($tag = array_map('utf8_encode',mysqli_fetch_assoc($tags))) {
+		while($tag = @array_map('utf8_encode',mysqli_fetch_assoc($tags))) {
 			$lista[] = array("id" => $tag['id'], "name" => $tag['tag_name']);
 		}
 		mysqli_free_result($tags);
@@ -464,7 +463,7 @@
 
 		$e = new Post();
 
-		if ($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
+		if ($post = @array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
 			
 			$e->id = $post['id'];
 			$e->feedId = $post['id_feed'];
@@ -572,7 +571,7 @@
 		$posts = mysqli_query($con,$secondSQL);
 		$lista = array();
 
-		while($post = array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
+		while($post = @array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
 			$e = new Post();
 			$e->id = $post['id'];
 			$e->feedId = $post['id_feed'];
@@ -595,7 +594,6 @@
 		} else {
 			$data = array("posts" => $lista);
 		}
-		mysqli_free_result($result);
 		return $data;
 	}
 ?>

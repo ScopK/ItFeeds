@@ -1,8 +1,11 @@
+body, .options_panel a, .options_panel button{
+    /*font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;*/
+	font-family: Tahoma, Geneva, sans-serif;
+}
+
 body {
     font-size: small;
-    font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;
     margin: 0;
-
     background-image: url("../imgs/back2.jpg");
     background-attachment: fixed;
     background-size: 100% 100%;
@@ -247,7 +250,6 @@ LATERAL MENU FOLDER STYLES
 
 
 .options_panel a, .options_panel button{
-    font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;
 	background-color: #555;
 	padding: 5px;
 	border: 2px solid black;

@@ -270,7 +270,3 @@
         <div id="top_message"><p></p></div>
     </body>
 </html>
-
-<?php
-    mysqli_close($con);
-?>

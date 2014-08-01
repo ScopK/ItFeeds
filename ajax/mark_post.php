@@ -4,9 +4,9 @@
 	include "../func/functions.php";
 	include "../func/classes.php";
 
-	$postid = $_REQUEST['postid'];
-	$unread = $_REQUEST['unread'];
-	$fav = $_REQUEST['fav'];
+	$postid = isset($_REQUEST['postid'])?$_REQUEST['postid']:null;
+	$unread = isset($_REQUEST['unread'])?$_REQUEST['unread']:null;
+	$fav = isset($_REQUEST['fav'])?$_REQUEST['fav']:null;
 
 	$stmt=mysqli_stmt_init($con);
 
@@ -28,7 +28,8 @@
 		mysqli_stmt_close($stmt);
 	}
 
-	$hidden = checkUserHiddenPassword($con, $_SESSION['log_user'],$_SESSION['hid_user']);
+	$hid_user = isset($_SESSION['hid_user'])?$_SESSION['hid_user']:null;
+	$hidden = checkUserHiddenPassword($con, $_SESSION['log_user'],$hid_user);
 	echo json_encode(getPost($con,$postid,$hidden));
 	mysqli_close($con);
 ?>

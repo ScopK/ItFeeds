@@ -1,22 +1,22 @@
 <?php
 	header("Content-Type: text/html;charset=utf-8");
-	$nextId = $_REQUEST['nextid'];
+	$nextId = isset($_REQUEST['nextid'])?$_REQUEST['nextid']:null;
 	if (!isset($nextId) || $nextId==""){
 		header("HTTP/1.1 501 No next entered");
 		die("HTTP/1.1 501 No next entered");
 	}
 
-	$postsPage = $_REQUEST['postspage'];
-
-	$favorites = $_REQUEST['fav'];
-	$unread = $_REQUEST['unread'];
-
-	$feedId = $_REQUEST['feed'];
-	$folderId = $_REQUEST['folder'];
-	$tagId = $_REQUEST['tag'];
-
-	$sort = $_REQUEST['sortBy'];
-
+	$postsPage = isset($_REQUEST['postspage'])?$_REQUEST['postspage']:null;
+	
+	$favorites = isset($_REQUEST['fav'])?$_REQUEST['fav']:null;
+	$unread = isset($_REQUEST['unread'])?$_REQUEST['unread']:null;
+	
+	$feedId = isset($_REQUEST['feed'])?$_REQUEST['feed']:null;
+	$folderId = isset($_REQUEST['folder'])?$_REQUEST['folder']:null;
+	$tagId = isset($_REQUEST['tag'])?$_REQUEST['tag']:null;
+	
+	$sort = isset($_REQUEST['sortBy'])?$_REQUEST['sortBy']:null;
+	
 // CHECK INPUTS
 	if (isset($feedId))	$mode=0;
 	elseif (isset($folderId)) $mode=1;

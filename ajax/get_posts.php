@@ -1,16 +1,17 @@
 <?php
 	header("Content-Type: text/html;charset=utf-8");
-	$postsPage = $_REQUEST['postspage'];
-	$page = $_REQUEST['page'];
-
-	$favorites = $_REQUEST['fav'];
-	$unread = $_REQUEST['unread'];
-
-	$feedId = $_REQUEST['feed'];
-	$folderId = $_REQUEST['folder'];
-	$tagId = $_REQUEST['tag'];
-
-	$sort = $_REQUEST['sortBy'];
+	
+	$postsPage = isset($_REQUEST['postspage'])?$_REQUEST['postspage']:null;
+	$page = isset($_REQUEST['page'])?$_REQUEST['page']:null;
+	
+	$favorites = isset($_REQUEST['fav'])?$_REQUEST['fav']:null;
+	$unread = isset($_REQUEST['unread'])?$_REQUEST['unread']:null;
+	
+	$feedId = isset($_REQUEST['feed'])?$_REQUEST['feed']:null;
+	$folderId = isset($_REQUEST['folder'])?$_REQUEST['folder']:null;
+	$tagId = isset($_REQUEST['tag'])?$_REQUEST['tag']:null;
+	
+	$sort = isset($_REQUEST['sortBy'])?$_REQUEST['sortBy']:null;
 
 // CHECK INPUTS
 	if (isset($feedId))	$mode=0;
