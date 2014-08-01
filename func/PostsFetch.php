@@ -97,7 +97,7 @@
 				}*/
 			} else {
 				$nid = getNewID();
-				$sql = "INSERT INTO posts VALUES('$nid',?,?,?,?,?,?,?)";
+				$sql = "INSERT INTO posts(id,id_feed,title,description,link,unread,favorite,date) VALUES('$nid',?,?,?,?,?,?,?)";
 				$stmt=mysqli_stmt_init($this->con);
 				$done = 0;
 				if (mysqli_stmt_prepare($stmt,$sql)){

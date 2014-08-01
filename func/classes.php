@@ -47,6 +47,7 @@
 
 	class Post {
 		public $id = "";
+		public $idx = "";
 		public $feedId = "";
 		public $title = "";
 		public $description = "";

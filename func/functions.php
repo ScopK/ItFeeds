@@ -176,60 +176,6 @@
 		return $e;
 	}
 
-/*
-	function getPostsFeed($con, $feedId,$depth){
-		if ($depth < 2)
-			return array();
-
-		$posts = mysqli_query($con,"SELECT * FROM posts WHERE id_feed='$feedId' ORDER BY ´date´ LIMIT 0, 10");
-		$lista = array();
-		
-		while($post = mysqli_fetch_array($posts)) {
-
-			$e = new Post();
-			$e->id = $post['id'];
-			$e->feedId = $feedId;
-
-			$e->title = $post['title'];
-			$e->description = $post['description'];
-			$e->link = $post['link'];
-			$e->unread = $post['unread'];
-			$e->favorite = $post['favorite'];
-			$e->date = $post['date'];
-
-			$lista[] = $e;
-		}
-		
-		mysqli_free_result($posts);
-		return $lista;
-	}
-
-	function getPostsTag($con, $tagId,$depth){
-		if ($depth < 1)
-			return array();
-
-		$posts = mysqli_query($con,"SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') ORDER BY ´date´ LIMIT 0, 10");
-		$lista = array();
-
-		while($post = mysqli_fetch_array($posts)) {
-
-			$e = new Post();
-			$e->id = $post['id'];
-			$e->feedId = $feedId;
-
-			$e->title = $post['title'];
-			$e->description = $post['description'];
-			$e->link = $post['link'];
-			$e->unread = $post['unread'];
-			$e->favorite = $post['favorite'];
-			$e->date = $post['date'];
-
-			$lista[] = $e;
-		}
-
-		return $lista;
-	}
-*/
 	function getUUID(){
 		return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
 	        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
@@ -282,7 +228,44 @@
 		return ($count == 1);
 	}
 
+	function getPostTags($con, $postid, $hidden){
 
+		$hiddenSQL = ($hidden)? "" : "AND t.hidden='0'";
+		$sql = "SELECT id,tag_name FROM tags t JOIN post_tags pt ON pt.id_tag=t.id WHERE pt.id_post='$postid' $hiddenSQL";
+
+		$tags = mysqli_query($con,$sql);
+		$lista = array();
+
+		while($tag = @array_map('utf8_encode',mysqli_fetch_assoc($tags))) {
+			$lista[] = array("id" => $tag['id'], "name" => $tag['tag_name']);
+		}
+		mysqli_free_result($tags);
+		return $lista;
+	}
+
+	function getPost($con,$postId,$hidden){
+		$postId = mysqli_real_escape_string($con,$postId);
+		$posts = mysqli_query($con,"SELECT * FROM posts WHERE id='$postId'");
+
+		$e = new Post();
+
+		if ($post = @array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
+			$e->id = $post['id'];
+			$e->idx = $post['idx'];
+			$e->feedId = $post['id_feed'];
+
+			$e->title = $post['title'];
+			$e->description = $post['description'];
+			$e->link = $post['link'];
+			$e->unread = $post['unread'];
+			$e->favorite = $post['favorite'];
+			$e->date = $post['date'];
+
+			$e->tags = getPostTags($con, $e->id, $hidden);
+		}
+		mysqli_free_result($posts);
+		return $e;
+	}
 
 
 
@@ -291,48 +274,9 @@
 
 			GET POSTS FUNCTIONS
 
- 	*//*
-	function getIDFeed($con, $folderIdx, $feedIdx, $showHidden){
-		$folderId = getIDFolder($con,$folderIdx, $showHidden);
-		$sql = "SELECT name FROM feeds WHERE id_folder=? ORDER BY name LIMIT ?,1";
-		$stmt=mysqli_stmt_init($con);
-		if (mysqli_stmt_prepare($stmt,$sql)){
-
-			mysqli_stmt_bind_param($stmt,"ss", $folderId, $feedIdx); // Bind parameters
-			mysqli_stmt_execute($stmt); // Execute query
-
-			mysqli_stmt_bind_result($stmt,$id); // Bind result variables
-			mysqli_stmt_fetch($stmt); // Fetch value
-
-			mysqli_stmt_close($stmt); // Close statement
-		}
-		return $id;
-
-	}
-
-	function getIDFolder($con, $folderIdx, $showHidden){
-		if ($showHidden)
-			$sql = "SELECT id FROM folders ORDER BY name LIMIT ?,1";
-		else
-			$sql = "SELECT id FROM folders WHERE hidden='0' ORDER BY name LIMIT ?,1";		
-
-		$stmt=mysqli_stmt_init($con);
-		if (mysqli_stmt_prepare($stmt,$sql)){
-
-			mysqli_stmt_bind_param($stmt,"s", $folderIdx); // Bind parameters
-			mysqli_stmt_execute($stmt); // Execute query
-
-			mysqli_stmt_bind_result($stmt,$id); // Bind result variables
-			mysqli_stmt_fetch($stmt); // Fetch value
-
-			mysqli_stmt_close($stmt); // Close statement
-		}
-		return $id;
-	}*/
-
+ 	*/
 
 	function getPostsFeed($con, $user, $hidden, $feedId, $favs, $unread, $sort, $page, $postspage){
-		$postspage++;
 		$user = mysqli_real_escape_string($con,$user);
 		$feedId = mysqli_real_escape_string($con,$feedId);
 		$sort = mysqli_real_escape_string($con,$sort);
@@ -348,7 +292,6 @@
 	}
 
 	function getPostsFolder($con, $user, $hidden, $folderId, $favs, $unread, $sort, $page, $postspage){
-		$postspage++;
 		$user = mysqli_real_escape_string($con,$user);
 		$folderId = mysqli_real_escape_string($con,$folderId);
 		$sort = mysqli_real_escape_string($con,$sort);
@@ -364,7 +307,6 @@
 	}
 
 	function getPostsTag($con, $user, $hidden, $tagId, $favs, $unread, $sort, $page, $postspage){
-		$postspage++;
 		$user = mysqli_real_escape_string($con,$user);
 		$tagId = mysqli_real_escape_string($con,$tagId);
 		$sort = mysqli_real_escape_string($con,$sort);
@@ -383,7 +325,6 @@
 	}
 
 	function getPostsAll($con, $user, $hidden, $favs, $unread, $sort, $page, $postspage){
-		$postspage++;
 		$user = mysqli_real_escape_string($con,$user);
 		$favs = mysqli_real_escape_string($con,$favs);
 		$unread = mysqli_real_escape_string($con,$unread);
@@ -414,6 +355,7 @@
 		while($post = @array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
 			$e = new Post();
 			$e->id = $post['id'];
+			$e->idx = $post['idx'];
 			$e->feedId = $post['id_feed'];
 
 			$e->title = $post['title'];
@@ -431,54 +373,9 @@
 		$result = mysqli_query($con,$countsql);
 		$rows = mysqli_fetch_assoc($result);
 
-		if ($postspage == sizeof($lista)){
-			$nextid = array_pop($lista)->id;
-			$data = array("posts" => $lista, "total" => $rows['c'], "nextid" => $nextid);
-		} else {
-			$data = array("posts" => $lista, "total" => $rows['c']);
-		}
-
+		$data = array("posts" => $lista, "total" => $rows['c']);
 		mysqli_free_result($result);
 		return $data;
-	}
-
-	function getPostTags($con, $postid, $hidden){
-
-		$hiddenSQL = ($hidden)? "" : "AND t.hidden='0'";
-		$sql = "SELECT id,tag_name FROM tags t JOIN post_tags pt ON pt.id_tag=t.id WHERE pt.id_post='$postid' $hiddenSQL";
-
-		$tags = mysqli_query($con,$sql);
-		$lista = array();
-
-		while($tag = @array_map('utf8_encode',mysqli_fetch_assoc($tags))) {
-			$lista[] = array("id" => $tag['id'], "name" => $tag['tag_name']);
-		}
-		mysqli_free_result($tags);
-		return $lista;
-	}
-
-	function getPost($con,$postId,$hidden){
-		$postId = mysqli_real_escape_string($con,$postId);
-		$posts = mysqli_query($con,"SELECT * FROM posts WHERE id='$postId'");
-
-		$e = new Post();
-
-		if ($post = @array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
-			
-			$e->id = $post['id'];
-			$e->feedId = $post['id_feed'];
-
-			$e->title = $post['title'];
-			$e->description = $post['description'];
-			$e->link = $post['link'];
-			$e->unread = $post['unread'];
-			$e->favorite = $post['favorite'];
-			$e->date = $post['date'];
-
-			$e->tags = getPostTags($con, $e->id, $hidden);
-		}
-		mysqli_free_result($posts);
-		return $e;
 	}
 
 
@@ -500,10 +397,9 @@
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 
-//	$tempSQL = "CREATE TEMPORARY TABLE IF NOT EXISTS
-		$tempSQL = "CREATE TEMPORARY TABLE tt AS (SELECT (@cnt:=@cnt+1) AS idx, p.* FROM posts AS p CROSS JOIN (SELECT @cnt := 0) AS x WHERE id_feed='$feedId' $unreadSQL $favsSQL ORDER BY p.date $sort)";
+		$whereSQL = "id_feed='$feedId' $unreadSQL $favsSQL";
 
-		return getPostsNext($con, $tempSQL, $hidden, $nextId, $postspage);
+		return getPostsNext($con, $whereSQL, $sort, $hidden, $nextId, $postspage);
 	}
 
 	function getPostsNextFolder($con, $user, $hidden, $folderId, $favs, $unread, $sort, $postspage, $nextId){
@@ -516,9 +412,9 @@
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 
-		$tempSQL = "CREATE TEMPORARY TABLE tt AS (SELECT (@cnt:=@cnt+1) AS idx, p.* FROM posts AS p CROSS JOIN (SELECT @cnt := 0) AS x WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') $unreadSQL $favsSQL ORDER BY p.date $sort)";
+		$whereSQL = "id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') $unreadSQL $favsSQL";
 
-		return getPostsNext($con, $tempSQL, $hidden, $nextId, $postspage);
+		return getPostsNext($con, $whereSQL, $sort, $hidden, $nextId, $postspage);
 	}
 
 	function getPostsNextTag($con, $user, $hidden, $tagId, $favs, $unread, $sort, $postspage, $nextId){
@@ -528,16 +424,12 @@
 		$postspage = mysqli_real_escape_string($con,$postspage);
 		$nextId = mysqli_real_escape_string($con,$nextId);
 
-		// uncomment to don't use favorites and unread vars
-		//$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') ORDER BY `date` $sort LIMIT $page,$postspage";
-		//$countsql = "SELECT count(*) AS c FROM post_tags WHERE id_tag='$tagId'";
-
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 
-		$tempSQL = "CREATE TEMPORARY TABLE tt AS (SELECT (@cnt:=@cnt+1) AS idx, p.* FROM posts AS p CROSS JOIN (SELECT @cnt := 0) AS x WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') $unreadSQL $favsSQL ORDER BY p.date $sort)";
+		$whereSQL = "id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') $unreadSQL $favsSQL";
 
-		return getPostsNext($con, $tempSQL, $hidden, $nextId, $postspage);
+		return getPostsNext($con, $whereSQL, $sort, $hidden, $nextId, $postspage);
 	}
 
 	function getPostsNextAll($con, $user, $hidden, $favs, $unread, $sort, $postspage, $nextId){
@@ -551,29 +443,26 @@
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 		$hiddenSQL = ($hidden)? "" : "AND hidden='0'";
 
-		$whereSql = "id_feed IN (SELECT id FROM feeds WHERE id_folder IN (".
+		$whereSQL = "id_feed IN (SELECT id FROM feeds WHERE id_folder IN (".
 						"SELECT id FROM folders WHERE user='$user' $hiddenSQL)) $unreadSQL $favsSQL";
 
-		$tempSQL = "CREATE TEMPORARY TABLE tt AS (SELECT (@cnt:=@cnt+1) AS idx, p.* FROM posts AS p CROSS JOIN (SELECT @cnt := 0) AS x WHERE $whereSql ORDER BY p.date $sort)";
-
-		return getPostsNext($con, $tempSQL, $hidden, $nextId, $postspage);
+		return getPostsNext($con, $whereSQL, $sort, $hidden, $nextId, $postspage);
 	}
 
-	function getPostsNext($con, $tempSQL, $hidden, $nextId, $postspage){
-		mysqli_query($con,$tempSQL);
-
-		$idxres = mysqli_query($con,"SELECT idx FROM tt WHERE id='$nextId'");
-		$idx = mysqli_fetch_assoc($idxres)['idx'];
-
-		$postspage++;
-		$secondSQL = "SELECT * FROM tt WHERE idx >= '$idx' LIMIT 0,$postspage";
-
-		$posts = mysqli_query($con,$secondSQL);
+	function getPostsNext($con, $whereSQL, $sort, $hidden, $nextId, $postspage){
+		$threshold = "(SELECT idx FROM posts WHERE id='$nextId')";
+		if ($sort == "ASC")
+			$sql = "SELECT * FROM posts WHERE idx > $threshold AND $whereSQL ORDER BY date ASC LIMIT 0,$postspage";
+		else
+			$sql = "SELECT * FROM posts WHERE idx < $threshold AND $whereSQL ORDER BY date DESC LIMIT 0,$postspage";
+	
+		$posts = mysqli_query($con,$sql);
 		$lista = array();
 
 		while($post = @array_map('utf8_encode',mysqli_fetch_assoc($posts))) {
 			$e = new Post();
 			$e->id = $post['id'];
+			$e->idx = $post['idx'];
 			$e->feedId = $post['id_feed'];
 
 			$e->title = $post['title'];
@@ -588,12 +477,7 @@
 		}
 		mysqli_free_result($posts);
 
-		if ($postspage == sizeof($lista)){
-			$nextid = array_pop($lista)->id;
-			$data = array("posts" => $lista, "nextid" => $nextid);
-		} else {
-			$data = array("posts" => $lista);
-		}
+		$data = array("posts" => $lista);
 		return $data;
 	}
 ?>

@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `unread` tinyint(1) NOT NULL,
   `favorite` tinyint(1) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `idx` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   KEY `posts_ibfk_1` (`id_feed`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

@@ -118,7 +118,6 @@ function ajaxPosts(args){
 		data: params,
 		dataType : "json",
 		success: function(result){
-			nextPostId = result.nextid;
 			postIdxSelected = 0;
 			postCount = 1;
 			pagesLoaded = 1;
@@ -157,8 +156,8 @@ function ajaxPosts(args){
 }
 
 function ajaxMorePosts(args){
-	if (!nextPostId) return;
-	var params = "nextid="+nextPostId+"&";
+	if (posts.length <= 0) return;
+	var params = "nextid="+(posts[posts.length-1].id)+"&";
 	updateNavigationElements();
 
 	if (get.feed != undefined)			params += "feed="+get.feed+"&";
@@ -178,7 +177,6 @@ function ajaxMorePosts(args){
 		data: params,
 		dataType : "json",
 		success: function(result){
-			nextPostId = result.nextid;
 			$.each(result.posts,function(){
 				posts.push(this);
 				var html = getHTMLPost(this,postCount++);
