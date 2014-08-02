@@ -285,7 +285,7 @@
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 
-		$sql = "SELECT * FROM posts WHERE id_feed='$feedId' $unreadSQL $favsSQL ORDER BY `date` $sort LIMIT $page,$postspage";
+		$sql = "SELECT * FROM posts WHERE id_feed='$feedId' $unreadSQL $favsSQL ORDER BY `idx` $sort LIMIT $page,$postspage";
 		$countsql = "SELECT count(*) AS c FROM posts WHERE id_feed='$feedId' $unreadSQL $favsSQL";
 
 		return getPosts($con, $sql, $countsql, $hidden, $postspage);
@@ -300,7 +300,7 @@
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 
-		$sql = "SELECT * FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') $unreadSQL $favsSQL ORDER BY `date` $sort LIMIT $page,$postspage";
+		$sql = "SELECT * FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') $unreadSQL $favsSQL ORDER BY `idx` $sort LIMIT $page,$postspage";
 		$countsql = "SELECT count(*) AS c FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder='$folderId') $unreadSQL $favsSQL";
 
 		return getPosts($con, $sql, $countsql, $hidden, $postspage);
@@ -313,12 +313,12 @@
 		$page = mysqli_real_escape_string($con,$page);
 
 		// uncomment to don't use favorites and unread vars
-		//$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') ORDER BY `date` $sort LIMIT $page,$postspage";
+		//$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') ORDER BY `idx` $sort LIMIT $page,$postspage";
 		//$countsql = "SELECT count(*) AS c FROM post_tags WHERE id_tag='$tagId'";
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
-		$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') $unreadSQL $favsSQL ORDER BY `date` $sort LIMIT $page,$postspage";
+		$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') $unreadSQL $favsSQL ORDER BY `idx` $sort LIMIT $page,$postspage";
 		$countsql = "SELECT count(*) AS c FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') $unreadSQL $favsSQL";
 
 		return getPosts($con, $sql, $countsql, $hidden, $postspage);
@@ -338,7 +338,7 @@
 		$sql = "SELECT * FROM posts WHERE id_feed IN (".
 					"SELECT id FROM feeds WHERE id_folder IN (".
 						"SELECT id FROM folders WHERE user='$user' $hiddenSQL)) ".
-				"$unreadSQL $favsSQL ORDER BY `date` $sort LIMIT $page,$postspage";
+				"$unreadSQL $favsSQL ORDER BY `idx` $sort LIMIT $page,$postspage";
 
 		$countsql = "SELECT count(*) AS c FROM posts WHERE id_feed IN (".
 					"SELECT id FROM feeds WHERE id_folder IN (".
@@ -452,9 +452,9 @@
 	function getPostsNext($con, $whereSQL, $sort, $hidden, $nextId, $postspage){
 		$threshold = "(SELECT idx FROM posts WHERE id='$nextId')";
 		if ($sort == "ASC")
-			$sql = "SELECT * FROM posts WHERE idx > $threshold AND $whereSQL ORDER BY date ASC LIMIT 0,$postspage";
+			$sql = "SELECT * FROM posts WHERE idx > $threshold AND $whereSQL ORDER BY `idx` ASC LIMIT 0,$postspage";
 		else
-			$sql = "SELECT * FROM posts WHERE idx < $threshold AND $whereSQL ORDER BY date DESC LIMIT 0,$postspage";
+			$sql = "SELECT * FROM posts WHERE idx < $threshold AND $whereSQL ORDER BY `idx` DESC LIMIT 0,$postspage";
 	
 		$posts = mysqli_query($con,$sql);
 		$lista = array();

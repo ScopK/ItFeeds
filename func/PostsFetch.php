@@ -45,6 +45,7 @@
 
 			try {
 				$posts = $this->fr->getFeeds();
+				$posts = array_reverse($posts);
 			} catch (Exception $e) {
 			    echo $e->getMessage();
 			    return;
