@@ -323,6 +323,24 @@
 
 		return getPosts($con, $sql, $countsql, $hidden, $postspage);
 	}
+	
+	function getPostsFilter($con, $user, $hidden, $filterStr, $favs, $unread, $sort, $page, $postspage){
+		$user = mysqli_real_escape_string($con,$user);
+		$filterStr = mysqli_real_escape_string($con,"%$filterStr%");
+		$sort = mysqli_real_escape_string($con,$sort);
+		$page = mysqli_real_escape_string($con,$page);
+		
+		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
+		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
+		$hiddenSQL = ($hidden)? "" : "AND hidden='0'";
+		
+		$wheresql = "id_feed IN (SELECT id FROM feeds WHERE id_folder IN (".
+						"SELECT id FROM folders WHERE user='$user' $hiddenSQL))";
+		$sql = "SELECT * FROM posts WHERE $wheresql AND (title LIKE '$filterStr' OR description LIKE '$filterStr') $unreadSQL $favsSQL ORDER BY `idx` $sort LIMIT $page,$postspage";
+		$countsql = "SELECT count(*) AS c FROM posts WHERE $wheresql AND (title LIKE '$filterStr' OR description LIKE '$filterStr') $unreadSQL $favsSQL";
+		
+		return getPosts($con, $sql, $countsql, $hidden, $postspage);
+	}
 
 	function getPostsAll($con, $user, $hidden, $favs, $unread, $sort, $page, $postspage){
 		$user = mysqli_real_escape_string($con,$user);
@@ -335,15 +353,10 @@
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 		$hiddenSQL = ($hidden)? "" : "AND hidden='0'";
 
-		$sql = "SELECT * FROM posts WHERE id_feed IN (".
-					"SELECT id FROM feeds WHERE id_folder IN (".
-						"SELECT id FROM folders WHERE user='$user' $hiddenSQL)) ".
-				"$unreadSQL $favsSQL ORDER BY `idx` $sort LIMIT $page,$postspage";
-
-		$countsql = "SELECT count(*) AS c FROM posts WHERE id_feed IN (".
-					"SELECT id FROM feeds WHERE id_folder IN (".
-						"SELECT id FROM folders WHERE user='$user' $hiddenSQL)) ".
-				"$unreadSQL $favsSQL";
+		$wheresql = "id_feed IN (SELECT id FROM feeds WHERE id_folder IN (".
+						"SELECT id FROM folders WHERE user='$user' $hiddenSQL))";
+		$sql = "SELECT * FROM posts WHERE $wheresql $unreadSQL $favsSQL ORDER BY `idx` $sort LIMIT $page,$postspage";
+		$countsql = "SELECT count(*) AS c FROM posts WHERE $wheresql $unreadSQL $favsSQL";
 
 		return getPosts($con, $sql, $countsql, $hidden, $postspage);
 	}
@@ -428,6 +441,24 @@
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 
 		$whereSQL = "id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') $unreadSQL $favsSQL";
+
+		return getPostsNext($con, $whereSQL, $sort, $hidden, $nextId, $postspage);
+	}
+	
+	function getPostsNextFilter($con, $user, $hidden, $filterStr, $favs, $unread, $sort, $postspage, $nextId){
+		$user = mysqli_real_escape_string($con,$user);
+		$filterStr = mysqli_real_escape_string($con,"%$filterStr%");
+		$sort = mysqli_real_escape_string($con,$sort);
+		$postspage = mysqli_real_escape_string($con,$postspage);
+		$nextId = mysqli_real_escape_string($con,$nextId);
+
+		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
+		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
+		$hiddenSQL = ($hidden)? "" : "AND hidden='0'";
+		
+		$whereSQL = "id_feed IN (SELECT id FROM feeds WHERE id_folder IN (".
+						"SELECT id FROM folders WHERE user='$user' $hiddenSQL))";
+		$whereSQL .= " AND (title LIKE '$filterStr' OR description LIKE '$filterStr') $unreadSQL $favsSQL";
 
 		return getPostsNext($con, $whereSQL, $sort, $hidden, $nextId, $postspage);
 	}

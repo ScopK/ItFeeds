@@ -2,6 +2,7 @@ function reloadPosts(){
 	if (get.feed != undefined)			ajaxPosts("feed="+get.feed);
 	else if (get.folder != undefined)	ajaxPosts("folder="+get.folder);
 	else if (get.tag != undefined)		ajaxPosts("tag="+get.tag);
+	else if (get.search != undefined)	ajaxPosts("search="+get.search);
 	else								ajaxPosts("");
 }
 
@@ -10,6 +11,7 @@ function setFeedsActions(){
 		get.page = undefined;
 		get.folder = undefined;
 		get.tag = undefined;
+		get.search = undefined;
 
 		$(".feed, .tag, .folder").not(this).removeClass("selected");
 
@@ -45,6 +47,7 @@ function setFeedsActions(){
 			get.page = undefined;
 			get.feed = undefined;
 			get.tag = undefined;
+			get.search = undefined;
 
 			$(".feed, .tag, .folder").not(this).removeClass("selected");
 
@@ -81,6 +84,7 @@ function setTagsActions(){
 		get.page = undefined;
 		get.feed = undefined;
 		get.folder = undefined;
+		get.search = undefined;
 
 		$(".feed, .tag, .folder").not(this).removeClass("selected");
 		$(".folderfeeds").slideUp();
@@ -103,6 +107,20 @@ function setTagsActions(){
 	});
 }
 
+function searchAction(){
+	var query = encodeURIComponent($("#searchField").val());
+	if (query.length > 0) {
+		get.page = undefined;
+		get.feed = undefined;
+		get.folder = undefined;
+		get.tag = undefined;
+		get.search = query;
+		updateUrl();
+		ajaxPosts("search="+query);
+		$('#search_dialog').fadeOut(100);
+	} else
+		showMessage("Write something to search");
+}
 
 function updateNavigationElements(){
 	if (get.fav) $("#favsTButton").addClass("marked");

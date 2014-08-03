@@ -396,7 +396,7 @@ Tags
 ##############################################################################################################
 ############################################################################################################*/
 
-#add_tag{
+.background-modal{
 	display:table;
 	position: fixed;
 	top:0; left:0;
@@ -407,30 +407,30 @@ Tags
 	z-index: 2;
 }
 
-#add_tag .taglist{
+#add_tag_content .taglist{
 	padding: 10px;
 }
 
-#add_tag .taglist p{
+#add_tag_content .taglist p{
 	display: inline-block;
 	padding: 0px 3px;
 	margin: 0 1px 1px 0;
 }
 
-#add_tag .taglist p:hover{
+#add_tag_content .taglist p:hover{
 	cursor:pointer;
 	background-color: #f4f4f4;
 }
 
-#add_tag .taglist p.selected{
+#add_tag_content .taglist p.selected{
 	background-color: #ddd;
 }
 
-#add_tag .taglist p.hiddenTag{
+#add_tag_content .taglist p.hiddenTag{
 	color: rgba(0,0,0,0.4);
 }
 
-#add_tag_content {
+#add_tag_content, #search_content {
 	width: 340px;
 	margin: auto;
 	background-color: #fff;
@@ -439,18 +439,18 @@ Tags
 	border: 2px solid #000;
 }
 
-#add_tag_content table{
+.background-modal table{
 	width: 100%;
 	border-spacing: 0;
 	margin: 0;padding: 0;
 }
-#add_tag_content th{
+.background-modal th{
 	padding: 10px;
 	background-color: #000;
 	color: white;
 	font-weight: bold;
 }
-#add_tag_content td{
+.background-modal td{
 	padding: 10px 0px;
 }
 

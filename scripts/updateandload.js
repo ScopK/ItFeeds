@@ -110,7 +110,6 @@ function ajaxPosts(args){
 	if (get.page != undefined)		params+="page="+get.page+"&";
 	if (get.sortby != undefined)	params+="sortBy="+get.sortby+"&";
 	params += args;
-
 	loading_run();
 	$.ajax({
 		url: "./ajax/get_posts.php",
@@ -163,6 +162,7 @@ function ajaxMorePosts(args){
 	if (get.feed != undefined)			params += "feed="+get.feed+"&";
 	else if (get.folder != undefined)	params += "folder="+get.folder+"&";
 	else if (get.tag != undefined)		params += "tag="+get.tag+"&";
+	else if (get.search != undefined)	params += "search="+get.search+"&";
 
 	if (get.unread != undefined)		params+="unread="+get.unread+"&";
 	if (get.fav != undefined)			params+="fav="+get.fav+"&";

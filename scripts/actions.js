@@ -84,6 +84,12 @@ function showAddTagsDialog(){
 	}
 }
 
+function showSearchDialog(){
+	$('#search_dialog').fadeIn(100);
+	$('#searchField').val("");
+	$('#searchField').focus();
+}
+
 function addSelectedTag(element){
 	$(element).toggleClass("selected");
 }

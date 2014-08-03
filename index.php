@@ -21,12 +21,12 @@
         <script src="scripts/updateandload.js"></script>
         <script src="scripts/actions.js"></script>
         <script src="scripts/search.js"></script>
-        <script src="scripts/main_scripts.js"></script>
+        <script src="scripts/mode_control.js"></script>
         <script src="scripts/posts_control.js"></script>
         <script src="scripts/init.js"></script>
         <script>
         $(document).ready(function(){
-            $("#add_tag").hide();
+            $(".background-modal").hide();
             $("#managerLink").attr("href","./manager.php"+location.search);
             loading_run();
             randomColors();
@@ -73,7 +73,7 @@
             <div class="loading" id="smallBall"></div>
             <div class="loading" id="bigBall"></div>
         </div>
-        <div id="add_tag"><div style="display:table-cell;vertical-align:middle;"><div id="add_tag_content">
+        <div id="add_tag" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="add_tag_content">
             <form action="" method="POST">
                 <table><tr><th colspan="2">Add tag</th></tr>
                 <tr><td class="taglist" colspan="2"></td></tr>
@@ -85,6 +85,19 @@
                 </table>
             </form>
         </div></div></div>
+		
+        <div id="search_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="search_content">
+            <form action="" method="POST">
+                <table><tr><th colspan="2">Search</th></tr>
+                <tr><td><input id="searchField" type="text" name="newtagname" autocomplete="off" /></td></tr>
+                <tr><td colspan="2" class="dialog_buttons">
+                    <button class="searchButton" onclick="searchAction(); return false;">Add</button>
+                    <button class="cancelAddTag" onclick="$('#search_dialog').fadeOut(100);return false;">Cancel</button>
+                </td></tr>
+                </table>
+            </form>
+        </div></div></div>
+		
         <div id="top_message"><p></p></div>
     </body>
 </html>

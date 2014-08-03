@@ -2,7 +2,7 @@ $(document).ready(function(){
     var allowed = true;
 	$(document).keydown(function(e) { 
 		if (e.ctrlKey || e.altKey || e.shiftKey) return;
-    	if (e.which == 27 && $("#add_tag").is(":visible")) $('#add_tag').fadeOut(100);
+    	if (e.which == 27 && $(".background-modal").is(":visible")) $('.background-modal').fadeOut(100);
 		if ($("input").is(":focus:visible")) return;
 		if (!allowed) return false;
 		allowed = false;
@@ -15,6 +15,9 @@ $(document).ready(function(){
 		}
 		if ($(".loading").css("animation-play-state") != "paused") return;
 		switch (e.which) {
+			case 81: //q
+				showSearchDialog();
+				return false;
 		    case 83: //s
 		        toogleFavPost();
 		        break;

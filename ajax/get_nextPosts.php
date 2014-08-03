@@ -14,6 +14,7 @@
 	$feedId = isset($_REQUEST['feed'])?$_REQUEST['feed']:null;
 	$folderId = isset($_REQUEST['folder'])?$_REQUEST['folder']:null;
 	$tagId = isset($_REQUEST['tag'])?$_REQUEST['tag']:null;
+	$search = isset($_REQUEST['search'])?$_REQUEST['search']:null;
 	
 	$sort = isset($_REQUEST['sortBy'])?$_REQUEST['sortBy']:null;
 	
@@ -21,7 +22,8 @@
 	if (isset($feedId))	$mode=0;
 	elseif (isset($folderId)) $mode=1;
 	elseif (isset($tagId)) $mode=2;
-	else $mode=3;
+	elseif (isset($search)) $mode=3;
+	else $mode=4;
 
 	if (!isset($sort)) $sort="DESC";
 	else $sort=($sort==1)?"DESC":"ASC";
@@ -54,7 +56,11 @@
 			$posts = getPostsNextTag($con, $user, $hidd, $tagId, $favorites, $unread, $sort, $postsPage, $nextId);
 			echo json_encode($posts);
 			break;
-		case 3: // all
+		case 3: // search
+			$posts = getPostsNextFilter($con, $user, $hidd, $search, $favorites, $unread, $sort, $postsPage, $nextId);
+			echo json_encode($posts);
+			break;
+		case 4: // all
 			$posts = getPostsNextAll($con, $user, $hidd, $favorites, $unread, $sort, $postsPage, $nextId);
 			echo json_encode($posts);
 			break;
