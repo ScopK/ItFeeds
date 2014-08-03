@@ -3,6 +3,7 @@ var tags;
 var idxFolder;
 var idxFeed;
 var idxTag;
+var first = true;
 
 function loadFolders(){
 	$("#user_list").fadeOut(200);
@@ -333,6 +334,7 @@ function addFolder(){
 
 function unlockHidden(){
 	var hidd = $(this).closest("form").serialize();
+	
 	loading_run();
 	$.ajax({
 		url: "./ajax/login_hidden.php",

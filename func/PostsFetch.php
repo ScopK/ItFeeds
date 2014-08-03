@@ -54,13 +54,18 @@
 			$feedDate = new DateTime($feed['last_date_post']);
 			$mostRecentDate = $feedDate;
 			$count = 0;
+			$updatedate = true;
 			foreach($posts as $post)
 			{
-				$count += $this->addIfPosible($feed,$post);			
+				$errval = $this->addIfPosible($feed,$post);
+				if ($errval == -1)
+					$updatedate = false;
+				else
+					$count += $errval;		
 				$date = new DateTime($post->date);
 				if ($mostRecentDate < $date) $mostRecentDate = $date;
 			}
-			if ($mostRecentDate != $feedDate)
+			if ($updatedate && $mostRecentDate != $feedDate)
 			{
 				$dateChangeSql = "UPDATE feeds SET last_date_post='";
 				$dateChangeSql.= date("Y-m-d H:i:s", $mostRecentDate->format('U'))."' WHERE id='";
@@ -98,11 +103,11 @@
 				}*/
 			} else {
 				$nid = getNewID();
-				$sql = "INSERT INTO posts(id,id_feed,title,description,link,unread,favorite,date) VALUES('$nid',?,?,?,?,?,?,?)";
+				$sql = "INSERT INTO posts(id,id_feed,title,description,link,unread,favorite,date) VALUES('$nid',?,?,?,?,'1','0',?)";
 				$stmt=mysqli_stmt_init($this->con);
 				$done = 0;
 				if (mysqli_stmt_prepare($stmt,$sql)){
-					mysqli_stmt_bind_param($stmt,"sssssss",$feed['id'],$post->title,$post->description,$post->link,$post->unread,$post->favorite,$post->date);
+					mysqli_stmt_bind_param($stmt,"sssss",$feed['id'],$post->title,$post->description,$post->link,$post->date);
 					mysqli_stmt_execute($stmt);
 					$done = mysqli_affected_rows($this->con);
 				}
@@ -111,10 +116,13 @@
 					return 1;
 				} else {
 					echo "Error\n";
-					echo $feed['id'].",".$post->title.",".$post->link.",".$post->unread.",".$post->favorite.",".$post->date;
+					echo $feed['id']."\n".$post->title."\n".$post->link."\n".$post->date;
 					echo "\n";
 					echo $post->description;
 					echo "\n";
+					echo "$sql\n";
+					mysqli_stmt_close($stmt);
+					return -1;
 				}
 			}
 			mysqli_stmt_close($stmt);

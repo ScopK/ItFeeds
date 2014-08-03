@@ -81,18 +81,22 @@ function load(flds){
 			$("#folder_list").append(line);
 	});
 
-	location.search.replace('?', '').split('&').every(function (val) {
-	    split = val.split("=", 2);
-	    if (split[0]=="folder"){
-	    	showFolderTools.call($(".folder[idFolder='"+split[1]+"'] h3")[0]);
-	    	return false;
-	    }
-	    if (split[0]=="feed"){
-	    	showFeedTools.call($(".feed[idFeed='"+split[1]+"'] p")[0]);
-	    	return false;
-	    }
-	    return true;
-	});
+	if (first){
+		first = false;
+		location.search.replace('?', '').split('&').every(function (val) {
+			split = val.split("=", 2);
+			if (split[0]=="folder"){
+				showFolderTools.call($(".folder[idFolder='"+split[1]+"'] h3")[0]);
+				return false;
+			}
+			if (split[0]=="feed"){
+				showFeedTools.call($(".feed[idFeed='"+split[1]+"'] p")[0]);
+				return false;
+			}
+			return true;
+		});
+	}
+	
 	$(".folder h3").click(showFolderTools);
 	$(".feed p").click(showFeedTools);
 	$("#folder_list").show();
@@ -112,15 +116,18 @@ function loadTags(tags){
 		$("#tag_list").append(line);
 	});
 
-	location.search.replace('?', '').split('&').every(function (val) {
-	    split = val.split("=", 2);
-	    if (split[0]=="tag"){
-	    	gotoTags();
-	    	showTagTools.call($(".tag[idTag='"+split[1]+"'] h3")[0]);
-	    	return false;
-	    }
-	    return true;
-	});
+	if (first){
+		first = false;
+		location.search.replace('?', '').split('&').every(function (val) {
+			split = val.split("=", 2);
+			if (split[0]=="tag"){
+				gotoTags();
+				showTagTools.call($(".tag[idTag='"+split[1]+"'] h3")[0]);
+				return false;
+			}
+			return true;
+		});
+	}
 	$(".tag").click(showTagTools);
 	$("#tag_list").show();
 }
