@@ -93,7 +93,7 @@
 
 			$e->id = $folder['id'];
 			$e->name = $folder['name'];
-			$e->user = $user;
+			//$e->user = $user;
 			$e->hidden = $folder['hidden'];
 			$e->feeds = getFeeds($con, $e->id,$depth);
 

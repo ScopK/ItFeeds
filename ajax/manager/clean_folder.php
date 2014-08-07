@@ -10,11 +10,8 @@
 	$unread = (isset($_POST['unread']))? "1":"0";
 
 
-	if (!$unread)
-		$unreadSQL = "AND unread='0'";
+	$unreadSQL = (!$unread)?"AND unread='0'":"";
 	$sql = "DELETE FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder=?) AND favorite='0' $unreadSQL AND date < DATE_SUB(CURRENT_TIMESTAMP, INTERVAL ? DAY) AND id NOT IN (SELECT id_post FROM post_tags)";
-
-
 
 	$stmt=mysqli_stmt_init($con);
 	if (mysqli_stmt_prepare($stmt,$sql)){

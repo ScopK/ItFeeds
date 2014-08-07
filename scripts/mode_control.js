@@ -108,18 +108,23 @@ function setTagsActions(){
 }
 
 function searchAction(){
+	$('#search_dialog').fadeOut(100);
+	get.page = undefined;
 	var query = encodeURIComponent($("#searchField").val());
 	if (query.length > 0) {
-		get.page = undefined;
-		get.feed = undefined;
-		get.folder = undefined;
-		get.tag = undefined;
-		get.search = query;
-		updateUrl();
 		ajaxPosts("search="+query);
-		$('#search_dialog').fadeOut(100);
-	} else
-		showMessage("Write something to search");
+		get.search = query;
+	} else {
+		ajaxPosts("");
+		get.search = undefined;
+	}
+	get.feed = undefined;
+	get.folder = undefined;
+	get.tag = undefined;
+	updateUrl();
+	$(".feed, .tag, .folder").removeClass("selected");
+	$(".folderfeeds").slideUp();
+	$(".expander").html("+");
 }
 
 function updateNavigationElements(){
