@@ -15,6 +15,7 @@
 
 	$time = time();
 	while(true){
+		echo date('Y-d-m H:i:s', time())."\r";
 		$feeds = mysqli_query($con,$sql);
 		foreach($feeds as $feed){
 			if (controlFeed($feed['id'],$feed['upd_time'])){
@@ -23,8 +24,10 @@
 		}
 		mysqli_free_result($feeds);
 		$left = ($time+60)-time();
-		if ($left>0)
+		if ($left>0){
+			echo date('Y-d-m H:i:s', time())."\r";
 			sleep($left);
+		}
 		$time+=60;
 	}
 

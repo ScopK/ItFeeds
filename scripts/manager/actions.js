@@ -3,7 +3,7 @@ var tags;
 var idxFolder;
 var idxFeed;
 var idxTag;
-var first = true;
+var first = false;
 
 function loadFolders(){
 	$("#user_list").fadeOut(200);

@@ -102,8 +102,10 @@
 						echo "Updated\n";
 				}*/
 			} else {
-				$nid = getNewID();
-				$sql = "INSERT INTO posts(id,id_feed,title,description,link,unread,favorite,date) VALUES('$nid',?,?,?,?,'1','0',?)";
+				$count =0;
+				repeat:
+				//$nid = getNewID();
+				$sql = "INSERT INTO posts(id,id_feed,title,description,link,unread,favorite,date) VALUES(newID(36,\"posts\"),?,?,?,?,'1','0',?)";
 				$stmt=mysqli_stmt_init($this->con);
 				$done = 0;
 				if (mysqli_stmt_prepare($stmt,$sql)){
@@ -115,13 +117,19 @@
 					mysqli_stmt_close($stmt);
 					return 1;
 				} else {
-					echo "Error\n";
-					echo $feed['id']."\n".$post->title."\n".$post->link."\n".$post->date;
-					echo "\n";
-					echo $post->description;
-					echo "\n";
-					echo "$sql\n";
+					if ($count < 3){
+						$count++;
+						echo "Failed adding 1 post. Counter $count\n";
+						goto repeat;
+					}
+					file_put_contents ("log.txt", date('Y-d-m H:i:s', time())."\n",FILE_APPEND);
+					file_put_contents ("log.txt", "Done value: $done (!= 1)\n",FILE_APPEND);
+					file_put_contents ("log.txt", "FeedId: ".$feed['id']."\n",FILE_APPEND);
+					file_put_contents ("log.txt", print_r($post, true)."\n",FILE_APPEND);
+					file_put_contents ("log.txt", "$sql\n",FILE_APPEND);
+					file_put_contents ("log.txt", "###############################################\n",FILE_APPEND);
 					mysqli_stmt_close($stmt);
+					//die();
 					return -1;
 				}
 			}

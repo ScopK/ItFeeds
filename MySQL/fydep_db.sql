@@ -167,3 +167,45 @@ ALTER TABLE `tags`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+DELIMITER //
+DROP FUNCTION IF EXISTS newID;
+CREATE FUNCTION newID(num INT, tabname CHAR(40)) RETURNS VARCHAR(100)
+BEGIN
+  DECLARE `password` VARCHAR(100);
+  DECLARE characters VARCHAR(100);
+  DECLARE clength INT;
+  DECLARE count INT;
+  DECLARE val INT;
+  DECLARE `continue` bool;
+  SET characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-";
+  SET clength = CHAR_LENGTH(characters);
+  
+  SET `continue` = true;
+  
+  WHILE (`continue`) DO
+    SET `password` = "";
+    SET count = 0;
+    WHILE count < num DO
+      SET `password` = CONCAT(`password`,SUBSTRING(characters,ROUND(RAND()*clength),1));
+      SET count = count + 1;
+    END WHILE;
+
+    IF tabname="posts" THEN
+      SET val = (SELECT count(*) FROM posts WHERE id=`password` );
+    ELSEIF tabname="feeds" THEN
+      SET val = (SELECT count(*) FROM feeds WHERE id=`password` );
+    ELSEIF tabname="folders" THEN
+      SET val = (SELECT count(*) FROM folders WHERE id=`password` );
+    ELSEIF tabname="tags" THEN
+      SET val = (SELECT count(*) FROM tags WHERE id=`password` );
+    ELSE
+      SET val=0;
+    END IF;
+    
+    SET `continue` = (val!=0);
+  END WHILE;
+  
+  RETURN `password`;
+END
+//
