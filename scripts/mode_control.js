@@ -2,7 +2,6 @@ function reloadPosts(){
 	if (get.feed != undefined)			ajaxPosts("feed="+get.feed);
 	else if (get.folder != undefined)	ajaxPosts("folder="+get.folder);
 	else if (get.tag != undefined)		ajaxPosts("tag="+get.tag);
-	else if (get.search != undefined)	ajaxPosts("search="+get.search);
 	else								ajaxPosts("");
 }
 
@@ -111,21 +110,13 @@ function searchAction(){
 	$('#search_dialog').fadeOut(100);
 	get.page = undefined;
 	var query = encodeURIComponent($("#searchField").val());
-	if (query.length > 0) {
-		ajaxPosts("search="+query);
+	if (query.length > 0)
 		get.search = query;
-	} else {
-		ajaxPosts("");
+	else
 		get.search = undefined;
-	}
-	get.feed = undefined;
-	get.folder = undefined;
-	get.tag = undefined;
+	reloadPosts();
 	updateNavigationElements();
 	updateUrl();
-	$(".feed, .tag, .folder").removeClass("selected");
-	$(".folderfeeds").slideUp();
-	$(".expander").html("+");
 }
 
 function updateNavigationElements(){

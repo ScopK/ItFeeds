@@ -14,7 +14,7 @@
 	$feedId = isset($_REQUEST['feed'])?$_REQUEST['feed']:null;
 	$folderId = isset($_REQUEST['folder'])?$_REQUEST['folder']:null;
 	$tagId = isset($_REQUEST['tag'])?$_REQUEST['tag']:null;
-	$search = isset($_REQUEST['search'])?$_REQUEST['search']:null;
+	$search = isset($_REQUEST['search'])?$_REQUEST['search']:"";
 	
 	$sort = isset($_REQUEST['sortBy'])?$_REQUEST['sortBy']:null;
 	
@@ -22,8 +22,7 @@
 	if (isset($feedId))	$mode=0;
 	elseif (isset($folderId)) $mode=1;
 	elseif (isset($tagId)) $mode=2;
-	elseif (isset($search)) $mode=3;
-	else $mode=4;
+	else $mode=3;
 
 	if (!isset($sort)) $sort="DESC";
 	else $sort=($sort==1)?"DESC":"ASC";
@@ -42,33 +41,27 @@
 
 	//usleep(400000);
 	$user = $_SESSION['log_user'];
-	$hidd = (isset($_SESSION['hid_user']))?checkUserHiddenPassword($con, $user,$_SESSION['hid_user']):false;
+	$hidden = (isset($_SESSION['hid_user']))?checkUserHiddenPassword($con, $user,$_SESSION['hid_user']):false;
 	switch($mode){
 		case 0: // feeds
-			$posts = getPostsNextFeed($con, $user, $hidd, $feedId, $favorites, $unread, $sort, $postsPage, $nextId);
+			$posts = getPostsNextFeed($con, $user, $feedId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
 			echo json_encode($posts);
 			break;
 		case 1: // folder
-			$posts = getPostsNextFolder($con, $user, $hidd, $folderId, $favorites, $unread, $sort, $postsPage, $nextId);
+			$posts = getPostsNextFolder($con, $user, $folderId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
 			echo json_encode($posts);
 			break;
 		case 2: // tags
-			$posts = getPostsNextTag($con, $user, $hidd, $tagId, $favorites, $unread, $sort, $postsPage, $nextId);
+			$posts = getPostsNextTag($con, $user, $tagId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
 			echo json_encode($posts);
 			break;
-		case 3: // search
-			$posts = getPostsNextFilter($con, $user, $hidd, $search, $favorites, $unread, $sort, $postsPage, $nextId);
-			echo json_encode($posts);
-			break;
-		case 4: // all
-			$posts = getPostsNextAll($con, $user, $hidd, $favorites, $unread, $sort, $postsPage, $nextId);
+		case 3: // all
+			$posts = getPostsNextAll($con, $user, $favorites, $unread, $sort, $postsPage, $nextId, $search);
 			echo json_encode($posts);
 			break;
 		default:
 			die("No reachable point");
 			break;
-
 	}
 	mysqli_close($con);
-
 ?>
