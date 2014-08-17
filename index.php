@@ -53,7 +53,7 @@
                         <span id="totalPages">10</span> (<span id="percentSeen">0</span>)
                     </span>
                     <button id="loadMore" onclick="loadMore()">Load More</button>
-					<button onclick="showSearchDialog(); return false;">Search</button>
+					<button id="searchButton" onclick="showSearchDialog(); return false;">Search</button>
                 </div>
             </div>
             <div id="content">

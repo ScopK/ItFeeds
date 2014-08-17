@@ -134,7 +134,10 @@ function ajaxPosts(args){
 			$.each(posts,function(){
 				var ixs = findFeedIndex(this.feedId);
 				var html = getHTMLPost(this,postCount++);
-				$("#posts_panel").append(html);
+				var jhtml = $(html);
+				jhtml.find("script").remove();
+				jhtml.find("a").attr("target","_blank");
+				$("#posts_panel").append(jhtml[0].outerHTML);
 			});
 			postsInit(true);
 			if (totalPages <= pagesLoaded){
@@ -180,7 +183,10 @@ function ajaxMorePosts(args){
 			$.each(result.posts,function(){
 				posts.push(this);
 				var html = getHTMLPost(this,postCount++);
-				$("#posts_panel").append(html);
+				var jhtml = $(html);
+				jhtml.find("script").remove();
+				jhtml.find("a").attr("target","_blank");
+				$("#posts_panel").append(jhtml[0].outerHTML);
 			});
 			pagesLoaded++;
 			$("#percentSeen").html(pagesLoaded+"/"+totalPages);

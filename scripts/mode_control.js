@@ -121,6 +121,7 @@ function searchAction(){
 	get.feed = undefined;
 	get.folder = undefined;
 	get.tag = undefined;
+	updateNavigationElements();
 	updateUrl();
 	$(".feed, .tag, .folder").removeClass("selected");
 	$(".folderfeeds").slideUp();
@@ -140,4 +141,6 @@ function updateNavigationElements(){
 	if (get.sortby) $("#sortTButton").html("Older");
 	else		  	$("#sortTButton").html("Newer");
 
+	if (get.search) $("#searchButton").addClass("marked");
+	else		    $("#searchButton").removeClass("marked");
 }

@@ -26,12 +26,12 @@ function hideLateralMenu(){
 	$("#content").css("margin-left","0");
 
     setTimeout(function(){
-        $("#lateral_menu").bind("mouseover", showLateralMenu);
+        $("#lateral_menu").bind("click", showLateralMenu);
     },500);
 }
 
 function showLateralMenu(){
-    $('#lateral_menu').unbind('mouseover');
+    $('#lateral_menu').unbind('click');
 	$("#content").css("margin-left",lateral_width+"px");
     $("#lateral_menu").removeClass("hidden");
 	$("#lateral_menu").css("margin-left","0");
