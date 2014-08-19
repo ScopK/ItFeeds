@@ -7,14 +7,15 @@
     	<script src="scripts/lib/messages.js"></script>
         <style>
 			body{
-				font-size: small;
-				font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;
-
 				background-image: url("imgs/back.jpg");
 				background-attachment: fixed;
 				background-size: 100% 100%;
 
 				overflow: hidden;
+			}
+			body, button, input{
+				/*font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;*/
+				font-family: sans-serif,Tahoma, Geneva;
 			}
 			#dialog{
 				position:fixed;
@@ -88,9 +89,9 @@
     	<div id="dialog">
     	<form style="height:100%">
 	    	<table ><tr><th colspan="2">User login</th></tr>
-		    	<tr><td colspan="2"><input id="username_field" type="text" autocomplete="off" placeholder="Username"/>
+		    	<tr><td colspan="2"><input id="username_field" style="font-size: 15px;" autocomplete="off" placeholder="Username" type="text">
 		    	</td></tr>
-		    	<tr><td colspan="2"><input id="password_field" type="password" autocomplete="off" placeholder="Password"/>
+		    	<tr><td colspan="2"><input id="password_field" style="width: 140px; font-size: 12px;" type="password" autocomplete="off" placeholder="Password"/>
 		    	</td></tr>
 		    	<tr><td align="right"><button onclick="login(this); return false;">Login</button></td>
 		    		 <td align="left"><button onclick="register(); return false;">Register</button></td></tr>

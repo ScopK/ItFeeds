@@ -1,6 +1,9 @@
-body, .options_panel a, .options_panel button{
+body,button,input{
     /*font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;*/
-	font-family: Tahoma, Geneva, sans-serif;
+	font-family: Tahoma, Geneva,sans-serif;
+}
+th{
+	font-size: 14px;
 }
 
 body {
@@ -452,6 +455,11 @@ Tags
 }
 .background-modal td{
 	padding: 10px 0px;
+}
+
+.dialog_buttons button{
+	margin: 0 6px 5px;
+	padding: 3px 7px;
 }
 
 /*###########################################################################################################

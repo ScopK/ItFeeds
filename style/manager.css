@@ -1,6 +1,12 @@
-body, #extrabuttons a, #extrabuttons button{
+body,button,input{
     /*font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;*/
+	font-family: sans-serif,Tahoma, Geneva;
+}
+#extrabuttons a, #extrabuttons button, th{
 	font-family: Tahoma, Geneva, sans-serif;
+}
+th{
+	font-size: 14px;
 }
 
 body {
@@ -13,7 +19,6 @@ body {
     background-color: #444;
     overflow-y: scroll;
 }
-
 
 h3,h2,p,td,th{
 	-webkit-touch-callout: none;
@@ -322,12 +327,9 @@ p.disabled{
 }
 
 .dialog_buttons button{
-	font-size: 15px;
-	margin: 0 10px;
-	padding: 5px;
-	border: 2px solid #000;
+	margin: 0 6px 5px;
+	padding: 3px 7px;
 }
-
 
 #confdel_feed, #confdel_tag {
 	height: 140px;
