@@ -19,6 +19,7 @@
         <link rel="stylesheet" type="text/css" href="style/anims.css">
         
         <script src="scripts/lib/jquery.min.js"></script>
+        <script src="scripts/lib/messages.js"></script>
         <script src="scripts/manager/actions.js"></script>
         <script src="scripts/manager/webview.js"></script>
         <script>

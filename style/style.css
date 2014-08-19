@@ -543,26 +543,6 @@ div.tagname button{
 	height: 16px;
 }
 
-#top_message{
-	z-index: 3;
-	position:fixed;
-	top:-50px;left:0;right:0;
-	background-color: rgba(230,46,0,0.9);
-	border-bottom: 2px solid #000;
-	transition: top 0.4s;
-}
-
-#top_message.good{
-	background-color: rgba(145,212,0,0.9);
-}
-
-#top_message p{
-	text-align: center;
-	color:white;
-	font-weight: bold;
-	font-size: 14px;
-	margin: 1em 0px;
-}
 
 #loadMoreLabel {
 	position:absolute; bottom: 0;

@@ -54,7 +54,6 @@ function toggleFavs(me){
 	reloadPosts();
 }
 
-
 function toggleUnread(me){
 	if (!get.unread)
 		get.unread = "0";
@@ -102,21 +101,5 @@ function loadMore(){
 	}
 }
 
-var hidemsgtimer;
-function showMessage(msg, good){
-	if (good)
-		$("#top_message").addClass("good");
-	else
-		$("#top_message").removeClass("good");
-	$("#top_message p").html(msg);
-	$("#top_message").css("top","0");
-	
-	clearTimeout(hidemsgtimer);
-	hidemsgtimer = setTimeout(hideMessage,3000);
-}
 
-function hideMessage() {
-	var hh = $("#top_message").outerHeight()+"px";
-	$("#top_message").css("top","-"+hh);
-}
 

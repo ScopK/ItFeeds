@@ -4,55 +4,42 @@
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     	<title>Fydeph Login</title>
     	<link rel="shortcut icon" href="imgs/icon.png" />
+    	<script src="scripts/lib/messages.js"></script>
         <style>
-			body {
-			    font-size: small;
-			    font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;
+			body{
+				font-size: small;
+				font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;
 
-			    background-image: url("imgs/back.jpg");
-			    background-attachment: fixed;
-			    background-size: 100% 100%;
+				background-image: url("imgs/back.jpg");
+				background-attachment: fixed;
+				background-size: 100% 100%;
 
-			    overflow: hidden;
+				overflow: hidden;
 			}
-			#invalid{
+			#dialog{
 				position:fixed;
-				top:-50px;left:0;right:0;
-				background-color: rgba(250,50,0,0.3);
-				border-bottom: 2px solid #000;
-				transition: top 0.4s;
+				margin:auto;top:0;bottom:100px;left:0;right:0;
+				width: 255px; height: 155px;
+				padding-bottom:5px;
+
+				background-color:#fff;
+				border: 2px solid #000;
 			}
-			#invalid p{
-				text-align: center;
-				color:white;
+			#dialog table {
+				border-spacing: 0;
+				width:100%;height:100%;text-align:center;
+			}
+			#dialog table th {
+				background-color: #000;
+				color: #fff;
 				font-weight: bold;
-				font-size: 14px;
-				margin: 1em 0px;
+				padding: 5px 0;
 			}
-        	#dialog{
-        		position:fixed;
-        		margin:auto;top:0;bottom:100px;left:0;right:0;
-        		width: 255px; height: 155px;
-        		padding-bottom:5px;
-        			
-        		background-color:#fff;
-        		border: 2px solid #000;
-        	}
-        	#dialog table {
-        		border-spacing: 0;
-        		width:100%;height:100%;text-align:center;
-        	}
-        	#dialog table th {
-        		background-color: #000;
-        		color: #fff;
-        		font-weight: bold;
-        		padding: 5px 0;
-        	}
-        	#dialog table td {
-        		margin:0;
-        	}
-        	button::-moz-focus-inner { border:0; }
-        	button{
+			#dialog table td {
+				margin:0;
+			}
+			button::-moz-focus-inner { border:0; }
+			button{
 				font-size: 15px;
 				margin: 0 10px;
 				padding: 5px;
@@ -70,7 +57,7 @@
     		doLogin(user,pass);
     	}
     	function register(){
-    		alert("register");
+    		showMessage("Work in progress");
     	}
 
 		function doLogin(user,pass) {
@@ -82,22 +69,13 @@
 
 			xmlhttp.onreadystatechange=function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-					document.getElementById("invalid").style.top = "-50px";
 					var data = "<?=http_build_query($_REQUEST);?>";
 					if (data.indexOf("manager=1")>=0)	window.location = "manager.php";
 					else	window.location = "index.php?"+data;
 				} else if (xmlhttp.readyState==4 && xmlhttp.status==502) {
-					document.getElementById("invalid").childNodes[1].innerHTML = "Invalid username or password, please, try again or register";
-					document.getElementById("invalid").style.top = "0";
-					setTimeout(function(){
-						document.getElementById("invalid").style.top = "-50px";
-					},3000);
+					showMessage("Invalid username or password, please, try again or register");
 				} else if (xmlhttp.readyState==4) {
-					document.getElementById("invalid").childNodes[1].innerHTML = xmlhttp.status+": "+xmlhttp.statusText;
-					document.getElementById("invalid").style.top = "0";
-					setTimeout(function(){
-						document.getElementById("invalid").style.top = "-50px";
-					},3000);
+					showMessage(xmlhttp.status+": "+xmlhttp.statusText);
 				}
 			}
 			xmlhttp.open("POST","ajax/login.php",true);
@@ -119,10 +97,5 @@
 			</table>
 		</form>
     	</div>
-
-    	<div id="invalid">
-    		<p>Invalid username or password, please, try again or register</p>
-    	</div>
-
     </body>
 </html>
