@@ -24,8 +24,8 @@ DROP DATABASE IF EXISTS `fydepdb`;
 CREATE DATABASE `fydepdb` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 USE `fydepdb`;
 
-CREATE USER 'fydep_u'@'localhost' IDENTIFIED BY '4syouwI5h';
-GRANT ALL PRIVILEGES ON fydepdb.* TO 'fydep_u'@'localhost';
+
+GRANT ALL PRIVILEGES ON fydepdb.* TO 'fydep_u'@'localhost' IDENTIFIED BY '4syouwI5h';
 
 -- --------------------------------------------------------
 
@@ -168,9 +168,9 @@ ALTER TABLE `tags`
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-DELIMITER //
-DROP FUNCTION IF EXISTS newID;
-CREATE FUNCTION newID(num INT, tabname CHAR(40)) RETURNS VARCHAR(100)
+DELIMITER $$
+DROP FUNCTION IF EXISTS `newID`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `newID`(num INT, tabname CHAR(40)) RETURNS varchar(100) CHARSET utf8 COLLATE utf8_spanish_ci
 BEGIN
   DECLARE `password` VARCHAR(100);
   DECLARE characters VARCHAR(100);
@@ -205,5 +205,4 @@ BEGIN
   END WHILE;
   
   RETURN `password`;
-END
-//
+END$$
