@@ -177,13 +177,12 @@ BEGIN
   DECLARE clength INT;
   DECLARE count INT;
   DECLARE val INT;
-  DECLARE `continue` bool;
   SET characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-";
   SET clength = CHAR_LENGTH(characters);
   
-  SET `continue` = true;
+  SET val = 1;
   
-  WHILE (`continue`) DO
+  WHILE (val!=0) DO
     SET `password` = "";
     SET count = 0;
     WHILE count < num DO
@@ -203,7 +202,6 @@ BEGIN
       SET val=0;
     END IF;
     
-    SET `continue` = (val!=0);
   END WHILE;
   
   RETURN `password`;
