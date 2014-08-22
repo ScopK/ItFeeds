@@ -194,6 +194,21 @@
 	    return $randomString;
 	}
 
+	function userExists($con,$user){
+		$sql = "SELECT count(*) FROM users WHERE username=?";
+		$stmt=mysqli_stmt_init($con);
+		if (mysqli_stmt_prepare($stmt,$sql)){
+			mysqli_stmt_bind_param($stmt,"s", $user); // Bind parameters
+			mysqli_stmt_execute($stmt); // Execute query
+
+			mysqli_stmt_bind_result($stmt,$count); // Bind result variables
+			mysqli_stmt_fetch($stmt); // Fetch value
+
+			mysqli_stmt_close($stmt); // Close statement
+		}
+		return ($count >= 1);
+	}
+
 	function checkUserPassword($con,$user,$pass){
 		$sql = "SELECT username FROM users WHERE username=? AND password=?";
 		$stmt=mysqli_stmt_init($con);
