@@ -47,7 +47,7 @@
 				$posts = $this->fr->getFeeds();
 				$posts = array_reverse($posts);
 			} catch (Exception $e) {
-			    echo $e->getMessage();
+			    echo date('Y-d-m H:i:s', time()).": ".$e->getMessage()."\n";
 			    return;
 			}
 
@@ -73,7 +73,7 @@
 				mysqli_query($this->con,$dateChangeSql);
 			}
 			if ($count>0)
-				echo date('Y-d-m H:i:s', time()).": $count added to:".$feed['rss_link']."\n";
+				echo date('Y-d-m H:i:s', time()).": $count post".(($count>1)?"s":"")." added - ".$feed['rss_link']."\n";
 		}
 
 		private function addIfPosible($feed,$post){

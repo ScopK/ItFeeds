@@ -39,10 +39,11 @@
 	styl.innerHTML+="	opacity:0; visibility:hidden;\n";
 	styl.innerHTML+="}\n";
 	styl.innerHTML+="#popup_message p{\n";
+	styl.innerHTML+="	font-variant: small-caps;\n";
 	styl.innerHTML+="	font-weight: bold;\n";
 	styl.innerHTML+="	color: #FFF;\n";
 	styl.innerHTML+="	font-size: 15px;\n";
-	styl.innerHTML+="	margin:0; padding:20px;\n";
+	styl.innerHTML+="	margin:0; padding: 10px 25px;\n";
 	styl.innerHTML+="}\n";
 
 	document.head.appendChild(styl);
@@ -91,7 +92,7 @@ function showPopMessage(msg=""){
 	box.className = "message_sys";
 
 	clearTimeout(hidepopmsgtimer);
-	hidepopmsgtimer = setTimeout(hidePopMessage,3000);
+	hidepopmsgtimer = setTimeout(hidePopMessage,2000);
 }
 
 function hidePopMessage(){

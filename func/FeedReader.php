@@ -18,7 +18,7 @@
 			$error = @$this->xmlDoc->load($this->url);
 
 			if ($error === false){
-				throw new Exception("Error loading page: ".$this->url."\n");
+				throw new Exception("Error loading page - ".$this->url."");
 			}
 
 			$source = $this->xmlDoc->getElementsByTagName('channel')->item(0);
@@ -28,6 +28,8 @@
 			$source = $this->xmlDoc->getElementsByTagName('feed')->item(0);
 			if ($source)
 				return $this->atomFeed($source);
+
+			throw new Exception("Error data format - ".$this->url."");
 		}
 
 		private function rssFeed($channel){

@@ -7,10 +7,12 @@
     	<script src="scripts/lib/messages.js"></script>
         <style>
 			body{
+				background: linear-gradient(#eee, #ddd);
+				/*
+				background: linear-gradient(yellowgreen, #687d3c);
 				background-image: url("imgs/back.jpg");
+				background-size: 100% 100%;*/
 				background-attachment: fixed;
-				background-size: 100% 100%;
-
 				overflow: hidden;
 			}
 			body, button, input{

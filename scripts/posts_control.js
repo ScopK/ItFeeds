@@ -6,9 +6,15 @@ $(document).ready(function(){
 		if ($("input").is(":focus:visible")) return;
 		if (!allowed) return false;
 		allowed = false;
-		if (e.which == 32){	// space
+		if (e.which == 32 || e.which == 40){	// space
 	        var body = $("html, body");
 	        body.animate({scrollTop: body.scrollTop() + 200}, {duration: 210, easing: 'linear', queue: false});
+	        setTimeout(function() {allowed = true;}, 200);
+	        $("button:focus").blur();
+	        return false;
+		} else if (e.which == 38) {
+	        var body = $("html, body");
+	        body.animate({scrollTop: body.scrollTop() - 200}, {duration: 210, easing: 'linear', queue: false});
 	        setTimeout(function() {allowed = true;}, 200);
 	        $("button:focus").blur();
 	        return false;
@@ -19,11 +25,11 @@ $(document).ready(function(){
 				showSearchDialog();
 				return false;
 		    case 83: //s
-		        toogleFavPost();
+		        toogleFavPost(true);
 		        break;
 		    case 78: //n
 		    case 77: //m  
-		        toogleUnreadPost();
+		        toogleUnreadPost(true);
 		        break;
 		    case 74: //j
 		        nextPost();
@@ -36,7 +42,11 @@ $(document).ready(function(){
 		    	break;
 		    case 71: //g
 		    	$(".post").not(".selected").addClass("minimized");
+				focusPost($(".post[idxpost='"+postIdxSelected+"']"),100);
 		    	return false;
+		    case 76: //l
+				loadMore();
+		    	break;
 		    case 84: //t
 			    showAddTagsDialog();
 			    return false;
@@ -258,20 +268,20 @@ function deleteTag(me){
 }
 
 
-function toogleUnreadPost(){
+function toogleUnreadPost(click=false){
 	var val = (posts[postIdxSelected-1].unread == 1)?0:1;
-	markPost(0,val,postIdxSelected);
+	markPost(0,val,postIdxSelected,click);
 }
 
-function toogleFavPost(){
+function toogleFavPost(click=false){
 	var val = (posts[postIdxSelected-1].favorite == 1)?0:1;
-	markPost(1,val,postIdxSelected);
+	markPost(1,val,postIdxSelected,click);
 }
 
 //  First param: 0-Read/unread  1-Favorite
 // Second param: 0-read/nofav   1-unread/favorite
 //  Third param: post idx
-function markPost(field, value, postidx){
+function markPost(field, value, postidx, click=false){
 	var fieldname = (field==0)? "unread":"fav";
 	loading_run();
 	$.ajax({
@@ -302,7 +312,20 @@ function markPost(field, value, postidx){
 					else
 						$(".post[idxpost='"+postidx+"']").addClass("unread");
 				}
+				if (click){
+					if (value==0)
+						showPopMessage("Post marked as read");
+					else
+						showPopMessage("Post marked as unread");
+				}
+
 			} else {	// fav/unfav 
+				if (click){
+					if (value==0)
+						showPopMessage("Post deleted from favorites");
+					else
+						showPopMessage("Post added to favorites");
+				}
 			}
 			enableControls();
 
