@@ -110,9 +110,9 @@
 		<div id="dialog">
 		<form style="height:100%">
 			<table ><tr><th colspan="2">User login</th></tr>
-				<tr><td colspan="2"><input id="username_field" style="font-size: 15px;" autocomplete="off" placeholder="Username" type="text">
+				<tr><td colspan="2"><input id="username_field" style="width: 167px;font-size: 15px;" autocomplete="off" placeholder="Username" type="text">
 				</td></tr>
-				<tr><td colspan="2"><input id="password_field" style="width: 140px; font-size: 12px;" type="password" autocomplete="off" placeholder="Password"/>
+				<tr><td colspan="2"><input id="password_field" style="width: 140px;font-size: 12px;" type="password" autocomplete="off" placeholder="Password"/>
 				</td></tr>
 				<tr><td align="right"><button onclick="login(this); return false;">Login</button></td>
 					 <td align="left"><button onclick="moveToReg(); return false;">Register</button></td></tr>
@@ -128,11 +128,11 @@
 		<div id="r_dialog">
 		<form style="height:100%">
 			<table ><tr><th colspan="2">User register</th></tr>
-				<tr><td><input id="r_username_field" style="font-size: 15px;" autocomplete="off" placeholder="Username" type="text">
+				<tr><td><input id="r_username_field" style="width: 167px;font-size: 15px;" autocomplete="off" placeholder="Username" type="text">
 				</td></tr>
-				<tr><td><input id="r_password_field" style="font-size: 15px;margin-top:5px" type="password" autocomplete="off" placeholder="Password"/>
+				<tr><td><input id="r_password_field" style="width: 167px;font-size: 15px;margin-top:5px" type="password" autocomplete="off" placeholder="Password"/>
 				</td></tr>
-				<tr><td><input id="r_password_field2" style="font-size: 15px" type="password" autocomplete="off" placeholder="Repeat Password"/>
+				<tr><td><input id="r_password_field2" style="width: 167px;font-size: 15px" type="password" autocomplete="off" placeholder="Repeat Password"/>
 				</td></tr>
 				<tr><td><input id="r_keyword_field" style="width: 140px; font-size: 12px;margin-top:5px" type="password" autocomplete="off" placeholder="Hidden keyword"/>
 				</td></tr>
@@ -142,8 +142,6 @@
 			</table>
 		</form>
 		</div>
-
-
 	</div>
 	</body>
 </html>

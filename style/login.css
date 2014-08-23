@@ -12,18 +12,18 @@ body, button, input{
 	position:relative;
 	margin:0; padding:0;
 	text-align:center;
-	/*background-attachment: fixed;
-	background-repeat: no-repeat;
+	background-attachment: fixed;
+	/*background-repeat: no-repeat;
 	background-size: 100%;*/
 }
 #logintab{
-	background: linear-gradient(to left, violet, orangered);
-	/*background-image: url("../imgs/loginbg.jpg");*/
+	/*background: linear-gradient(to left, violet, orangered);*/
+	background-image: url("../imgs/back.jpg");
 	background-position: center bottom;
 }
 #registertab{
-	background: linear-gradient(to left, cyan, yellowgreen);
-	/*background-image: url("../imgs/regbg.jpg");*/
+	/*background: linear-gradient(to left, cyan, yellowgreen);*/
+	background-image: url("../imgs/back.jpg");
 	margin-top: 25px;
 	background-position: center top;
 
@@ -59,6 +59,25 @@ button{
 	font-size: 15px;
 	margin: 0 10px;
 	padding: 5px;
-	border: 2px solid #000;
+	border-radius: 3px;
+	border: 1px solid #777;
 }
-button:focus{ background-color: #ffdead; }
+
+button:hover{ background-color: #eaeaea; }
+button:focus{ background-color: #bfd2e5; }
+button:active{ background-color: #7eb4ea; }
+
+input[type=password], input[type=text]{
+	border: 1px solid #abadb3;
+	padding:2px;
+}
+input[type=password]:hover, input[type=text]:hover{
+	border-color: #7eb4ea;
+}
+input[type=password]:focus, input[type=text]:focus{
+	border-color: #7a7c80;
+}
+
+
+
+
