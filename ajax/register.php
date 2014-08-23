@@ -12,7 +12,7 @@
 		die('HTTP/1.1 500 Field too short');
 	}
 
-	if (userExists($con,$user)){
+	if (userExists($user)){
 		header('HTTP/1.1 501 User already exists');
 		die('HTTP/1.1 501 User already exists');
 	}

@@ -61,7 +61,7 @@
 
 		if ($hidobt==1){
 			mysqli_stmt_close($stmt);
-			if (!checkUserHiddenPassword($con, $user,$_SESSION['hid_user'])){
+			if (!checkUserHiddenPassword($user,$_SESSION['hid_user'])){
 				continue;
 				//header('HTTP/1.1 500 Error, permission denied');
 				//die('HTTP/1.1 500 Error, permission denied');
@@ -84,7 +84,7 @@
 			//header('HTTP/1.1 500 Error tagging post');
 			//die('HTTP/1.1 500 Error tagging post');
 		}
-		$tagResults[] = getTag($con,$idobt);
+		$tagResults[] = getTag($idobt);
 	}
 	echo json_encode($tagResults);
 	mysqli_close($con);

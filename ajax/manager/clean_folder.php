@@ -22,7 +22,7 @@
 		//mysqli_stmt_close($stmt); // Close statement
 	}
 
-	$folder = getFolder($con,$folderId,2);
+	$folder = getFolder($folderId,2);
     
 	mysqli_close($con);
     echo json_encode($folder); // {"a":1,"b":2,"c":3,"d":4}

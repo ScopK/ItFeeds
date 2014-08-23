@@ -6,7 +6,7 @@
 	$user = $_POST['user'];
 	$pass = $_POST['pass'];
 
-	if ($user = checkUserPassword($con,$user,$pass)) {
+	if ($user = checkUserPassword($user,$pass)) {
 		$_SESSION['log_user'] = $user;
 		unset($_SESSION['hid_user']);
 	} else {

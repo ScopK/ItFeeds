@@ -16,12 +16,12 @@
 		$_SESSION['hid_user'] = $pass;
 
 	if (isset($_SESSION['hid_user']))
-		$hidden = checkUserHiddenPassword($con, $user,$_SESSION['hid_user']);
+		$hidden = checkUserHiddenPassword($user,$_SESSION['hid_user']);
 	else $hidden = false;
 
 	//usleep(400000);
-	$folders = getFolders($con, $user,1,$hidden);
-	$tags = getTags($con, $user,0,$hidden);
+	$folders = getFolders($user,1,$hidden);
+	$tags = getTags($user,0,$hidden);
 
 	$data = array("folders" => $folders, "tags" => $tags);
 

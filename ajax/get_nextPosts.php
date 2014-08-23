@@ -41,22 +41,22 @@
 
 	//usleep(400000);
 	$user = $_SESSION['log_user'];
-	$hidden = (isset($_SESSION['hid_user']))?checkUserHiddenPassword($con, $user,$_SESSION['hid_user']):false;
+	$hidden = (isset($_SESSION['hid_user']))?checkUserHiddenPassword($user,$_SESSION['hid_user']):false;
 	switch($mode){
 		case 0: // feeds
-			$posts = getPostsNextFeed($con, $user, $feedId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
+			$posts = getPostsNextFeed($user, $feedId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
 			echo json_encode($posts);
 			break;
 		case 1: // folder
-			$posts = getPostsNextFolder($con, $user, $folderId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
+			$posts = getPostsNextFolder($user, $folderId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
 			echo json_encode($posts);
 			break;
 		case 2: // tags
-			$posts = getPostsNextTag($con, $user, $tagId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
+			$posts = getPostsNextTag($user, $tagId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
 			echo json_encode($posts);
 			break;
 		case 3: // all
-			$posts = getPostsNextAll($con, $user, $favorites, $unread, $sort, $postsPage, $nextId, $search);
+			$posts = getPostsNextAll($user, $favorites, $unread, $sort, $postsPage, $nextId, $search);
 			echo json_encode($posts);
 			break;
 		default:

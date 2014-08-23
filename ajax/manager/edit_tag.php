@@ -18,7 +18,7 @@
 		mysqli_stmt_close($stmt); // Close statement
 	}
 
-	$tag = getTag($con,$tagId);
+	$tag = getTag($tagId);
 
 	mysqli_close($con);	
 

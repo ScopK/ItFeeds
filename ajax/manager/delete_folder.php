@@ -7,7 +7,7 @@
 	$pass = $_POST['pass'];
 	$folderId = $_POST['folderId'];
 
-	if (checkUserPassword($con,$user,$pass)) {
+	if (checkUserPassword($user,$pass)) {
 		$stmt=mysqli_stmt_init($con);
 
 		if (mysqli_stmt_prepare($stmt,"DELETE FROM folders WHERE id=? AND name!='null'")){

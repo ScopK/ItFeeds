@@ -14,13 +14,13 @@
 	} else {
 		$user = $_SESSION['log_user'];
 		if (isset($_SESSION['hid_user']))
-			$hidden = checkUserHiddenPassword($con, $user,$_SESSION['hid_user']);
+			$hidden = checkUserHiddenPassword($user,$_SESSION['hid_user']);
 		else
 			$hidden = false;
 	}
 
-	$folders = getFolders($con, $user,1,$hidden);
-	$tags = getTags($con, $user,0,$hidden);
+	$folders = getFolders($user,1,$hidden);
+	$tags = getTags($user,0,$hidden);
 
 	//usleep(400000);
 	$data = array("folders" => $folders, "tags" => $tags);
