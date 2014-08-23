@@ -3,7 +3,7 @@ body{
 }
 body, button, input{
 	/*font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;*/
-	font-family: sans-serif,Tahoma, Geneva;
+	font-family: "Nimbus Sans L",sans-serif,Tahoma, Geneva;
 	margin:0;
 	overflow: hidden;
 }
