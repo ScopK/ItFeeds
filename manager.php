@@ -2,7 +2,8 @@
     session_start();
 
     if (!isset($_SESSION['log_user'])){
-        header('Location: ./login.php?manager=1');
+        $data = http_build_query($_REQUEST);
+        header('Location: ./login.php?manager=1&'.$data);
     } else {
         $log_user = $_SESSION['log_user'];
         $hidClass = (isset($_SESSION['hid_user']))?"set":"";

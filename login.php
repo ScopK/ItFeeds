@@ -71,7 +71,12 @@
 				console.log(xmlhttp);
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					var data = "<?=http_build_query($_REQUEST);?>";
-					if (data.indexOf("manager=1")>=0)	window.location = "manager.php";
+					if (data.indexOf("manager=1")>=0){
+						var i = data.indexOf("manager=1");
+						var go = data.substring(0,i)+data.substring(i+10);
+						if (go.charAt(go.length-1) == "&") go = go.substring(0,go.length-1);
+						window.location = "manager.php?"+go;
+					}
 					else	window.location = "index.php?"+data;
 				} else if (xmlhttp.readyState==4 && xmlhttp.status==502) {
 					showMessage("Invalid username or password, please, try again or register");
@@ -122,7 +127,7 @@
 	</div>
 	<div id="registertab" class="tab">
 		<div id="arrowslog" onclick="moveToLog();" style="display:none;cursor:pointer;color:#333">
-			<h1 style="margin:0">▲</h1><h2 style="margin:0">▲</h2>
+			<h1>▲</h1><h2>▲</h2>
 		</div>
 
 		<div id="r_dialog">

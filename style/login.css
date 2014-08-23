@@ -26,7 +26,6 @@ body, button, input{
 	background-image: url("../imgs/back.jpg");
 	margin-top: 25px;
 	background-position: center top;
-
 }
 #dialog, #r_dialog{
 	position:absolute;
@@ -54,6 +53,22 @@ body, button, input{
 #dialog table td , #r_dialog table td {
 	margin:0;
 }
+h1,h2{
+	margin:0;
+}
+h1{
+    animation-name: goup;
+    animation-duration: .5s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+@keyframes goup {
+    0%   {margin-bottom:-5px;}
+		50% {padding-top:1px;}
+    100% {margin-bottom:-10px;}
+}
+
 button::-moz-focus-inner { border:0; }
 button{
 	font-size: 15px;

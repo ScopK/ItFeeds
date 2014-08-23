@@ -370,7 +370,7 @@ function logoutButton(){
 		url: "./ajax/logout.php",
 		type: "POST",
 		success: function(result){
-			window.location = "./login.php";
+			window.location = "./login.php"+location.search;
 		},
 		error: function (request, status, error){
 			showMessage("Error "+request.status+": "+request.statusText);

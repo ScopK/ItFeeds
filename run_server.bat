@@ -1,1 +1,1 @@
-start C:\xampp\php\php.exe .\func\Server.php
+start C:\xampp\php\php-win.exe .\func\Server.php
