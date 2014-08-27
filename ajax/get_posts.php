@@ -41,14 +41,26 @@
 	$hidden = (isset($_SESSION['hid_user']))?checkUserHiddenPassword($user,$_SESSION['hid_user']):false;
 	switch($mode){
 		case 0: // feeds
+			if (!checkFeedAccess($user,$feedId)){
+				header("HTTP/1.1 403 Forbidden");
+				die("HTTP/1.1 403 Forbidden");
+			}
 			$posts = getPostsFeed($user, $feedId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage, $search);
 			echo json_encode($posts);
 			break;
 		case 1: // folder
+			if (!checkFolderAccess($user,$folderId)){
+				header("HTTP/1.1 403 Forbidden");
+				die("HTTP/1.1 403 Forbidden");
+			}
 			$posts = getPostsFolder($user, $folderId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage, $search);
 			echo json_encode($posts);
 			break;
 		case 2: // tags
+			if (!checkTagAccess($user,$tagId)){
+				header("HTTP/1.1 403 Forbidden");
+				die("HTTP/1.1 403 Forbidden");
+			}
 			$posts = getPostsTag($user, $tagId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage, $search);
 			echo json_encode($posts);
 			break;

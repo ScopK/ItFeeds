@@ -235,6 +235,57 @@
 		return false;
 	}
 
+	function checkFolderAccess($user,$idFolder){
+		global $con;
+		$sql = "SELECT user FROM folders WHERE id=?";
+		$stmt=mysqli_stmt_init($con);
+		if (mysqli_stmt_prepare($stmt,$sql)){
+
+			mysqli_stmt_bind_param($stmt,"s", $idFolder); // Bind parameters
+			mysqli_stmt_execute($stmt); // Execute query
+
+			mysqli_stmt_bind_result($stmt,$username); // Bind result variables
+			mysqli_stmt_fetch($stmt); // Fetch value
+
+			mysqli_stmt_close($stmt); // Close statement
+		}
+		return (isset($username) && $username == $user);
+	}
+
+	function checkFeedAccess($user,$idFeed){
+		global $con;
+		$sql = "SELECT fo.user FROM feeds f JOIN folders fo ON f.id_folder=fo.id WHERE f.id=?";
+		$stmt=mysqli_stmt_init($con);
+		if (mysqli_stmt_prepare($stmt,$sql)){
+
+			mysqli_stmt_bind_param($stmt,"s", $idFeed); // Bind parameters
+			mysqli_stmt_execute($stmt); // Execute query
+
+			mysqli_stmt_bind_result($stmt,$username); // Bind result variables
+			mysqli_stmt_fetch($stmt); // Fetch value
+
+			mysqli_stmt_close($stmt); // Close statement
+		}
+		return (isset($username) && $username == $user);
+	}
+
+	function checkTagAccess($user,$idTag){
+		global $con;
+		$sql = "SELECT user FROM tags WHERE id=?";
+		$stmt=mysqli_stmt_init($con);
+		if (mysqli_stmt_prepare($stmt,$sql)){
+
+			mysqli_stmt_bind_param($stmt,"s", $idTag); // Bind parameters
+			mysqli_stmt_execute($stmt); // Execute query
+
+			mysqli_stmt_bind_result($stmt,$username); // Bind result variables
+			mysqli_stmt_fetch($stmt); // Fetch value
+
+			mysqli_stmt_close($stmt); // Close statement
+		}
+		return (isset($username) && $username == $user);
+	}
+
 	function checkUserHiddenPassword($user,$pass){
 		global $con;
 		$sql = "SELECT count(*) FROM users WHERE username=? AND hidden_pass=?";
