@@ -48,6 +48,7 @@
 				$posts = array_reverse($posts);
 			} catch (Exception $e) {
 			    echo date('Y-d-m H:i:s', time()).": ".$e->getMessage()."\n";
+			    file_put_contents ("log.txt", date('Y-d-m H:i:s', time()).": ".$e->getMessage()."\n",FILE_APPEND);
 			    return;
 			}
 
