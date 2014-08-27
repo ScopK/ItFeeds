@@ -159,7 +159,7 @@
 			$e->id = $feed['id'];
 			$e->name = $feed['name'];
 
-			$e->folderId = $folderId;
+			$e->folderId = $feed['id_folder'];
 			$e->upd_time = $feed['upd_time'];
 			$e->last_date_post = $feed['last_date_post'];
 
@@ -174,9 +174,8 @@
 			$res = mysqli_query($con,$sql);
 			$countQ = mysqli_fetch_array($res);
 			$e->unread = $countQ['u'];
-			$e->count = $countQ['c'];*/
-
-			mysqli_free_result($res);
+			$e->count = $countQ['c'];
+			mysqli_free_result($res);*/
 		}
 		mysqli_free_result($feeds);
 		return $e;

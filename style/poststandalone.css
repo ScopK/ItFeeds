@@ -3,10 +3,11 @@ body {
     font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;
     margin: 0;
 
-    background-image: url("../imgs/back.jpg");
+    /*background-image: url("../imgs/back.jpg");*/
     background-attachment: fixed;
-    background-size: 100% 100%;
-    background-color: #444;
+    /*background-size: 100% 100%;*/
+    background-color: #ddd;
+
     overflow-y: scroll;
 }
 
@@ -28,7 +29,7 @@ body {
 	text-align: center;
 	display: table;
 	margin: 20px auto;
-	border: 1px solid black;
+	outline: 1px solid rgba(0,0,0,0.5);
 	/*min-width: 750px;*/
 	max-width: 900px;
 }
