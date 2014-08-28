@@ -1,0 +1,6 @@
+RewriteEngine on
+RewriteRule [Tt][Aa][Gg]/(.*)\.(.*) $1.$2
+RewriteRule [Tt][Aa][Gg]/([\w-]*)/? tag.php?id=$1
+
+RewriteRule [Pp][Oo][Ss][Tt]/(.*)\.(.*) $1.$2
+RewriteRule [Pp][Oo][Ss][Tt]/([\w-]*) post.php?id=$1

@@ -61,7 +61,7 @@ $(document).ready(function(){
 		    	if (postIdxSelected>0){
 		    		var post = posts[postIdxSelected-1];
 		    		allowed = true;
-		    		window.open('post.php?id='+post.id, '_blank', '');
+		    		window.open('post/'+post.id, '_blank', '');
 		    	}
 		    	break;
 		    case 116: //f5
