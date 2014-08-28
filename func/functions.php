@@ -18,6 +18,7 @@
 			$e->name = $tag['tag_name'];
 			$e->user = $user;
 			$e->hidden = $tag['hidden'];
+			$e->public = $tag['public'];
 			$e->posts = array(); //getPostsTag($e->id,$depth);
 
 			$sql = "SELECT count(*) AS c FROM post_tags p WHERE p.id_tag='".$e->id."'";
@@ -43,6 +44,7 @@
 			$e->id = $tag['id'];
 			$e->name = $tag['tag_name'];
 			$e->hidden = $tag['hidden'];
+			$e->public = $tag['public'];
 			$e->posts = array(); //getPostsTag($e->id,$depth);
 
 			$sql = "SELECT count(*) AS c FROM post_tags p WHERE p.id_tag='".$e->id."'";

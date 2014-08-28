@@ -10,6 +10,7 @@
 		public $posts = array();
 		public $user = "";
 		public $hidden = "";
+		public $public = "";
 
 		public $count =0;		
 	}
