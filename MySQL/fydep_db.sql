@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `user` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
   `tag_name` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `hidden` tinyint(1) DEFAULT '0' NOT NULL,
+  `public` tinyint(1) DEFAULT '0' NOT NULL,
   PRIMARY KEY (`id`),
   KEY `tags_ibfk_1` (`user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

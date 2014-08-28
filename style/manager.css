@@ -358,12 +358,16 @@ p.disabled{
 	background-color: #deffad;
 }
 
+#add_folder{
+	height: 165px;
+}
+
 #clean_folder, #clean_feed, #editTag{
 	background-color: #aaa;
 }
 
 #editTag{
-	height: 170px;
+	height: 180px;
 }
 
 #clean_feed{
@@ -373,7 +377,6 @@ p.disabled{
 #clean_folder{
 	height: 300px;
 }
-
 
 .counter{
 	color:#999;

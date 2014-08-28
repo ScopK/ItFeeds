@@ -232,6 +232,7 @@
                         <table style="width: 300px">
                         <tr><td align="right"><label>Tag name:</label></td><td style="padding-left:10px"><input type="text" name="tagname" autocomplete="off"/></td></tr>
                         <tr><td align="right"><label style="cursor:pointer" for="taghidcheck">Hidden:</label></td><td align="left" style="padding-left:10px"><input id="taghidcheck" type="checkbox" name="hidden" style="cursor:pointer"/></td></tr>
+                        <tr><td align="right"><label style="cursor:pointer" for="tagpubcheck">Public:</label></td><td align="left" style="padding-left:10px"><input id="tagpubcheck" type="checkbox" name="public" style="cursor:pointer"/></td></tr>
                         </table>
                         <div class="dialog_buttons">
                             <button class="editTag" onclick="return false;">Edit</button>
