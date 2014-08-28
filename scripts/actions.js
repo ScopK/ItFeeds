@@ -18,10 +18,10 @@ function updateUrl(){
 		args+=this+"="+get[this];
 	});
 	if (args.length>0){
-		var page = "/Fydeph/index.php?"+args;
+		var page = "./index.php?"+args;
 		$("#managerLink").attr("href","./manager.php?"+args);
 	} else {
-		var page = "/Fydeph/index.php";
+		var page = "./index.php";
 		$("#managerLink").attr("href","./manager.php");
 	}
 	window.history.pushState("", "", page);
