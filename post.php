@@ -17,14 +17,10 @@
 <html>
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <title>Fydeph Manager</title>
+        <title>Fydeph Post - <?= $post->title ?></title>
         <link rel="shortcut icon" href="imgs/icon.png" />
 
         <link rel="stylesheet" type="text/css" href="style/poststandalone.css">
-        
-        <script src="scripts/lib/jquery.min.js"></script>
-        <script src="scripts/manager/actions.js"></script>
-        <script src="scripts/manager/webview.js"></script>
 
     </head>
     <body>

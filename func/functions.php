@@ -270,6 +270,23 @@
 		return (isset($username) && $username == $user);
 	}
 
+	function isTagPublic($idTag){
+		global $con;
+		$sql = "SELECT public FROM tags WHERE id=?";
+		$stmt=mysqli_stmt_init($con);
+		if (mysqli_stmt_prepare($stmt,$sql)){
+
+			mysqli_stmt_bind_param($stmt,"s", $idTag); // Bind parameters
+			mysqli_stmt_execute($stmt); // Execute query
+
+			mysqli_stmt_bind_result($stmt,$ppcc); // Bind result variables
+			mysqli_stmt_fetch($stmt); // Fetch value
+
+			mysqli_stmt_close($stmt); // Close statement
+		}
+		return (isset($ppcc) && $ppcc == 1);
+	}
+
 	function checkTagAccess($user,$idTag){
 		global $con;
 		$sql = "SELECT user FROM tags WHERE id=?";
@@ -360,7 +377,7 @@
 		$feedId = mysqli_real_escape_string($con,$feedId);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$page = mysqli_real_escape_string($con,$page);
-		$filterStr = mysqli_real_escape_string($con,"%$filterStr%");
+		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
@@ -381,7 +398,7 @@
 		$folderId = mysqli_real_escape_string($con,$folderId);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$page = mysqli_real_escape_string($con,$page);
-		$filterStr = mysqli_real_escape_string($con,"%$filterStr%");
+		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
@@ -396,14 +413,13 @@
 		return $posts;
 	}
 
-	function getPostsTag($user, $tagId, $favs, $unread, $sort, $page, $postspage, $filterStr){
+	function getPostsTag($tagId, $favs, $unread, $sort, $page, $postspage, $filterStr){
 		global $con;
 		global $hidden;
-		$user = mysqli_real_escape_string($con,$user);
 		$tagId = mysqli_real_escape_string($con,$tagId);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$page = mysqli_real_escape_string($con,$page);
-		$filterStr = mysqli_real_escape_string($con,"%$filterStr%");
+		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		// uncomment to don't use favorites and unread vars
 		//$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') ORDER BY `idx` $sort LIMIT $page,$postspage";
@@ -430,7 +446,7 @@
 		$unread = mysqli_real_escape_string($con,$unread);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$page = mysqli_real_escape_string($con,$page);
-		$filterStr = mysqli_real_escape_string($con,"%$filterStr%");
+		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
@@ -462,7 +478,7 @@
 		$sort = mysqli_real_escape_string($con,$sort);
 		$postspage = mysqli_real_escape_string($con,$postspage);
 		$nextId = mysqli_real_escape_string($con,$nextId);
-		$filterStr = mysqli_real_escape_string($con,"%$filterStr%");
+		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
@@ -481,7 +497,7 @@
 		$sort = mysqli_real_escape_string($con,$sort);
 		$postspage = mysqli_real_escape_string($con,$postspage);
 		$nextId = mysqli_real_escape_string($con,$nextId);
-		$filterStr = mysqli_real_escape_string($con,"%$filterStr%");
+		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
@@ -493,15 +509,14 @@
 		return getPosts($whereSQL, $sort, $nextId, 0, $postspage);
 	}
 
-	function getPostsNextTag($user, $tagId, $favs, $unread, $sort, $postspage, $nextId, $filterStr){
+	function getPostsNextTag($tagId, $favs, $unread, $sort, $postspage, $nextId, $filterStr){
 		global $con;
 		global $hidden;
-		$user = mysqli_real_escape_string($con,$user);
 		$tagId = mysqli_real_escape_string($con,$tagId);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$postspage = mysqli_real_escape_string($con,$postspage);
 		$nextId = mysqli_real_escape_string($con,$nextId);
-		$filterStr = mysqli_real_escape_string($con,"%$filterStr%");
+		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
@@ -521,7 +536,7 @@
 		$unread = mysqli_real_escape_string($con,$unread);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$nextId = mysqli_real_escape_string($con,$nextId);
-		$filterStr = mysqli_real_escape_string($con,"%$filterStr%");
+		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";

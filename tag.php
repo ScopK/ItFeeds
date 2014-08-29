@@ -11,17 +11,19 @@
     require_once "func/classes.php";
 
     $tag = getTag($id);
-    if (!$tag->public){
-        header("HTTP/1.1 403 Forbidden");
-        die("HTTP/1.1 403 Forbidden");
-    }
-
 ?><!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>Fydeph Tag - <?= $tag->name ?></title>
+    <link rel="shortcut icon" href="imgs/icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="style/poststandalone.css">
+    <script src="scripts/lib/jquery.min.js"></script>
+    <script>var idtag="<?=$id?>";</script>
+    <script src="scripts/standalone/actions.js"></script>
 </head>
 <body>
-
+    <div id="tag-content" style="display:none"></div>
 </body>
 </html>

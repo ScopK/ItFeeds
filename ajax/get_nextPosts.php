@@ -17,6 +17,8 @@
 	$search = isset($_REQUEST['search'])?$_REQUEST['search']:"";
 	
 	$sort = isset($_REQUEST['sortBy'])?$_REQUEST['sortBy']:null;
+
+	$public = isset($_REQUEST['public']);
 	
 // CHECK INPUTS
 	if (isset($feedId))	$mode=0;
@@ -44,15 +46,33 @@
 	$hidden = (isset($_SESSION['hid_user']))?checkUserHiddenPassword($user,$_SESSION['hid_user']):false;
 	switch($mode){
 		case 0: // feeds
+			if (!checkFeedAccess($user,$feedId)){
+				header("HTTP/1.1 403 Forbidden");
+				die("HTTP/1.1 403 Forbidden");
+			}
 			$posts = getPostsNextFeed($user, $feedId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
 			echo json_encode($posts);
 			break;
 		case 1: // folder
+			if (!checkFolderAccess($user,$folderId)){
+				header("HTTP/1.1 403 Forbidden");
+				die("HTTP/1.1 403 Forbidden");
+			}
 			$posts = getPostsNextFolder($user, $folderId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
 			echo json_encode($posts);
 			break;
 		case 2: // tags
-			$posts = getPostsNextTag($user, $tagId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
+			if ($public && isTagPublic($tagId)){
+				$hidden = 1;
+				$posts = getPostsNextTag($tagId, 0, 0, $sort, $postsPage, $nextId, "");
+				echo json_encode($posts);
+				break;
+			}
+			if ($public || !checkTagAccess($user,$tagId)){
+				header("HTTP/1.1 403 Forbidden");
+				die("HTTP/1.1 403 Forbidden");
+			}
+			$posts = getPostsNextTag($tagId, $favorites, $unread, $sort, $postsPage, $nextId, $search);
 			echo json_encode($posts);
 			break;
 		case 3: // all

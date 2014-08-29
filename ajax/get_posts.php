@@ -14,6 +14,8 @@
 	
 	$sort = isset($_REQUEST['sortBy'])?$_REQUEST['sortBy']:null;
 
+	$public = isset($_REQUEST['public']);
+
 // CHECK INPUTS
 	if (isset($feedId))	$mode=0;
 	elseif (isset($folderId)) $mode=1;
@@ -57,11 +59,17 @@
 			echo json_encode($posts);
 			break;
 		case 2: // tags
-			if (!checkTagAccess($user,$tagId)){
+			if ($public && isTagPublic($tagId)){
+				$hidden = 1;
+				$posts = getPostsTag($tagId, 0, 0, $sort, ($page-1)*$postsPage, $postsPage, "");
+				echo json_encode($posts);
+				break;
+			}
+			if ($public || !checkTagAccess($user,$tagId)){
 				header("HTTP/1.1 403 Forbidden");
 				die("HTTP/1.1 403 Forbidden");
 			}
-			$posts = getPostsTag($user, $tagId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage, $search);
+			$posts = getPostsTag($tagId, $favorites, $unread, $sort, ($page-1)*$postsPage, $postsPage, $search);
 			echo json_encode($posts);
 			break;
 		case 3: // all

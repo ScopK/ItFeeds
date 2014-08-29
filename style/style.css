@@ -111,6 +111,7 @@ button::-moz-focus-inner {
 }
 
 #navopts_bottom{
+	z-index: 2;
 	position:absolute;
 	bottom:0;
 	width:100%;
@@ -406,8 +407,7 @@ Tags
 	height: 100%;
 	width: 100%;
 	background-color: rgba(0,0,0,0.8);
-
-	z-index: 2;
+	z-index: 3;
 }
 
 #add_tag_content .taglist{
@@ -540,7 +540,7 @@ div.tagname button{
 	background-color: transparent;
 	border: 0px;
 	bottom: 0; right: 0; left: 0;
-	height: 12px;
+	height: 15px;
 	transition: height 0.3s, background-color 0.3s;
 }
 
@@ -548,7 +548,7 @@ div.tagname button{
 	transition-delay:0s;
 	cursor:pointer;
 	background-color: black;
-	height: 20px;
+	height: 50px;
 }
 
 
