@@ -42,7 +42,7 @@
 	include "../func/classes.php";
 
 	//usleep(400000);
-	$user = $_SESSION['log_user'];
+	$user = isset($_SESSION['log_user'])?$_SESSION['log_user']:"";
 	$hidden = (isset($_SESSION['hid_user']))?checkUserHiddenPassword($user,$_SESSION['hid_user']):false;
 	switch($mode){
 		case 0: // feeds

@@ -294,6 +294,7 @@ function showConfigTag() {
 	$("#editTag input[name='tagId']").val(tag['id']);
 	$("#editTag input[name='tagname']").val(tag['name']);
 	$("#editTag input[name='hidden']").prop('checked',(tag['hidden'] == '1'));
+	$("#editTag input[name='public']").prop('checked',(tag['public'] == '1'));
 
 	$("#editTag").addClass("active");
 }

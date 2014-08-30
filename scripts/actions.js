@@ -101,5 +101,32 @@ function loadMore(){
 	}
 }
 
+//#################### CONTEXT MENU
+function cmTag(e,context){
+	var arr = [];
+	/*arr[0] = {
+		name: "Console.log(context)",
+		function: function(){console.log(this)},
+		context: context
+	};*/
+	arr[1] = {
+		name: "Open in new window",
+		function: function(){
+			window.open(window.location.pathname+window.location.search, '_blank', '');
+		},
+		context: context
+	};
+	if ($(context).hasClass("public"))
+	arr[2] = {
+		name: "Open with public tag viewer",
+		function: function(){
+			var id = $(this).attr("idtag");
+			window.open('tag/'+id, '_blank', '');
+		},
+		context: context
+	};
 
-
+	setCMContent(arr);
+	showCM(e.clientX,e.clientY)
+	return false;
+}

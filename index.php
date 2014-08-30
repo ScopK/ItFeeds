@@ -18,6 +18,7 @@
         <link rel="stylesheet" type="text/css" href="style/style.css">
         <script src="scripts/lib/jquery.min.js"></script>
         <script src="scripts/lib/jsanims.js"></script>
+        <script src="scripts/lib/contextmenu.js"></script>
         <script src="scripts/lib/messages.js"></script>
         <script src="scripts/updateandload.js"></script>
         <script src="scripts/actions.js"></script>

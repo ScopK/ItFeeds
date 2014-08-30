@@ -75,7 +75,7 @@ function getHTMLTags(tag_list){
 
 		var selected = (get.tag == this.id);
 
-		html += '<div class="tag'+((selected)?' selected':'')+((this.hidden==1)?" hidden":"")+'" idxTag="'+index+'" idTag="'+this.id+'">'+
+		html += '<div class="tag'+((selected)?' selected':'')+((this.hidden==1)?" hidden":"")+((this.public==1)?" public":"")+'" idxTag="'+index+'" idTag="'+this.id+'" oncontextmenu="return cmTag(event,this);">'+
 					'<span class="name">'+(this.name)+'</span> <span class="count">('+this.count+')</span></div>';
 
 	});
@@ -218,7 +218,7 @@ function getHTMLPost(post,indexPost){
 		var folder = folders[ixs[0]];
 		var folderInfo = (folder.name == "null")?"":folder.name+" | ";
 		var feed = folder.feeds[ixs[1]];
-		subtitle = '<div class="subtitle">[ '+folderInfo+'<a target="_blank" href="'+feed.link+'">'+feed.name+'</a> ] '+post.date+'</div>';
+		subtitle = '<div class="subtitle">[ '+folderInfo+'<a target="_blank" href="'+feed.link+'">'+feed.name+'</a> ] <a class="date" target="_blank" href="/post/'+post.id+'">'+post.date+'</a></div>';
 	}
 	var unreadl=(post.unread==1)? "unread":"";
 	html ='<div class="post '+unreadl+'" idxpost="'+indexPost+'">';

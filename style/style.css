@@ -368,6 +368,10 @@ POSTS
 	white-space: nowrap;
 }
 
+.post .header .subtitle a.date{
+	color: #555;
+}
+
 .post .description{
     background-image: url("../imgs/backPosts.png");
     background-repeat: repeat-x;

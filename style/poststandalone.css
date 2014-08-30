@@ -110,16 +110,18 @@ body {
 
 .title-bg h1, .title-bg h2{
 	font-family: Tahoma,Geneva,sans-serif;
-	margin:0; padding:0;
-	margin-left: 50px;
+	margin:0 50px; padding:0;
 }
 .title-bg h1{
 	padding: 3px 0;
 	color:white;
 	font-size:small;
 }
-.title-bg a{
+.title-bg h1 a{
 	color:white;
+	display:block;
+}
+.title-bg a{
 	text-decoration:none;
 }
 .title-bg a:hover{
@@ -129,6 +131,9 @@ body {
 	padding: 0 0 3px;
 	color:#888;
 	font-size:9px;
+}
+.title-bg h2 a{
+	color:#888;
 }
 
 .space-used{

@@ -4,6 +4,7 @@ var postspage = 10;
 var posts;
 var total;
 
+var allowed = true;
 $(document).ready(function(){
 	$(document).keydown(function(e) { 
 		if (e.ctrlKey || e.altKey || e.shiftKey) return;
@@ -14,13 +15,44 @@ $(document).ready(function(){
 			case 75: //k
 				prevPost();
 				break;
+			case 32: // space
+			case 40: // down
+				if (!allowed) return false;
+				var body = $("html, body");
+				body.animate({scrollTop: body.scrollTop() + 200}, {duration: 210, easing: 'linear', queue: false});
+				allowed = false;
+				setTimeout(function() {allowed = true;}, 190);
+				return false;
+			case 38: // up
+				if (!allowed) return false;
+				var body = $("html, body");
+				body.animate({scrollTop: body.scrollTop() - 200}, {duration: 210, easing: 'linear', queue: false});
+				allowed = false;
+				setTimeout(function() {allowed = true;}, 190);
+				return false;
 		}
+	});
+
+	$(document).scroll(function(e) { 
+		var pos = $(document).scrollTop();
+		var c = 1;
+		$.each($(".post"),function(){
+			if (pos < (this.offsetTop+this.offsetHeight)){
+				console.log(c);
+				selectPost(c);
+				return false;
+			}
+			c++;
+		});
 	});
 
 	initialize();
 });
 
+var loading = false;
 function initialize(){
+	if (loading) return;
+	else loading=true;
 	$.ajax({
 		url: "./ajax/get_posts.php",
 		type: "GET",
@@ -33,10 +65,11 @@ function initialize(){
 			pagesLoaded = 1;
 
 			$.each(posts,function(){
+				if (this.title == "" || this.title == "&nbsp;") this.title = "-- NO TITLE --";
 				var html = '<div class="post">';
 					html+= '<div class="title-bg"><div class="space-used">';
 						html+='<h1><a target="_blank" href="'+this.link+'">'+this.title+'</a></h1>';
-						html+='<h2>'+this.date+'</h2>';
+						html+='<h2><a target="_blank" href="/post/'+this.id+'">'+this.date+'</a></h2>';
 					html+='</div></div>';
 					html+='<div class="space-used"><div class="description">'+this.description+'</div></div>';
 				html+='</div>';
@@ -44,18 +77,19 @@ function initialize(){
 			});
 			selectPost(postIdxSelected);
 			$("#tag-content").fadeIn();
-
 		},
 		error: function (request, status, error){
-			alert("watError");
+			$("#error-message").fadeIn();
 		},
 		complete: function(){
-			//alert("watEnd");
+			loading = false;
 		}
 	});
 }
 
 function loadMore(){
+	if (loading) return;
+	else loading=true;
 	$.ajax({
 		url: "./ajax/get_nextPosts.php",
 		type: "GET",
@@ -76,10 +110,10 @@ function loadMore(){
 			pagesLoaded++;
 		},
 		error: function (request, status, error){
-			alert("watError");
+			$("#error-message").fadeIn();
 		},
 		complete: function(){
-			//alert("watEnd");
+			loading = false;
 		}
 	});
 }
@@ -109,7 +143,7 @@ function selectPost(idx){
 	postIdxSelected = idx;
 	$(".post:eq("+(postIdxSelected-1)+")").addClass("selected");
 
-	if (postIdxSelected == pagesLoaded*postspage){
+	if (total > posts.length && postIdxSelected == pagesLoaded*postspage){
 		loadMore();
 	}
 }
