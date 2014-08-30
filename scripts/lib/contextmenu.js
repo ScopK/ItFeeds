@@ -42,15 +42,20 @@ function addCMContent(array){
 	var cm = document.getElementById("contextual-menu");
 
 	array.forEach(function(entry) {
-		var di = document.createElement('div');
-		di.className = "cm-item";
-		di.onclick = function(){
+		var fun = function(){
 			document.getElementById("contextual-menu").style.visibility = "hidden";
 			if('context' in entry)
 				entry.function.call(entry.context);
 			else
 				entry.function();
+			return false;
 		};
+
+		var di = document.createElement('div');
+		di.className = "cm-item";
+		di.onclick = fun;
+		di.oncontextmenu = fun;
+		di.onmousedown = function(e){if (e.buttons>3)document.getElementById("contextual-menu").style.visibility = "hidden";};
 		di.innerHTML = entry.name;
 		cm.appendChild(di);
 	});
@@ -71,8 +76,9 @@ function showCM(x,y){
 	
 	var backup = window.onmousedown;
 	window.onmousedown = function(event){
-		if (event.target.className != "cm-item")
+		if (event.target.className != "cm-item"){
 			document.getElementById("contextual-menu").style.visibility = "hidden";
-		window.onmousedown = backup;
+			window.onmousedown = backup;
+		}
 	};
 }

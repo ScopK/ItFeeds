@@ -67,7 +67,10 @@ window.addEventListener("load", function() {
 
 
 var hidemsgtimer;
-function showMessage(msg="", good=false){
+function showMessage(msg, good){
+	msg = (typeof msg !== 'undefined')? msg : "";
+	good = (typeof good !== 'undefined')? good : false;
+
 	var box = document.getElementById("top_message");
 	if (good)
 		box.className = "message_sys good";
@@ -85,7 +88,9 @@ function hideMessage() {
 }
 
 var hidepopmsgtimer;
-function showPopMessage(msg=""){
+function showPopMessage(msg){
+	msg = (typeof msg !== 'undefined')? msg : "";
+
 	var box = document.getElementById("popup_message");
 	box.children[0].innerHTML=msg;
 	box.style.display="";

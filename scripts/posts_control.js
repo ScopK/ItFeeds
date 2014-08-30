@@ -267,13 +267,16 @@ function deleteTag(me){
 	});
 }
 
+function toogleUnreadPost(click){
+	click = (typeof click !== 'undefined')? click : false;
 
-function toogleUnreadPost(click=false){
 	var val = (posts[postIdxSelected-1].unread == 1)?0:1;
 	markPost(0,val,postIdxSelected,click);
 }
 
-function toogleFavPost(click=false){
+function toogleFavPost(click){
+	click = (typeof click !== 'undefined')? click : false;
+
 	var val = (posts[postIdxSelected-1].favorite == 1)?0:1;
 	markPost(1,val,postIdxSelected,click);
 }
@@ -281,7 +284,9 @@ function toogleFavPost(click=false){
 //  First param: 0-Read/unread  1-Favorite
 // Second param: 0-read/nofav   1-unread/favorite
 //  Third param: post idx
-function markPost(field, value, postidx, click=false){
+function markPost(field, value, postidx, click){
+	click = (typeof click !== 'undefined')? click : false;
+
 	var fieldname = (field==0)? "unread":"fav";
 	loading_run();
 	$.ajax({
