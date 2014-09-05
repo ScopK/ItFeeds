@@ -1,3 +1,5 @@
+/* COMMON */
+
 body {
     font-size: small;
     font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;
@@ -11,88 +13,6 @@ body {
     overflow-y: scroll;
 }
 
-/* POST */
-
-#feedBar a, #titleBar a {
-	text-decoration: none;
-	color: white;
-	transition: padding 0.2s, color 1s;
-	display:block;
-}
-
-#titleBar p {
-	display:inline;
-	color: #333;
-}
-
-#content {
-	position: relative;
-	background-color: rgba(255,255,255,0.8);
-	text-align: center;
-	display: table;
-	margin: 20px auto;
-	outline: 1px solid rgba(0,0,0,0.5);
-	/*min-width: 750px;*/
-	max-width: 900px;
-}
-
-#feedBar{
-	background-color: rgba(0,0,0,0.8);
-	text-align: left;
-	font-weight: bolder;
-}
-
-#feedBar a{
-	padding: 14px 30px;
-	font-size: 20px;
-}
-
-#feedBar a:hover{
-	padding: 14px 20px 14px 40px;
-	color: #777;
-}
-
-#titleBar{
-	background-color: rgba(0,0,0,0.5);
-	text-align: left;
-	font-weight: bold;
-	padding-bottom: 5px;
-}
-
-#titleBar a{
-	padding: 5px 30px 0px;
-}
-
-#titleBar a:hover{
-	padding: 5px 20px 0px 40px;
-	color: #ccc;
-}
-
-#description{
-	padding: 20px 50px 30px;
-	min-width:600px;
-	text-align: left;
-}
-
-#tags{
-	display:inline;
-	float:right;
-}
-
-#date{
-	font-weight: normal;
-	font-size: 11px;
-	padding: 0 30px;
-}
-
-#tags p{
-	font-weight: normal;
-	font-size: 11px;
-	margin-right: 5px;
-}
-
-/* TAG */
-
 .title-bg{
 	position:relative;
 	width:100%;
@@ -103,47 +23,89 @@ body {
 	box-shadow: 0 1px 10px rgba(0,0,0,0.5);
 }
 
-.post.selected .title-bg{
+.title-bg a{ text-decoration:none;}
+.title-bg a:hover{ text-decoration:underline;}
+
+.post.selected .title-bg, .title-bg.selected{
 	background-color:#000;
 	box-shadow: inset 0 0px 100px #fff,0 1px 10px rgba(0,0,0,0.5);
 }
 
-.title-bg h1, .title-bg h2{
+.post-title, .post-date{
 	font-family: Tahoma,Geneva,sans-serif;
 	margin:0 50px; padding:0;
+	font-weight: bold;
 }
-.title-bg h1{
+.post-title{
+overflow: hidden;
+white-space: nowrap;
 	padding: 3px 0;
 	color:white;
 	font-size:small;
 }
-.title-bg h1 a{
+.post-title a{
 	color:white;
 	display:block;
 }
-.title-bg a{
-	text-decoration:none;
-}
-.title-bg a:hover{
-	text-decoration:underline;
-}
-.title-bg h2{
+
+.post-date{
 	padding: 0 0 3px;
 	color:#888;
 	font-size:9px;
 }
-.title-bg h2 a{
+.post-date a{
 	color:#888;
+}
+
+.description{
+	position: relative;
+	background-color: rgba(255,255,255,0.8);
+	margin-top: 11px;
+	margin-bottom: 21px;
+	outline: 1px solid rgba(0,0,0,0.5);
+
+	padding: 20px 50px 30px;
+	text-align: left;
 }
 
 .space-used{
 	max-width:850px;
-	margin:auto;
+	margin-right:auto;
+	margin-left:auto;
 }
 
-.description{
-	background-color: #eee;
-	padding: 20px 50px;
-	border: solid #000;
-	border-width: 0 2px;
+/* POST */
+
+#top-bars a{
+	transition: padding 0.2s, color 1s;
+	display:block;
+}
+
+#feed-bar{
+	background-color: #444;
+	text-align: left;
+	font-weight: bolder;
+}
+
+#feed-bar a{
+	text-decoration: none;
+	color: white;
+	padding: 14px 30px;
+	font-size: 20px;
+}
+
+#feed-bar a:hover{
+	padding: 14px 20px 14px 40px;
+	color: #777;
+}
+
+#tags{
+	display:inline;
+	float:right;
+}
+
+#tags p{
+	font-weight: normal;
+	font-size: 11px;
+	margin-right: 5px;
 }

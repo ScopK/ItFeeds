@@ -24,21 +24,26 @@
 
     </head>
     <body>
-        <div id="content">
-        <div id="feedBar"><a target="_blank" href="<?=$feed->link?>"><?=$feed->name?></a></div>
-        <div id="titleBar">
-            <a target="_blank" href="<?=$post->link?>"><?=$post->title?></a>
-            <p id="date">Post date: <?=$post->date?></p>
-            <div id="tags">
-                <?php 
-                foreach($post->tags as $tag){
-                    echo "<p>".$tag['name']."</p>";
-                }
-                ?>
-            </div>
-        </div>
-        <div id="description"><?=$post->description?></div>
 
+    <div id="top-bars">
+        <div id="feed-bar"><a class="space-used" target="_blank" href="<?=$feed->link?>"><?=$feed->name?></a></div>
+        <div class="title-bg selected">
+            <a class="space-used post-title" target="_blank" href="<?=$post->link?>"><?=$post->title?></a>
+            <p class="space-used post-date"><?=$post->date?></p>
         </div>
+    </div>
+
+    <div class="space-used"><div class="description"><?=$post->description?></div></div>
+
+
+
+    <!--<div id="tags">
+        <?php 
+        foreach($post->tags as $tag){
+            echo "<p>".$tag['name']."</p>";
+        }
+        ?>
+    </div>-->
+
     </body>
 </html><?php mysqli_close($con);  ?>

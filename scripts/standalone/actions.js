@@ -68,8 +68,8 @@ function initialize(){
 				if (this.title == "" || this.title == "&nbsp;") this.title = "-- NO TITLE --";
 				var html = '<div class="post">';
 					html+= '<div class="title-bg"><div class="space-used">';
-						html+='<h1><a target="_blank" href="'+this.link+'">'+this.title+'</a></h1>';
-						html+='<h2><a target="_blank" href="/post/'+this.id+'">'+this.date+'</a></h2>';
+						html+='<h1 class="post-title"><a target="_blank" href="'+this.link+'">'+this.title+'</a></h1>';
+						html+='<h2 class="post-date"><a target="_blank" href="/post/'+this.id+'">'+this.date+'</a></h2>';
 					html+='</div></div>';
 					html+='<div class="space-used"><div class="description">'+this.description+'</div></div>';
 				html+='</div>';
@@ -100,8 +100,8 @@ function loadMore(){
 				posts.push(this);
 				var html = '<div class="post">';
 					html+= '<div class="title-bg"><div class="space-used">';
-						html+='<h1><a target="_blank" href="'+this.link+'">'+this.title+'</a></h1>';
-						html+='<h2>'+this.date+'</h2>';
+						html+='<h1 class="post-title"><a target="_blank" href="'+this.link+'">'+this.title+'</a></h1>';
+						html+='<h2 class="post-date"><a target="_blank" href="/post/'+this.id+'">'+this.date+'</a></h2>';
 					html+='</div></div>';
 					html+='<div class="space-used"><div class="description">'+this.description+'</div></div>';
 				html+='</div>';
