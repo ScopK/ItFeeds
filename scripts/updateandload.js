@@ -37,7 +37,7 @@ function getHTMLFolder(folder,idx){
 		unread = ' <span class="count hidden">(<span class="num">'+folder.unread+'</span>)</span>';
 
 	var selected = (get.folder == folder.id);
-	html = '<div class="folder'+((selected)?' selected':'')+'" idxFolder="'+idx+'" idFolder="'+folder.id+'">'+
+	html = '<div class="folder'+((selected)?' selected':'')+'" idxFolder="'+idx+'" idFolder="'+folder.id+'" oncontextmenu="return cmFolder(event,this);">'+
 				'<div class="folderHeader'+((folder.hidden==1)?" hidden":"")+'">'+
 					'<button class="expander" onclick="toogleViewFeeds(this)">'+((selected)?'-':'+')+'</button>'+
 					'<span class="folderTitle">'+(folder.name)+unread+'</span>'+
@@ -59,7 +59,7 @@ function getHTMLFeeds(feed_list,indexFolder){
 			unread = ' <span class="count hidden">(<span class="num">'+this.unread+'</span>)</span>';
 
 		var selected = (get.feed == this.id);
-		html += '<div class="feed'+((selected)?' selected':'')+((unread=="")?"":" unread")+'" idxFolder="'+indexFolder+'" idxFeed="'+indexFeed+'" idFeed="'+this.id+'">'+
+		html += '<div class="feed'+((selected)?' selected':'')+((unread=="")?"":" unread")+'" idxFolder="'+indexFolder+'" idxFeed="'+indexFeed+'" idFeed="'+this.id+'" oncontextmenu="return cmFeed(event,this);">'+
 					'<div class="feedTitle">'+(this.name)+unread+'</div>'+
 				'</div>';
 	});
