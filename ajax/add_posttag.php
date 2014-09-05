@@ -28,7 +28,7 @@
 		}
 		if (!$idobt){
 			$idobt = getNewID();
-			$sql = "INSERT INTO tags VALUES(?,?,?,'0')";
+			$sql = "INSERT INTO tags VALUES(?,?,?,'0','0')";
 			if (mysqli_stmt_prepare($stmt,$sql)){
 
 				mysqli_stmt_bind_param($stmt,"sss", $idobt, $user, utf8_decode($tag));
