@@ -10,7 +10,6 @@ function setFeedsActions(){
 		get.page = undefined;
 		get.folder = undefined;
 		get.tag = undefined;
-		get.search = undefined;
 
 		$(".feed, .tag, .folder").not(this).removeClass("selected");
 
@@ -46,7 +45,6 @@ function setFeedsActions(){
 			get.page = undefined;
 			get.feed = undefined;
 			get.tag = undefined;
-			get.search = undefined;
 
 			$(".feed, .tag, .folder").not(this).removeClass("selected");
 
@@ -83,7 +81,6 @@ function setTagsActions(){
 		get.page = undefined;
 		get.feed = undefined;
 		get.folder = undefined;
-		get.search = undefined;
 
 		$(".feed, .tag, .folder").not(this).removeClass("selected");
 		$(".folderfeeds").slideUp();
@@ -110,10 +107,15 @@ function searchAction(){
 	$('#search_dialog').fadeOut(100);
 	get.page = undefined;
 	var query = encodeURIComponent($("#searchField").val());
-	if (query.length > 0)
+	if (query.length > 0){
+		$(".selected").removeClass("selected");
+		get.feed = undefined;
+		get.folder = undefined;
+		get.tag = undefined;
 		get.search = query;
-	else
+	} else {
 		get.search = undefined;
+	}
 	reloadPosts();
 	updateNavigationElements();
 	updateUrl();
