@@ -103,17 +103,17 @@ function loadMore(){
 
 
 function openNewWindowTag(tagid){
-	var res = location.search.replace(/&?(feed|folder|tag)=[\w-]*/, "");
+	var res = location.search.replace(/&?(feed|folder|tag|unread)=[\w-]*/g, "");
 	var url = window.location.pathname;
 	if (res.length<2)
-		url+="?tag="+tagid;
+		url+="?tag="+tagid+"&unread=0";
 	else
-		url+=res+"&tag="+tagid;
+		url+=res+"&tag="+tagid+"&unread=0";
 	window.open(url, '_blank', '');
 }
 
 function openNewWindowFeed(feedid){
-	var res = location.search.replace(/&?(feed|folder|tag)=[\w-]*/, "");
+	var res = location.search.replace(/&?(feed|folder|tag)=[\w-]*/g, "");
 	var url = window.location.pathname;
 	if (res.length<2)
 		url+="?feed="+feedid;
@@ -123,7 +123,7 @@ function openNewWindowFeed(feedid){
 }
 
 function openNewWindowFolder(folderid){
-	var res = location.search.replace(/&?(feed|folder|tag)=[\w-]*/, "");
+	var res = location.search.replace(/&?(feed|folder|tag)=[\w-]*/g, "");
 	var url = window.location.pathname;
 	if (res.length<2)
 		url+="?folder="+folderid;
