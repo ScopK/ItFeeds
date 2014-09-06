@@ -24,6 +24,7 @@
     <script src="scripts/standalone/actions.js"></script>
 </head>
 <body style="overflow:auto">
+    <div id="navigation-bar" oncontextmenu="return false;"></div>
     <div id="tag-content" style="display:none"></div>
     <div style="width:100%; height:100vh; background-color:#222;box-shadow: inset 0 10px 10px #000"></div>
 

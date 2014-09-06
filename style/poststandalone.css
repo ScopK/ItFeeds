@@ -109,3 +109,27 @@ white-space: nowrap;
 	font-size: 11px;
 	margin-right: 5px;
 }
+
+/* TAGS */
+
+#navigation-bar{
+	cursor:pointer;
+	position:fixed;
+	top:0; bottom:0; left:0;
+	width:1px;
+	transition: width 0.3s, background-color 0s 0.3s;
+	z-index:3;
+}
+
+#navigation-bar:hover{
+	transition-delay: 0s;
+	background-color:black;
+	width:40px;
+}
+
+#tag-content{
+	transition: margin 0.3s;
+}
+#navigation-bar:hover ~ #tag-content {
+   	margin-left:40px;
+}

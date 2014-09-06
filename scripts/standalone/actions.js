@@ -46,6 +46,17 @@ $(document).ready(function(){
 		});
 	});
 
+	$('#navigation-bar').mousedown(function(event) {
+	    switch (event.which) {
+	        case 1:
+	            nextPost();
+	            break;
+	        case 3:
+	            prevPost();
+	            return false;
+	    }
+	});
+
 	initialize();
 });
 
