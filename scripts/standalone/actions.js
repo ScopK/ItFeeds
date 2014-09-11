@@ -1,6 +1,5 @@
 var postIdxSelected = 1;
 var pagesLoaded = 0;
-var postspage = 10;
 var posts;
 var total;
 
@@ -67,12 +66,11 @@ function initialize(){
 	$.ajax({
 		url: "./ajax/get_posts.php",
 		type: "GET",
-		data: "public=1&tag="+idtag,
+		data: "public=1&postspage="+postspage+"&tag="+idtag,
 		dataType : "json",
 		success: function(result){
 			posts = result.posts;
 			total = result.total;
-			postspage = posts.length;
 			pagesLoaded = 1;
 
 			$.each(posts,function(){
@@ -104,7 +102,7 @@ function loadMore(){
 	$.ajax({
 		url: "./ajax/get_nextPosts.php",
 		type: "GET",
-		data: "public=1&tag="+idtag+"&nextid="+(posts[posts.length-1].id),
+		data: "public=1&postspage="+postspage+"&tag="+idtag+"&nextid="+(posts[posts.length-1].id),
 		dataType : "json",
 		success: function(result){
 			$.each(result.posts,function(){
