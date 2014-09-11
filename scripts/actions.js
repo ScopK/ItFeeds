@@ -144,15 +144,16 @@ function cmTag(e,context){
 			openNewWindowTag($(this).attr("idtag"));
 		},
 		context: context
-	},{
-		name: "Open with public tag viewer",
-		function: function(){
-			var id = $(this).attr("idtag");
-			window.open('tag/'+id, '_blank', '');
-		},
-		context: context
 	}];
-
+	if ($(context).hasClass("public"))
+		arr.push({
+			name: "Open with public tag viewer",
+			function: function(){
+				var id = $(this).attr("idtag");
+				window.open('tag/'+id, '_blank', '');
+			},
+			context: context
+		});
 	setCMContent(arr);
 	showCM(e.clientX,e.clientY)
 	return false;
