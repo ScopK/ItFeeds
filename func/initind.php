@@ -18,34 +18,35 @@
 
   	$REMIP = $_SERVER['REMOTE_ADDR'];
   	$REMLA = time();
-  	$fullstr = date('Y-d-m H:i:s', $REMLA)." >> $REMIP\n";
+  	$fullstr = date('Y-d-m H:i:s', $REMLA)." - $REMIP\n";
 
+  	$fileroute = "cons.txt";
+  	if (!file_exists($fileroute)) $fileroute = "../cons.txt";
 
-
+	/*
   	if ($REMIP != "::1"){
-		file_put_contents("../cons.txt", "######## STATUS ########\n",FILE_APPEND);
-		file_put_contents("../cons.txt", $fullstr,FILE_APPEND);
-	  	if (isset($_SESSION['userweb_ip']) && isset($_SESSION['userweb_last']))
-	  		file_put_contents("../cons.txt", "SESSION:\n".date('Y-d-m H:i:s', $_SESSION['userweb_last'])." >> ".$_SESSION['userweb_ip']."\n",FILE_APPEND);
-	  	else
-	  		file_put_contents("../cons.txt", "NO LAST SESSION\n",FILE_APPEND);
-		file_put_contents("../cons.txt", "# END ## STATUS ########\n",FILE_APPEND);
-	}
+		file_put_contents($fileroute, "# ",FILE_APPEND);
+		file_put_contents($fileroute, date('Y-d-m H:i:s', $REMLA)." - $REMIP",FILE_APPEND);
+	  	if (isset($_SESSION['userweb_last']))
+	  		file_put_contents($fileroute, " (Last connection: ".date('Y-d-m H:i:s', $_SESSION['userweb_last']).")",FILE_APPEND);
+
+		file_put_contents($fileroute, "\n",FILE_APPEND);
+	}*/
 
   	if ($REMIP != "::1"){
 	  	if (isset($_SESSION['userweb_ip']) && $_SESSION['userweb_ip']!==$REMIP){
-			file_put_contents("../cons.txt", date('Y-d-m H:i:s', $REMLA).">> CHANGED IP FROM ".$_SESSION['userweb_ip']." TO: $REMIP\n",FILE_APPEND);
+			file_put_contents($fileroute, date('Y-d-m H:i:s', $REMLA).">> CHANGED IP FROM ".$_SESSION['userweb_ip']." TO: $REMIP\n",FILE_APPEND);
 	  	}
 
 	  	if (isset($_SESSION['userweb_last'])) {
 	  		$diff = $REMLA - $_SESSION['userweb_last'];
 
 	  		if ($diff > 3600){
-				file_put_contents("../cons.txt", "More than 1 hour later:\n".$fullstr,FILE_APPEND);
+				file_put_contents($fileroute, "More than 1 hour later:\n".$fullstr,FILE_APPEND);
 	  		}
 		} else {
-			//if (strpos(file_get_contents("../cons.txt"),$fullstr)===false)
-			file_put_contents("../cons.txt", $fullstr,FILE_APPEND);
+			//if (strpos(file_get_contents($fileroute),$fullstr)===false)
+			file_put_contents($fileroute, $fullstr,FILE_APPEND);
 		}
 	}
 
