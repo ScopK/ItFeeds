@@ -39,12 +39,13 @@
         <div id="page">
             <div id="lateral_menu">
                 <div id="navopts_top" class="options_panel">
-                    <button onclick="hideLateralMenu()">&#10094; </button>
+                    <button onclick="hideLateralMenu()">&#10094;</button>
                     <a id="managerLink" href="./manager.php">Manager</a>
                     <button id="favsTButton" onclick="toggleFavs(this)">Favs</button>
                     <button id="unreadTButton" onclick="toggleUnread(this)">Unread</button>
                     <button id="sortTButton" onclick="toggleSort(this)"></button>
                 </div>
+                <button id="show-lateral-button" onclick="showLateralMenu()">&#10095;</button>
                 <div id="navigation_panel" style="overflow-y: auto;">
                     <div id="folders"></div>
                     <div id="feeds"></div>

@@ -45,8 +45,27 @@ button::-moz-focus-inner {
 	border-right: 0px solid #000;
 }
 
-#lateral_menu.hidden{
-	border-right-width: 40px;
+#lateral_menu #show-lateral-button{
+	position:fixed;
+	width: 40px;
+	left:0;
+	top:0;
+	height: 50px;
+	border: 0px;
+	background-color:black;
+	color:white;
+	font-weight: bold;
+	cursor:pointer;
+	transition: opacity 1s, visibility 0s 1s;
+	opacity: 0;
+	visibility:hidden;
+	z-index:2;
+}
+
+#lateral_menu.hidden #show-lateral-button{
+	transition-delay: 0s;
+	opacity: 1;
+	visibility:visible;
 }
 
 #content{
@@ -540,6 +559,25 @@ div.tagname button{
 #mouse_nav{
 	z-index:1;
 	position:fixed;
+	width:1px;
+	background-color: transparent;
+	border: 0;
+	padding:0;
+	bottom: 0; top: 0; left: 0;
+	height: 100%;
+	transition: width 0.3s, background-color 0.3s;
+}
+
+#mouse_nav:hover{
+	transition-delay:0s;
+	cursor:pointer;
+	background-color: black;
+	width:40px;
+}
+
+#mouse_nav-h{
+	z-index:1;
+	position:fixed;
 	width:100%;
 	background-color: transparent;
 	border: 0px;
@@ -548,7 +586,7 @@ div.tagname button{
 	transition: height 0.3s, background-color 0.3s;
 }
 
-#mouse_nav:hover{
+#mouse_nav-h:hover{
 	transition-delay:0s;
 	cursor:pointer;
 	background-color: black;
