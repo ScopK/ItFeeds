@@ -9,6 +9,8 @@
 	if ($user = checkUserPassword($user,$pass)) {
 		$_SESSION['log_user'] = $user;
 		unset($_SESSION['hid_user']);
+
+		file_put_contents("../cons.txt", date('Y-d-m H:i:s', time())." - $REMIP Logged as: '".$user."'\n",FILE_APPEND);
 	} else {
 		header('HTTP/1.1 502 User not found');
 		die('HTTP/1.1 502 User not found');
