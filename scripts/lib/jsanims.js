@@ -15,31 +15,3 @@ function loading_toggle(){
     if (status == "paused") loading_run();
     else                    loading_stop();
 }
-
-/** ANIMATIONS WEBSITE **/
-var lateral_width;
-function hideLateralMenu(){
-	lateral_width = $("#lateral_menu").outerWidth();
-    var left = $("#lateral_menu").position().left;
-	$("#lateral_menu").css("margin-left",-(left+lateral_width)+"px");
-    $("#lateral_menu").addClass("hidden");
-	$("#content").css("margin-left","0");
-
-    setTimeout(function(){
-        $("#lateral_menu").bind("click", showLateralMenu);
-    },500);
-}
-
-function showLateralMenu(){
-    $('#lateral_menu').unbind('click');
-	$("#content").css("margin-left",lateral_width+"px");
-    $("#lateral_menu").removeClass("hidden");
-	$("#lateral_menu").css("margin-left","0");
-}
-
-function toggleLateralMenu(){
-    if ($("#lateral_menu").hasClass("hidden"))
-        showLateralMenu();
-    else
-        hideLateralMenu();
-}

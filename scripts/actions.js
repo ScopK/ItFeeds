@@ -89,6 +89,25 @@ function showSearchDialog(){
 	$('#searchField').focus();
 }
 
+function hideLateralMenu(){
+    $("#show-lateral-button").html("&#10095;");
+    $("#lateral_menu").addClass("hidden");
+	$("#content").css("margin-left","0");
+}
+
+function showLateralMenu(){
+	$("#show-lateral-button").html("&#10094;");
+	$("#content").css("margin-left",$("#lateral_menu").outerWidth()+"px");
+    $("#lateral_menu").removeClass("hidden");
+}
+
+function toggleLateralMenu(){
+    if ($("#lateral_menu").hasClass("hidden"))
+        showLateralMenu();
+    else
+        hideLateralMenu();
+}
+
 function addSelectedTag(element){
 	$(element).toggleClass("selected");
 }
@@ -159,6 +178,7 @@ function cmTag(e,context){
 	return false;
 }
 
+
 function cmFeed(e,context){
 	var arr = [{
 	/*	name: "Console.log(context)",
@@ -173,7 +193,8 @@ function cmFeed(e,context){
 	}];
 
 	setCMContent(arr);
-	showCM(e.clientX,e.clientY)
+	showCM(e.clientX,e.clientY);
+	e.stopPropagation();
 	return false;
 }
 
