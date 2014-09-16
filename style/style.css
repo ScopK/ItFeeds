@@ -9,11 +9,11 @@ th{
 body {
     font-size: small;
     margin: 0;
-    background-image: url("../imgs/back2.jpg");
+    /*background-image: url("../imgs/back2.jpg");*/
     background-attachment: fixed;
     background-size: 100% 100%;
-  	/*background-blend-mode: color-burn;
-    background-color:#f00;*/
+  	/*background-blend-mode: color-burn;*/
+    background-color:#292929;
     overflow-y: scroll;
 }
 button::-moz-focus-inner {
@@ -41,31 +41,52 @@ button::-moz-focus-inner {
 	width: 300px;
 	float:left;
 	font-size: 12.5px;
-	transition: margin-left 0.4s, border 0.4s;
+	/*transition: margin-left 0.4s, border 0.4s;*/
 	border-right: 0px solid #000;
+	z-index:1;
+	transition: opacity 0.4s, visibility 0s 0s;
 }
 
-#lateral_menu #show-lateral-button{
+#lateral_menu.hidden{
+	transition-delay: 0s,0.4s;
+	opacity: 0;
+	visibility: hidden;
+}
+
+#mouse_bottom{
 	position:fixed;
-	width: 40px;
+	bottom:0;
 	left:0;
-	top:0;
+	width:40px;
+	z-index: 2;
+}
+
+.mouse-button{
+	width:40px;
+	left:0;
 	height: 50px;
 	border: 0px;
-	background-color:black;
 	color:white;
 	font-weight: bold;
 	cursor:pointer;
-	transition: opacity 1s, visibility 0s 1s;
-	opacity: 0;
-	visibility:hidden;
-	z-index:2;
+	background-color:transparent;
+	transition: background-color 0.3s, color 0.3s;
 }
 
-#lateral_menu.hidden #show-lateral-button{
-	transition-delay: 0s;
-	opacity: 1;
-	visibility:visible;
+.mouse-button:hover{
+	background-color:black;
+	color:white;
+}
+
+.mouse-button.colored{
+	background-color: rgba(255,255,255,0.7);
+	color:black;
+}
+
+#show-lateral-button{
+	position:fixed;
+	top:0;
+	z-index:2;
 }
 
 #content{
@@ -130,7 +151,6 @@ button::-moz-focus-inner {
 }
 
 #navopts_bottom{
-	z-index: 2;
 	position:absolute;
 	bottom:0;
 	width:100%;
@@ -165,6 +185,8 @@ LATERAL MENU FOLDER STYLES
 
 .folder .feed{
 	margin-left: 10px;
+	z-index:40;
+	position:relative;
 }
 
 .folderfeeds{
@@ -559,7 +581,7 @@ div.tagname button{
 #mouse_nav{
 	z-index:1;
 	position:fixed;
-	width:1px;
+	width:40px;
 	background-color: transparent;
 	border: 0;
 	padding:0;
@@ -627,4 +649,10 @@ div.tagname button{
 	background-color: rgba(0,0,0,0.1);
 	color: transparent;
 	cursor: default;
+}
+
+.gear-icon{
+	background-image: url("../imgs/gear.png");
+	background-repeat: no-repeat;
+	background-position: center center;
 }

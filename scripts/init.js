@@ -86,6 +86,8 @@ function randomColors(){
             this.style.backgroundColor = hue;
         else if (this.selectorText == ".post.unread .header")
             this.style.backgroundColor = hue;
+        else if (this.selectorText == ".mouse-button.colored")
+            this.style.backgroundColor = hue;
     });
     //setTimeout(randomColors,2000);
 }

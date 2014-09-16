@@ -39,13 +39,12 @@
         <div id="page">
             <div id="lateral_menu">
                 <div id="navopts_top" class="options_panel">
-                    <button onclick="hideLateralMenu()">&#10094;</button>
+                    <button id="settingsButton" class="gear-icon" style="width:35px;" onclick="alert('WIP')">&nbsp;</button>
                     <a id="managerLink" href="./manager.php">Manager</a>
                     <button id="favsTButton" onclick="toggleFavs(this)">Favs</button>
                     <button id="unreadTButton" onclick="toggleUnread(this)">Unread</button>
                     <button id="sortTButton" onclick="toggleSort(this)"></button>
                 </div>
-                <button id="show-lateral-button" onclick="showLateralMenu()">&#10095;</button>
                 <div id="navigation_panel" style="overflow-y: auto;">
                     <div id="folders"></div>
                     <div id="feeds"></div>
@@ -71,9 +70,19 @@
                 <div id="posts_panel"></div>
                 <div id="load_more_panel" style="margin-top:60px"><p id="loadMoreLabel" onclick="loadMore()">LOAD MORE</p></div>
             </div>
-            <button id="mouse_nav" oncontextmenu="return false;"></button>
         </div>
-        <div id="loading_panel">
+
+
+            <button id="show-lateral-button" class="mouse-button" onclick="toggleLateralMenu()">&#10094;</button>
+            <button id="mouse_nav" oncontextmenu="return false;"></button>
+            <div id="mouse_bottom" style="display:none">
+                <button class="markunread mouse-button colored" onclick="toogleUnreadPost(true)">U</button>
+                <button class="markfav mouse-button" onclick="toogleFavPost(true)">F</button>
+                <button class="mouse-button" onclick="showAddTagsDialog();">T</button>
+            </div>
+
+
+        <div id="loading_panel" style="pointer-events:none;">
             <div class="loading" id="smallBall"></div>
             <div class="loading" id="bigBall"></div>
         </div>

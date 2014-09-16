@@ -165,6 +165,8 @@ function updateControlTags(){
 function disableControls(){
 	$("#actions_panel button").prop('disabled',true);
 	$("#actions_panel").addClass('disabled');
+
+	$("#mouse_bottom").hide();
 }
 
 function enableControls(){
@@ -178,6 +180,16 @@ function enableControls(){
 
 	$("#actions_panel").removeClass('disabled');
 	$("#actions_panel button").prop('disabled',false);
+
+	//
+
+	if (post.unread == 1)	$("#mouse_bottom .markunread").addClass("colored");
+	else	$("#mouse_bottom .markunread").removeClass("colored");
+
+	if (post.favorite == 1)	$("#mouse_bottom .markfav").addClass("colored");
+	else	$("#mouse_bottom .markfav").removeClass("colored");
+
+	$("#mouse_bottom").show();
 }
 
 function addTag(){
