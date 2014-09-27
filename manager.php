@@ -56,7 +56,7 @@
                     <form action="" method="POST">
                         <div class="dialog_buttons">
                             Delete posts older than <input type="text" name="days" style="width: 30px; text-align:center" autocomplete="off"/> days<br/>
-                            <input id="allhidcheck" type="checkbox" name="unreadDIS" style="cursor:pointer"/><label style="cursor:pointer" for="allhidcheck">Delete unread</label><br/><br/>
+                            <input id="allhidcheck" type="checkbox" name="unread" style="cursor:pointer"/><label style="cursor:pointer" for="allhidcheck">Delete unread</label><br/><br/>
 
                             <button class="cleanAll" onclick="return false;">Clean</button>
                             <button class="cancel" onclick="return false;">Cancel</button>

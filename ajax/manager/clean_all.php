@@ -1,18 +1,29 @@
 <?php
 	$isServer=true;
 	include "../../func/initind.php";
+	include "../../func/functions.php";
 	
 	$days = $_POST['days'];
 	$unread = (isset($_POST['unread']))? "1":"0";
 
+	$unreadSQL="";
 	if (!$unread)
-		$unreadSQL = "AND unread='0'";
-	$sql = "DELETE FROM posts WHERE favorite='0' $unreadSQL AND date < DATE_SUB(CURRENT_TIMESTAMP, INTERVAL ? DAY) AND id NOT IN (SELECT id_post FROM post_tags)";
+		$unreadSQL = "AND p.unread='0'";
+
+ 	$user = $_SESSION['log_user'];
+ 	$hidPass = (isset($_SESSION['hid_user']))?$_SESSION['hid_user']:"";
+ 	$hidden = checkUserHiddenPassword($user,$hidPass);
+
+	$hiddenSQL = "";
+	if (!$hidden)
+		$hiddenSQL = "AND fo.hidden='0'";
+	
+	$sql = "DELETE p.* FROM posts p JOIN feeds fe ON fe.id=p.id_feed JOIN folders fo ON fo.id=fe.id_folder WHERE fo.user=? AND p.favorite='0' $unreadSQL $hiddenSQL AND p.date < DATE_SUB(CURRENT_TIMESTAMP, INTERVAL ? DAY) AND p.id NOT IN (SELECT id_post FROM post_tags)";
 
 	$stmt=mysqli_stmt_init($con);
 	if (mysqli_stmt_prepare($stmt,$sql)){
 
-		mysqli_stmt_bind_param($stmt,"s", $days); // Bind parameters
+		mysqli_stmt_bind_param($stmt,"ss", $user, $days); // Bind parameters
 		mysqli_stmt_execute($stmt); // Execute query
 
 		$done = mysqli_affected_rows($con);
