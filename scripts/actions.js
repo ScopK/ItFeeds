@@ -27,6 +27,21 @@ function updateUrl(){
 	window.history.pushState("", "", page);
 }
 
+function logout(){
+	loading_run();
+	$.ajax({
+		url: "./ajax/logout.php",
+		type: "POST",
+		success: function(result){
+			window.location = "./login.php"+location.search;
+		},
+		error: function (request, status, error){
+			showMessage("Error "+request.status+": "+request.statusText);
+			loading_stop();
+		}
+	});
+}
+
 function toogleViewFeeds(me){
 	var hid = $(me).html();
 
@@ -93,6 +108,7 @@ function hideLateralMenu(){
     $("#show-lateral-button").html("&#10095;");
     $("#lateral_menu").addClass("hidden");
 	$("#content").css("margin-left","0");
+	$('#settings_panel').addClass('hidden');
 }
 
 function showLateralMenu(){
@@ -119,7 +135,6 @@ function loadMore(){
 		ajaxMorePosts("");
 	}
 }
-
 
 function openNewWindowTag(tagid){
 	var res = location.search.replace(/&?(feed|folder|tag|unread)=[\w-]*/g, "");
@@ -178,7 +193,6 @@ function cmTag(e,context){
 	return false;
 }
 
-
 function cmFeed(e,context){
 	var arr = [{
 	/*	name: "Console.log(context)",
@@ -188,6 +202,22 @@ function cmFeed(e,context){
 		name: "Open in new window",
 		function: function(){
 			openNewWindowFeed($(this).attr("idfeed"));
+		},
+		context: context
+	},{
+		name: "Open website",
+		function: function(){
+			var fo = $(this).attr("idxfolder");
+			var fe = $(this).attr("idxfeed");
+			window.open(folders[fo].feeds[fe].link, '_blank', '');
+		},
+		context: context
+	},{
+		name: "Open RSS link",
+		function: function(){
+			var fo = $(this).attr("idxfolder");
+			var fe = $(this).attr("idxfeed");
+			window.open(folders[fo].feeds[fe].rss_link, '_blank', '');
 		},
 		context: context
 	}];

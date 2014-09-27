@@ -11,7 +11,6 @@ $(document).ready(function(){
 	$("button.editTag").click(editTag);
 	$("button.deleteTag").click(deleteTag);
 	$("button.unlockHidden").click(unlockHidden);
-	$("button.logoutButton").click(logoutButton);
 
 	$("button#folderConfig").click(showCleanFolder);
 	$("button#folderDelete").click(showDeleteFolder);

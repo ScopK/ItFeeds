@@ -364,21 +364,6 @@ function unlockHidden(){
 	});
 }
 
-function logoutButton(){
-	loading_run();
-	$.ajax({
-		url: "./ajax/logout.php",
-		type: "POST",
-		success: function(result){
-			window.location = "./login.php"+location.search;
-		},
-		error: function (request, status, error){
-			showMessage("Error "+request.status+": "+request.statusText);
-			loading_stop();
-		}
-	});
-}
-
 function nameSort(a, b){
 	var aName = a.name.toLowerCase();
 	var bName = b.name.toLowerCase(); 

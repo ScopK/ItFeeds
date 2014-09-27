@@ -73,21 +73,47 @@ function initialize(){
 }
 
 function randomColors(){
+	var bright = "#C8F56F";
+	var dark = "#9acc37";
+	/*
     var hueSel = Math.random();
     if (hueSel < 0.3)
         var hue = 'rgb(255,'+ (Math.floor(Math.random()*155)+100) +','+ (Math.floor(Math.random()*155)+100) +')';
     else if (hueSel <= 0.6)
         var hue = 'rgb('+ (Math.floor(Math.random()*155)+100) +',255,'+ (Math.floor(Math.random()*155)+100) +')';
     else
-        var hue = 'rgb('+ (Math.floor(Math.random()*100)+155) +','+ (Math.floor(Math.random()*100)+155) +',255)';
+        var hue = 'rgb('+ (Math.floor(Math.random()*155)+100) +','+ (Math.floor(Math.random()*155)+100) +',255)';
     //$("body").css("background-color",hue);
+	bright = hue;
+	dark = hue;
+    /**/
     $.each(document.styleSheets[1].cssRules, function(){
         if (this.selectorText == ".feed.selected, .tag.selected, .folder.selected")
-            this.style.backgroundColor = hue;
+            this.style.backgroundColor = bright;
         else if (this.selectorText == ".post.unread .header")
-            this.style.backgroundColor = hue;
+            this.style.backgroundColor = bright;
         else if (this.selectorText == ".mouse-button.colored")
-            this.style.backgroundColor = hue;
+            this.style.backgroundColor = dark;
+
+	    else if (this.selectorText == ".buttonuser-panel"){
+			this.style.backgroundColor = dark;
+			this.style.borderColor = dark;
+	    }
+	    else if (this.selectorText == ".buttonuser-panel:active"){
+			this.style.backgroundColor = bright;
+			this.style.borderColor = bright;
+	    }
+	    else if (this.selectorText == ".button-panel.marked:active"){
+			this.style.backgroundColor = bright;
+			this.style.borderColor = bright;
+	    }
+	    else if (this.selectorText == ".button-panel:active"){
+			this.style.backgroundColor = bright;
+			this.style.borderColor = bright;
+	    }
     });
+
+
     //setTimeout(randomColors,2000);
+    /**/
 }

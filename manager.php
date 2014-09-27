@@ -41,7 +41,6 @@
                 <a class="mainpageLink" href="./">Main page</a>
                 <button onclick="gotoTags()">Tags</button>
                 <button class="showHiddenButton <?=$hidClass?>" onclick="showHiddenDialog();">Set hidden</button>
-                <button class="logoutButton" onclick="return false">Logout</button>
                 <button onclick="showCleanAll();">Clean All</button>
             </div>
             <div id="header">
@@ -206,7 +205,6 @@
                 <a class="mainpageLink" href="./">Main page</a>
                 <button onclick="gotoFolders()">Folders</button>
                 <button class="showHiddenButton <?=$hidClass?>" onclick="showHiddenDialog()">Set hidden</button>
-                <button class="logoutButton" onclick="return false;">Logout</button>
             </div>
             <div id="header">
                 <h2 id="titletags" onclick=''>+ Tags</h2>

@@ -29,7 +29,7 @@
         <div id="feed-bar"><a class="space-used" target="_blank" href="<?=$feed->link?>"><?=$feed->name?></a></div>
         <div class="title-bg selected">
             <a class="space-used post-title" target="_blank" href="<?=$post->link?>"><?=$post->title?></a>
-            <p class="space-used post-date"><?=$post->date?></p>
+            <p class="space-used post-date"><a href="/post/<?php echo $id ?>"><?=$post->date?></a></p>
         </div>
     </div>
 

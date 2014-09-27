@@ -53,6 +53,25 @@ button::-moz-focus-inner {
 	visibility: hidden;
 }
 
+#settings_panel{
+	position:absolute;
+	background-color:black;
+	z-index:1;
+	height:100%;
+	top:0;	left:0;	right:0; bottom:0;
+	color:white;
+	padding:5px 10px;
+	transition: padding 0.2s, opacity 0.3s, visibility 0.3s;
+}
+
+#settings_panel.hidden{
+	transition-delay: 0s, 0s, 0.3s;
+	padding-top:0;
+	opacity:0;
+	visibility:hidden;
+	pointer-events:none;
+}
+
 #mouse_bottom{
 	position:fixed;
 	bottom:0;
@@ -70,7 +89,7 @@ button::-moz-focus-inner {
 	font-weight: bold;
 	cursor:pointer;
 	background-color:transparent;
-	transition: background-color 0.3s, color 0.3s;
+	transition: background-color 0.15s, color 0.15s;
 }
 
 .mouse-button:hover{
@@ -79,8 +98,8 @@ button::-moz-focus-inner {
 }
 
 .mouse-button.colored{
-	background-color: rgba(255,255,255,0.7);
-	color:black;
+	background-color: #E2F875;
+	color:white;
 }
 
 #show-lateral-button{
@@ -185,7 +204,6 @@ LATERAL MENU FOLDER STYLES
 
 .folder .feed{
 	margin-left: 10px;
-	z-index:40;
 	position:relative;
 }
 
@@ -220,7 +238,7 @@ LATERAL MENU FOLDER STYLES
 }
 
 .feed.selected, .tag.selected, .folder.selected{
-	background-color: #addeff;
+	background-color: #E2F875;
 }
 
 .feed.unread{
@@ -293,8 +311,7 @@ LATERAL MENU FOLDER STYLES
 	border-color: #ddd;
 }
 
-
-.options_panel a, .options_panel button{
+.button-panel{
 	background-color: #555;
 	padding: 5px;
 	border: 2px solid black;
@@ -306,42 +323,60 @@ LATERAL MENU FOLDER STYLES
 	transition: border-color 0.2s,background-color 0.3s;
 }
 
-
-.options_panel a:hover, .options_panel button:hover{
+.button-panel:hover{
 	border-color: #404040;
 	background-color: #404040;
 }
 
-.options_panel a:active,
-.options_panel button:active{
-	border-color: #e67b7b;
-	background-color: #e67b7b;
+.button-panel:active{
+	border-color: #E2F875;
+	background-color: #E2F875;
 }
 
-.options_panel a.disabled,
-.options_panel button:disabled{
+.button-panel:disabled{
 	color: #333;
 }
-.options_panel a.disabled:hover,
-.options_panel button:disabled:hover{
+.button-panel:disabled:hover, .button-panel.disabled:hover{
 	background-color: #555;
 	border: 2px solid black;
-} 
+}
 
-.options_panel .marked{
+.button-panel.marked{
 	background-color: #AAA;
 		border-color: #AAA;
 	transition: border-color 0.2s,background-color 0.3s;
 }
 
-.options_panel .marked:hover{
+.button-panel.marked:hover{
 	border-color: black;
 	background-color: #888;
 }
 
-.options_panel .marked:active{
+.button-panel.marked:active{
 	border-color: black;
-	background-color: #652020;
+	background-color: #E2F875;
+}
+
+.buttonuser-panel{
+	background-color: #96B20E;
+	padding: 5px;
+	border: 1px solid #96B20E;
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+	cursor:pointer;
+	font-size: 13px;
+	transition: border-color 0.2s,background-color 0.3s;
+}
+
+.buttonuser-panel:hover{
+	border-color: #444;
+	background-color: #444;
+}
+
+.buttonuser-panel:active{
+	border-color: #E2F875;
+	background-color: #E2F875;
 }
 
 
@@ -370,9 +405,9 @@ POSTS
 .post.selected .header{
 	border-color: rgba(0,0,0,0.5);
 }
-	
+
 .post.unread .header{
-	background-color: rgba(255,255,255,0.7);
+	background-color: #E2F875;
 }
 
 .post .title{

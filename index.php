@@ -1,6 +1,5 @@
 <?php
     session_start();
-
     if (!isset($_SESSION['log_user'])){
         $data = http_build_query($_REQUEST);
         header('Location: ./login.php?'.$data);
@@ -38,12 +37,25 @@
     <body>
         <div id="page">
             <div id="lateral_menu">
+                <div id="settings_panel" class="hidden">
+                    <button class="button-panel" style="position:absolute;top:0;right:0;width:35px;margin:10px" onclick="$('#settings_panel').addClass('hidden')">X</button>
+                    <div id="user-box" style="border:dotted #666;border-width:0 0 1px;padding-bottom:10px;margin-bottom:20px">
+                        <p style="margin-left:6px"><b>Logged as <?=$log_user?></b></p>
+                        <button class="button-panel" onclick="alert('WIP')">Change password</button>
+                        <button class="button-panel" onclick="logout()">Logout</button>
+                    </div>
+                    <a class="button-panel" id="managerLink" style="display:block;text-align:center;margin:2px 0" href="./manager.php">Advanced Manager</a>
+                    <div id="footer" style="position:absolute;bottom:10px;right:10px">
+                        <p>Sc-pyK</p>
+                    </div>
+                </div>
+
                 <div id="navopts_top" class="options_panel">
-                    <button id="settingsButton" class="gear-icon" style="width:35px;" onclick="alert('WIP')">&nbsp;</button>
-                    <a id="managerLink" href="./manager.php">Manager</a>
-                    <button id="favsTButton" onclick="toggleFavs(this)">Favs</button>
-                    <button id="unreadTButton" onclick="toggleUnread(this)">Unread</button>
-                    <button id="sortTButton" onclick="toggleSort(this)"></button>
+                    <!--<button id="settingsButton" class="button-panel gear-icon" style="width:35px" onclick="$('#settings_panel').toggleClass('hidden')">&nbsp;</button>-->
+                    <button class="buttonuser-panel" id="settingsButton" onclick="$('#settings_panel').toggleClass('hidden')"><?=$log_user?></button>
+                    <button class="button-panel" id="favsTButton" onclick="toggleFavs(this)">Favs</button>
+                    <button class="button-panel" id="unreadTButton" onclick="toggleUnread(this)">Unread</button>
+                    <button class="button-panel" id="sortTButton" onclick="toggleSort(this)"></button>
                 </div>
                 <div id="navigation_panel" style="overflow-y: auto;">
                     <div id="folders"></div>
@@ -54,8 +66,8 @@
                     <span id="pages">
                         <span id="totalPages">10</span> (<span id="percentSeen">0</span>)
                     </span>
-                    <button id="loadMore" onclick="loadMore()">Load More</button>
-					<button id="searchButton" onclick="showSearchDialog(); return false;">Search</button>
+                    <button class="button-panel" id="loadMore" onclick="loadMore()">Load More</button>
+					<button class="button-panel" id="searchButton" onclick="showSearchDialog(); return false;">Search</button>
                 </div>
             </div>
             <div id="content">
@@ -72,15 +84,13 @@
             </div>
         </div>
 
-
-            <button id="show-lateral-button" class="mouse-button" onclick="toggleLateralMenu()">&#10094;</button>
-            <button id="mouse_nav" oncontextmenu="return false;"></button>
-            <div id="mouse_bottom" style="display:none">
-                <button class="markunread mouse-button colored" onclick="toogleUnreadPost(true)">U</button>
-                <button class="markfav mouse-button" onclick="toogleFavPost(true)">F</button>
-                <button class="mouse-button" onclick="showAddTagsDialog();">T</button>
-            </div>
-
+        <button id="show-lateral-button" class="mouse-button" onclick="toggleLateralMenu()">&#10094;</button>
+        <button id="mouse_nav" oncontextmenu="return false;"></button>
+        <div id="mouse_bottom" style="display:none">
+            <button class="markunread mouse-button colored" onclick="toogleUnreadPost(true)">U</button>
+            <button class="markfav mouse-button" onclick="toogleFavPost(true)">F</button>
+            <button class="mouse-button" onclick="showAddTagsDialog();">T</button>
+        </div>
 
         <div id="loading_panel" style="pointer-events:none;">
             <div class="loading" id="smallBall"></div>
