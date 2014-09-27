@@ -71,14 +71,6 @@
                 </div>
             </div>
             <div id="content">
-                <div id="actions_panel">
-                    <div id="control_panel">
-                    <button class="setUnread" disabled onclick="toogleUnreadPost()"></button>
-                    <button class="setFav" disabled onclick="toogleFavPost()"></button>
-                    <button class="addTag" disabled onclick="showAddTagsDialog();return false;"></button>
-                    </div>
-                    <div id="tagList"></div>
-                </div>
                 <div id="posts_panel"></div>
                 <div id="load_more_panel" style="margin-top:60px"><p id="loadMoreLabel" onclick="loadMore()">LOAD MORE</p></div>
             </div>

@@ -140,6 +140,7 @@ function ajaxPosts(args){
 				jhtml.find("script").remove();
 				jhtml.find("a").attr("target","_blank");
 				$("#posts_panel").append(jhtml[0].outerHTML);
+				updateControlTags(postCount-1);
 			});
 			postsInit(true);
 			if (totalPages <= pagesLoaded){
@@ -189,6 +190,7 @@ function ajaxMorePosts(args){
 				jhtml.find("script").remove();
 				jhtml.find("a").attr("target","_blank");
 				$("#posts_panel").append(jhtml[0].outerHTML);
+				updateControlTags(postCount-1);
 			});
 			pagesLoaded++;
 			$("#percentSeen").html(pagesLoaded+"/"+totalPages);
@@ -207,7 +209,6 @@ function ajaxMorePosts(args){
 	});
 }
 
-
 function getHTMLPost(post,indexPost){
 	var html="";
 
@@ -220,12 +221,34 @@ function getHTMLPost(post,indexPost){
 		var feed = folder.feeds[ixs[1]];
 		subtitle = '<div class="subtitle">[ '+folderInfo+'<a target="_blank" href="'+feed.link+'">'+feed.name+'</a> ] <a class="date" target="_blank" href="/post/'+post.id+'">'+post.date+'</a></div>';
 	}
+	var controller = '<div class="controller"><div class="control_panel">'+
+	    '<button class="setUnread" onclick="toogleUnreadPost(true,'+indexPost+')"></button>'+
+	    '<button class="setFav" onclick="toogleFavPost(true,'+indexPost+')"></button>'+
+	    '<button class="addTag" onclick="showAddTagsDialog('+indexPost+');return false;"></button>'+
+	    '</div><div class="tagList"></div></div>';
+
 	var unreadl=(post.unread==1)? "unread":"";
-	html ='<div class="post '+unreadl+'" idxpost="'+indexPost+'">';
+	var favoritel=(post.favorite==1)? "favorite":"";
+
+	html ='<div class="post '+unreadl+' '+favoritel+'" idxpost="'+indexPost+'">';
 	html += '<div class="header">'+
 				'<div class="title"><a target="_blank" href="'+post.link+'">'+post.title+'</a></div>'+subtitle+
 			'</div>';
+	html += controller;
 	html += '<div class="description">'+post.description+'</div>';
 	html +='</div>';
 	return html;
+}
+
+function updateControlTags(idx){
+	idx = (typeof idx !== 'undefined')? idx : postIdxSelected;
+	var tags = posts[idx-1].tags;
+
+	//if (tags.length > 0){
+		var html="";
+		$.each(tags, function(){
+			html += '<div class="tagname" idTag="'+this.id+'">'+this.name+'<button onclick="deleteTag(this);"></button></div>';
+		});
+		$(".post[idxpost='"+idx+"'] .tagList").html(html);
+	//}
 }

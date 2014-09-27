@@ -21,18 +21,30 @@ $(document).ready(function(){
 	});
 	$("#load_more_panel").css("height",$(window).height()-60);
 
-	//################# Auto position post controls
-	$(document).scroll(function() {
-		var pos = $(document).scrollTop();
-		$("#actions_panel").css("top",pos);
-	});
-
 	//################# Middle click on button will open new page
 	$("button").mousedown(function(e){
 		if (e.button == 1){
 			window.open(window.location.pathname+window.location.search, '_blank', '');
 			return true; // to allow the browser to know that we handled it.
 		}
+	});
+
+
+	//################# Auto position post controls
+	$(document).scroll(function() {
+		var pos = $(document).scrollTop();
+		var controllers = $(".post").toArray();
+		var idx = 0;
+		$.each(controllers.reverse(),function(){
+			var con = $(this).find(".controller");
+			var top = this.offsetTop;
+			var bot = top + this.offsetHeight - con.height();
+			if (top < pos && pos < bot){
+				con.addClass("fixed");
+			} else {
+				con.removeClass("fixed");
+			}
+		});
 	});
 
 	//################# Mouse navigator

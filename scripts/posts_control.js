@@ -83,7 +83,8 @@ $(document).ready(function(){
 
 
 function postsInit(scrollTop){
-	$(".post").click(function(){
+	$(".post").click(function(ev){
+		if (ev.target.tagName=="BUTTON") return;
 		selectPost($(this).attr("idxpost"));
 	});
 
@@ -145,51 +146,24 @@ function selectPost(idx){
 		loadMore();
 
 	enableControls();
-	updateControlTags();
-}
-
-function updateControlTags(){
-	var tags = posts[postIdxSelected-1].tags;
-	if (tags.length > 0){
-		var html="";
-		$.each(tags, function(){
-			html += '<div class="tagname" idTag="'+this.id+'">'+this.name+'<button onclick="deleteTag(this);"></button></div>';
-		});
-		$("#tagList").html(html);
-		$("#tagList").show();
-	} else {
-		$("#tagList").hide();
-	}
 }
 
 function disableControls(){
-	$("#actions_panel button").prop('disabled',true);
-	$("#actions_panel").addClass('disabled');
-
 	$("#mouse_bottom").hide();
 }
 
 function enableControls(){
-	var post = posts[postIdxSelected-1];
+	if (postIdxSelected>0){
+		var post = posts[postIdxSelected-1];
 
-	if (post.unread == 1)	$("#actions_panel button.setUnread").addClass("unread");
-	else	$("#actions_panel button.setUnread").removeClass("unread");
+		if (post.unread == 1)	$("#mouse_bottom .markunread").addClass("colored");
+		else	$("#mouse_bottom .markunread").removeClass("colored");
 
-	if (post.favorite == 1)	$("#actions_panel button.setFav").addClass("fav");
-	else	$("#actions_panel button.setFav").removeClass("fav");
+		if (post.favorite == 1)	$("#mouse_bottom .markfav").addClass("colored");
+		else	$("#mouse_bottom .markfav").removeClass("colored");
 
-	$("#actions_panel").removeClass('disabled');
-	$("#actions_panel button").prop('disabled',false);
-
-	//
-
-	if (post.unread == 1)	$("#mouse_bottom .markunread").addClass("colored");
-	else	$("#mouse_bottom .markunread").removeClass("colored");
-
-	if (post.favorite == 1)	$("#mouse_bottom .markfav").addClass("colored");
-	else	$("#mouse_bottom .markfav").removeClass("colored");
-
-	$("#mouse_bottom").show();
+		$("#mouse_bottom").show();
+	}
 }
 
 function addTag(){
@@ -201,7 +175,8 @@ function addTag(){
 		tag += " "+$("#newtagField").val();
 	tag = encodeURIComponent(tag.substring(1));
 	if (tag.length > 0) {
-		var post = posts[postIdxSelected-1];
+		var idxpost = addTagTo;
+		var post = posts[idxpost-1];
 		loading_run();
 		$.ajax({
 			url: "./ajax/add_posttag.php",
@@ -223,13 +198,13 @@ function addTag(){
 					if (found == -1)
 						tags.push(this);
 					else
-						tags[found].count = this.count;//tags[found].count++;
+						tags[found].count = this.count;
 
 					post.tags.push(tagInfo);
 				});
 				tags.sort(nameSort);
 				post.tags.sort(nameSort);
-				updateControlTags();
+				updateControlTags(idxpost);
 				displayTags();
 				showMessage("Tags added succesfully",true);
 			},
@@ -249,7 +224,8 @@ function addTag(){
 
 function deleteTag(me){
 	var idTag = $(me).parent().attr("idTag");
-	var post = posts[postIdxSelected-1];
+	var idxPost = $(me).closest(".post").attr("idxpost");
+	var post = posts[idxPost-1];
 	loading_run();
 	$.ajax({
 		url: "./ajax/delete_posttag.php",
@@ -266,7 +242,7 @@ function deleteTag(me){
 			    }
 			    return true; //keep
 			});
-			updateControlTags();
+			updateControlTags(idxPost);
 			displayTags();
 			showMessage("Tag deleted succesfully",true);
 		},
@@ -279,18 +255,20 @@ function deleteTag(me){
 	});
 }
 
-function toogleUnreadPost(click){
+function toogleUnreadPost(click,idx){
 	click = (typeof click !== 'undefined')? click : false;
+	idx = (typeof idx !== 'undefined')? idx : postIdxSelected;
 
-	var val = (posts[postIdxSelected-1].unread == 1)?0:1;
-	markPost(0,val,postIdxSelected,click);
+	var val = (posts[idx-1].unread == 1)?0:1;
+	markPost(0,val,idx,click);
 }
 
-function toogleFavPost(click){
+function toogleFavPost(click,idx){
 	click = (typeof click !== 'undefined')? click : false;
+	idx = (typeof idx !== 'undefined')? idx : postIdxSelected;
 
-	var val = (posts[postIdxSelected-1].favorite == 1)?0:1;
-	markPost(1,val,postIdxSelected,click);
+	var val = (posts[idx-1].favorite == 1)?0:1;
+	markPost(1,val,idx,click);
 }
 
 //  First param: 0-Read/unread  1-Favorite
@@ -337,6 +315,10 @@ function markPost(field, value, postidx, click){
 				}
 
 			} else {	// fav/unfav 
+				if (value==0)
+					$(".post[idxpost='"+postidx+"']").removeClass("favorite");
+				else
+					$(".post[idxpost='"+postidx+"']").addClass("favorite");
 				if (click){
 					if (value==0)
 						showPopMessage("Post deleted from favorites");
@@ -345,7 +327,6 @@ function markPost(field, value, postidx, click){
 				}
 			}
 			enableControls();
-
 		},
 		error: function (request, status, error){
 			showMessage("An error ocurred marking post<br/>"+error);

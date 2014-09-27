@@ -131,9 +131,6 @@ function updateNavigationElements(){
 	if (get.sortby) $("#sortTButton").html("Older");
 	else		  	$("#sortTButton").html("Newer");
 
-	if (get.sortby) $("#sortTButton").html("Older");
-	else		  	$("#sortTButton").html("Newer");
-
 	if (get.search) $("#searchButton").addClass("marked");
 	else		    $("#searchButton").removeClass("marked");
 }

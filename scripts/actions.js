@@ -89,8 +89,11 @@ function toggleSort(me){
 	reloadPosts();
 }
 
-function showAddTagsDialog(){
-	if (postIdxSelected>0) {
+var addTagTo;
+function showAddTagsDialog(idx){
+	idx = (typeof idx !== 'undefined')? idx : postIdxSelected;
+	if (idx>0) {
+		addTagTo = idx;
 		$('#add_tag').fadeIn(100);
 		$('#add_tag p').removeClass("selected");
 		$('#newtagField').val("");

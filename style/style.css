@@ -115,52 +115,6 @@ button::-moz-focus-inner {
 	transition: margin 0.4s;
 }
 
-#actions_panel{
-	z-index: 1;
-	position:absolute;
-	top:0; right:0;
-	margin: 0;
-	padding: 0;
-	border-width: 0 0 2px 2px;
-
-	font-size: 10px;
-	font-weight: bold;
-
-	width: 200px;
-
-	opacity:0.6;
-	transition:opacity 0.4s;
-}
-
-#actions_panel.disabled:hover{
-	opacity:0;
-}
-
-#actions_panel.disabled{
-	opacity:0;
-}
-
-#actions_panel:hover{
-	opacity:0.9;
-	transition-delay:0s;
-}
-
-#control_panel{
-	text-align: right;
-	padding: 7px 10px;
-}
-
-#tagList{
-	display:none;
-	text-align: right;
-}
-
-#actions_panel:hover #tagList{
-	visibility:visible;
-	opacity:1;
-	transition-delay:0s;
-}
-
 #navopts_top{
 	background-color: #000;
 	text-align: center;
@@ -389,10 +343,10 @@ POSTS
 	padding-top: 0px;
 	margin: 0;
 }
-/*
+
 .post{
-	background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6))!important;
-}*/
+	position:relative;
+}
 
 .post .header{
 	position:relative;
@@ -446,6 +400,76 @@ POSTS
 
 .post .header .subtitle a.date{
 	color: #555;
+}
+
+.post .controller{
+	text-align:right;
+	padding:6px 10px 5px 5px;
+	position:absolute;
+	top:0;
+	right:0;
+}
+
+.post:not(.minimized) .controller.fixed{
+	position:fixed;
+	right:40px;
+}
+
+.post .controller button{
+	cursor:pointer;
+	width: 25px;
+	height:25px;
+	margin: 0 5px;
+	background-color:transparent;
+	border:0;
+	background-repeat: no-repeat;
+	background-position:center;
+}
+
+.post .controller button:hover{
+	box-shadow: 0 0 10px -2px rgba(0,0,0,0.5);
+	background-color: rgba(0,0,0,0.1);
+	/*inset*/
+}
+
+.post .controller button.addTag{
+	background-image: url("../imgs/addTag.png");
+}
+
+.post .controller button.setUnread{
+	background-image: url("../imgs/read.png");
+}
+
+.post.unread .controller button.setUnread{
+	background-image: url("../imgs/unread.png");
+}
+
+.post .controller button.setFav{
+	background-image: url("../imgs/starOff.png");
+}
+
+.post.favorite .controller button.setFav{
+	background-image: url("../imgs/starOn.png");
+}
+
+.post.minimized .tagList{
+	display:none;
+}
+
+.post .tagList{
+	font-size:10px;
+	font-weight: bold;
+	color:#333;
+	margin-top:10px;
+}
+
+.post .tagList *{
+	vertical-align: middle;
+}
+
+.post .tagList button{
+	margin: 5px 0px 5px 5px;
+	background-image: url("../imgs/remTag.png");
 }
 
 .post .description{
@@ -691,3 +715,7 @@ div.tagname button{
 	background-repeat: no-repeat;
 	background-position: center center;
 }
+
+
+
+
