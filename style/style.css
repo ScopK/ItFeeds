@@ -169,6 +169,7 @@ LATERAL MENU FOLDER STYLES
 	cursor:pointer;
 	color: #333;
 	padding: 2px 5px;
+	border-radius:3px;
 }
 
 .tag{
@@ -193,6 +194,7 @@ LATERAL MENU FOLDER STYLES
 
 .feed.selected, .tag.selected, .folder.selected{
 	background-color: #E2F875;
+	border-radius: 3px;
 }
 
 .feed.unread{
@@ -222,7 +224,8 @@ LATERAL MENU FOLDER STYLES
 .folderHeader.hidden .folderTitle{
 	background-color: #eee;
 	color: #777;
-	padding: 2px 4px 1px;
+	padding: 1px 5px 2px;
+	border-radius:3px;
 }
 
 
@@ -231,13 +234,13 @@ LATERAL MENU FOLDER STYLES
 }
 
 .folderHeader.hidden:hover .folderTitle{
-	background-color: unset;
+	background-color: initial;
 	color: #777;
-	padding: 2px 4px 1px;
 }
 
 .folderHeader:hover{
 	background-color: #aaa;
+	border-radius:2px;
 }
 
 .folderTitle{
@@ -274,6 +277,7 @@ LATERAL MENU FOLDER STYLES
 	text-decoration: none;
 	cursor:pointer;
 	font-size: 13px;
+	border-radius:3px;
 	transition: border-color 0.2s,background-color 0.3s;
 }
 
@@ -312,6 +316,7 @@ LATERAL MENU FOLDER STYLES
 }
 
 .buttonuser-panel{
+	border-radius:2px;
 	background-color: #96B20E;
 	padding: 5px;
 	border: 1px solid #96B20E;

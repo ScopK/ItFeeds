@@ -108,14 +108,14 @@ function showSearchDialog(){
 }
 
 function hideLateralMenu(){
-    $("#show-lateral-button").html("&#10095;");
+    $("#show-lateral-button").html("&rsaquo;");
     $("#lateral_menu").addClass("hidden");
 	$("#content").css("margin-left","0");
 	$('#settings_panel').addClass('hidden');
 }
 
 function showLateralMenu(){
-	$("#show-lateral-button").html("&#10094;");
+	$("#show-lateral-button").html("&lsaquo;");
 	$("#content").css("margin-left",$("#lateral_menu").outerWidth()+"px");
     $("#lateral_menu").removeClass("hidden");
 }

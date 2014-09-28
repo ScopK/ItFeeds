@@ -44,7 +44,7 @@
                         <button class="button-panel" onclick="alert('WIP')">Change password</button>
                         <button class="button-panel" onclick="logout()">Logout</button>
                     </div>
-                    <a class="button-panel" id="managerLink" style="display:block;text-align:center;margin:2px 0" href="./manager.php">Advanced Manager</a>
+                    <a class="button-panel" id="managerLink" style="display:block;margin:2px 0" href="./manager.php">Advanced Manager</a>
                     <div id="footer" style="position:absolute;bottom:10px;right:10px">
                         <p>Sc-pyK</p>
                     </div>
@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        <button id="show-lateral-button" class="mouse-button" onclick="toggleLateralMenu()">&#10094;</button>
+        <button id="show-lateral-button" class="mouse-button" style="font-size:20px" onclick="toggleLateralMenu()">&lsaquo;</button>
         <button id="mouse_nav" oncontextmenu="return false;"></button>
         <div id="mouse_bottom" style="display:none">
             <button class="markunread mouse-button colored" onclick="toogleUnreadPost(true)">U</button>
