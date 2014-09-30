@@ -437,8 +437,20 @@ POSTS
 	/*inset*/
 }
 
+.post .controller button.maxminimize{
+	margin:0 -5px 0 0;
+}
+
 .post .controller button.addTag{
 	background-image: url("../imgs/addTag.png");
+}
+
+.post .controller button.maxminimize{
+	background-image: url("../imgs/less.png");
+}
+
+.post.minimized .controller button.maxminimize{
+	background-image: url("../imgs/more.png");
 }
 
 .post .controller button.setUnread{

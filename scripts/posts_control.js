@@ -107,7 +107,6 @@ function postsInit(scrollTop){
 
 function nextPost(){
 	if (postIdxSelected < posts.length){
-		//$(".post[idxpost='"+postIdxSelected+"']").addClass("minimized");
 		var idx = postIdxSelected;
 		selectPost(++idx);
 		$(".post[idxpost='"+postIdxSelected+"']").prevAll("div.post").addClass("minimized");
@@ -118,7 +117,6 @@ function nextPost(){
 
 function prevPost(){
 	if (postIdxSelected > 1){
-		//$(".post[idxpost='"+postIdxSelected+"']").addClass("minimized");
 		var idx = postIdxSelected;
 		selectPost(--idx);
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
@@ -253,6 +251,15 @@ function deleteTag(me){
 			loading_stop();
 		}
 	});
+}
+
+function toggleMinimize(idx,value){
+	idx = (typeof idx !== 'undefined')? idx : postIdxSelected;
+	var post = $(".post[idxpost='"+idx+"']");
+	value = (typeof value !== 'undefined')? value : !post.hasClass("minimized");
+
+	if (value)	post.addClass("minimized");
+	else		post.removeClass("minimized");
 }
 
 function toogleUnreadPost(click,idx){
