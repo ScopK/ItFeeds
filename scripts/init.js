@@ -31,21 +31,7 @@ $(document).ready(function(){
 
 
 	//################# Auto position post controls
-	$(document).scroll(function() {
-		var pos = $(document).scrollTop();
-		var controllers = $(".post").toArray();
-		var idx = 0;
-		$.each(controllers.reverse(),function(){
-			var con = $(this).find(".controller");
-			var top = this.offsetTop;
-			var bot = top + this.offsetHeight - con.height();
-			if (top < pos && pos < bot){
-				con.addClass("fixed");
-			} else {
-				con.removeClass("fixed");
-			}
-		});
-	});
+	$(document).scroll(situatePostControls);
 
 	//################# Mouse navigator
 	$('#mouse_nav').mousedown(function(event) {
@@ -59,6 +45,22 @@ $(document).ready(function(){
 	    }
 	});
 });
+
+function situatePostControls(){
+	var pos = $(document).scrollTop();
+	var controllers = $(".post").toArray();
+	var idx = 0;
+	$.each(controllers.reverse(),function(){
+		var con = $(this).find(".controller");
+		var top = this.offsetTop;
+		var bot = top + this.offsetHeight - con.height();
+		if (top < pos && pos < bot){
+			con.addClass("fixed");
+		} else {
+			con.removeClass("fixed");
+		}
+	});
+}
 
 function initialize(){
 	$("#page").hide();

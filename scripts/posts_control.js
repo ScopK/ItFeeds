@@ -258,8 +258,11 @@ function toggleMinimize(idx,value){
 	var post = $(".post[idxpost='"+idx+"']");
 	value = (typeof value !== 'undefined')? value : !post.hasClass("minimized");
 
-	if (value)	post.addClass("minimized");
-	else		post.removeClass("minimized");
+	if (value){
+		post.addClass("minimized");
+		situatePostControls();
+	} else
+		post.removeClass("minimized");
 }
 
 function toogleUnreadPost(click,idx){
