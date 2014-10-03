@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <title>Fydeph - <?=$log_user?></title>
+        <title>NeoFydeph - <?=$log_user?></title>
         <link rel="shortcut icon" href="imgs/icon.png" />
         <link rel="stylesheet" type="text/css" href="style/anims.css">
         <link rel="stylesheet" type="text/css" href="style/style.css">
