@@ -23,7 +23,7 @@
 	$folders = getFolders($user,1,$hidden);
 	$tags = getTags($user,0,$hidden);
 
-	$data = array("folders" => $folders, "tags" => $tags);
+	$data = array("folders" => $folders, "tags" => $tags, "unlocked" => ($hidden?"true":"false") );
 
 	echo json_encode($data);
 

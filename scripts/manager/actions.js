@@ -332,38 +332,6 @@ function addFolder(){
 	});
 }
 
-function unlockHidden(){
-	var hidd = $(this).closest("form").serialize();
-	
-	loading_run();
-	$.ajax({
-		url: "./ajax/login_hidden.php",
-		type: "POST",
-		data: hidd,
-		dataType : "json",
-		success: function(result){
-			$("#folder_list").hide();
-			$("#tag_list").hide();
-
-			folders = result.folders;
-			tags = result.tags;
-			load(folders);
-			loadTags(tags);
-			loading_stop();
-			$('#login_hidden').fadeOut(100);
-			if (hidd == "hiddenPass=")
-				$(".showHiddenButton").removeClass("set");
-			else
-				$(".showHiddenButton").addClass("set");
-
-		},
-		error: function (request, status, error){
-			showMessage("Error "+request.status+": "+request.statusText);
-			loading_stop();
-		}
-	});
-}
-
 function nameSort(a, b){
 	var aName = a.name.toLowerCase();
 	var bName = b.name.toLowerCase(); 

@@ -109,11 +109,11 @@ function randomColors(){
         else if (this.selectorText == ".mouse-button.colored")
             this.style.backgroundColor = dark;
 
-	    else if (this.selectorText == ".buttonuser-panel"){
+	    else if (this.selectorText == ".highlight-color"){
 			this.style.backgroundColor = dark;
 			this.style.borderColor = dark;
 	    }
-	    else if (this.selectorText == ".buttonuser-panel:active"){
+	    else if (this.selectorText == ".highlight-color:active"){
 			this.style.backgroundColor = bright;
 			this.style.borderColor = bright;
 	    }

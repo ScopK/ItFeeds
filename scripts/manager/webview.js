@@ -313,14 +313,6 @@ function closeDialogs(){
 	$(".inside_dialog").removeClass("active");
 }
 
-function showHiddenDialog(){
-	$('#login_hidden').fadeIn(100);
-	$('#pwdHiddenField').val("");
-	$('#pwdHiddenField').focus();
-
-}
-
-
 /** LOADING ANIMATIONS CONTROL **/
 function loading_stop() {
     $(".loading").css("animation-play-state","paused");

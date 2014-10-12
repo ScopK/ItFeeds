@@ -107,6 +107,118 @@ function showSearchDialog(){
 	$('#searchField').focus();
 }
 
+function showPasswordChangeDialog(){
+	$('#settings_panel').addClass('hidden');
+	$('#pwchange_dialog').fadeIn(100);
+	$("#oldPassField").val("").focus();
+	$("#newPassField").val("");
+	$("#newPass2Field").val("");
+}
+
+function showLockPasswordChangeDialog(){
+	$('#settings_panel').addClass('hidden');
+	$('#pwlchange_dialog').fadeIn(100);
+	$("#oldLPassField").val("").focus();
+	$("#newLPassField").val("");
+	$("#newLPass2Field").val("");
+}
+
+function showUnlockDialog(){
+	$('#settings_panel').addClass('hidden');
+	$('#unlock_dialog').fadeIn(100);
+	$('#lockPassField').val("").focus();
+}
+
+function changePasswordAction(){
+	var newp = $("#newPassField").val();
+	if (newp != $("#newPass2Field").val()){
+		showMessage("Passwords doesn't match");
+		return;
+	}
+	var oldp = $("#oldPassField").val();
+	loading_run();
+	$.ajax({
+		url: "./ajax/change_password.php",
+		type: "POST",
+		data: "lock=0&old="+oldp+"&new="+newp,
+		success: function(result){
+			if (result=="ok"){
+				$('#pwchange_dialog').fadeOut(100);
+			} else {
+				showMessage("An error ocurred. Try again.");
+				$("#oldPassField").val("");
+				$("#newPass2Field").val("");
+			}
+		},
+		error: function (request, status, error){
+			showMessage("JS Error "+request.status+": "+request.responseText);
+		},
+		complete: function(){
+			loading_stop();
+		}
+	});
+}
+
+function changeLockPasswordAction(){
+	var newp = $("#newLPassField").val();
+	if (newp != $("#newLPass2Field").val()){
+		showMessage("Passwords doesn't match");
+		return;
+	}
+	var oldp = $("#oldLPassField").val();
+	loading_run();
+	$.ajax({
+		url: "./ajax/change_password.php",
+		type: "POST",
+		data: "lock=1&old="+oldp+"&new="+newp,
+		success: function(result){
+			if (result=="ok"){
+				$('#pwlchange_dialog').fadeOut(100);
+			} else {
+				showMessage("An error ocurred. Try again.");
+				$("#oldLPassField").val("");
+				$("#newLPass2Field").val("");
+			}
+		},
+		error: function (request, status, error){
+			showMessage("JS Error "+request.status+": "+request.responseText);
+		},
+		complete: function(){
+			loading_stop();
+		}
+	});
+}
+
+function unlockAction(){
+	var unlockp = $("#lockPassField").val();
+	loading_run();
+	$.ajax({
+		url: "./ajax/login_hidden.php",
+		type: "POST",
+		data: "hiddenPass="+unlockp,
+		dataType : "json",
+		success: function(result){
+			folders = result.folders;
+			tags = result.tags;
+			displayFolders();
+			displayTags();
+			reloadPosts();
+			$('#unlock_dialog').fadeOut(100);
+			if (result.unlocked=="true"){
+				$('#unlockButton').addClass("highlight-color");
+			} else {
+				$('#unlockButton').removeClass("highlight-color");
+			}
+		},
+		error: function (request, status, error){
+			showMessage("JS Error "+request.status+": "+request.responseText);
+		},
+		complete: function(){
+			loading_stop();
+		}
+	});
+}
+
 function hideLateralMenu(){
     $("#show-lateral-button").html("&rsaquo;");
     $("#lateral_menu").addClass("hidden");

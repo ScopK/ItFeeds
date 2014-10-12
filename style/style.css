@@ -315,27 +315,28 @@ LATERAL MENU FOLDER STYLES
 	background-color: #E2F875;
 }
 
-.buttonuser-panel{
+.highlight-color{
 	border-radius:2px;
 	background-color: #96B20E;
-	padding: 5px;
 	border: 1px solid #96B20E;
-	color: white;
-	font-weight: bold;
-	text-decoration: none;
-	cursor:pointer;
-	font-size: 13px;
-	transition: border-color 0.2s,background-color 0.3s;
 }
 
-.buttonuser-panel:hover{
+.highlight-color:hover{
 	border-color: #444;
 	background-color: #444;
 }
 
-.buttonuser-panel:active{
+.highlight-color:active{
 	border-color: #E2F875;
 	background-color: #E2F875;
+}
+
+#settings_panel button,#settings_panel a{
+	margin:2px 0;
+}
+
+#settings_panel .highlight-color{
+	margin:3px 0;
 }
 
 
@@ -469,6 +470,16 @@ POSTS
 	background-image: url("../imgs/starOn.png");
 }
 
+button.lock-icon{
+	background-repeat: no-repeat;
+	background-position:center;
+	background-image: url("../imgs/locked.png");
+}
+
+button.lock-icon.highlight-color{
+	background-image: url("../imgs/unlocked.png");
+}
+
 .post.minimized .tagList{
 	display:none;
 }
@@ -576,6 +587,16 @@ Tags
 }
 .background-modal td{
 	padding: 10px 0px;
+}
+
+.background-modal .slim td{
+	padding: 3px 0px;
+}
+.background-modal .slim tr:nth-child(2) td{
+	padding-top: 10px;
+}
+.background-modal .slim tr:last-child td{
+	padding:7px 0;
 }
 
 .dialog_buttons button{

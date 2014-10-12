@@ -1,11 +1,16 @@
 <?php
-    session_start();
+    $isServer=true;
+    require_once("func/initind.php");
+
     if (!isset($_SESSION['log_user'])){
         $data = http_build_query($_REQUEST);
         header('Location: ./login.php?'.$data);
     } else {
+        require_once("func/functions.php");
+
         $log_user = $_SESSION['log_user'];
-        $hidClass = (isset($_SESSION['hid_user']))?"set":"";
+        //$hid_user = isset($_SESSION['hid_user']);
+        $hid_user = isset($_SESSION['hid_user'])?checkUserHiddenPassword($log_user,$_SESSION['hid_user']):false;
     }
 ?><!DOCTYPE html>
 <html>
@@ -39,20 +44,21 @@
             <div id="lateral_menu">
                 <div id="settings_panel" class="hidden">
                     <button class="button-panel" style="position:absolute;top:0;right:0;width:35px;margin:10px" onclick="$('#settings_panel').addClass('hidden')">X</button>
-                    <div id="user-box" style="border:dotted #666;border-width:0 0 1px;padding-bottom:10px;margin-bottom:20px">
+                    <div id="user-box" style="border:dotted #666;border-width:0 0 1px;padding-bottom:10px;margin-bottom:10px">
                         <p style="margin-left:6px"><b>Logged as <?=$log_user?></b></p>
-                        <button class="button-panel" onclick="alert('WIP')">Change password</button>
+                        <button class="button-panel" onclick="showPasswordChangeDialog();return false">Change password</button>
                         <button class="button-panel" onclick="logout()">Logout</button>
                     </div>
-                    <a class="button-panel" id="managerLink" style="display:block;margin:2px 0" href="./manager.php">Advanced Manager</a>
+                    <button class="button-panel <?php echo ($hid_user)?"highlight-color":"";?> lock-icon" id="unlockButton" style="width:40px;float:right" onclick="showUnlockDialog();return false">&nbsp;</button>
+                    <button class="button-panel" id="managerLink" style="width:256px;text-align:left" onclick="showLockPasswordChangeDialog();return false">Change Lock Password</button>
+                    <a class="button-panel" id="managerLink" style="display:block" href="./manager.php">Advanced Manager</a>
                     <div id="footer" style="position:absolute;bottom:10px;right:10px">
                         <p>Sc-pyK</p>
                     </div>
                 </div>
 
                 <div id="navopts_top" class="options_panel">
-                    <!--<button id="settingsButton" class="button-panel gear-icon" style="width:35px" onclick="$('#settings_panel').toggleClass('hidden')">&nbsp;</button>-->
-                    <button class="buttonuser-panel" id="settingsButton" onclick="$('#settings_panel').toggleClass('hidden')"><?=$log_user?></button>
+                    <button class="button-panel highlight-color" id="settingsButton" onclick="$('#settings_panel').toggleClass('hidden')"><?=$log_user?></button>
                     <button class="button-panel" id="favsTButton" onclick="toggleFavs(this)">Favs</button>
                     <button class="button-panel" id="unreadTButton" onclick="toggleUnread(this)">Unread</button>
                     <button class="button-panel" id="sortTButton" onclick="toggleSort(this)"></button>
@@ -88,6 +94,8 @@
             <div class="loading" id="smallBall"></div>
             <div class="loading" id="bigBall"></div>
         </div>
+
+        <!-- DIALOGS -->
         <div id="add_tag" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="add_tag_content">
             <form action="" method="POST">
                 <table><tr><th colspan="2">Add tag</th></tr>
@@ -108,6 +116,63 @@
                 <tr><td colspan="2" class="dialog_buttons">
                     <button class="searchButton" onclick="searchAction(); return false;">Add</button>
                     <button class="cancelAddTag" onclick="$('#search_dialog').fadeOut(100);return false;">Cancel</button>
+                </td></tr>
+                </table>
+            </form>
+        </div></div></div>
+
+        <div id="pwchange_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="search_content">
+            <form action="" method="POST">
+                <table class="slim"><tr><th colspan="2">Change account password</th>
+                </tr><tr>
+                    <td align="right" style="padding-right:10px">Old password</td>
+                    <td align="left"><input id="oldPassField" type="password" name="old" autocomplete="off" /></td>
+                </tr><tr>
+                    <td align="right" style="padding-right:10px">New password</td>
+                    <td align="left"><input id="newPassField" type="password" name="new" autocomplete="off" /></td>
+                </tr><tr>
+                    <td align="right" style="padding-right:10px">Repeat</td>
+                    <td align="left"><input id="newPass2Field" type="password" autocomplete="off" /></td>
+                </tr><tr>
+                <td colspan="2" class="dialog_buttons">
+                    <button class="searchButton" onclick="changePasswordAction(); return false;">Confirm</button>
+                    <button class="cancelAddTag" onclick="$('#pwchange_dialog').fadeOut(100);return false;">Cancel</button>
+                </td></tr>
+                </table>
+            </form>
+        </div></div></div>
+
+        <div id="pwlchange_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="search_content">
+            <form action="" method="POST">
+                <table class="slim"><tr><th colspan="2">Change lock password</th>
+                </tr><tr>
+                    <td align="right" style="padding-right:10px">Old password</td>
+                    <td align="left"><input id="oldLPassField" type="password" name="old" autocomplete="off" /></td>
+                </tr><tr>
+                    <td align="right" style="padding-right:10px">New password</td>
+                    <td align="left"><input id="newLPassField" type="password" name="new" autocomplete="off" /></td>
+                </tr><tr>
+                    <td align="right" style="padding-right:10px">Repeat</td>
+                    <td align="left"><input id="newLPass2Field" type="password" autocomplete="off" /></td>
+                </tr><tr>
+                <td colspan="2" class="dialog_buttons">
+                    <button class="searchButton" onclick="changeLockPasswordAction(); return false;">Confirm</button>
+                    <button class="cancelAddTag" onclick="$('#pwlchange_dialog').fadeOut(100);return false;">Cancel</button>
+                </td></tr>
+                </table>
+            </form>
+        </div></div></div>
+
+        <div id="unlock_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="search_content">
+            <form action="" method="POST">
+                <table class="slim"><tr><th colspan="2">Unlock content</th>
+                </tr><tr>
+                    <td align="right" style="padding-right:10px">Enter lock password</td>
+                    <td align="left"><input id="lockPassField" type="password" name="hiddenPass" autocomplete="off" /></td>
+                </tr><tr>
+                <tr><td colspan="2" class="dialog_buttons">
+                    <button class="searchButton" onclick="unlockAction(); return false;">Confirm</button>
+                    <button class="cancelAddTag" onclick="$('#unlock_dialog').fadeOut(100);return false;">Cancel</button>
                 </td></tr>
                 </table>
             </form>

@@ -40,7 +40,6 @@
             <div id="extrabuttons">
                 <a class="mainpageLink" href="./">Main page</a>
                 <button onclick="gotoTags()">Tags</button>
-                <button class="showHiddenButton <?=$hidClass?>" onclick="showHiddenDialog();">Set hidden</button>
                 <button onclick="showCleanAll();">Clean All</button>
             </div>
             <div id="header">
@@ -204,7 +203,6 @@
             <div id="extrabuttons">
                 <a class="mainpageLink" href="./">Main page</a>
                 <button onclick="gotoFolders()">Folders</button>
-                <button class="showHiddenButton <?=$hidClass?>" onclick="showHiddenDialog()">Set hidden</button>
             </div>
             <div id="header">
                 <h2 id="titletags" onclick=''>+ Tags</h2>
@@ -254,20 +252,6 @@
                 </div>
             </div></div>
         </div>
-
-
-        <div id="login_hidden"><div id="login_hidden_content">
-            <form action="" method="POST">
-                <table><tr><th colspan="2">Hidden Password</th></tr>
-                <tr><td><input id="pwdHiddenField" type="password" name="hiddenPass" autocomplete="off" /></td></tr>
-                <tr><td colspan="2" class="dialog_buttons">
-                    <button class="unlockHidden" onclick="return false;">Unlock</button>
-                    <button class="cancel" onclick="$('#login_hidden').fadeOut(100);return false;">Cancel</button>
-                </td></tr>
-                </table>
-
-            </form>
-        </div></div>
         <div id="top_message"><p></p></div>
     </body>
 </html>
