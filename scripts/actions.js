@@ -191,6 +191,7 @@ function changeLockPasswordAction(){
 
 function unlockAction(){
 	var unlockp = $("#lockPassField").val();
+	$('#unlock_dialog').fadeOut(100);
 	loading_run();
 	$.ajax({
 		url: "./ajax/login_hidden.php",
@@ -203,7 +204,6 @@ function unlockAction(){
 			displayFolders();
 			displayTags();
 			reloadPosts();
-			$('#unlock_dialog').fadeOut(100);
 			if (result.unlocked=="true"){
 				$('#unlockButton').addClass("highlight-color");
 			} else {

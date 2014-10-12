@@ -22,10 +22,11 @@ function loadFolders(){
 			tags = result.tags;
 			load(folders);
 			loadTags(tags);
-			loading_stop();
 		},
 		error: function (request, status, error){
 			showMessage("Error "+request.status+": "+request.statusText);
+		},
+		complete: function(){
 			loading_stop();
 		}
 	});
@@ -41,10 +42,11 @@ function cleanAll(){
 		dataType : "json",
 		success: function(result){
 			showMessage("Cleaned "+result.postsDeleted+" posts",true);
-			loadFolders();
 		},
 		error: function (request, status, error){
 			showMessage("Error "+request.status+": "+request.statusText);
+		},
+		complete: function(){
 			loading_stop();
 		}
 	});
@@ -71,11 +73,12 @@ function cleanFeed(){
 			folder.unread = result.folderUnread;
 			folder.count = result.folderCount;
 			load(folders);
-			loading_stop();
 			showMessage("Cleaned "+cleaned+" posts",true);
 		},
 		error: function (request, status, error){
 			showMessage("Error "+request.status+": "+request.statusText);
+		},
+		complete: function(){
 			loading_stop();
 		}
 	});
@@ -102,11 +105,12 @@ function editFeed(){
 			folders[prevIdxFolder].feeds.sort(nameSort);
 
 			load(folders);
-			loading_stop();
 			showMessage("Feed edited correctly",true);
 		},
 		error: function (request, status, error){
 			showMessage("Error "+request.status+": "+request.statusText);
+		},
+		complete: function(){
 			loading_stop();
 		}
 	});
@@ -129,11 +133,12 @@ function editFolder(){
 			folders.sort(nameSort);
 
 			load(folders);
-			loading_stop();
 			showMessage("Folder edited correctly",true);
 		},
 		error: function (request, status, error){
 			showMessage("Error "+request.status+": "+request.statusText);
+		},
+		complete: function(){
 			loading_stop();
 		}
 	});
@@ -157,11 +162,12 @@ function editTag(){
 			tags.sort(nameSort);
 
 			loadTags(tags);
-			loading_stop();
 			showMessage("Tag edited correctly",true);
 		},
 		error: function (request, status, error){
 			showMessage("Error "+request.status+": "+request.statusText);
+		},
+		complete: function(){
 			loading_stop();
 		}
 	});
@@ -181,11 +187,12 @@ function cleanFolder(){
 			var cleaned = folders[prevIdxFolder].count-result.count;
 			folders[prevIdxFolder] = result;
 			load(folders);
-			loading_stop();
 			showMessage("Cleaned "+cleaned+" posts",true);
 		},
 		error: function (request, status, error){
 			showMessage("Error "+request.status+": "+request.statusText);
+		},
+		complete: function(){
 			loading_stop();
 		}
 	});
@@ -206,7 +213,6 @@ function addFeed(){
 			folders[prevIdxFolder].feeds.push(result);
 			folders[prevIdxFolder].feeds.sort(nameSort);
 			load(folders);
-			loading_stop();
 			closeDialogs();
 			showMessage("Feed added correctly",true);
 		},
@@ -214,6 +220,8 @@ function addFeed(){
 			showMessage("Error "+request.status+": "+request.statusText);
 			if (request.status<=500)
 				closeDialogs();
+		},
+		complete: function(){
 			loading_stop();
 		}
 	});
@@ -234,13 +242,14 @@ function deleteFeed(){
 			if (result == "oK"){
 				folders[prevIdxFolder].feeds.splice(prevIdxFeed,1);
 				load(folders);
-				loading_stop();
 				showMessage("Feed deleted correctly",true);
 			} else
 				showMessage(result);
 		},
 		error: function (request, status, error){
 			showMessage("Error "+request.status+": "+request.statusText);
+		},
+		complete: function(){
 			loading_stop();
 		}
 	});
@@ -262,13 +271,14 @@ function deleteFolder(){
 			if (result == "oK"){
 				folders.splice(prevIdxFolder,1);
 				load(folders);
-				loading_stop();
 				showMessage("Folder deleted correctly",true);
 			} else
 				showMessage(result);
 		},
 		error: function (request, status, error){
 			showMessage("Error "+request.status+": "+request.statusText);
+		},
+		complete: function(){
 			loading_stop();
 		}
 	});
@@ -291,13 +301,14 @@ function deleteTag(){
 			if (result == "oK"){
 				tags.splice(prevIdxTag,1);
 				loadTags(tags);
-				loading_stop();
 				showMessage("Tag deleted correctly",true);
 			} else
 				showMessage(result);
 		},
 		error: function (request, status, error){
 			showMessage("Error "+request.status+": "+request.statusText);
+		},
+		complete: function(){
 			loading_stop();
 		}
 	});
@@ -319,7 +330,6 @@ function addFolder(){
 			folders.sort(nameSort);
 
 			load(folders);
-			loading_stop();
 			closeDialogs();
 			showMessage("Folder added correctly",true);
 		},
@@ -327,6 +337,8 @@ function addFolder(){
 			showMessage("Error "+request.status+": "+request.statusText);
 			if (request.status<=500) 
 				closeDialogs();
+		},
+		complete: function(){
 			loading_stop();
 		}
 	});

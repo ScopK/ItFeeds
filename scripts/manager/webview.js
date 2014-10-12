@@ -10,7 +10,6 @@ $(document).ready(function(){
 	$("button.deleteFolder").click(deleteFolder);
 	$("button.editTag").click(editTag);
 	$("button.deleteTag").click(deleteTag);
-	$("button.unlockHidden").click(unlockHidden);
 
 	$("button#folderConfig").click(showCleanFolder);
 	$("button#folderDelete").click(showDeleteFolder);
@@ -313,7 +312,7 @@ function closeDialogs(){
 	$(".inside_dialog").removeClass("active");
 }
 
-/** LOADING ANIMATIONS CONTROL **/
+/** LOADING ANIMATIONS CONTROL **//*
 function loading_stop() {
     $(".loading").css("animation-play-state","paused");
     $("#loading_panel").fadeOut();
@@ -329,4 +328,4 @@ function loading_toggle(){
     var status = $("#smallBall").css("animation-play-state");
     if (status == "paused") loading_run();
     else                    loading_stop();
-}
+}*/

@@ -82,6 +82,7 @@ function initialize(){
 		},
 		complete: function(){
 			$("#page").show();
+			loading_stop();
 		}
 	});
 }
