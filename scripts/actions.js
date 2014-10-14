@@ -125,6 +125,11 @@ function showLockPasswordChangeDialog(){
 
 function showUnlockDialog(){
 	$('#settings_panel').addClass('hidden');
+	if ($('#unlockButton').hasClass("highlight-color")){
+		$("#lockPassField").val("");
+		unlockAction();
+		return;
+	}
 	$('#unlock_dialog').fadeIn(100);
 	$('#lockPassField').val("").focus();
 }
