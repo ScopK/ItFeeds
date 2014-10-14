@@ -21,15 +21,6 @@ $(document).ready(function(){
 	});
 	$("#load_more_panel").css("height",$(window).height()-60);
 
-	//################# Middle click on button will open new page
-	$("button").mousedown(function(e){
-		if (e.button == 1){
-			window.open(window.location.pathname+window.location.search, '_blank', '');
-			return true; // to allow the browser to know that we handled it.
-		}
-	});
-
-
 	//################# Auto position post controls
 	$(document).scroll(situatePostControls);
 
