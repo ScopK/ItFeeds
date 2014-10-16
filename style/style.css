@@ -140,7 +140,7 @@ button::-moz-focus-inner {
 	overflow-y: auto;
 	padding-top: 10px;
 	top:50px; bottom: 50px;
-	left: 10px; right:10px;
+	left: 10px; padding-right:10px;
 }
 
 
