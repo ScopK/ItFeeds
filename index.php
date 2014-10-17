@@ -49,8 +49,8 @@
                         <button class="button-panel" onclick="showPasswordChangeDialog();return false">Change password</button>
                         <button class="button-panel" onclick="logout()">Logout</button>
                     </div>
-                    <button class="button-panel <?php echo ($hid_user)?"highlight-color":"";?> lock-icon" id="unlockButton" style="width:40px;float:right" onclick="showUnlockDialog();return false">&nbsp;</button>
-                    <button class="button-panel" style="width:256px;text-align:left" onclick="showLockPasswordChangeDialog();return false">Change Lock Password</button>
+                    <button class="button-panel <?php echo ($hid_user)?"highlight-color":"";?> lock-icon" id="unlockButton" style="width:14.5%;float:right" onclick="showUnlockDialog();return false">&nbsp;</button>
+                    <button class="button-panel" style="width:85%;text-align:left" onclick="showLockPasswordChangeDialog();return false">Change Lock Password</button>
                     <a class="button-panel" id="managerLink" style="display:block" href="./manager.php">Advanced Manager</a>
                     <div id="footer" style="position:absolute;bottom:10px;right:10px">
                         <p>Sc-pyK</p>
