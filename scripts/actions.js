@@ -229,12 +229,14 @@ function hideLateralMenu(){
     $("#lateral_menu").addClass("hidden");
 	$("#content").css("margin-left","0");
 	$('#settings_panel').addClass('hidden');
+	setCookie("fullscreen","1",1);
 }
 
 function showLateralMenu(){
 	$("#show-lateral-button").html("&lsaquo;");
 	$("#content").css("margin-left",$("#lateral_menu").outerWidth()+"px");
     $("#lateral_menu").removeClass("hidden");
+    deleteCookie("fullscreen");
 }
 
 function toggleLateralMenu(){
