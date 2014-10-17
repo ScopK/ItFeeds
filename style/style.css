@@ -480,6 +480,31 @@ button.lock-icon.highlight-color{
 	background-image: url("../imgs/unlocked.png");
 }
 
+#mouse_bottom button{
+	background-repeat: no-repeat;
+	background-position:center;
+}
+
+#mouse_bottom button.markunread{
+	background-image: url("../imgs/w_read.png");
+}
+
+#mouse_bottom button.markunread.colored{
+	background-image: url("../imgs/w_unread.png");
+}
+
+#mouse_bottom button.markfav{
+	background-image: url("../imgs/w_starOff.png");
+}
+
+#mouse_bottom button.markfav.colored{
+	background-image: url("../imgs/w_starOn.png");
+}
+
+#mouse_bottom button.addtag{
+	background-image: url("../imgs/w_addTag.png");
+}
+
 .post.minimized .tagList{
 	display:none;
 }

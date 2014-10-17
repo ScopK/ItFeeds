@@ -85,9 +85,9 @@
         <button id="show-lateral-button" class="mouse-button" style="font-size:20px" onclick="toggleLateralMenu()">&lsaquo;</button>
         <button id="mouse_nav" oncontextmenu="return false;"></button>
         <div id="mouse_bottom" style="display:none">
-            <button class="markunread mouse-button colored" onclick="toogleUnreadPost(true)">U</button>
-            <button class="markfav mouse-button" onclick="toogleFavPost(true)">F</button>
-            <button class="mouse-button" onclick="showAddTagsDialog();">T</button>
+            <button class="markunread mouse-button colored" onclick="toogleUnreadPost(true)"></button>
+            <button class="markfav mouse-button" onclick="toogleFavPost(true)"></button>
+            <button class="addtag mouse-button" onclick="showAddTagsDialog();"></button>
         </div>
 
         <div id="loading_panel" style="pointer-events:none;">
