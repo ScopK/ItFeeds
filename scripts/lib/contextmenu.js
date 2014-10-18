@@ -21,10 +21,13 @@
 	styl.innerHTML+="	background-color:#d1e2f2;\n";
 	styl.innerHTML+="	border-color: #78aee5;\n";
 	styl.innerHTML+="}\n";
+	styl.innerHTML+= "#contextual-menu hr{\n";
+	styl.innerHTML+="	border:solid #d7d7d7;\n";
+	styl.innerHTML+="	border-width:0 0 1px 0;\n";
+	styl.innerHTML+="	margin: 1px 1px 2px;\n";
+	styl.innerHTML+="}\n";
 	document.head.appendChild(styl);
 })();
-
-
 
 window.addEventListener("load", function() {
     var di = document.createElement('div');
@@ -42,6 +45,12 @@ function addCMContent(array){
 	var cm = document.getElementById("contextual-menu");
 
 	array.forEach(function(entry) {
+		if (entry.type=="separator"){
+			var hr = document.createElement('hr');
+			cm.appendChild(hr);
+			return;
+		}
+
 		var fun = function(){
 			document.getElementById("contextual-menu").style.visibility = "hidden";
 			if('context' in entry)

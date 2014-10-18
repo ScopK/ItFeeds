@@ -302,7 +302,7 @@ function cmTag(e,context){
 		context: context
 	}];
 	if ($(context).hasClass("public"))
-		arr.push({
+		arr.push({ type: "separator" },{
 			name: "Open with public tag viewer",
 			function: function(){
 				var id = $(this).attr("idtag");
@@ -326,7 +326,7 @@ function cmFeed(e,context){
 			openNewWindowFeed($(this).attr("idfeed"));
 		},
 		context: context
-	},{
+	},{ type: "separator" },{
 		name: "Open website",
 		function: function(){
 			var fo = $(this).attr("idxfolder");
