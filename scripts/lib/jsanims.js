@@ -9,7 +9,6 @@ function loading_stop() {
 	}
 }
 
-
 function loading_run() {
     $(".loading").css("animation-play-state","running");
     $("#loading_panel").show();
@@ -17,7 +16,11 @@ function loading_run() {
 }
 
 function loading_toggle(){
+    if (loading_check()) loading_stop();
+    else                    loading_run();
+}
+
+function loading_check(){
     var status = $("#smallBall").css("animation-play-state");
-    if (status == "paused") loading_run();
-    else                    loading_stop();
+    return status != "paused";
 }
