@@ -14,6 +14,7 @@ var get;
 readGetParameters();
 
 $(document).ready(function(){
+	$("#page").hide();
 	initialize();
 	//################# Blank space at the end of page
 	$(window).resize(function(){
@@ -39,7 +40,25 @@ $(document).ready(function(){
 	if (getCookie("fullscreen")=='1'){
 		hideLateralMenu();
 	}
+
+//checkout
+	var idleTime = 0;
+	var reloadTime = 0;
+    $(document).mousemove(function(e){ idleTime = 0; });
+    $(document).click(function(e){ idleTime = 0; });
+    $(document).keypress(function(e){ idleTime = 0; });
+
+	setInterval(function(){
+		idleTime++;
+		reloadTime++;
+		if (reloadTime >= 4){ //2 minutes
+			initialize(postIdxSelected==0 && idleTime>=4);
+			reloadTime=0;
+			idleTime=0;
+		}
+	},30000);
 });
+
 
 function situatePostControls(){
 	var pos = $(document).scrollTop();
@@ -57,8 +76,8 @@ function situatePostControls(){
 	});
 }
 
-function initialize(){
-	$("#page").hide();
+function initialize(reload){
+	if (reload==undefined) reload = true;
 	loading_run();
 	$.ajax({
 		url: "./ajax/get_user_info.php",
@@ -69,8 +88,8 @@ function initialize(){
 			tags = result.tags;
 			displayFolders();
 			displayTags();
-
-			reloadPosts();
+			if (reload)
+				reloadPosts();
 		},
 		error: function (request, status, error){
 			showMessage("Couldn't get user info<br/>Error "+request.status+": "+request.responseText);

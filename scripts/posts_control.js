@@ -65,6 +65,7 @@ $(document).ready(function(){
 		    	}
 		    	break;
 		    case 116: //f5
+		    	$("#page").hide();
 		    	initialize();
 		    	//randomColors();
 		    	return false;
