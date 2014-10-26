@@ -62,12 +62,14 @@ button::-moz-focus-inner {
 	color:white;
 	padding:5px 10px;
 	overflow-y:auto;
-	transition: padding 0.2s, opacity 0.3s, visibility 0.3s;
+	transition: padding 0.2s, opacity 0.3s, visibility 0.3s, top 0.3s;
 }
 
 #settings_panel.hidden{
 	transition-delay: 0s, 0s, 0.3s;
-	padding-top:0;
+	padding-top:0px;
+	top:-5px;
+	padding-bottom:30px;
 	opacity:0;
 	visibility:hidden;
 	pointer-events:none;
