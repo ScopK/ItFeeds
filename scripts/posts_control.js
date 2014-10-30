@@ -41,8 +41,23 @@ $(document).ready(function(){
 		    	toggleLateralMenu();
 		    	break;
 		    case 71: //g
-		    	$(".post").not(".selected").addClass("minimized");
-				focusPost($(".post[idxpost='"+postIdxSelected+"']"),100);
+		    	var compactedmode = getCookie("compactedmode");
+		    	compactedmode++;
+		    	switch(compactedmode){
+		    		case 1: 
+		    			showPopMessage("Compacted Mode"); 
+				    	$(".post").not(".selected").addClass("minimized");
+		    			break;
+		    		case 2: 
+		    			//showPopMessage("Extra Mode"); break;
+		    		case 3: 
+		    			showPopMessage("Normal Mode"); compactedmode=0;
+		    			$(".post").removeClass("minimized");
+		    			break;
+		    	}
+				setCookie("compactedmode",compactedmode,3);
+		    	if (postIdxSelected>0)
+					focusPost($(".post[idxpost='"+postIdxSelected+"']"),100);
 		    	return false;
 		    case 76: //l
 				loadMore();

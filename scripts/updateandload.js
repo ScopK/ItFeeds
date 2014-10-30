@@ -230,8 +230,8 @@ function getHTMLPost(post,indexPost){
 
 	var unreadl=(post.unread==1)? "unread":"";
 	var favoritel=(post.favorite==1)? "favorite":"";
-
-	html ='<div class="post '+unreadl+' '+favoritel+'" idxpost="'+indexPost+'">';
+	var compactedl=(getCookie("compactedmode")==1)? "minimized":"";
+	html ='<div class="post '+unreadl+' '+favoritel+' '+compactedl+'" idxpost="'+indexPost+'">';
 	html += '<div class="header">'+
 				'<div class="title"><a target="_blank" href="'+post.link+'">'+post.title+'</a></div>'+subtitle+
 			'</div>';
