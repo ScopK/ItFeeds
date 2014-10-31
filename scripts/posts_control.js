@@ -134,6 +134,8 @@ function nextPost(){
 function prevPost(){
 	if (postIdxSelected > 1){
 		var idx = postIdxSelected;
+		if (getCookie("compactedmode")==1)
+			$(".post[idxpost='"+postIdxSelected+"']").addClass("minimized");
 		selectPost(--idx);
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,100);
