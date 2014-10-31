@@ -1,7 +1,25 @@
-body,button,input{
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:600);
+@import url(http://fonts.googleapis.com/css?family=Montserrat);
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans:700);
+@import url(http://fonts.googleapis.com/css?family=Quattrocento+Sans);
+
+body:not(.description){
+	font-family: "Quattrocento Sans",Tahoma, Geneva,sans-serif;
+}
+.description{
     /*font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;*/
 	font-family: Tahoma, Geneva,sans-serif;
 }
+.button-panel, .folder{
+	font-family: "Noto Sans",Tahoma, Geneva,sans-serif;
+}
+button,input,.feed,.tag{
+	font-family: "Open Sans",Tahoma, Geneva,sans-serif;
+}
+#loadMoreLabel{
+	font-family: "Montserrat",Tahoma, Geneva,sans-serif;
+}
+
 th{
 	font-size: 14px;
 }
@@ -378,6 +396,7 @@ POSTS
 	top: 4px;
 	left:15px; right: 110px;
 	overflow:hidden;
+	font-size:14px;
 }
 
 .post .subtitle{
@@ -385,14 +404,17 @@ POSTS
 	top: 22px;
 	left:15px; right: 300px;
 	overflow:hidden;
-	font-size: 9px;
+	font-size: 11px;
 }
 
 .post .header a{
 	color: #333;
-	font-weight: bold;
 	text-decoration: none;
 	white-space: nowrap;
+}
+
+.post .header .title a{
+	font-weight: bold;
 }
 
 .post .header a:hover{
@@ -402,7 +424,6 @@ POSTS
 
 .post .header .subtitle{
 	color: #555;
-	font-weight: bold;
 	text-decoration: none;
 	white-space: nowrap;
 }
@@ -781,7 +802,3 @@ div.tagname button{
 	background-repeat: no-repeat;
 	background-position: center center;
 }
-
-
-
-
