@@ -617,8 +617,8 @@ Tags
 	color: rgba(0,0,0,0.4);
 }
 
-#add_tag_content, #search_content {
-	width: 340px;
+.dialog-dim {
+	width: 400px;
 	margin: auto;
 	background-color: #fff;
 	text-align:center;

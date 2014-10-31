@@ -96,7 +96,7 @@
         </div>
 
         <!-- DIALOGS -->
-        <div id="add_tag" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="add_tag_content">
+        <div id="add_tag" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="add_tag_content" class="dialog-dim">
             <form action="" method="POST">
                 <table><tr><th colspan="2">Add tag</th></tr>
                 <tr><td class="taglist" colspan="2"></td></tr>
@@ -109,7 +109,7 @@
             </form>
         </div></div></div>
 		
-        <div id="search_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="search_content">
+        <div id="search_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="search_content" class="dialog-dim">
             <form action="" method="POST">
                 <table><tr><th colspan="2">Search</th></tr>
                 <tr><td><input id="searchField" type="text" name="newtagname" autocomplete="off" /></td></tr>
@@ -121,7 +121,7 @@
             </form>
         </div></div></div>
 
-        <div id="pwchange_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="search_content">
+        <div id="pwchange_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="pwd_change_content" class="dialog-dim">
             <form action="" method="POST">
                 <table class="slim"><tr><th colspan="2">Change account password</th>
                 </tr><tr>
@@ -142,7 +142,7 @@
             </form>
         </div></div></div>
 
-        <div id="pwlchange_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="search_content">
+        <div id="pwlchange_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="pwdlock_change_content" class="dialog-dim">
             <form action="" method="POST">
                 <table class="slim"><tr><th colspan="2">Change lock password</th>
                 </tr><tr>
@@ -163,7 +163,7 @@
             </form>
         </div></div></div>
 
-        <div id="unlock_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="search_content">
+        <div id="unlock_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="unlock_content" class="dialog-dim">
             <form action="" method="POST">
                 <table class="slim"><tr><th colspan="2">Unlock content</th>
                 </tr><tr>
