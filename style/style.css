@@ -217,6 +217,10 @@ LATERAL MENU FOLDER STYLES
 	border-radius: 3px;
 }
 
+.tag.public{
+	color:#85b32b;
+}
+
 .feed.unread{
 	font-weight:bold;
 }
