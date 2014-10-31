@@ -1,13 +1,13 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:600);
 @import url(http://fonts.googleapis.com/css?family=Montserrat);
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans:700);
-@import url(http://fonts.googleapis.com/css?family=Quattrocento+Sans);
+@import url(http://fonts.googleapis.com/css?family=Roboto:300);
 
 body:not(.description),button,input,.feed,.tag{
 	font-family: "Open Sans",Tahoma, Geneva,sans-serif;
 }
 .header{
-	font-family: "Quattrocento Sans",Tahoma, Geneva,sans-serif;
+	font-family: "Roboto",Tahoma, Geneva,sans-serif;
 }
 .description{
 	font-family: Tahoma, Geneva,sans-serif;
@@ -395,18 +395,18 @@ POSTS
 
 .post .title{
 	position:absolute;
-	top: 4px;
+	top: 1px;
 	left:15px; right: 110px;
 	overflow:hidden;
-	font-size:14px;
+	font-size:13.4px;
 }
 
 .post .subtitle{
 	position:absolute;
-	top: 22px;
+	top: 20px;
 	left:15px; right: 300px;
 	overflow:hidden;
-	font-size: 11px;
+	font-size: 10.5px;
 }
 
 .post .header a{
