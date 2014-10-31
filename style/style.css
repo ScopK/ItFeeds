@@ -3,18 +3,17 @@
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans:700);
 @import url(http://fonts.googleapis.com/css?family=Quattrocento+Sans);
 
-body:not(.description){
+body:not(.description),button,input,.feed,.tag{
+	font-family: "Open Sans",Tahoma, Geneva,sans-serif;
+}
+.header{
 	font-family: "Quattrocento Sans",Tahoma, Geneva,sans-serif;
 }
 .description{
-    /*font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;*/
 	font-family: Tahoma, Geneva,sans-serif;
 }
-.button-panel, .folder{
+.options_panel .button-panel, .folder{
 	font-family: "Noto Sans",Tahoma, Geneva,sans-serif;
-}
-button,input,.feed,.tag{
-	font-family: "Open Sans",Tahoma, Geneva,sans-serif;
 }
 #loadMoreLabel{
 	font-family: "Montserrat",Tahoma, Geneva,sans-serif;
