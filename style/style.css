@@ -155,11 +155,11 @@ button::-moz-focus-inner {
 	padding: 10px 0;
 }
 
-
 #navigation_panel{
 	position:absolute;
 	overflow-y: auto;
 	padding-top: 10px;
+	width:300px;
 	top:50px; bottom: 50px;
 	left: 10px; padding-right:10px;
 }
@@ -354,6 +354,9 @@ LATERAL MENU FOLDER STYLES
 
 #settings_panel button,#settings_panel a{
 	margin:2px 0;
+}
+#settings_panel a{
+	padding-left:7px;
 }
 
 #settings_panel .highlight-color{
@@ -592,12 +595,13 @@ Tags
 }
 
 #add_tag_content .taglist{
-	padding: 10px;
+	padding: 10px 10px 0;
 }
 
 #add_tag_content .taglist p{
 	display: inline-block;
-	padding: 0px 3px;
+	padding: 2px 5px;
+	border-radius: 5px;
 	margin: 0 1px 1px 0;
 }
 
