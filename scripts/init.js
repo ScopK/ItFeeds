@@ -40,6 +40,9 @@ $(document).ready(function(){
 	if (getCookie("fullscreen")=='1'){
 		hideLateralMenu();
 	}
+	if ((compactedmode=getCookie("compactedmode"))!==""){
+		$("#posts_mode").val(compactedmode);
+	}
 
 //checkout
 	var idleTime = 0;

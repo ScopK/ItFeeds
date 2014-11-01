@@ -134,3 +134,47 @@ function updateNavigationElements(){
 	if (get.search) $("#searchButton").addClass("marked");
 	else		    $("#searchButton").removeClass("marked");
 }
+
+function change_postsmode(val,msg){
+	if (msg==undefined) msg=true;
+	if (val==undefined){
+		var val = getCookie("compactedmode");
+		val++;
+		if (val==3) val=0;
+	}
+	val++;val--;
+	switch(val){
+		case 0:
+			if (msg) showPopMessage("Normal Mode: Previous posts are minimized");
+			if (postIdxSelected>0){
+				$(".post[idxpost='"+postIdxSelected+"']").prevAll("div.post").addClass("minimized");
+				$(".post[idxpost='"+(postIdxSelected-1)+"']").nextAll("div.post").removeClass("minimized");
+			} else {
+				$(".post").removeClass("minimized");
+			}
+			break;
+		case 1: 
+			if (msg) showPopMessage("Minimized Mode: All unselected posts are minimized"); 
+	    	$(".post").not(".selected").addClass("minimized");
+	    	$(".post.selected").removeClass("minimized");
+			break;
+		case 2:
+			if (msg) showPopMessage("Never minimize"); 
+	    	$(".post").removeClass("minimized");
+			break;
+	}
+	setCookie("compactedmode",val,3);
+	$("#posts_mode").val(val);
+	if (postIdxSelected>0)
+		focusPost($(".post[idxpost='"+postIdxSelected+"']"),100);
+}
+
+function change_autoreadmode(val,msg){
+	if (msg==undefined) msg=true;
+	if (val==undefined){
+		var val = getCookie("compactedmode");
+		val++;
+		if (val==3) val=0;
+	}
+	alert(val);
+}

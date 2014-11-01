@@ -44,14 +44,33 @@
             <div id="lateral_menu">
                 <div id="settings_panel" class="hidden">
                     <button class="button-panel" style="position:absolute;top:0;right:0;width:35px;margin:10px" onclick="$('#settings_panel').addClass('hidden')">X</button>
-                    <div id="user-box" style="border:dotted #666;border-width:0 0 1px;padding-bottom:10px;margin-bottom:10px">
-                        <p style="margin-left:6px"><b>Logged as <?=$log_user?></b></p>
-                        <button class="button-panel" onclick="showPasswordChangeDialog();return false">Change password</button>
-                        <button class="button-panel" onclick="logout()">Logout</button>
-                    </div>
-                    <button class="button-panel <?php echo ($hid_user)?"highlight-color":"";?> lock-icon" id="unlockButton" style="width:14.5%;float:right" onclick="showUnlockDialog();return false">&nbsp;</button>
-                    <button class="button-panel" style="width:85%;text-align:left" onclick="showLockPasswordChangeDialog();return false">Change Lock Password</button>
-                    <a class="button-panel" id="managerLink" style="display:block" href="./manager.php">Advanced Manager</a>
+
+                    <p style="margin-left:6px"><b>Logged as <?=$log_user?></b></p>
+                    <a class="button-panel" id="managerLink" href="./manager.php">Advanced Manager</a>
+                    <button class="button-panel <?php echo ($hid_user)?"highlight-color":"";?> lock-icon" id="unlockButton" style="width:14.5%" onclick="showUnlockDialog();return false">&nbsp;</button>
+                    <button class="button-panel" style="float:right" onclick="logout()">Logout</button>
+                    <hr/>
+
+                    <table style="width:100%;margin:10px 5px 5px;border-collapse:collapse"><tr>
+                        <td>Posts mode</td>
+                        <td><select id="posts_mode" style="width:90%" class="select-panel" onchange="change_postsmode(this.value,false)">
+                            <option value="0">Normal Mode</option>
+                            <option value="1">Minimized Mode</option>
+                            <option value="2">Never minimize</option>
+                        </select></td>
+                        <td style="color:#666;margin-left:5px">Key 'G'</td>
+                    </tr><tr>
+                        <td>Auto mark read</td>
+                        <td><select id="autoread_mode" style="width:90%" class="select-panel" onchange="change_autoreadmode(this.value,false)">
+                            <option value="0">On select post</option>
+                            <option value="1">On scroll</option>
+                            <option value="2">Never</option>
+                        </select></td>
+                        <td style="color:#666;margin-left:5px"><!--Key ''--></td>
+                    </tr></table>
+                    
+                    <button class="button-panel" style="text-align:left;width:100%" onclick="showPasswordChangeDialog();return false">Change password</button>
+                    <button class="button-panel" style="text-align:left;width:100%" onclick="showLockPasswordChangeDialog();return false">Change Lock Password</button>
                     <div id="footer" style="position:absolute;bottom:10px;right:10px">
                         <p>Sc-pyK</p>
                     </div>

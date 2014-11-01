@@ -41,23 +41,7 @@ $(document).ready(function(){
 		    	toggleLateralMenu();
 		    	break;
 		    case 71: //g
-		    	var compactedmode = getCookie("compactedmode");
-		    	compactedmode++;
-		    	switch(compactedmode){
-		    		case 1: 
-		    			showPopMessage("Compacted Mode"); 
-				    	$(".post").not(".selected").addClass("minimized");
-		    			break;
-		    		case 2: 
-		    			//showPopMessage("Extra Mode"); break;
-		    		case 3: 
-		    			showPopMessage("Normal Mode"); compactedmode=0;
-		    			$(".post").removeClass("minimized");
-		    			break;
-		    	}
-				setCookie("compactedmode",compactedmode,3);
-		    	if (postIdxSelected>0)
-					focusPost($(".post[idxpost='"+postIdxSelected+"']"),100);
+		    	change_postsmode();
 		    	return false;
 		    case 76: //l
 				loadMore();
@@ -125,7 +109,8 @@ function nextPost(){
 	if (postIdxSelected < posts.length){
 		var idx = postIdxSelected;
 		selectPost(++idx);
-		$(".post[idxpost='"+postIdxSelected+"']").prevAll("div.post").addClass("minimized");
+		if (getCookie("compactedmode")!=2)
+			$(".post[idxpost='"+postIdxSelected+"']").prevAll("div.post").addClass("minimized");
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,100);
 	}

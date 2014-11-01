@@ -1,9 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:600);
 @import url(http://fonts.googleapis.com/css?family=Montserrat);
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans:700);
-@import url(http://fonts.googleapis.com/css?family=Roboto:300);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400);
 
-body:not(.description),button,input,.feed,.tag{
+body:not(.description),button,input,select,.feed,.tag{
 	font-family: "Open Sans",Tahoma, Geneva,sans-serif;
 }
 .header{
@@ -80,6 +80,13 @@ button::-moz-focus-inner {
 	padding:5px 10px;
 	overflow-y:auto;
 	transition: padding 0.2s, opacity 0.3s, visibility 0.3s, top 0.3s;
+}
+
+#settings_panel hr{
+	border: dotted #666;
+	border-width: 0 0 1px;
+	height:1px;
+	margin:10px 0;
 }
 
 #settings_panel.hidden{
@@ -292,6 +299,19 @@ LATERAL MENU FOLDER STYLES
 	border-color: #ddd;
 }
 
+.select-panel{
+	background-color: #555;
+	color: white;
+	border: 0;
+	padding: 2px 4px;
+	text-decoration: none;
+	font-size: 12px;
+	border-radius:2px;
+}
+.select-panel:hover{
+	background-color: #404040;
+}
+
 .button-panel{
 	background-color: #555;
 	padding: 5px;
@@ -402,7 +422,7 @@ POSTS
 	top: 1px;
 	left:15px; right: 110px;
 	overflow:hidden;
-	font-size:13.4px;
+	font-size:14px;
 }
 
 .post .subtitle{
