@@ -1,7 +1,7 @@
 (function() {
 	var styl = document.createElement('style');
 	styl.innerHTML= ".message_sys{\n";
-	styl.innerHTML+="	font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;\n";
+	styl.innerHTML+="	font-family:'Noto Sans','Lucida Sans Unicode', 'Lucida Grande', sans-serif;\n";
 	styl.innerHTML+="}\n";
 	styl.innerHTML+="#top_message{\n";
 	styl.innerHTML+="	z-index:3;\n";
