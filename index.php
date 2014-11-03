@@ -54,9 +54,9 @@
                     <table style="width:100%;margin:10px 5px 5px;border-collapse:collapse"><tr>
                         <td>Posts mode</td>
                         <td><select id="posts_mode" style="width:90%" class="select-panel" onchange="change_postsmode(this.value,false)">
-                            <option value="0">Normal Mode</option>
-                            <option value="1">Minimized Mode</option>
-                            <option value="2">Never minimize</option>
+                            <option value="0" title="Previous posts are minimized">Normal Mode</option>
+                            <option value="1" title="All unselected posts are minimized">Minimized Mode</option>
+                            <option value="2" title="Nothing is minimized">Never minimize</option>
                         </select></td>
                         <td style="color:#666;margin-left:5px">Key 'G'</td>
                     </tr><tr>
