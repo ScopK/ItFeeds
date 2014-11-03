@@ -431,11 +431,15 @@ POSTS
 }
 
 .post .header{
-	position:relative;
 	border: solid transparent;
-	border-width: 1px 0 2px;
-	height: 38px;
+	border-width: 0px 0 2px;
+	height: 39px;
 	background-color: rgba(60,60,60,0.2);
+
+	width:100vw;
+	display: table-cell;
+	vertical-align: middle;
+	padding-left:15px;
 }
 
 .post.selected .header{
@@ -446,18 +450,16 @@ POSTS
 	background-color: #E2F875;
 }
 
+.header-content{
+	
+}
+
 .post .title{
-	position:absolute;
-	top: 1px;
-	left:15px; right: 110px;
 	overflow:hidden;
 	font-size:14px;
 }
 
 .post .subtitle{
-	position:absolute;
-	top: 20px;
-	left:15px; right: 300px;
 	overflow:hidden;
 	font-size: 10.5px;
 }
