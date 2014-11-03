@@ -1,7 +1,36 @@
+/* FONTS */
+
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:600);
 @import url(http://fonts.googleapis.com/css?family=Montserrat);
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans:700);
 @import url(http://fonts.googleapis.com/css?family=Roboto:400);
+/*
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(fonts/opensans.woff) format('woff');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Montserrat-Regular'), url(fonts/montserrat.woff) format('woff');
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Noto Sans Bold'), local('NotoSans-Bold'), url(fonts/notosans.woff) format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Regular'), local('Roboto-Regular'), url(fonts/roboto.woff) format('woff');
+}*/
+/* END FONTS */
+
 
 body:not(.description),button,input,select,.feed,.tag{
 	font-family: "Open Sans",Tahoma, Geneva,sans-serif;
