@@ -432,8 +432,8 @@ POSTS
 
 .post .header{
 	border: solid transparent;
-	border-width: 0px 0 2px;
-	height: 39px;
+	border-width: 1px 0 2px;
+	height: 38px;
 	background-color: rgba(60,60,60,0.2);
 
 	width:100vw;
@@ -448,10 +448,6 @@ POSTS
 
 .post.unread .header{
 	background-color: #E2F875;
-}
-
-.header-content{
-	
 }
 
 .post .title{
@@ -777,9 +773,8 @@ div.tagname button{
 }
 
 .post.minimized .header{
-	border-color: rgba(0,0,0,0.5);
-	border-width: 0 0 1px;
-	border-style:dotted;
+	border-bottom:1px dotted rgba(0,0,0,0.5);
+	border-top:1px solid transparent;
 }
 
 #mouse_nav{
