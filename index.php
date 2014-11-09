@@ -62,9 +62,9 @@
                     </tr><tr>
                         <td>Auto mark read</td>
                         <td><select id="autoread_mode" style="width:90%" class="select-panel" onchange="change_autoreadmode(this.value,false)">
-                            <option value="0">On select post</option>
-                            <option value="1">On scroll</option>
-                            <option value="2">Never</option>
+                            <option value="0" title="Mark read when selecting a post">On select post</option>
+                            <option value="1" title="Mark as read while scrolling">On scroll</option>
+                            <option value="2" title="Don't mark as read automatically">Never</option>
                         </select></td>
                         <td style="color:#666;margin-left:5px"><!--Key ''--></td>
                     </tr></table>

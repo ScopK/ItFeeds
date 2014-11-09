@@ -43,6 +43,9 @@ $(document).ready(function(){
 	if ((compactedmode=getCookie("compactedmode"))!==""){
 		$("#posts_mode").val(compactedmode);
 	}
+	if ((autoreadmode=getCookie("autoreadmode"))!==""){
+		$("#autoread_mode").val(autoreadmode);
+	}
 
 //checkout
 	var idleTime = 0;

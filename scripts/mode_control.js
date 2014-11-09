@@ -172,9 +172,22 @@ function change_postsmode(val,msg){
 function change_autoreadmode(val,msg){
 	if (msg==undefined) msg=true;
 	if (val==undefined){
-		var val = getCookie("compactedmode");
+		var val = getCookie("autoreadmode");
 		val++;
 		if (val==3) val=0;
 	}
-	alert(val);
+	val++;val--;
+	switch(val){
+		case 0: // On select post
+			if (msg) showPopMessage("Normal Mode: Previous posts are minimized");
+			break;
+		case 1: // On scroll
+			if (msg) showPopMessage("Minimized Mode: All unselected posts are minimized"); 
+			break;
+		case 2: // Never
+			if (msg) showPopMessage("Never minimize"); 
+			break;
+	}
+	setCookie("autoreadmode",val,3);
+	$("#autoread_mode").val(val);
 }

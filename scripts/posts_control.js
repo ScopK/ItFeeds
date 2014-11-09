@@ -139,7 +139,7 @@ function selectPost(idx){
 	$(".post[idxpost='"+postIdxSelected+"']").addClass("selected");
 	$(".post[idxpost='"+postIdxSelected+"']").removeClass("minimized");
 
-	if (posts[idx-1].unread == 1)
+	if (posts[idx-1].unread == 1 && getCookie("autoreadmode") == 0)
 		markPost(0, 0, idx);
 
 	var postspage = (get.postspage)?get.postspage:10;
