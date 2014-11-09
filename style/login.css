@@ -1,9 +1,43 @@
+/* FONTS */
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:600);
+@import url(http://fonts.googleapis.com/css?family=Montserrat);
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans:700);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400);
+/*
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(fonts/opensans.woff) format('woff');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Montserrat-Regular'), url(fonts/montserrat.woff) format('woff');
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Noto Sans Bold'), local('NotoSans-Bold'), url(fonts/notosans.woff) format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Regular'), local('Roboto-Regular'), url(fonts/roboto.woff) format('woff');
+}*/
+/* END FONTS */
+
+
 body{
 	background-color:#444;
 }
 body, button, input{
 	/*font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;*/
-	font-family: "Nimbus Sans L",sans-serif,Tahoma, Geneva;
+	font-family: "Open Sans","Nimbus Sans L",sans-serif,Tahoma, Geneva;
 	margin:0;
 	overflow: hidden;
 }
@@ -47,35 +81,22 @@ body, button, input{
 #dialog table th , #r_dialog table th {
 	background-color: #000;
 	color: #fff;
-	font-weight: bold;
 	padding: 5px 0;
 }
 #dialog table td , #r_dialog table td {
 	margin:0;
 }
-h1,h2{
-	margin:0;
-}
-h1{
-    animation-name: goup;
-    animation-duration: .5s;
-    animation-direction: alternate;
-    animation-iteration-count: infinite;
-	animation-timing-function: linear;
-}
-@keyframes goup {
-    0%   {margin-bottom:-5px;}
-		50% {padding-top:1px;}
-    100% {margin-bottom:-10px;}
-}
-
 button::-moz-focus-inner { border:0; }
 button{
-	font-size: 15px;
+	font-size: small;
 	margin: 0 10px;
 	padding: 5px;
 	border-radius: 3px;
 	border: 1px solid #777;
+}
+th {
+	font-family: "Noto sans";
+	font-size:15px;
 }
 
 button:hover{ background-color: #eaeaea; }
@@ -96,3 +117,19 @@ input[type=password]:focus, input[type=text]:focus{
 
 
 
+h1,h2{
+	margin:0;
+}
+
+h1{
+    animation-name: goup;
+    animation-duration: .5s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+@keyframes goup {
+    0%   {margin-bottom:-5px;}
+		50% {padding-top:1px;}
+    100% {margin-bottom:-10px;}
+}
