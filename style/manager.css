@@ -1,9 +1,42 @@
-body,button,input{
-    /*font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;*/
-	font-family: sans-serif,Tahoma, Geneva;
+/* FONTS */
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:600);
+@import url(http://fonts.googleapis.com/css?family=Montserrat);
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans:700);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400);
+/*
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(fonts/opensans.woff) format('woff');
 }
-#extrabuttons a, #extrabuttons button, th{
-	font-family: Tahoma, Geneva, sans-serif;
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Montserrat-Regular'), url(fonts/montserrat.woff) format('woff');
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Noto Sans Bold'), local('NotoSans-Bold'), url(fonts/notosans.woff) format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Regular'), local('Roboto-Regular'), url(fonts/roboto.woff) format('woff');
+}*/
+/* END FONTS */
+
+body,button,input,.feed{
+    /*font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;*/
+	font-family: "Open Sans",sans-serif,Tahoma, Geneva;
+}
+#extrabuttons a, #extrabuttons button, th, h2{
+	font-family: "Noto Sans",Tahoma, Geneva, sans-serif;
 }
 th{
 	font-size: 14px;
@@ -44,35 +77,35 @@ button::-moz-focus-inner {
 }
 
 #extrabuttons button, #extrabuttons a{
-	font-size: 11.5px;
-	font-weight: bold;
+	font-size: 13px;
 	text-decoration: none;
 	display:block;
 
 	background-color: rgba(0,0,0,0.5);
 	color:white;
+	width:100px;
 
-	width: 110px;
-	text-align: right;
-	padding: 6px 6px 6px 12px;
-	margin: 2px 0 4px 4px;
+	text-align: left;
+	padding: 6px;
+	margin: 3px 0 3px 3px;
 
-	border: 2px solid #000;
+	border: 2px solid transparent;
+	border-radius: 3px;
 	transition: padding 0.2s;
 }
 
-#extrabuttons button{
-	width: 132px;
+#extrabuttons a{
+	width:84px;
 }
 
 #extrabuttons button:hover, #extrabuttons a:hover{
 	background-color: rgba(0,0,0,0.8);
-	padding: 6px 12px 6px 6px;
+	padding: 6px 6px 6px 12px;
 }
 
 #extrabuttons button:active, #extrabuttons a:active{
 	background-color: #000;
-	padding: 6px 18px 6px 0px;
+	padding: 6px 6px 6px 18px;
 }
 
 #content_folders, #content_tags{
@@ -105,26 +138,27 @@ button::-moz-focus-inner {
 }
 
 #header{
-	padding: 20px 30px;
 	background-color: rgba(0,0,0,0.5);
-	height: 22px;
-
-	cursor: pointer;
 	font-variant: small-caps;
-	transition: padding 0.3s, background-color 0.7s;
 }
 
-#header *{
-	height: 100%;
+.headermenu{
+	width:350px;
+	margin:0;
+	padding: 20px 0;
+	text-align:center;
+	display:inline-block;
+	color: white;
+	transition: background-color 0.7s;
 }
-
-#header:hover{
-	padding: 20px 20px 20px 40px;
-	background-color: rgba(0,0,0,0.8);
+.headermenu.selected{
+	background-color:rgba(50,50,50,0.9);
 }
-
-#header h2{
-	margin: 0; padding: 0; color: white;
+.headermenu:not(.selected){
+	cursor:pointer;
+}
+.headermenu:not(.selected):hover{
+	background-color:rgba(50,50,50,0.6);
 }
 
 /* folders */
@@ -200,7 +234,7 @@ p.disabled{
 .feed p{
 	font-size: 12.5px;
 	margin: 0 10px;
-	padding: 5px 10px;
+	padding: 4px 10px;
 }
 
 /* user dialog */

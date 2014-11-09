@@ -19,7 +19,7 @@ $(document).ready(function(){
 	$("button#tagConfig").click(showConfigTag);
 	$("button#tagDelete").click(showDeleteTag);
 
-	$("#content_folders #header").click(showAddFolder);
+	$("#newfolder_icon").click(showAddFolder);
 	$("button.addFolder").click(addFolder);
 
 	$("input[name='days'],input[name='unread']").on("focus",function(){

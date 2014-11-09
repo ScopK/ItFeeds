@@ -40,13 +40,13 @@
         <div id="content_folders">
             <div id="extrabuttons">
                 <a class="mainpageLink" href="./">Main page</a>
-                <button onclick="gotoTags()">Tags</button>
                 <button onclick="showCleanAll();">Clean All</button>
             </div>
             <div id="header">
-                <h2 id="titleuser" onclick=''>+ Folders</h2>
+                <h2 class="headermenu selected">Folders</h2>
+                <h2 class="headermenu" style="float:right" onclick='gotoTags()'>Tags</h2>
             </div>
-
+            <img id="newfolder_icon" style="margin-left:620px;top:80px;position:fixed;cursor:pointer" src="imgs/morefo.png"/>
             <div id="folder_list"></div>
 
             <div class="inside_dialog" id="clean_all"><div class="dialog_container">
@@ -203,10 +203,10 @@
         <div id="content_tags" class="disabled">
             <div id="extrabuttons">
                 <a class="mainpageLink" href="./">Main page</a>
-                <button onclick="gotoFolders()">Folders</button>
             </div>
             <div id="header">
-                <h2 id="titletags" onclick=''>+ Tags</h2>
+                <h2 class="headermenu" onclick='gotoFolders()'>Folders</h2>
+                <h2 class="headermenu selected" style="float:right">Tags</h2>
             </div>
 
             <div id="tag_list"></div>
