@@ -132,20 +132,16 @@ function loadTags(tags){
 
 function gotoTags(){
 	$("#content_folders").addClass("disabled");
-	$("#content_folders").delay(300).hide(0);
-	setTimeout( function() {
-		$("#content_tags").show(00);
-		$("#content_tags").removeClass("disabled");
-	}, 300);
+	$("#content_folders").hide();
+	$("#content_tags").show(0);
+	$("#content_tags").removeClass("disabled");
 }
 
 function gotoFolders(){
 	$("#content_tags").addClass("disabled");
-	$("#content_tags").delay(300).hide(0);
-	setTimeout( function() {
-		$("#content_folders").show(00);
-		$("#content_folders").removeClass("disabled");
-	}, 300);
+	$("#content_tags").hide();
+	$("#content_folders").show(0);
+	$("#content_folders").removeClass("disabled");
 }
 
 function showFolderTools(){
