@@ -1,4 +1,8 @@
 RewriteEngine on
 
+RedirectMatch 404 /\.git
+RedirectMatch 404 /func
+RedirectMatch 404 /MySQL
+
 RewriteRule (?i)(post|tag)\/(.*)\.(.*)	$2.$3
 RewriteRule (?i)(post|tag)\/([\w-]*)	$1.php?id=$2
