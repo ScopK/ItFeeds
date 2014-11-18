@@ -153,6 +153,8 @@ function ajaxPosts(args){
 				var html = getHTMLPost(this,postCount++);
 				var jhtml = $(html);
 				jhtml.find("script").remove();
+				//jhtml.find("iframe").prop("sandbox",true);
+				jhtml.find("video").prop("controls",true);
 				jhtml.find("a").attr("target","_blank");
 				$("#posts_panel").append(jhtml[0].outerHTML);
 				updateControlTags(postCount-1);
@@ -203,6 +205,8 @@ function ajaxMorePosts(args){
 				var html = getHTMLPost(this,postCount++);
 				var jhtml = $(html);
 				jhtml.find("script").remove();
+				//jhtml.find("iframe").prop("sandbox",true);
+				jhtml.find("video").prop("controls",true);
 				jhtml.find("a").attr("target","_blank");
 				$("#posts_panel").append(jhtml[0].outerHTML);
 				updateControlTags(postCount-1);
