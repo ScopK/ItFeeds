@@ -159,6 +159,7 @@ function editTag(){
 			var tag = tags[prevIdxTag];
 			tag['name'] = result['name'];
 			tag['hidden'] = result['hidden'];
+			tag['public'] = result['public'];
 			tags.sort(nameSort);
 
 			loadTags(tags);
