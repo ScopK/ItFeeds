@@ -1,4 +1,3 @@
-
 function displayFolders() {
 	var html = '';
 	var feedHtml = '';
@@ -16,8 +15,24 @@ function displayFolders() {
 		$(".feed[idFeed='"+get.feed+"']").closest(".folderfeeds").show();
 		$(".feed[idFeed='"+get.feed+"']").closest(".folder").find("button").html("-");
 	}
-
 	setFeedsActions();
+}
+
+function updateNewCounters() {
+	var html = '';
+	var feedHtml = '';
+	$.each(folders,function(index){
+		var folder = $(".folder[idxfolder='"+index+"']");
+		var field = folder.find(".folderTitle .count .num");
+		if (field[0] != undefined){
+			field.html(this.unread);
+			$.each(this.feeds,function(index){
+				var feed = this;
+				var field = folder.find(".feed[idxfeed='"+index+"'] .count .num");
+				field.html(this.unread);
+			});
+		}
+	});
 }
 
 function displayTags() {
