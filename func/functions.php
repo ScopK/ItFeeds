@@ -465,7 +465,7 @@
 
  	/**
 
-			GET POSTS FUNCTIONS
+			GET MORE POSTS FUNCTIONS
 
  	*/
 //CREATE TEMPORARY TABLE IF NOT EXISTS tt AS (SELECT (@cnt:=@cnt+1) AS idx, p.* FROM posts AS p CROSS JOIN (SELECT @cnt := 0) AS x ORDER BY p.date);
@@ -595,5 +595,40 @@
 		$count = $rows['c'];
 		mysqli_free_result($result);
 		return $count;
+	}
+
+ 	/**
+
+			API 1.0
+
+ 	*/
+
+	function getTokenUsername($token){
+		global $con;
+		$stmt=mysqli_stmt_init($con);
+		if (mysqli_stmt_prepare($stmt,"SELECT user FROM active_user WHERE token=?")){
+
+			mysqli_stmt_bind_param($stmt,"s", $token); // Bind parameters
+			mysqli_stmt_execute($stmt); // Execute query
+
+			mysqli_stmt_bind_result($stmt,$user); // Bind result variables
+			mysqli_stmt_fetch($stmt); // Fetch value
+		}
+		mysqli_stmt_close($stmt); // Close statement
+		return isset($user)? $user : false;
+	}
+
+	function getTokenLock($token,$lock){
+		global $con;
+		$stmt=mysqli_stmt_init($con);
+		if (mysqli_stmt_prepare($stmt,"SELECT count(*) FROM active_user WHERE token=? AND `lock`=?")){
+			mysqli_stmt_bind_param($stmt,"ss", $token, $lock); // Bind parameters
+			mysqli_stmt_execute($stmt); // Execute query
+
+			mysqli_stmt_bind_result($stmt,$count); // Bind result variables
+			mysqli_stmt_fetch($stmt); // Fetch value
+		}
+		mysqli_stmt_close($stmt); // Close statement
+		return isset($count)? ($count==1) : false;
 	}
 ?>
