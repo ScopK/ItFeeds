@@ -19,19 +19,24 @@ function displayFolders() {
 }
 
 function updateNewCounters() {
-	var html = '';
-	var feedHtml = '';
 	$.each(folders,function(index){
 		var folder = $(".folder[idxfolder='"+index+"']");
-		var field = folder.find(".folderTitle .count .num");
-		if (field[0] != undefined){
+		if (folder.length>0){
+			var folderCounter = folder.find(".folderTitle .count");
+			var field = folderCounter.find(".num");
 			field.html(this.unread);
-			$.each(this.feeds,function(index){
-				var feed = this;
-				var field = folder.find(".feed[idxfeed='"+index+"'] .count .num");
-				field.html(this.unread);
-			});
+			if (this.unread>0)	folderCounter.removeClass("hidden");
+			else				folderCounter.addClass("hidden");
+		} else {
+			folder = $("#feeds");
 		}
+		$.each(this.feeds,function(index){
+			var feedCounter = folder.find(".feed[idxfeed='"+index+"'] .count");
+			var field = feedCounter.find(".num");
+			field.html(this.unread);
+			if (this.unread>0)	feedCounter.removeClass("hidden");
+			else				feedCounter.addClass("hidden");
+		});
 	});
 }
 
