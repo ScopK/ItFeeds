@@ -1,21 +1,12 @@
 package com.scopyk.fydeph;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.scopyk.fydeph.data.Content;
+
 import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,9 +47,15 @@ public class MainActivity extends Activity implements APICallback {
     }
     
 	@Override
-	public void APIResponse(JSONObject json) {
-		// TODO Auto-generated method stub
+	public void APIResponse(JSONObject json) throws JSONException {
+		if (json.has("error")){
+			Toast.makeText(this.getApplicationContext(), R.string.unknown_user, 5).show();
+			return;
+		}
 		
+        Content.get().setToken(json.getString("token"));
+        Intent intentApp = new Intent(this, PostViewer.class);
+        startActivity(intentApp);
 	}
     
     @Override

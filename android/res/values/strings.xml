@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Fydeph</string>
+    <string name="app_viewer">All posts</string>
     <string name="empty_user">Username field can\'t be empty</string><string name="empty_pass">Password field can\'t be empty</string><string name="action_settings">Settings</string>
     <string name="greetings">Start using Fydeph</string>
     <string name="login">Login</string>
