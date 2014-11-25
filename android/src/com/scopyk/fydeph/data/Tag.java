@@ -2,7 +2,7 @@ package com.scopyk.fydeph.data;
 
 import java.util.ArrayList;
 
-public class Tag {
+public class Tag implements MenuLabel {
 	private String id;
 	private String name;
 	private ArrayList<Post> posts;
@@ -56,4 +56,9 @@ public class Tag {
 	public String getName() {
 		return name;
 	}
+	
+	@Override
+	public String getLabel() {
+		return this.name+" ("+this.count+")";
+	}	
 }

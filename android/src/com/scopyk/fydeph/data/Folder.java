@@ -2,7 +2,7 @@ package com.scopyk.fydeph.data;
 
 import java.util.ArrayList;
 
-public class Folder {
+public class Folder implements MenuLabel {
 	private String id;
 	private String name;
 	private ArrayList<Feed> feeds;
@@ -55,5 +55,13 @@ public class Folder {
 	}
 	public String getName(){
 		return this.name;
+	}
+
+	@Override
+	public String getLabel() {
+		if (this.unread > 0)
+			return this.name+" ("+this.unread+")";
+		else
+			return this.name;
 	}	
 }

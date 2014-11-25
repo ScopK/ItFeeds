@@ -1,5 +1,6 @@
 package com.scopyk.fydeph.data;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -72,4 +73,18 @@ public class Content {
 			this.tags.put(t.getString("id"),tag);
 		}
 	}
+
+	public HashMap<String, Folder> getFolders() {
+		return folders;
+	}
+
+	public HashMap<String, Tag> getTags() {
+		return tags;
+	}
+
+	public HashMap<String, Post> getPosts() {
+		return posts;
+	}
+	
+	
 }

@@ -21,16 +21,20 @@ public class APICall extends AsyncTask<String, Void, String> {
 	private final String APIROOT = "http://192.168.1.7:8082/api/1.0/";
     private Exception exception;
     private APICallback callback;
+    private int callId;
     
     public APICall(APICallback c){
     	super();
     	callback=c;
     }
 
-    protected String doInBackground(String... url) {
-        try {       	
+    protected String doInBackground(String... params) {
+        try {
+        	if (params.length>1)callId = Integer.parseInt(params[1]);
+        	else				callId = 0;
+        	
         	HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
-        	HttpGet httpget = new HttpGet(APIROOT+url[0]); // Set the action you want to do
+        	HttpGet httpget = new HttpGet(APIROOT+params[0]); // Set the action you want to do
         	HttpResponse response = httpclient.execute(httpget); // Executeit
         	HttpEntity entity = response.getEntity(); 
         	InputStream is = entity.getContent(); // Create an InputStream with the response
@@ -48,23 +52,10 @@ public class APICall extends AsyncTask<String, Void, String> {
         }
     }
 
-    protected void onPostExecute(String feed) {
+    protected void onPostExecute(String response) {
     	try {
-			JSONObject json = new JSONObject(feed);
-			callback.APIResponse(json);
-			/*
-			if (json.has("error")){
-				Toast.makeText(callback.getApplicationContext(), R.string.unknown_user, 5).show();
-				return;
-			}
-			switch(action){
-				case LOGIN:
-					Toast.makeText(callback.getApplicationContext(), (String)json.get("token"), 5).show();	
-					break;
-				default:break;
-			
-			}
-			*/
+			JSONObject json = new JSONObject(response);
+			callback.APIResponse(json,callId);
 		} catch (JSONException e) {
         	Toast.makeText(callback.getApplicationContext(), "JSON ERROR", 5).show();
 			e.printStackTrace();

@@ -1,8 +1,15 @@
-package com.scopyk.fydeph;
+package com.scopyk.fydeph.view;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.scopyk.fydeph.APICall;
+import com.scopyk.fydeph.APICallback;
+import com.scopyk.fydeph.R;
+import com.scopyk.fydeph.R.id;
+import com.scopyk.fydeph.R.layout;
+import com.scopyk.fydeph.R.menu;
+import com.scopyk.fydeph.R.string;
 import com.scopyk.fydeph.data.Content;
 
 import android.app.Activity;
@@ -47,7 +54,7 @@ public class MainActivity extends Activity implements APICallback {
     }
     
 	@Override
-	public void APIResponse(JSONObject json) throws JSONException {
+	public void APIResponse(JSONObject json, int id) throws JSONException {
 		if (json.has("error")){
 			Toast.makeText(this.getApplicationContext(), R.string.unknown_user, 5).show();
 			return;

@@ -2,7 +2,7 @@ package com.scopyk.fydeph.data;
 
 import java.util.ArrayList;
 
-public class Feed {
+public class Feed implements MenuLabel {
 	private String id;
 	private String name;
 	private ArrayList<Post> posts;
@@ -75,4 +75,12 @@ public class Feed {
 	public void setRssLink(String rssLink) {
 		this.rssLink = rssLink;
 	}
+	
+	@Override
+	public String getLabel() {
+		if (this.unread > 0)
+			return this.name+" ("+this.unread+")";
+		else
+			return this.name;
+	}	
 }
