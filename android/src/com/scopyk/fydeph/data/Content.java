@@ -1,7 +1,12 @@
 package com.scopyk.fydeph.data;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,14 +20,21 @@ public class Content {
 	}
 	
 	private HashMap<String,Folder> folders;
+	private HashMap<String,Feed> feeds;
 	private HashMap<String,Tag> tags;
 	private HashMap<String,Post> posts;
+	private List<Post> postsOrdered;
 	private String token;
+	private int totalPosts;
 	
 	private Content(){
 		this.folders = new HashMap<String,Folder>();
+		this.feeds = new HashMap<String,Feed>();
 		this.tags = new HashMap<String,Tag>();
 		this.posts = new HashMap<String,Post>();
+		this.token = "";
+		this.totalPosts = 0;
+		this.postsOrdered = new ArrayList<Post>();
 	}
 	
 	public void setToken(String token){
@@ -34,8 +46,10 @@ public class Content {
 	
 	public void reloadStructure(JSONObject json) throws JSONException{
 		this.folders = new HashMap<String,Folder>();
+		this.feeds = new HashMap<String,Feed>();
 		this.tags = new HashMap<String,Tag>();
 		this.posts = new HashMap<String,Post>();
+		this.postsOrdered = new ArrayList<Post>();
 		
 		JSONArray folders = json.getJSONArray("folders");
 		for (int i=0;i<folders.length();i++){
@@ -58,6 +72,7 @@ public class Content {
 				
 				feed.setFolder(folder);
 				folder.addFeeds(feed);
+				this.feeds.put(ff.getString("id"),feed);
 			}
 			this.folders.put(f.getString("id"),folder);
 		}
@@ -73,18 +88,88 @@ public class Content {
 			this.tags.put(t.getString("id"),tag);
 		}
 	}
+	
+	public void resetPosts(){
+		this.posts = new HashMap<String,Post>();
+		this.postsOrdered = new ArrayList<Post>();
+		this.totalPosts = 0;
+	}
+	
+	public void addPosts(JSONObject json) throws JSONException{
+		if (json.has("total"))
+			this.totalPosts = json.getInt("total");
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
+
+		JSONArray posts = json.getJSONArray("posts");
+		for (int i=0;i<posts.length();i++){
+			JSONObject p = (JSONObject)posts.get(i);
+			Post post = new Post(p.getString("id"),decodeHtml(p.getString("title"),true),p.getString("description"));
+			post.setLink(p.getString("link"));
+			post.setFavorite(p.getInt("favorite")==1);
+			post.setUnread(p.getInt("unread")==1);
+			try {
+				post.setDate(sdf.parse(p.getString("date")));
+			} catch (ParseException e) {
+				post.setDate(null);
+				e.printStackTrace();
+			}
+			String feedid = p.getString("feedId");
+			if (this.feeds.containsKey(feedid)){
+				post.setFeed(this.feeds.get(feedid));
+			} else {
+				post.setFeed(null);
+			}
+			
+			JSONArray tags = p.getJSONArray("tags"); 
+			for (int j=0;j<tags.length();j++){
+				JSONObject t = (JSONObject)tags.get(j);
+				Tag tag;
+				String tagid = t.getString("id");
+				if (this.tags.containsKey(tagid)){
+					tag = this.tags.get(tagid);
+				} else {
+					tag = new Tag(tagid,t.getString("name"));
+					this.tags.put(tagid, tag);
+				}
+				tag.addPost(post);
+				post.addTag(tag);
+			}
+			this.posts.put(p.getString("id"),post);
+			this.postsOrdered.add(post);
+		}
+	}
 
 	public HashMap<String, Folder> getFolders() {
 		return folders;
 	}
-
+	public Folder getFolder(String id) {
+		return folders.get(id);
+	}
 	public HashMap<String, Tag> getTags() {
 		return tags;
 	}
-
+	public Tag getTag(String id) {
+		return tags.get(id);
+	}
 	public HashMap<String, Post> getPosts() {
 		return posts;
 	}
+	public Post getPost(String id) {
+		return posts.get(id);
+	}
+	public List<Post> getOrderedPosts() {
+		return postsOrdered;
+	}
 	
+	public String decodeHtml(String in){
+		return decodeHtml(in,false);
+	}
+	public String decodeHtml(String in,boolean nobreak){
+		String str = in;
+		if (nobreak)
+			str = in.replace("\n", " ");
+		return android.text.Html.fromHtml(str).toString();
+	}
 	
 }

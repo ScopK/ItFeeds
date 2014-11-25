@@ -1,5 +1,6 @@
 package com.scopyk.fydeph.view;
 
+//http://creandoandroid.es/implementar-navigation-drawer-menu-lateral/
 
 import java.util.Collections;
 import java.util.Collection;
@@ -35,12 +36,17 @@ public class PostViewer extends Activity implements APICallback {
 
 	private String token;
 	private List<MenuLabel> drawerOptions;
+	private ArrayAdapter<String> postListAdapter;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.post_viewer);
-       
+        
+        postListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, new ArrayList<String>());
+        ListView rr = (ListView)findViewById(R.id.postlistview);
+        rr.setAdapter(postListAdapter);
+
 		ListView drawer = (ListView) findViewById(R.id.drawer);
 		drawer.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -60,25 +66,28 @@ public class PostViewer extends Activity implements APICallback {
 			case 0: // ARCH
 				Content.get().reloadStructure(json);
 				updateDrawer();
-				findViewById(R.id.loadingtext).setVisibility(View.INVISIBLE);
+				findViewById(R.id.loadingtext).setVisibility(View.GONE);
 				new APICall(this).execute("posts?token="+token,"1");
 				break;
 			case 1: // GetPosts
-				JSONArray ja = json.getJSONArray("posts");
 
-                LinearLayout rr = (LinearLayout)findViewById(R.id.posts_layout);
-                
-                for (int i=0;i<ja.length();i++){
-                	JSONObject j = ja.getJSONObject(i);
+				Content.get().resetPosts();
+				Content.get().addPosts(json);
+				//ListView rr = (ListView)findViewById(R.id.postlistview);
+				int i=0;
+				for (Post p : Content.get().getOrderedPosts()){
+					postListAdapter.add(p.getTitle());
+					/*
     				TextView tv1 = new TextView(this);
                     tv1.setId((int)System.currentTimeMillis()+i);
                     //lp = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
                     //lp.addRule(RelativeLayout.BELOW, recent.getId());
-                    tv1.setText(j.getString("title").replace("\n", " "));
+                    tv1.setText(p.getTitle());
 
                     rr.addView(tv1,i);
-                }
-
+                    i++;*/
+				}
+		        postListAdapter.notifyDataSetChanged();
 				break;
 		}
 			
