@@ -48,6 +48,9 @@ public class MainActivity extends Activity implements APICallback {
             		Toast.makeText(getApplicationContext(), getString(R.string.empty_pass), 5).show();
             		return;
             	}
+            	Button button = (Button) findViewById(R.id.goLogin);
+            	button.setText(R.string.logingin);
+            	button.setEnabled(false);
             	new APICall(callback).execute("login?user="+loginfo[0]+"&pass="+loginfo[1]);
             }
         });
@@ -55,6 +58,10 @@ public class MainActivity extends Activity implements APICallback {
     
 	@Override
 	public void APIResponse(JSONObject json, int id) throws JSONException {
+		Button button = (Button) findViewById(R.id.goLogin);
+    	button.setText(R.string.login);
+    	button.setEnabled(true);
+    	
 		if (json.has("error")){
 			Toast.makeText(this.getApplicationContext(), R.string.unknown_user, 5).show();
 			return;

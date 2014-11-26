@@ -13,7 +13,6 @@ import org.json.JSONObject;
 
 import com.scopyk.fydeph.APICall;
 import com.scopyk.fydeph.APICallback;
-import com.scopyk.fydeph.ItemListAdapter;
 import com.scopyk.fydeph.R;
 import com.scopyk.fydeph.R.id;
 import com.scopyk.fydeph.R.layout;
@@ -36,16 +35,24 @@ public class PostViewer extends Activity implements APICallback {
 
 	private String token;
 	private List<MenuLabel> drawerOptions;
-	private ArrayAdapter<String> postListAdapter;
+	private PostListAdapter postListAdapter;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.post_viewer);
+        setLoading(true);
         
-        postListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, new ArrayList<String>());
+        postListAdapter = new PostListAdapter(this, android.R.id.text1, new ArrayList<Post>());
         ListView rr = (ListView)findViewById(R.id.postlistview);
         rr.setAdapter(postListAdapter);
+        rr.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				Toast.makeText(PostViewer.this, postListAdapter.getItem(arg2).getId(), Toast.LENGTH_SHORT).show();
+				//((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawers();
+			}
+		});
 
 		ListView drawer = (ListView) findViewById(R.id.drawer);
 		drawer.setOnItemClickListener(new OnItemClickListener() {
@@ -66,7 +73,7 @@ public class PostViewer extends Activity implements APICallback {
 			case 0: // ARCH
 				Content.get().reloadStructure(json);
 				updateDrawer();
-				findViewById(R.id.loadingtext).setVisibility(View.GONE);
+				setLoading(false);
 				new APICall(this).execute("posts?token="+token,"1");
 				break;
 			case 1: // GetPosts
@@ -76,7 +83,7 @@ public class PostViewer extends Activity implements APICallback {
 				//ListView rr = (ListView)findViewById(R.id.postlistview);
 				int i=0;
 				for (Post p : Content.get().getOrderedPosts()){
-					postListAdapter.add(p.getTitle());
+					postListAdapter.add(p);
 					/*
     				TextView tv1 = new TextView(this);
                     tv1.setId((int)System.currentTimeMillis()+i);
@@ -115,6 +122,16 @@ public class PostViewer extends Activity implements APICallback {
 	        }
         }
         drawer.setAdapter(new ItemListAdapter(this, android.R.id.text1, drawerOptions));
+	}
+	
+	public void setLoading(boolean val){
+		if (val){
+	        findViewById(R.id.loadingtext).setVisibility(View.VISIBLE);
+	        findViewById(R.id.posts_layout).setVisibility(View.INVISIBLE);
+		} else {
+			findViewById(R.id.loadingtext).setVisibility(View.INVISIBLE);
+			findViewById(R.id.posts_layout).setVisibility(View.VISIBLE);
+		}
 	}
 
 }
