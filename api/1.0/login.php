@@ -14,7 +14,25 @@
 	}
 	$user=$_REQUEST['user'];
 	$pass=$_REQUEST['pass'];
+	if ($user=checkUserPassword($user,$pass)){
+		retry:
 
+		$res = mysqli_query($con,"SELECT * FROM active_user WHERE user='$user'");
+		$row = @array_map('utf8_encode',mysqli_fetch_assoc($res));
+		if (!isset($row)){
+			mysqli_query($con,"INSERT INTO active_user(user,token) VALUES('$user',newID(36,\"active_user\"))");
+			goto retry;
+		}
+
+		$json=array("user"=>$user,"token"=>$row['token']);
+		header("Content-Type: application/json; charset=utf-8");
+		echo json_encode($json);
+	} else {
+		header("HTTP/1.1 401 Unauthorized");
+		die("HTTP/1.1 401 Unauthorized");
+	}
+
+	/*
 	if ($user=checkUserPassword($user,$pass)){
 		mysqli_query($con,"INSERT INTO active_user(user,token) VALUES('$user',newID(36,\"active_user\"))");
 
@@ -27,5 +45,5 @@
 	} else {
 		header("HTTP/1.1 401 Unauthorized");
 		die("HTTP/1.1 401 Unauthorized");
-	}
+	}*/
 ?>
