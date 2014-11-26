@@ -19,6 +19,7 @@ import com.scopyk.fydeph.R.layout;
 import com.scopyk.fydeph.data.*;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -48,9 +49,10 @@ public class PostViewer extends Activity implements APICallback {
         rr.setAdapter(postListAdapter);
         rr.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				Toast.makeText(PostViewer.this, postListAdapter.getItem(arg2).getId(), Toast.LENGTH_SHORT).show();
-				//((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawers();
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {			
+		        Intent intentApp = new Intent(PostViewer.this, ViewerActivity.class);
+				intentApp.putExtra("postId", (String)postListAdapter.getItem(arg2).getId());
+		        startActivity(intentApp);
 			}
 		});
 
