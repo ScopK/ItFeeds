@@ -36,6 +36,8 @@
         android:layout_marginTop="46dp"
         android:ems="10"
         android:hint="@string/username"
+		android:singleLine="true"
+		android:imeOptions="actionNext"
         android:text="" >
 
         <requestFocus />
@@ -50,7 +52,9 @@
         android:layout_marginTop="17dp"
         android:ems="10"
         android:hint="@string/password"
+        android:imeOptions="actionDone"
         android:inputType="textPassword"
+        android:singleLine="true"
         android:text="" />
 
     <Button
