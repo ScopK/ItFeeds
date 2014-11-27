@@ -28,8 +28,8 @@
 		header("Content-Type: application/json; charset=utf-8");
 		echo json_encode($json);
 	} else {
-		header("HTTP/1.1 401 Unauthorized");
-		die("HTTP/1.1 401 Unauthorized");
+		header("Content-Type: application/json; charset=utf-8");
+		die("{\"error\":\"Incorrect login\"}");
 	}
 
 	/*
