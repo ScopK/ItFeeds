@@ -3,7 +3,9 @@
 
     <string name="app_name">Fydeph</string>
     <string name="all_posts">All posts</string>
-    <string name="empty_user">Username field can\'t be empty</string><string name="empty_pass">Password field can\'t be empty</string><string name="action_settings">Settings</string>
+    <string name="empty_user">Username field can\'t be empty</string>
+    <string name="empty_pass">Password field can\'t be empty</string>
+    <string name="settings">Settings</string>
     <string name="greetings">Start using Fydeph</string>
     <string name="login">Login</string>
     <string name="logingin">Logging in&#8230;</string>
@@ -11,6 +13,13 @@
     <string name="password">Password</string>
     <string name="go">Go</string>
     <string name="unknown_user">Unknown user</string>
+    <string name="no_connection">No connection</string>
     <string name="loading">Loading</string>
+    <string name="unread">Unread</string>
+    <string name="unlock">Unlock</string>
+    <string name="dev_test">Test</string>
+    <string name="favorite">Favorite</string>
+    <string name="next">Next</string>
+    <string name="prev">Prev</string>
 
 </resources>

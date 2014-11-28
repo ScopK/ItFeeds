@@ -31,12 +31,11 @@ public class APICall extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params) {
         try {
         	if (params.length>1)callId = Integer.parseInt(params[1]);
-        	else				callId = 0;
-        	
+        	else				callId = 0;       	
         	HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
         	HttpGet httpget = new HttpGet(APIROOT+params[0]); // Set the action you want to do
         	HttpResponse response = httpclient.execute(httpget); // Executeit
-        	HttpEntity entity = response.getEntity(); 
+        	HttpEntity entity = response.getEntity();
         	InputStream is = entity.getContent(); // Create an InputStream with the response
         	BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
         	StringBuilder sb = new StringBuilder();
@@ -59,6 +58,11 @@ public class APICall extends AsyncTask<String, Void, String> {
 		} catch (JSONException e) {
         	Toast.makeText(callback.getApplicationContext(), "JSON ERROR", 5).show();
 			e.printStackTrace();
+		} catch (java.lang.NullPointerException err) {
+			String errorResponse="{\"error\":\"No connection\"}";
+			if (!errorResponse.equals(response))
+				onPostExecute(errorResponse);
 		}
+
     }
 }
