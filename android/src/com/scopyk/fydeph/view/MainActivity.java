@@ -19,20 +19,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity implements APICallback {
 
-	private String token;
 	private List<MenuLabel> drawerOptions;
 	private PostListAdapter postListAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -41,9 +38,7 @@ public class MainActivity extends Activity implements APICallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setLoading(true);
-        
-        this.token = Content.get().getToken();
+        setLoadingScreen(true);             
         
         postListAdapter = new PostListAdapter(this, android.R.id.text1, new ArrayList<Post>());
         ListView rr = (ListView)findViewById(R.id.postlistview);
@@ -53,10 +48,10 @@ public class MainActivity extends Activity implements APICallback {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				Post p = postListAdapter.getItem(arg2);
 				if (p==null){
-					if (!swipeRefreshLayout.isRefreshing()){
-						swipeRefreshLayout.setRefreshing(true);
-						postListAdapter.isLoading(true,MainActivity.this);
-						new ReloadTask(false).execute();
+					if (!swipeRefreshLayout.isRefreshing()){						
+						new APICall(MainActivity.this).execute(Content.get().getQuery(postListAdapter.getLastPostId()),"2");
+						setLoading(true);
+						postListAdapter.isLoading(true);
 					}
 					return;
 				}
@@ -70,8 +65,16 @@ public class MainActivity extends Activity implements APICallback {
 		drawer.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				Toast.makeText(MainActivity.this, drawerOptions.get(arg2).getId(), Toast.LENGTH_SHORT).show();
-				//((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawers();
+				MenuLabel ml = drawerOptions.get(arg2);
+				if (ml instanceof Folder)
+					Content.get().viewFolder(ml.getId());
+				else if (ml instanceof Feed)
+					Content.get().viewFeed(ml.getId());
+				else if (ml instanceof Tag)
+					Content.get().viewTag(ml.getId());
+				new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
+				setLoading(true);
+				((DrawerLayout)findViewById(R.id.drawer_layout)).closeDrawers();
 			}
 		});
 		
@@ -107,7 +110,7 @@ public class MainActivity extends Activity implements APICallback {
 			}
         });
 		*/
-        new APICall(this).execute("arch?token="+token);
+        new APICall(this).execute("arch?token="+Content.get().getToken());
     }
 	
 	@Override
@@ -116,32 +119,34 @@ public class MainActivity extends Activity implements APICallback {
 			case 0: // ARCH
 				Content.get().reloadStructure(json);
 				updateDrawer();
-				setLoading(false);
-				new APICall(this).execute("posts?token="+token,"1");
+				setLoadingScreen(false);
+				new APICall(this).execute(Content.get().getQuery(),"1");
+				setLoading(true);
 				break;
 			case 1: // GetPosts
-
 				Content.get().resetPosts();
+				postListAdapter.emptyList();
 				Content.get().addPosts(json);
 				
-				//ListView rr = (ListView)findViewById(R.id.postlistview);
-				int i=0;
 				for (Post p : Content.get().getOrderedPosts()){
 					postListAdapter.add(p);
-					/*
-    				TextView tv1 = new TextView(this);
-                    tv1.setId((int)System.currentTimeMillis()+i);
-                    //lp = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-                    //lp.addRule(RelativeLayout.BELOW, recent.getId());
-                    tv1.setText(p.getTitle());
-
-                    rr.addView(tv1,i);
-                    i++;*/
 				}
 				postListAdapter.addLoadMore();
-				postListAdapter.notifyDataSetInvalidated();
 		        postListAdapter.notifyDataSetChanged();
+		        setLoading(false);
+				break;
+				
+			case 2: // GetMorePosts
+				int idx = Content.get().getOrderedPosts().size();
+				Content.get().addPosts(json);
 
+				List<Post> posts = Content.get().getOrderedPosts();
+				for (int j=idx;j<posts.size();j++){
+					postListAdapter.add(posts.get(j));
+				}
+				
+		        postListAdapter.notifyDataSetChanged();
+				setLoading(false);
 				break;
 		}
 			
@@ -171,7 +176,7 @@ public class MainActivity extends Activity implements APICallback {
         drawer.setAdapter(new DrawerListAdapter(this, android.R.id.text1, drawerOptions));
 	}
 	
-	public void setLoading(boolean val){
+	public void setLoadingScreen(boolean val){
 		if (val){
 	        findViewById(R.id.loadingtext).setVisibility(View.VISIBLE);
 	        findViewById(R.id.posts_layout).setVisibility(View.INVISIBLE);
@@ -179,6 +184,12 @@ public class MainActivity extends Activity implements APICallback {
 			findViewById(R.id.loadingtext).setVisibility(View.INVISIBLE);
 			findViewById(R.id.posts_layout).setVisibility(View.VISIBLE);
 		}
+	}
+	
+	public void setLoading(boolean val){
+		swipeRefreshLayout.setRefreshing(val);
+		if (!val)
+			postListAdapter.isLoading(false);
 	}
 	
 	 
@@ -200,29 +211,10 @@ public class MainActivity extends Activity implements APICallback {
         }
         return super.onOptionsItemSelected(item);
     }
-    
-    private void onRefreshComplete(List<String> result) {
-    	/*
-        mListAdapter.clear();
-        for (String cheese : result) {
-            mListAdapter.add(cheese);
-        }
-        mListAdapter.notifyDataSetChanged();
-        */
-        swipeRefreshLayout.setRefreshing(false);
-    }
 
 
     private class ReloadTask extends AsyncTask<Void, Void, List<String>> {
         static final int TASK_DURATION = 3 * 1000;
-        private boolean reloadUp;
-        
-        public ReloadTask(){
-        	this(true);
-        }
-        public ReloadTask(boolean up){
-        	this.reloadUp = up;
-        }
 
         @Override
         protected List<String> doInBackground(Void... params) {
@@ -237,17 +229,7 @@ public class MainActivity extends Activity implements APICallback {
         @Override
         protected void onPostExecute(List<String> result) {
             super.onPostExecute(result);
-            
-			//postListAdapter.removeLoadMore();
-	        //postListAdapter.notifyDataSetChanged();
-            if (this.reloadUp)
-            	System.out.println("RELOAD UP");
-            else{
-            	System.out.println("RELOAD DOWN");
-            	postListAdapter.isLoading(false,MainActivity.this);
-            }
-            
-            onRefreshComplete(result);
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 }

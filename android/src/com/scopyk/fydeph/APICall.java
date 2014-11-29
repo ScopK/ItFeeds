@@ -12,14 +12,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 public class APICall extends AsyncTask<String, Void, String> {
 	
 	private final String APIROOT = "http://192.168.1.7:8082/api/1.0/";
-    private Exception exception;
     private APICallback callback;
     private int callId;
     
@@ -29,6 +27,7 @@ public class APICall extends AsyncTask<String, Void, String> {
     }
 
     protected String doInBackground(String... params) {
+    	System.out.println("JSONQUERY:"+params[0]);
         try {
         	if (params.length>1)callId = Integer.parseInt(params[1]);
         	else				callId = 0;       	
@@ -46,7 +45,6 @@ public class APICall extends AsyncTask<String, Void, String> {
         	is.close(); // Close the stream
         	return resString;
         } catch (Exception e) {
-            this.exception = e;
             return null;
         }
     }
@@ -56,7 +54,7 @@ public class APICall extends AsyncTask<String, Void, String> {
 			JSONObject json = new JSONObject(response);
 			callback.APIResponse(json,callId);
 		} catch (JSONException e) {
-        	Toast.makeText(callback.getApplicationContext(), "JSON ERROR", 5).show();
+        	Toast.makeText(callback.getApplicationContext(), "JSON ERROR", Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		} catch (java.lang.NullPointerException err) {
 			String errorResponse="{\"error\":\"No connection\"}";

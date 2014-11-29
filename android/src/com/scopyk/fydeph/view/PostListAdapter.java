@@ -5,21 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.scopyk.fydeph.R;
-import com.scopyk.fydeph.R.layout;
 import com.scopyk.fydeph.data.Post;
-import com.scopyk.fydeph.data.MenuLabel;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class PostListAdapter extends BaseAdapter {
 
@@ -35,7 +28,15 @@ public class PostListAdapter extends BaseAdapter {
 	 }
 	 
 	 public void add(Post p){
-		 this.list.add(p);
+		 if (this.hasLoadMore)
+			 this.list.add(this.list.size()-1,p);
+		 else
+			 this.list.add(p);
+		 
+	 }
+	 public void emptyList(){
+		 this.list.clear();
+		 this.hasLoadMore = false;
 	 }
 	 
 	 public void addLoadMore(){
@@ -49,6 +50,7 @@ public class PostListAdapter extends BaseAdapter {
 		 if (this.hasLoadMore){
 			 this.list.remove(null);
 			 this.hasLoadMore = false;
+			 this.nullView = null;
 		 }
 	 }
 	 
@@ -56,13 +58,9 @@ public class PostListAdapter extends BaseAdapter {
 		 return this.hasLoadMore;
 	 }
 	 
-	 public void isLoading(boolean loading,Activity a){
-		 if (this.hasLoadMore){
+	 public void isLoading(boolean loading){
+		 if (this.hasLoadMore && nullView != null){
 			 TextView text;
-			 if (nullView==null){
-				 Toast.makeText(a, ""+list.size(), Toast.LENGTH_SHORT).show();
-				 return;
-			 }
 			 text = (TextView) nullView.findViewById(R.id.textView1);
 			 if (loading)
 				 text.setText(R.string.loading);
@@ -83,6 +81,11 @@ public class PostListAdapter extends BaseAdapter {
 	 public long getItemId(int position) {  
 		 return position;
 	 }
+	 
+	 public String getLastPostId() {
+		 int i=(this.hasLoadMore)?2:1;
+		 return this.list.get(this.list.size()-i).getId();
+	 }
 
 	 @Override
 	 public View getView(int position, View convertView, ViewGroup parent) {
@@ -92,22 +95,23 @@ public class PostListAdapter extends BaseAdapter {
         		nullView = mInflater.inflate(R.layout.loadmore_line_item, parent, false);
     		return nullView;
         }
+        
         View view;
-		if (convertView != null) 
-			view = convertView;
-		else
-			view = mInflater.inflate(R.layout.post_line_item, parent, false);
-		
-
         TextView title,date;
-    	
-    	title = (TextView) view.findViewById(R.id.post_title);
-    	title.setText(item.getTitle());
-    	if (item.getUnread())
-    		title.setTypeface(null, android.graphics.Typeface.BOLD);
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        date = (TextView) view.findViewById(R.id.post_date);
-    	date.setText(df.format(item.getDate()));
+		//if (convertView != null) 
+		//	view = convertView;
+		//else
+			view = mInflater.inflate(R.layout.post_line_item, parent, false);
+			
+		try{
+	    	title = (TextView) view.findViewById(R.id.post_title);
+	    	title.setText(item.getTitle());
+	    	if (item.getUnread())
+	    		title.setTypeface(null, android.graphics.Typeface.BOLD);
+	        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        date = (TextView) view.findViewById(R.id.post_date);
+	    	date.setText(df.format(item.getDate()));
+		}catch(Exception e){}
 
         return view;
 	 }

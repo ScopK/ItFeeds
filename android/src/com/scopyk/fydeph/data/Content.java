@@ -27,6 +27,8 @@ public class Content {
 	private String token;
 	private int totalPosts;
 	
+	private Filter filter;
+	
 	private Content(){
 		this.folders = new HashMap<String,Folder>();
 		this.feeds = new HashMap<String,Feed>();
@@ -39,6 +41,7 @@ public class Content {
 	
 	public void setToken(String token){
 		this.token = token;
+		this.filter = new Filter(token);
 	}
 	public String getToken(){
 		return this.token;
@@ -170,6 +173,45 @@ public class Content {
 		if (nobreak)
 			str = in.replace("\n", " ");
 		return android.text.Html.fromHtml(str).toString();
+	}
+	
+	
+	
+	public void viewFolder(String id){
+		this.filter.viewFolder(id);
+	}
+	public void viewFeed(String id){
+		this.filter.viewFeed(id);
+	}
+	public void viewTag(String id){
+		this.filter.viewTag(id);
+	}
+	public void viewAll(){
+		this.filter.viewAll();
+	}
+	public void viewOldersFirst(){
+		viewNewersFirst(false);
+	}
+	public void viewNewersFirst(){
+		viewNewersFirst(true);
+	}
+	public void viewNewersFirst(boolean val){
+		this.filter.viewNewersFirst(val);
+	}
+	public void viewUnlocked(String st){
+		this.filter.viewUnlocked(st);
+	}
+	public void viewUnread(boolean u){
+		this.filter.viewUnread(u);
+	}
+	public void viewFavorites(boolean f){
+		this.filter.viewFavorites(f);
+	}
+	public String getQuery(String nextValue){
+		return this.filter.getQuery(nextValue);
+	}
+	public String getQuery(){
+		return this.filter.getQuery("");
 	}
 	
 }
