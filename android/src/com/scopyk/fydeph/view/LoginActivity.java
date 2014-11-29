@@ -14,6 +14,7 @@ import com.scopyk.fydeph.data.Content;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -28,7 +29,8 @@ import android.widget.Toast;
 
 
 public class LoginActivity extends Activity implements APICallback {
-
+	
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +47,14 @@ public class LoginActivity extends Activity implements APICallback {
                 return handled;
             }
         });
-        
         loginSetUp();
+        
+        String tokenRead = loadToken();
+        if (tokenRead != null){
+            Content.get().setToken(tokenRead);
+            Intent intentApp = new Intent(this, MainActivity.class);
+            startActivity(intentApp);
+        }
     }
     
     public void loginSetUp(){
@@ -89,10 +97,24 @@ public class LoginActivity extends Activity implements APICallback {
 				Toast.makeText(this.getApplicationContext(), errormsg, 5).show();
 			return;
 		}
+		String tokenObtained = json.getString("token");
+		saveToken(tokenObtained);
 		
-        Content.get().setToken(json.getString("token"));
+        Content.get().setToken(tokenObtained);
         Intent intentApp = new Intent(this, MainActivity.class);
         startActivity(intentApp);
+	}
+	
+	public void saveToken(String token){
+	      SharedPreferences settings = getSharedPreferences("FydephPrefsFile", 0);
+	      SharedPreferences.Editor editor = settings.edit();
+	      editor.putString("tokensaved", token);
+	      editor.commit();
+	}
+	
+	public String loadToken(){
+        SharedPreferences settings = getSharedPreferences("FydephPrefsFile", 0);
+        return settings.getString("tokensaved", null);
 	}
     
 }

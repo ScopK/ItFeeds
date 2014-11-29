@@ -17,6 +17,7 @@ import com.scopyk.fydeph.data.*;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -84,7 +85,8 @@ public class MainActivity extends Activity implements APICallback {
 		swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-            	new ReloadTask().execute();
+            	new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
+				setLoading(true);
             }
         });
 		
@@ -127,7 +129,6 @@ public class MainActivity extends Activity implements APICallback {
 				Content.get().resetPosts();
 				postListAdapter.emptyList();
 				Content.get().addPosts(json);
-				
 				for (Post p : Content.get().getOrderedPosts()){
 					postListAdapter.add(p);
 				}
@@ -206,30 +207,26 @@ public class MainActivity extends Activity implements APICallback {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch(id){
+	        case R.id.action_logout:
+	  	      SharedPreferences settings = getSharedPreferences("FydephPrefsFile", 0);
+		      SharedPreferences.Editor editor = settings.edit();
+		      editor.putString("tokensaved", null);
+		      editor.commit();
+		      finish();
+		      break;
+	        case R.id.action_filter:
+	        case R.id.action_settings:
+	        case R.id.action_unlock:
+	        default:
+	        		return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
-
-
-    private class ReloadTask extends AsyncTask<Void, Void, List<String>> {
-        static final int TASK_DURATION = 3 * 1000;
-
-        @Override
-        protected List<String> doInBackground(Void... params) {
-            try {
-                Thread.sleep(TASK_DURATION);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return new ArrayList<String>();
-        }
-
-        @Override
-        protected void onPostExecute(List<String> result) {
-            super.onPostExecute(result);
-            swipeRefreshLayout.setRefreshing(false);
-        }
+    
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }
