@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.scopyk.fydeph.view.MainActivity"
+            android:name="com.scopyk.fydeph.view.LoginActivity"
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar"
             android:label="@string/app_name" >
             <intent-filter>
@@ -27,12 +27,12 @@
             </intent-filter>
         </activity>
 		<activity 
-	        android:name="com.scopyk.fydeph.view.PostViewer"
+	        android:name="com.scopyk.fydeph.view.MainActivity"
 	        android:theme="@android:style/Theme.Light.NoTitleBar" 
 	        android:label="@string/app_name">
 		</activity>
 		<activity 
-	        android:name="com.scopyk.fydeph.view.ViewerActivity"
+	        android:name="com.scopyk.fydeph.view.PostViewActivity"
 	        android:theme="@android:style/Theme.Light.NoTitleBar" 
 	        android:label="@string/app_name">
 		</activity>

@@ -16,14 +16,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class ItemListAdapter extends BaseAdapter {
+public class DrawerListAdapter extends BaseAdapter {
 
 	 private Context activity;
 	 private List<MenuLabel> list;
 	 private int textViewResourceId;
 	 private LayoutInflater mInflater;
 	 
-	 public ItemListAdapter(Context activity, int textViewResourceId,List<MenuLabel> list){
+	 public DrawerListAdapter(Context activity, int textViewResourceId,List<MenuLabel> list){
 		 this.activity = activity;
 		 this.list = list;
 		 this.textViewResourceId = textViewResourceId;

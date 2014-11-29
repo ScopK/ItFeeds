@@ -15,7 +15,7 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 
-public class ViewerActivity extends Activity {
+public class PostViewActivity extends Activity {
 
 	private Post post;
     @Override
