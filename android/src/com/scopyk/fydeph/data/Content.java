@@ -207,6 +207,21 @@ public class Content {
 	public void viewFavorites(boolean f){
 		this.filter.viewFavorites(f);
 	}
+	public boolean toggleFavorites(){
+		boolean i = this.filter.isFavorite();
+		this.filter.viewFavorites(!i);
+		return !i;
+	}
+	public boolean toggleUnread(){
+		boolean i = this.filter.isUnread();
+		this.filter.viewUnread(!i);
+		return !i;
+	}
+	public boolean toggleOrder(){
+		boolean i = this.filter.isNewFirst();
+		this.filter.viewNewersFirst(!i);
+		return !i;
+	}
 	public String getQuery(String nextValue){
 		return this.filter.getQuery(nextValue);
 	}

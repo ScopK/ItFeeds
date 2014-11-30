@@ -20,8 +20,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +35,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class MainActivity extends Activity implements APICallback {
+public class MainActivity extends ActionBarActivity implements APICallback {
 
 	private List<MenuLabel> drawerOptions;
 	private PostListAdapter postListAdapter;
@@ -39,7 +45,8 @@ public class MainActivity extends Activity implements APICallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setLoadingScreen(true);             
+        initBar();
+        setLoadingScreen(true);  
         
         postListAdapter = new PostListAdapter(this, android.R.id.text1, new ArrayList<Post>());
         ListView rr = (ListView)findViewById(R.id.postlistview);
@@ -218,6 +225,17 @@ public class MainActivity extends Activity implements APICallback {
 	        case R.id.action_filter:
 	        case R.id.action_settings:
 	        case R.id.action_unlock:
+	        	break;
+	        case R.id.action_unread:
+	        	boolean u = Content.get().toggleUnread();
+	        	if (u)	item.setIcon(R.drawable.ic_unread);
+	        	else	item.setIcon(R.drawable.ic_read);
+	        	break;
+	        case R.id.action_fav:
+	        	boolean f = Content.get().toggleFavorites();
+	        	if (f)	item.setIcon(R.drawable.ic_fav);
+	        	else	item.setIcon(R.drawable.ic_unfav);
+	        	break;
 	        default:
 	        		return true;
         }
@@ -228,5 +246,33 @@ public class MainActivity extends Activity implements APICallback {
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
+    }
+    
+    private void initBar(){
+    	Toolbar t = (Toolbar)findViewById(R.id.toolbar_actionbar);
+    	setSupportActionBar(t);
+
+    	t.setNavigationIcon(R.drawable.ic_drawer);
+/*
+    	t.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+			@Override
+			public boolean onMenuItemClick(MenuItem arg0) {
+				if ()
+				
+				//System.exit(0);
+				return false;
+			}
+
+    	});*/
+    	//t.setLogo(R.drawable.ic_launcher);
+    	
+    	DrawerLayout dl=(DrawerLayout)findViewById(R.id.drawer_layout);
+    	
+    	ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, dl,t,R.string.login, R.string.logout);
+        dl.setDrawerListener(mDrawerToggle);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 }

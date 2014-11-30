@@ -62,4 +62,14 @@ public class Filter {
 
 		return q;
 	}
+	public boolean isUnread() {
+		return unread;
+	}
+	public boolean isFavorite() {
+		return favorite;
+	}
+	public boolean isNewFirst() {
+		return newFirst;
+	}
+
 }
