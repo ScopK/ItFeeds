@@ -18,6 +18,7 @@
     <string name="no_connection">No connection</string>
     <string name="loading">Loading</string>
     <string name="unread">Unread</string>
+    <string name="order">Order</string>
     <string name="unlock">Unlock</string>
     <string name="dev_test">Test</string>
     <string name="favorite">Favorite</string>

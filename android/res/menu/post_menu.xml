@@ -3,29 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.scopyk.fydeph.MainActivity" >
     
-    <item
-        android:id="@+id/action_filter"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/filters"/>
     
-    <item
-        android:id="@+id/action_unlock"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/unlock"/>
+  	<item android:id="@+id/action_prev"
+          android:icon="@drawable/ic_prev_arrow"
+          android:title="@string/favorite"
+          
+          app:showAsAction="always"
+          android:enabled="true" android:visible="true"/>
     
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/settings"/>
-    
-    <item
-        android:id="@+id/action_logout"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/logout"/>
 
   	<item android:id="@+id/action_fav"
           android:icon="@drawable/ic_unfav"
@@ -41,9 +26,9 @@
           app:showAsAction="always"
           android:enabled="true" android:visible="true"/>
   	
-  	<item android:id="@+id/action_order"
-          android:icon="@drawable/ic_newer"
-          android:title="@string/order"
+  	<item android:id="@+id/action_next"
+          android:icon="@drawable/ic_next_arrow"
+          android:title="@string/favorite"
           
           app:showAsAction="always"
           android:enabled="true" android:visible="true"/>

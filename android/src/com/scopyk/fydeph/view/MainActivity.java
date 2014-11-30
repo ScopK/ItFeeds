@@ -230,11 +230,22 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 	        	boolean u = Content.get().toggleUnread();
 	        	if (u)	item.setIcon(R.drawable.ic_unread);
 	        	else	item.setIcon(R.drawable.ic_read);
+            	new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
+				setLoading(true);
 	        	break;
 	        case R.id.action_fav:
 	        	boolean f = Content.get().toggleFavorites();
 	        	if (f)	item.setIcon(R.drawable.ic_fav);
 	        	else	item.setIcon(R.drawable.ic_unfav);
+            	new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
+				setLoading(true);
+	        	break;
+	        case R.id.action_order:
+	        	boolean o = Content.get().toggleOrder();
+	        	if (o)	item.setIcon(R.drawable.ic_newer);
+	        	else	item.setIcon(R.drawable.ic_older);
+            	new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
+				setLoading(true);
 	        	break;
 	        default:
 	        		return true;

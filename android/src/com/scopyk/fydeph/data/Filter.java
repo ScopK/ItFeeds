@@ -56,7 +56,7 @@ public class Filter {
 		}
 		if (nextValue.length()>0)		q += "&nextid="+nextValue;
 		if (this.unlockToken.length()>0)q += "&lock="+this.unlockToken;
-		if (!this.newFirst)	q+="&sortby=0";
+		if (!this.newFirst)	q+="&sortBy=0";
 		if (!this.unread)	q+="&unread=0";
 		if (this.favorite)	q+="&fav=1";
 

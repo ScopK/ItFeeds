@@ -164,7 +164,22 @@ public class Content {
 	public List<Post> getOrderedPosts() {
 		return postsOrdered;
 	}
-	
+	public Post getNextPost(Post p){
+		int idx = postsOrdered.indexOf(p);
+		idx++;
+		if (idx==postsOrdered.size())
+			return p;
+		else
+			return postsOrdered.get(idx);
+	}
+	public Post getPrevPost(Post p){
+		int idx = postsOrdered.indexOf(p);
+		idx--;
+		if (idx<0)
+			return p;
+		else
+			return postsOrdered.get(idx);
+	}
 	public String decodeHtml(String in){
 		return decodeHtml(in,false);
 	}
