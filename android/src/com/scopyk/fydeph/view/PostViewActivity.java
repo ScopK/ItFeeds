@@ -8,7 +8,9 @@ import com.scopyk.fydeph.R;
 import com.scopyk.fydeph.data.*;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -16,6 +18,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -32,9 +36,17 @@ public class PostViewActivity extends ActionBarActivity {
         String postid = this.getIntent().getStringExtra("postId");
         this.post = Content.get().getPost(postid);
     	Toolbar t = (Toolbar)findViewById(R.id.toolbar_actionbar);
+    	t.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(post.getLink()));
+				startActivity(browserIntent);
+			}
+ 
+    	});
     	setSupportActionBar(t);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        
+
         WebView wv = (WebView)findViewById(R.id.html_content);
         
         WebSettings ws = wv.getSettings();
@@ -58,12 +70,13 @@ public class PostViewActivity extends ActionBarActivity {
     }
     
 
-    
     private void loadPost(Post p){
         WebView wv = (WebView)findViewById(R.id.html_content);
         final String mimeType = "text/html";
         final String encoding = "UTF-8";
-        final String style = "<style>body{font-size:3em;}p,b,h1,h2,h3,h4,h5,h6,div,img{width:100%;background-color:#fff;}table{width:100wv;}table img{width:initial}</style>";//,unset
+        
+        //final String style = "<style>body{width:100wv;position:absolute;font-size:1em}p,b,h1,h2,h3,h4,h5,h6,div,img{background-color:#fff;}table{width:100wv;}table img{width:initial}</style>";//,unset
+        final String style = "<style>body{font-size:1em;}p,b,h1,h2,h3,h4,h5,h6,div,img{height:auto;width:100%;background-color:#fff;}table{width:100wv;}table img{width:initial}</style>";//,unset
         wv.loadDataWithBaseURL("", style+post.getDescription(), mimeType, encoding, "");
         
     	Toolbar t = (Toolbar)findViewById(R.id.toolbar_actionbar);   	
