@@ -363,6 +363,21 @@
 	}
 
 
+	function havePostAccess($user,$hidden,$postid){
+		global $con;
+		$stmt=mysqli_stmt_init($con);
+		if (mysqli_stmt_prepare($stmt,"SELECT u.username,f.hidden FROM users u
+										JOIN folders f ON f.user=u.username
+										JOIN feeds fe ON fe.id_folder=f.id
+										JOIN posts p ON p.id_feed=fe.id WHERE p.id=?")){
+
+			mysqli_stmt_bind_param($stmt,"s", $postid); // Bind parameters
+			mysqli_stmt_execute($stmt); // Execute query
+			mysqli_stmt_bind_result($stmt,$username,$hid); // Bind result variables
+			mysqli_stmt_fetch($stmt); // Fetch value
+		}
+		return $hid<=$hidden && $username==$user;
+	}
 
 
  	/**
