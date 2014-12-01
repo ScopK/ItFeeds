@@ -49,9 +49,14 @@ public class LoginActivity extends Activity implements APICallback {
         });
         loginSetUp();
         
-        String tokenRead = loadToken();
+        String tokenRead = load("tokensaved");
         if (tokenRead != null){
             Content.get().setToken(tokenRead);
+            save("locksaved",null);
+            String lockRead = load("locksaved");
+            if (lockRead != null){
+                Content.get().setLock(lockRead);
+            }
             Intent intentApp = new Intent(this, MainActivity.class);
             startActivity(intentApp);
         }
@@ -98,23 +103,23 @@ public class LoginActivity extends Activity implements APICallback {
 			return;
 		}
 		String tokenObtained = json.getString("token");
-		saveToken(tokenObtained);
+		save("tokensaved",tokenObtained);
 		
         Content.get().setToken(tokenObtained);
         Intent intentApp = new Intent(this, MainActivity.class);
         startActivity(intentApp);
 	}
 	
-	public void saveToken(String token){
+	public void save(String s,String token){
 	      SharedPreferences settings = getSharedPreferences("FydephPrefsFile", 0);
 	      SharedPreferences.Editor editor = settings.edit();
-	      editor.putString("tokensaved", token);
+	      editor.putString(s, token);
 	      editor.commit();
 	}
 	
-	public String loadToken(){
+	public String load(String s){
         SharedPreferences settings = getSharedPreferences("FydephPrefsFile", 0);
-        return settings.getString("tokensaved", null);
+        return settings.getString(s, null);
 	}
     
 }

@@ -60,5 +60,10 @@ public class Tag implements MenuLabel {
 	@Override
 	public String getLabel() {
 		return this.name+" ("+this.count+")";
-	}	
+	}
+	
+	@Override
+	public String getTitle() {
+		return this.name;
+	}
 }

@@ -4,12 +4,6 @@
     tools:context="com.scopyk.fydeph.MainActivity" >
     
     <item
-        android:id="@+id/action_filter"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/filters"/>
-    
-    <item
         android:id="@+id/action_unlock"
         android:orderInCategory="100"
         android:showAsAction="never"
@@ -26,6 +20,12 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/logout"/>
+    
+    <item
+        android:id="@+id/action_exit"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/exit"/>
 
   	<item android:id="@+id/action_fav"
           android:icon="@drawable/ic_unfav"

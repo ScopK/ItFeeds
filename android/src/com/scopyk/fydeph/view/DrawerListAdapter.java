@@ -5,6 +5,8 @@ import java.util.List;
 import com.scopyk.fydeph.R;
 import com.scopyk.fydeph.R.layout;
 import com.scopyk.fydeph.data.Feed;
+import com.scopyk.fydeph.data.Folder;
+import com.scopyk.fydeph.data.Label;
 import com.scopyk.fydeph.data.MenuLabel;
 
 import android.app.Activity;
@@ -49,12 +51,12 @@ public class DrawerListAdapter extends BaseAdapter {
         
         MenuLabel item = list.get(position);
 
-        if (convertView == null) {
-            if (item instanceof Feed)
-            	view = mInflater.inflate(R.layout.menuitem_normal, parent, false);
-            else
-            	view = mInflater.inflate(R.layout.menuitem_bold, parent, false);
-        } else view = convertView;
+        //if (convertView == null) {
+        	if (item instanceof Label)
+        		view = mInflater.inflate(R.layout.menuitem_title, parent, false);
+        	else
+        		view = mInflater.inflate(R.layout.menuitem_normal, parent, false);
+        //} else view = convertView;
 
         try {
 	        text = (TextView) view;

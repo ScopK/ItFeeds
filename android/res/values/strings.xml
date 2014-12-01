@@ -21,8 +21,12 @@
     <string name="order">Order</string>
     <string name="unlock">Unlock</string>
     <string name="dev_test">Test</string>
+    <string name="exit">Exit</string>
     <string name="favorite">Favorite</string>
     <string name="next">Next</string>
+    <string name="folders">Folders</string>
+    <string name="feeds">Feeds</string>
+    <string name="tags">Tags</string>
     <string name="prev">Prev</string>
     <string name="load_more">Load More</string>
 

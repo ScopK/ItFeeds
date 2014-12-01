@@ -82,5 +82,10 @@ public class Feed implements MenuLabel {
 			return this.name+" ("+this.unread+")";
 		else
 			return this.name;
+	}
+	
+	@Override
+	public String getTitle() {
+		return this.name;
 	}	
 }

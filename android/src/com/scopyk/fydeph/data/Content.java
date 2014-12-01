@@ -24,7 +24,7 @@ public class Content {
 	private HashMap<String,Tag> tags;
 	private HashMap<String,Post> posts;
 	private List<Post> postsOrdered;
-	private String token;
+	private String token,lock;
 	private int totalPosts;
 	
 	private Filter filter;
@@ -43,8 +43,15 @@ public class Content {
 		this.token = token;
 		this.filter = new Filter(token);
 	}
+	public void setLock(String lock){
+		this.lock = lock;
+		this.filter.viewUnlocked(lock);
+	}
 	public String getToken(){
 		return this.token;
+	}
+	public String getLock(){
+		return this.lock;
 	}
 	
 	public void reloadStructure(JSONObject json) throws JSONException{

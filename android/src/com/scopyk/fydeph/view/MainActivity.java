@@ -80,6 +80,10 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 					Content.get().viewFeed(ml.getId());
 				else if (ml instanceof Tag)
 					Content.get().viewTag(ml.getId());
+				else if (ml instanceof Label && ml.getLabel().equals(getString(R.string.all_posts)))
+					Content.get().viewAll();
+				else return;
+				setTitle(ml.getTitle());
 				new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
 				setLoading(true);
 				((DrawerLayout)findViewById(R.id.drawer_layout)).closeDrawers();
@@ -119,7 +123,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 			}
         });
 		*/
-        new APICall(this).execute("arch?token="+Content.get().getToken());
+        new APICall(this).execute("arch?token="+Content.get().getToken()+"&lock="+Content.get().getLock());
     }
 	
 	@Override
@@ -162,25 +166,39 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 	
 	public void updateDrawer(){
         ListView drawer = (ListView) findViewById(R.id.drawer);
-        //DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		
         drawerOptions = new ArrayList<MenuLabel>();
-        Collection<Folder> values = Content.get().getFolders().values();
+        Collection<Folder> folders = Content.get().getFolders().values();
         
         Folder fnull = null;
-        for (Folder f : values){
+        for (Folder f : folders){
         	if (f.getName().equals("null"))
         		fnull = f;
         	else
         		drawerOptions.add(f);
         }
 		Collections.sort(drawerOptions, new LabelComparator());
+		
+        drawerOptions.add(0,new Label(getString(R.string.folders)));
+        drawerOptions.add(0,new Label(getString(R.string.all_posts)));
+		drawerOptions.add(new Label(getString(R.string.feeds)));
+		
         if (fnull != null){
         	Collections.sort(fnull.getFeeds(), new LabelComparator());
 	        for (Feed f : fnull.getFeeds()){
 	        	drawerOptions.add(f);
 	        }
         }
+        
+        drawerOptions.add(new Label(getString(R.string.tags)));
+        
+        List<Tag> tags = new ArrayList<Tag>(Content.get().getTags().values());
+        Collections.sort(tags, new LabelComparator());
+        
+        for (Tag t : tags){
+        	drawerOptions.add(t);
+        }
+        
         drawer.setAdapter(new DrawerListAdapter(this, android.R.id.text1, drawerOptions));
 	}
 	
@@ -222,9 +240,11 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 		      editor.commit();
 		      finish();
 		      break;
-	        case R.id.action_filter:
 	        case R.id.action_settings:
 	        case R.id.action_unlock:
+	        	break;
+	        case R.id.action_exit:
+	        	moveTaskToBack(true);
 	        	break;
 	        case R.id.action_unread:
 	        	boolean u = Content.get().toggleUnread();
@@ -248,7 +268,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 				setLoading(true);
 	        	break;
 	        default:
-	        		return true;
+	        	return true;
         }
 
         return super.onOptionsItemSelected(item);
