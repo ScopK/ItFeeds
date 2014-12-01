@@ -55,7 +55,10 @@
 
 	if (isset($done)){
 		header("Content-Type: application/json; charset=utf-8");
-		die("{\"ok\":\"ok\"}");
+		if (isset($unread))
+			die("{\"unread\":\"$value\"}");
+		else
+			die("{\"favorite\":\"$value\"}");
 	} else {
 		header("Content-Type: application/json; charset=utf-8");
 		die("{\"error\":\"Incorrect data entered\"}");
