@@ -12,33 +12,59 @@ import com.scopyk.fydeph.R;
 import com.scopyk.fydeph.data.*;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
+import android.view.View.OnTouchListener;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PostViewActivity extends ActionBarActivity implements APICallback {
 
 	private Post post;
 	private Menu menu;
+	
+	private WebView wv;
+	
+	//Mouse Events DoubleTap:
+    int clickCount = 0;
+    long startTime = 0;
+    static final int MAX_DURATION = 1000;
+    static final int MIN_DURATION = 500;
+    private float lastScrollX,lastX;
+    private int moveDragStepL = 0;
+    private int moveDragStepR = 0;
+    private int screenWidth = 0;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postviewer);
+        
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        screenWidth = size.x;
         
         String postid = this.getIntent().getStringExtra("postId");
         this.post = Content.get().getPost(postid);
@@ -53,7 +79,7 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
     	setSupportActionBar(t);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        WebView wv = (WebView)findViewById(R.id.html_content);
+        wv = (WebView)findViewById(R.id.html_content);
         
         WebSettings ws = wv.getSettings();
         wv.setHorizontalScrollBarEnabled(false);
@@ -64,7 +90,7 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
         ws.setSupportZoom(true); 
         ws.setLoadWithOverviewMode(true);
         ws.setDisplayZoomControls(false);
-        
+
         wv.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -73,8 +99,59 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
             }
         });
         loadPost(post);
+        wv.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+		        switch(event.getAction() & MotionEvent.ACTION_MASK){
+			        case MotionEvent.ACTION_DOWN:
+			        	if ((System.currentTimeMillis() - startTime)>MAX_DURATION){
+			        		startTime = System.currentTimeMillis();
+			        		clickCount=1;
+			        	} else {
+			        		clickCount++;
+			        	}
+
+			            lastScrollX=wv.getScrollX();
+			            lastX=event.getX();
+			            moveDragStepL=1;
+			            moveDragStepR=1;
+			            break;
+			        case MotionEvent.ACTION_MOVE:
+			        	if (moveDragStepL==1 && wv.getScrollX()==lastScrollX && event.getX()<lastX)
+			        		moveDragStepL=2;
+			        	else if (moveDragStepR==1 && wv.getScrollX()==lastScrollX && event.getX()>lastX)
+			        		moveDragStepR=2;
+			        	break;
+			        case MotionEvent.ACTION_UP:
+			            if (moveDragStepL==2 && wv.getScrollX()==lastScrollX && event.getX()<(lastX-screenWidth/2.5)){
+				        	post = Content.get().getNextPost(post);
+				        	loadPost(post);
+				        	markAsRead();
+			            }
+			            else if (moveDragStepR==2 && wv.getScrollX()==lastScrollX && event.getX()>(lastX+screenWidth/2.5)){
+				        	post = Content.get().getPrevPost(post);
+				        	loadPost(post);
+				        	//markAsRead();
+			            }
+			            /*else if (clickCount==2){
+			            	long duration = System.currentTimeMillis() - startTime;
+			                if(MIN_DURATION <= duration && duration<= MAX_DURATION){
+			                    toggleUnread();
+			                }
+			                clickCount = 0;
+			                duration = 0;   
+			                return true;
+			            }*/
+			            moveDragStepL=0;
+			            moveDragStepR=0;
+		                break;
+		        }
+		        return false;  
+			}
+        });
     }
-    
+
+   
 
     private void loadPost(Post p){
         WebView wv = (WebView)findViewById(R.id.html_content);
@@ -100,6 +177,7 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
         getMenuInflater().inflate(R.menu.post_menu, menu);
         this.menu = menu;
         updateIcons();
+    	markAsRead();
         return true;
     }
     
@@ -122,44 +200,61 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 	        case R.id.action_prev:
 	        	post = Content.get().getPrevPost(post);
 	        	loadPost(post);
+	        	markAsRead();
 	        	break;
 	        case R.id.action_next:
 	        	post = Content.get().getNextPost(post);
 	        	loadPost(post);
+	        	markAsRead();
 	        	break;
 	        case R.id.action_unread:
-	        	String l="token="+Content.get().getToken()+"&postid="+post.getId()+"&unread=";
-	        	if (post.getUnread()) 	l+="0";
-	        	else					l+="1";
-	        	new APICall(PostViewActivity.this).execute("update_post?"+l,"1");
+	        	toggleUnread();
 	        	break;
 	        case R.id.action_fav:
-	        	String f="token="+Content.get().getToken()+"&postid="+post.getId()+"&fav=";
-	        	if (post.getFavorite()) 	f+="0";
-	        	else					f+="1";
-	        	new APICall(PostViewActivity.this).execute("update_post?"+f,"2");
+	        	toggleFavorite();
 	        	break;
 	        default:
 	        	finish();
 	        	return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
 	@Override
-	public void APIResponse(JSONObject json, int id) throws JSONException {
+	public void APIResponse(JSONObject json, int id, APICall parent) throws JSONException {
+		Post p = (Post) parent.getContent();
 		switch (id){
 			case 1:	//unread
 				int i = json.getInt("unread");
-				post.setUnread(i==1);
-				updateIcons();
+				p.setUnread(i==1);
+				if (p==post) updateIcons();
 				break;
 			case 2:	//fav
 				int j = json.getInt("favorite");
-				post.setFavorite(j==1);
-				updateIcons();
+				p.setFavorite(j==1);
+				if (p==post) updateIcons();
 				break;
+		}
+	}
+	
+	private void toggleFavorite(){
+    	String f="token="+Content.get().getToken()+"&postid="+post.getId()+"&fav=";
+    	if (post.getFavorite()) 	f+="0";
+    	else					f+="1";
+    	new APICall(PostViewActivity.this,post).execute("update_post?"+f,"2");
+	}
+	
+	private void toggleUnread(){
+    	String l="token="+Content.get().getToken()+"&postid="+post.getId()+"&unread=";
+    	if (post.getUnread()) 	l+="0";
+    	else					l+="1";
+    	new APICall(PostViewActivity.this,post).execute("update_post?"+l,"1");
+	}
+	
+	private void markAsRead(){
+		if (post.getUnread()){
+			String l="token="+Content.get().getToken()+"&postid="+post.getId()+"&unread=0";
+			new APICall(PostViewActivity.this,post).execute("update_post?"+l,"1");
 		}
 	}
 }

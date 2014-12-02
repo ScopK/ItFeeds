@@ -20,10 +20,16 @@ public class APICall extends AsyncTask<String, Void, String> {
 	private final String APIROOT = "http://192.168.1.7:8082/api/1.0/";
     private APICallback callback;
     private int callId;
+    private Object content;
     
     public APICall(APICallback c){
     	super();
     	callback=c;
+    }
+    
+    public APICall(APICallback c, Object content){
+    	this(c);
+    	this.content=content;
     }
 
     protected String doInBackground(String... params) {
@@ -52,7 +58,7 @@ public class APICall extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String response) {
     	try {
 			JSONObject json = new JSONObject(response);
-			callback.APIResponse(json,callId);
+			callback.APIResponse(json,callId,this);
 		} catch (JSONException e) {
         	Toast.makeText(callback.getApplicationContext(), "JSON ERROR", Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
@@ -61,6 +67,13 @@ public class APICall extends AsyncTask<String, Void, String> {
 			if (!errorResponse.equals(response))
 				onPostExecute(errorResponse);
 		}
-
+    }
+    
+    public void setContent(Object content){
+    	this.content = content;
+    }
+    
+    public Object getContent(){
+    	return this.content;
     }
 }

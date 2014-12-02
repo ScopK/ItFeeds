@@ -9,7 +9,7 @@
           android:title="@string/favorite"
           
           app:showAsAction="always"
-          android:enabled="true" android:visible="true"/>
+          android:enabled="true" android:visible="false"/>
     
 
   	<item android:id="@+id/action_fav"
@@ -31,6 +31,6 @@
           android:title="@string/favorite"
           
           app:showAsAction="always"
-          android:enabled="true" android:visible="true"/>
+          android:enabled="true" android:visible="false"/>
 
 </menu>

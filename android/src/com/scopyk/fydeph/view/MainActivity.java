@@ -34,6 +34,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements APICallback {
 
@@ -127,7 +128,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
     }
 	
 	@Override
-	public void APIResponse(JSONObject json, int id) throws JSONException {
+	public void APIResponse(JSONObject json, int id, APICall parent) throws JSONException {
 		switch(id){
 			case 0: // ARCH
 				Content.get().reloadStructure(json);
@@ -304,6 +305,12 @@ public class MainActivity extends ActionBarActivity implements APICallback {
         dl.setDrawerListener(mDrawerToggle);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+    }
+    
+    @Override
+    public void onResume(){
+    	super.onResume();
+    	if (postListAdapter!=null)
+    		postListAdapter.notifyDataSetChanged();
     }
 }

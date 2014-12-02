@@ -87,7 +87,7 @@ public class LoginActivity extends Activity implements APICallback {
     }
     
 	@Override
-	public void APIResponse(JSONObject json, int id) throws JSONException {
+	public void APIResponse(JSONObject json, int id, APICall parent) throws JSONException {
 		Button button = (Button) findViewById(R.id.goLogin);
     	button.setText(R.string.login);
     	button.setEnabled(true);
