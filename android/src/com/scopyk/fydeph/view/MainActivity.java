@@ -161,6 +161,13 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 		        postListAdapter.notifyDataSetChanged();
 				setLoading(false);
 				break;
+				
+			case 3: // Unlock
+				String lockToken = json.getString("locktoken");
+				Content.get().setLock(lockToken);
+		        new APICall(this).execute("arch?token="+Content.get().getToken()+"&lock="+Content.get().getLock());
+		        setLoadingScreen(true);
+				break;
 		}
 			
 	}
@@ -243,6 +250,8 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 		      break;
 	        case R.id.action_settings:
 	        case R.id.action_unlock:
+	        	LockDialog cdd=new LockDialog(this);
+	        	cdd.show();
 	        	break;
 	        case R.id.action_exit:
 	        	moveTaskToBack(true);
@@ -312,5 +321,15 @@ public class MainActivity extends ActionBarActivity implements APICallback {
     	super.onResume();
     	if (postListAdapter!=null)
     		postListAdapter.notifyDataSetChanged();
+    }
+    
+    public void setLock(String lock){
+    	new APICall(this).execute("unlock?token="+Content.get().getToken()+"&pass="+lock,"3");
+    }
+    
+    public void removeLock(){
+    	Content.get().setLock("");
+        new APICall(this).execute("arch?token="+Content.get().getToken()+"&lock="+Content.get().getLock());
+        setLoadingScreen(true);
     }
 }

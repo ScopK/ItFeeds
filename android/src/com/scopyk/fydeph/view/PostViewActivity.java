@@ -123,12 +123,12 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 			        		moveDragStepR=2;
 			        	break;
 			        case MotionEvent.ACTION_UP:
-			            if (moveDragStepL==2 && wv.getScrollX()==lastScrollX && event.getX()<(lastX-screenWidth/2.5)){
+			            if (moveDragStepL==2 && wv.getScrollX()==lastScrollX && event.getX()<(lastX-screenWidth/3)){
 				        	post = Content.get().getNextPost(post);
 				        	loadPost(post);
 				        	markAsRead();
 			            }
-			            else if (moveDragStepR==2 && wv.getScrollX()==lastScrollX && event.getX()>(lastX+screenWidth/2.5)){
+			            else if (moveDragStepR==2 && wv.getScrollX()==lastScrollX && event.getX()>(lastX+screenWidth/3)){
 				        	post = Content.get().getPrevPost(post);
 				        	loadPost(post);
 				        	//markAsRead();
@@ -238,14 +238,14 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 	}
 	
 	private void toggleFavorite(){
-    	String f="token="+Content.get().getToken()+"&postid="+post.getId()+"&fav=";
+    	String f="token="+Content.get().getToken()+"&lock="+Content.get().getLock()+"&postid="+post.getId()+"&fav=";
     	if (post.getFavorite()) 	f+="0";
     	else					f+="1";
     	new APICall(PostViewActivity.this,post).execute("update_post?"+f,"2");
 	}
 	
 	private void toggleUnread(){
-    	String l="token="+Content.get().getToken()+"&postid="+post.getId()+"&unread=";
+    	String l="token="+Content.get().getToken()+"&lock="+Content.get().getLock()+"&postid="+post.getId()+"&unread=";
     	if (post.getUnread()) 	l+="0";
     	else					l+="1";
     	new APICall(PostViewActivity.this,post).execute("update_post?"+l,"1");
@@ -253,7 +253,7 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 	
 	private void markAsRead(){
 		if (post.getUnread()){
-			String l="token="+Content.get().getToken()+"&postid="+post.getId()+"&unread=0";
+			String l="token="+Content.get().getToken()+"&lock="+Content.get().getLock()+"&postid="+post.getId()+"&unread=0";
 			new APICall(PostViewActivity.this,post).execute("update_post?"+l,"1");
 		}
 	}
