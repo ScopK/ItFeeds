@@ -16,6 +16,9 @@ import com.scopyk.fydeph.R;
 import com.scopyk.fydeph.data.*;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -28,11 +31,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
+import android.text.InputType;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -40,6 +48,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 
 	private List<MenuLabel> drawerOptions;
 	private PostListAdapter postListAdapter;
+	private DrawerListAdapter drawerListAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 	
     @Override
@@ -66,7 +75,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 				}
 		        Intent intentApp = new Intent(MainActivity.this, PostViewActivity.class);
 				intentApp.putExtra("postId", (String)p.getId());
-		        startActivity(intentApp);
+				startActivityForResult(intentApp,37);
 			}
 		});  
 
@@ -152,12 +161,10 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 			case 2: // GetMorePosts
 				int idx = Content.get().getOrderedPosts().size();
 				Content.get().addPosts(json);
-
 				List<Post> posts = Content.get().getOrderedPosts();
 				for (int j=idx;j<posts.size();j++){
 					postListAdapter.add(posts.get(j));
 				}
-				
 		        postListAdapter.notifyDataSetChanged();
 				setLoading(false);
 				break;
@@ -171,6 +178,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 		}
 			
 	}
+
 	
 	public void updateDrawer(){
         ListView drawer = (ListView) findViewById(R.id.drawer);
@@ -207,7 +215,8 @@ public class MainActivity extends ActionBarActivity implements APICallback {
         	drawerOptions.add(t);
         }
         
-        drawer.setAdapter(new DrawerListAdapter(this, android.R.id.text1, drawerOptions));
+        drawerListAdapter = new DrawerListAdapter(this, android.R.id.text1, drawerOptions);
+        drawer.setAdapter(drawerListAdapter);
 	}
 	
 	public void setLoadingScreen(boolean val){
@@ -248,7 +257,8 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 		      editor.commit();
 		      finish();
 		      break;
-	        case R.id.action_settings:
+	        case R.id.action_settings:	        	
+	        	break;
 	        case R.id.action_unlock:
 	        	LockDialog cdd=new LockDialog(this);
 	        	cdd.show();
@@ -321,7 +331,24 @@ public class MainActivity extends ActionBarActivity implements APICallback {
     	super.onResume();
     	if (postListAdapter!=null)
     		postListAdapter.notifyDataSetChanged();
+    	if (drawerListAdapter!=null)
+    		drawerListAdapter.notifyDataSetChanged();
     }
+    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 37 && resultCode == 21) {
+			int idx = postListAdapter.getPostsCount();//Content.get().getOrderedPosts().size();
+			List<Post> posts = Content.get().getOrderedPosts();
+			for (int j=idx;j<posts.size();j++){
+				postListAdapter.add(posts.get(j));
+			}
+			
+	        postListAdapter.notifyDataSetChanged();
+        }
+   }
     
     public void setLock(String lock){
     	new APICall(this).execute("unlock?token="+Content.get().getToken()+"&pass="+lock,"3");

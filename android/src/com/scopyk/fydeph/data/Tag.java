@@ -56,7 +56,9 @@ public class Tag implements MenuLabel {
 	public String getName() {
 		return name;
 	}
-	
+	public void addCount(int c){
+		this.count += c;
+	}
 	@Override
 	public String getLabel() {
 		return this.name+" ("+this.count+")";

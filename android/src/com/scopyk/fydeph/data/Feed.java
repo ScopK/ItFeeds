@@ -75,7 +75,9 @@ public class Feed implements MenuLabel {
 	public void setRssLink(String rssLink) {
 		this.rssLink = rssLink;
 	}
-	
+	public void addCount(int c){
+		this.unread += c;
+	}
 	@Override
 	public String getLabel() {
 		if (this.unread > 0)

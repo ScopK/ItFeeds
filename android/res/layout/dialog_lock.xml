@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@android:style/Theme.Holo.Dialog.NoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/insert_lock"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
         android:id="@+id/lockField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:imeOptions="actionDone"
         android:inputType="textPassword" >
 
         <requestFocus />
@@ -27,25 +22,29 @@
         android:layout_weight="1" >
 
         <Button
-            android:id="@+id/confirmlock_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/confirm" />
-
-        <Button
             android:id="@+id/cancellock_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/cancel" />
+            android:layout_weight="0.5"
+            android:text="@string/cancel"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <Button
             android:id="@+id/removelock_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/remove_lock" />
+            android:text="@string/remove_lock"
+   			android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+        <Button
+            android:id="@+id/confirmlock_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/confirm"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
     </LinearLayout>
 
 </LinearLayout>

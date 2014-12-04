@@ -46,6 +46,8 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 	
 	private WebView wv;
 	
+	private boolean addedPosts;
+	
 	//Mouse Events DoubleTap:
     int clickCount = 0;
     long startTime = 0;
@@ -60,6 +62,8 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postviewer);
+        addedPosts=false;
+        
         
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -95,7 +99,7 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-            	//Toast.makeText(ViewerActivity.this.getApplicationContext(), newProgress+"", 1).show();
+                //findViewById(R.id.loading_icon).setVisibility(View.INVISIBLE);
             }
         });
         loadPost(post);
@@ -124,14 +128,10 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 			        	break;
 			        case MotionEvent.ACTION_UP:
 			            if (moveDragStepL==2 && wv.getScrollX()==lastScrollX && event.getX()<(lastX-screenWidth/3)){
-				        	post = Content.get().getNextPost(post);
-				        	loadPost(post);
-				        	markAsRead();
+				        	nextPost();
 			            }
 			            else if (moveDragStepR==2 && wv.getScrollX()==lastScrollX && event.getX()>(lastX+screenWidth/3)){
-				        	post = Content.get().getPrevPost(post);
-				        	loadPost(post);
-				        	//markAsRead();
+			            	prevPost();
 			            }
 			            /*else if (clickCount==2){
 			            	long duration = System.currentTimeMillis() - startTime;
@@ -150,8 +150,6 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 			}
         });
     }
-
-   
 
     private void loadPost(Post p){
         WebView wv = (WebView)findViewById(R.id.html_content);
@@ -198,14 +196,10 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
         int id = item.getItemId();
         switch(id){
 	        case R.id.action_prev:
-	        	post = Content.get().getPrevPost(post);
-	        	loadPost(post);
-	        	markAsRead();
+	        	prevPost();
 	        	break;
 	        case R.id.action_next:
-	        	post = Content.get().getNextPost(post);
-	        	loadPost(post);
-	        	markAsRead();
+	        	nextPost();
 	        	break;
 	        case R.id.action_unread:
 	        	toggleUnread();
@@ -220,13 +214,43 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
         return super.onOptionsItemSelected(item);
     }
 
+    public void nextPost(){
+    	Post pnext = Content.get().getNextPost(post);
+    	if (pnext==post){
+    		new APICall(PostViewActivity.this).execute(Content.get().getQuery(post.getId()),"3");
+    	} else {
+    		post = pnext;
+        	loadPost(post);
+        	markAsRead();
+    	}
+    }
+    
+    public void prevPost(){
+    	Post pprev = Content.get().getPrevPost(post);
+    	if (pprev==post){
+    	} else {
+    		post = pprev;
+        	loadPost(post);
+        	//markAsRead();
+    	}
+    }
+    
 	@Override
 	public void APIResponse(JSONObject json, int id, APICall parent) throws JSONException {
+    	findViewById(R.id.loading_icon).setVisibility(View.INVISIBLE);
 		Post p = (Post) parent.getContent();
 		switch (id){
 			case 1:	//unread
 				int i = json.getInt("unread");
-				p.setUnread(i==1);
+				if (i==1){
+					p.setUnread(true);
+					post.getFeed().addCount(1);
+					post.getFeed().getFolder().addCount(1);
+				} else {
+					p.setUnread(false);
+					post.getFeed().addCount(-1);
+					post.getFeed().getFolder().addCount(-1);
+				}
 				if (p==post) updateIcons();
 				break;
 			case 2:	//fav
@@ -234,10 +258,18 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 				p.setFavorite(j==1);
 				if (p==post) updateIcons();
 				break;
+			case 3:	//loadmore
+				Content.get().addPosts(json);
+	        	addedPosts=true;
+				post = Content.get().getNextPost(post);
+	        	loadPost(post);
+	        	markAsRead();
+				break;
 		}
 	}
 	
 	private void toggleFavorite(){
+		findViewById(R.id.loading_icon).setVisibility(View.VISIBLE);
     	String f="token="+Content.get().getToken()+"&lock="+Content.get().getLock()+"&postid="+post.getId()+"&fav=";
     	if (post.getFavorite()) 	f+="0";
     	else					f+="1";
@@ -245,6 +277,7 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 	}
 	
 	private void toggleUnread(){
+		findViewById(R.id.loading_icon).setVisibility(View.VISIBLE);
     	String l="token="+Content.get().getToken()+"&lock="+Content.get().getLock()+"&postid="+post.getId()+"&unread=";
     	if (post.getUnread()) 	l+="0";
     	else					l+="1";
@@ -253,8 +286,18 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 	
 	private void markAsRead(){
 		if (post.getUnread()){
+			findViewById(R.id.loading_icon).setVisibility(View.VISIBLE);
 			String l="token="+Content.get().getToken()+"&lock="+Content.get().getLock()+"&postid="+post.getId()+"&unread=0";
 			new APICall(PostViewActivity.this,post).execute("update_post?"+l,"1");
 		}
+	}
+	
+	@Override
+	public void finish(){
+		if (addedPosts){
+			Intent resultIntent = new Intent();
+			setResult(21, resultIntent);
+		}
+		super.finish();
 	}
 }

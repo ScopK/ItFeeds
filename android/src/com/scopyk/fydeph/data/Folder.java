@@ -56,7 +56,9 @@ public class Folder implements MenuLabel {
 	public String getName(){
 		return this.name;
 	}
-
+	public void addCount(int c){
+		this.unread += c;
+	}
 	@Override
 	public String getLabel() {
 		if (this.unread > 0)

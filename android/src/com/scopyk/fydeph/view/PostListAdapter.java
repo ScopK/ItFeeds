@@ -69,6 +69,13 @@ public class PostListAdapter extends BaseAdapter {
 		 }
 	 }
 	 
+	 public int getPostsCount() {
+		 if (this.hasLoadMore)
+			 return list.size()-1;
+		 else
+			 return list.size();
+	 }
+	 
 	 public int getCount() {
 		 return list.size();
 	 }
