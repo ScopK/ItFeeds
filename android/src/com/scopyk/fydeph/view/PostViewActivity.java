@@ -47,6 +47,7 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 	private WebView wv;
 	
 	private boolean addedPosts;
+	private boolean loadingNewPosts;
 	
 	//Mouse Events DoubleTap:
     int clickCount = 0;
@@ -63,8 +64,9 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postviewer);
         addedPosts=false;
+        loadingNewPosts=false;
         
-        
+		findViewById(R.id.loading_icon).setVisibility(View.INVISIBLE);
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -217,7 +219,10 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
     public void nextPost(){
     	Post pnext = Content.get().getNextPost(post);
     	if (pnext==post){
-    		new APICall(PostViewActivity.this).execute(Content.get().getQuery(post.getId()),"3");
+    		if (!loadingNewPosts){
+	    		new APICall(PostViewActivity.this).execute(Content.get().getQuery(post.getId()),"3");
+	    		loadingNewPosts=true;
+    		}
     	} else {
     		post = pnext;
         	loadPost(post);
@@ -259,6 +264,7 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 				if (p==post) updateIcons();
 				break;
 			case 3:	//loadmore
+				loadingNewPosts = false;
 				Content.get().addPosts(json);
 	        	addedPosts=true;
 				post = Content.get().getNextPost(post);

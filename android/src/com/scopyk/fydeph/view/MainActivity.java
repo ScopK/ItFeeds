@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -50,6 +51,8 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 	private PostListAdapter postListAdapter;
 	private DrawerListAdapter drawerListAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private Folder selectedFolder;
+    
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,18 +87,51 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				MenuLabel ml = drawerOptions.get(arg2);
-				if (ml instanceof Folder)
-					Content.get().viewFolder(ml.getId());
-				else if (ml instanceof Feed)
+				if (ml instanceof Folder){
+					//Content.get().viewFolder(ml.getId());
+					selectedFolder = (Folder) ml;
+					List<CharSequence> a = new ArrayList<CharSequence>();
+					a.add("All posts");
+					for (Feed feed:selectedFolder.getFeeds()){
+						a.add(feed.getLabel());
+					}
+					
+					CharSequence[] titles = a.toArray(new CharSequence[a.size()]);
+					AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivity.this, android.R.style.Theme_Holo_Dialog));
+					builder.setTitle(R.string.feed_prompt);
+					builder.setItems(titles, new DialogInterface.OnClickListener() {
+					    @Override
+					    public void onClick(DialogInterface dialog, int which) {
+					    	if (which==0){
+					    		Content.get().viewFolder(selectedFolder.getId());
+					    		setTitle(selectedFolder.getTitle());	
+					    	} else {
+						    	Feed f = selectedFolder.getFeeds().get(which-1);
+								Content.get().viewFeed(f.getId());
+								setTitle(f.getTitle());
+					    	}
+							new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
+							setLoading(true);
+					    }
+					});
+					builder.show();
+				} else if (ml instanceof Feed) {
 					Content.get().viewFeed(ml.getId());
-				else if (ml instanceof Tag)
+					setTitle(ml.getTitle());
+					new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
+					setLoading(true);
+				} else if (ml instanceof Tag) {
 					Content.get().viewTag(ml.getId());
-				else if (ml instanceof Label && ml.getLabel().equals(getString(R.string.all_posts)))
+					setTitle(ml.getTitle());
+					new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
+					setLoading(true);
+				} else if (ml instanceof Label && ml.getLabel().equals(getString(R.string.all_posts))) {
 					Content.get().viewAll();
-				else return;
-				setTitle(ml.getTitle());
-				new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
-				setLoading(true);
+					setTitle(ml.getTitle());
+					new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
+					setLoading(true);
+				} else return;
+
 				((DrawerLayout)findViewById(R.id.drawer_layout)).closeDrawers();
 			}
 		});
@@ -135,7 +171,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 		*/
         new APICall(this).execute("arch?token="+Content.get().getToken()+"&lock="+Content.get().getLock());
     }
-	
+
 	@Override
 	public void APIResponse(JSONObject json, int id, APICall parent) throws JSONException {
 		switch(id){
@@ -263,6 +299,10 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 	        	LockDialog cdd=new LockDialog(this);
 	        	cdd.show();
 	        	break;
+	        case R.id.action_reload:
+		        new APICall(this).execute("arch?token="+Content.get().getToken()+"&lock="+Content.get().getLock());
+		        setLoadingScreen(true);
+		        break;
 	        case R.id.action_exit:
 	        	moveTaskToBack(true);
 	        	break;
@@ -334,6 +374,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
     	if (drawerListAdapter!=null)
     		drawerListAdapter.notifyDataSetChanged();
     }
+
     
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

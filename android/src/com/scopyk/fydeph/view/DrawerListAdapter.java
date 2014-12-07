@@ -11,11 +11,14 @@ import com.scopyk.fydeph.data.MenuLabel;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class DrawerListAdapter extends BaseAdapter {
@@ -52,9 +55,17 @@ public class DrawerListAdapter extends BaseAdapter {
         MenuLabel item = list.get(position);
 
         //if (convertView == null) {
-        	if (item instanceof Label)
+        	if (item instanceof Label) {
         		view = mInflater.inflate(R.layout.menuitem_title, parent, false);
-        	else
+        		Label l=(Label)item;
+        		if (!l.getLabel().equals(activity.getString(R.string.all_posts))){
+        			((TextView) view).setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        			view.setPadding(view.getPaddingLeft(),
+        							view.getPaddingTop(),
+        							view.getPaddingRight(), 
+        							5);
+        		}
+        	} else
         		view = mInflater.inflate(R.layout.menuitem_normal, parent, false);
         //} else view = convertView;
 

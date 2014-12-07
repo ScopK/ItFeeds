@@ -1,65 +1,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/non"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-<include
-    android:id="@+id/toolbar_actionbar"
-    layout="@layout/toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
 
-<android.support.v4.widget.DrawerLayout 
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
- 
-<!-- Contenido principal -->
+    <include
+        android:id="@+id/toolbar_actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/toolbar" />
 
-<TextView
-    android:id="@+id/loadingtext"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#333"
-    android:gravity="center"
-    android:paddingTop="30dp"
-    android:text="@string/loading"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:textColor="#fff"
-    android:visibility="invisible" />
- 
-<LinearLayout
-    android:id="@+id/posts_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
-    
-	<android.support.v4.widget.SwipeRefreshLayout
-	    android:id="@+id/swiperefresh"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent" >
-	 	
-	    <ListView
-	        android:id="@+id/postlistview"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content" >
-	    </ListView>
-    
-    </android.support.v4.widget.SwipeRefreshLayout>
+        <!-- Contenido principal -->
 
+        <TextView
+            android:id="@+id/loadingtext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#333"
+            android:gravity="center"
+            android:paddingTop="30dp"
+            android:text="@string/loading"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#fff"
+            android:visibility="invisible" />
 
- </LinearLayout>
- 
-<!-- Navigation Drawer -->
- 
-<ListView
-    android:id="@+id/drawer"
-    android:layout_width="300dp"
-    android:layout_height="match_parent"
-    android:layout_gravity="left"
-    android:background="#EEE"/>
- 
-</android.support.v4.widget.DrawerLayout>
+        <LinearLayout
+            android:id="@+id/posts_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swiperefresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <ListView
+                    android:id="@+id/postlistview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/post_line_item" >
+                </ListView>
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </LinearLayout>
+
+        <!-- Navigation Drawer -->
+
+        <ListView
+            android:id="@+id/drawer"
+            android:layout_width="300dp"
+            android:dividerHeight="0dp"
+            android:divider="#00000000"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:background="#EEE" />
+    </android.support.v4.widget.DrawerLayout>
+
 </LinearLayout>
