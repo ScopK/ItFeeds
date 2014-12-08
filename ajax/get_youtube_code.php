@@ -11,32 +11,38 @@
 	$post = getPost($id,false);
 	$code = "";
 
-	$pattern = '/youtube.com\/(?:embed\/|v\/|watch\?v=)(\w{11,15})/';
+	$patternyoutube		= '/youtube.com\/(?:embed\/|v\/|watch\?v=)(\w{11,15})/';
+	$patternsoundcloud 	= '/api.soundcloud.com\/((?:playlists|tracks)\/\w*)/';
 
-	preg_match($pattern,$post->link,$matches);
+	$youtube = array();
+	$soundcloud = array();
+
+	preg_match($patternyoutube,$post->link,$matches);
 	if (count($matches)>0){
-		if (is_array($matches[1]))
-			echo json_encode($matches[1]);
-		else
-			echo "[".json_encode($matches[1])."]";
+		echo json_encode($matches[1]);
 		die();
 	}
-	preg_match($pattern,$post->description,$matches);
+	preg_match($patternyoutube,$post->description,$matches);
 	if (count($matches)>0){
-		if (is_array($matches[1]))
-			echo json_encode($matches[1]);
-		else
-			echo "[".json_encode($matches[1])."]";
+		echo json_encode($matches[1]);
 		die();
 	}
+
 
 	$page = file_get_contents($post->link);
-	preg_match_all($pattern,$page,$matches);
+	preg_match_all($patternyoutube,$page,$matches);
 	if (count($matches)>0){
-		if (is_array($matches[1]))
-			echo json_encode($matches[1]);
-		else
-			echo "[".json_encode($matches[1])."]";
+		$youtube = $matches[1];
+	}
+
+	preg_match_all($patternsoundcloud,$page,$matches);
+	if (count($matches)>0){
+		$soundcloud = $matches[1];
+	}
+
+	$result = array_merge($youtube, $soundcloud);
+	if (count($result)>0){
+		echo json_encode($result);
 		die();
 	}
 

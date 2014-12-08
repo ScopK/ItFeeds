@@ -112,12 +112,14 @@ function searchYoutubeVideo(){
 			data: "postid="+id,
 			dataType : "json",
 			success: function(result){
-				console.log(result);
 				if (result.length>0){
 					videos=result;
 					idxVideo=0;
 					$("#youtube_viewer_dialog").show();
-					var html = "<iframe src='http://www.youtube.com/embed/"+result[0]+"' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
+					if (result[0].indexOf("/")>=0)
+						var html = "<iframe src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+result[0]+"' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
+					else
+						var html = "<iframe src='http://www.youtube.com/embed/"+result[0]+"' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
 					$("#youtube_td").html(html);
 					$("#counter_videos").html(1+"/"+result.length);
 				} else {
@@ -143,9 +145,12 @@ function nextVideo(){
 		idxVideo++;
 		if (idxVideo==videos.length)
 			idxVideo=0;
-		var html = "<iframe src='http://www.youtube.com/embed/"+videos[idxVideo]+"' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
+		if (videos[idxVideo].indexOf("/")>=0)
+			var html = "<iframe src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+videos[idxVideo]+"' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
+		else
+			var html = "<iframe src='http://www.youtube.com/embed/"+videos[idxVideo]+"' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
 		$("#youtube_td").html(html);
-		$("#counter_videos").html((idxVideo+1)+"/"+result.length);
+		$("#counter_videos").html((idxVideo+1)+"/"+videos.length);
 	}
 }
 
