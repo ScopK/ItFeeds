@@ -40,6 +40,9 @@ $(document).ready(function(){
 		    case 70: //f
 		    	toggleLateralMenu();
 		    	break;
+		    case 89: //y
+		    	searchYoutubeVideo();
+		    	break;
 		    case 71: //g
 		    	change_postsmode();
 		    	return false;

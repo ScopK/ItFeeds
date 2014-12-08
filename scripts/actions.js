@@ -101,6 +101,54 @@ function showAddTagsDialog(idx){
 	}
 }
 
+var videos;
+var idxVideo;
+function searchYoutubeVideo(){
+	if (postIdxSelected>0){
+		var id = posts[postIdxSelected-1]['id'];
+		$.ajax({
+			url: "./ajax/get_youtube_code.php",
+			type: "GET",
+			data: "postid="+id,
+			dataType : "json",
+			success: function(result){
+				console.log(result);
+				if (result.length>0){
+					videos=result;
+					idxVideo=0;
+					$("#youtube_viewer_dialog").show();
+					var html = "<iframe src='http://www.youtube.com/embed/"+result[0]+"' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
+					$("#youtube_td").html(html);
+					$("#counter_videos").html(1+"/"+result.length);
+				} else {
+					showMessage("No videos were found");
+				}
+			},
+			error: function (request, status, error){
+				if (request.responseText=="Code not found"){
+					showMessage("No videos were found");	
+				} else {
+					showMessage("JS Error "+request.status+": "+request.responseText);
+				}
+			},
+			complete: function(){
+				//loading_stop();
+			}
+		});
+	}
+}
+
+function nextVideo(){
+	if (videos.length>1){
+		idxVideo++;
+		if (idxVideo==videos.length)
+			idxVideo=0;
+		var html = "<iframe src='http://www.youtube.com/embed/"+videos[idxVideo]+"' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
+		$("#youtube_td").html(html);
+		$("#counter_videos").html((idxVideo+1)+"/"+result.length);
+	}
+}
+
 function showSearchDialog(){
 	$('#search_dialog').fadeIn(100);
 	$('#searchField').val("");

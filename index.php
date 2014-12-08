@@ -196,6 +196,14 @@
                 </table>
             </form>
         </div></div></div>
+
+        <div id="youtube_viewer_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="youtube_viewer" class="dialog-dim" style="width:700px">
+            <table class="slim"><tr><th>Youtube viewer</th>
+            </tr><tr><td id="youtube_td" style="margin:0;padding:0;background-color:black">
+            </td></tr><tr><td id="counter_videos" onclick="nextVideo()" style="color:white;font-weight:bold;background-color:black;cursor:pointer">
+            </td></tr>
+            </table>
+        </div></div></div>
 		
     </body>
 </html>
