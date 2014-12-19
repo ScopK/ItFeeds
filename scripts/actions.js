@@ -106,6 +106,7 @@ var idxVideo;
 function searchYoutubeVideo(){
 	if (postIdxSelected>0){
 		var id = posts[postIdxSelected-1]['id'];
+		loading_run();
 		$.ajax({
 			url: "./ajax/get_youtube_code.php",
 			type: "GET",
@@ -117,9 +118,9 @@ function searchYoutubeVideo(){
 					idxVideo=0;
 					$("#youtube_viewer_dialog").show();
 					if (result[0].indexOf("/")>=0)
-						var html = "<iframe src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+result[0]+"' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
+						var html = "<iframe src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+result[0]+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
 					else
-						var html = "<iframe src='http://www.youtube.com/embed/"+result[0]+"' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
+						var html = "<iframe src='http://www.youtube.com/embed/"+result[0]+"?autoplay=1' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
 					$("#youtube_td").html(html);
 					$("#counter_videos").html(1+"/"+result.length);
 				} else {
@@ -134,7 +135,7 @@ function searchYoutubeVideo(){
 				}
 			},
 			complete: function(){
-				//loading_stop();
+				loading_stop();
 			}
 		});
 	}
@@ -146,12 +147,20 @@ function nextVideo(){
 		if (idxVideo==videos.length)
 			idxVideo=0;
 		if (videos[idxVideo].indexOf("/")>=0)
-			var html = "<iframe src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+videos[idxVideo]+"' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
+			var html = "<iframe src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+videos[idxVideo]+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
 		else
-			var html = "<iframe src='http://www.youtube.com/embed/"+videos[idxVideo]+"' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
+			var html = "<iframe src='http://www.youtube.com/embed/"+videos[idxVideo]+"?autoplay=1' allowfullscreen frameBorder='0' width='100%' height='460'></iframe>";
 		$("#youtube_td").html(html);
 		$("#counter_videos").html((idxVideo+1)+"/"+videos.length);
 	}
+}
+function nextPostVideo(){
+	nextPost();
+	searchYoutubeVideo();
+}
+function nextVideoMarkUnread(){
+	markPost(0, 1, postIdxSelected);
+	nextPostVideo();
 }
 
 function showSearchDialog(){
