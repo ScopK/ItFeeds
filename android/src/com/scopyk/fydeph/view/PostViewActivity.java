@@ -54,9 +54,9 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
     long startTime = 0;
     static final int MAX_DURATION = 1000;
     static final int MIN_DURATION = 500;
-    private float lastScrollX,lastX;
-    private int moveDragStepL = 0;
-    private int moveDragStepR = 0;
+    
+    private float scrollX,scrollY;
+    private float initX,initY;
     private int screenWidth = 0;
     
     @Override
@@ -117,24 +117,32 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 			        		clickCount++;
 			        	}
 
-			            lastScrollX=wv.getScrollX();
-			            lastX=event.getX();
-			            moveDragStepL=1;
-			            moveDragStepR=1;
+			            scrollX=wv.getScrollX();
+			            scrollY=wv.getScrollY();
+			            initX=event.getX();
+			            initY=event.getY();
 			            break;
 			        case MotionEvent.ACTION_MOVE:
-			        	if (moveDragStepL==1 && wv.getScrollX()==lastScrollX && event.getX()<lastX)
-			        		moveDragStepL=2;
-			        	else if (moveDragStepR==1 && wv.getScrollX()==lastScrollX && event.getX()>lastX)
-			        		moveDragStepR=2;
 			        	break;
 			        case MotionEvent.ACTION_UP:
-			            if (moveDragStepL==2 && wv.getScrollX()==lastScrollX && event.getX()<(lastX-screenWidth/3)){
+			        	// To top
+			            if (wv.getScrollY()==scrollY && event.getY()<(initY-screenWidth/3)){		
+			            	//nextPost();
+			            }
+			            // To bottom
+			            else if (wv.getScrollY()==scrollY && event.getY()>(initY+screenWidth/3)){
+			            	//prevPost();
+			            }
+			            // To Right
+			            else if (wv.getScrollX()==scrollX && event.getX()<(initX-screenWidth/3)){
 				        	nextPost();
 			            }
-			            else if (moveDragStepR==2 && wv.getScrollX()==lastScrollX && event.getX()>(lastX+screenWidth/3)){
+			            // To Left
+			            else if (wv.getScrollX()==scrollX && event.getX()>(initX+screenWidth/3)){
 			            	prevPost();
 			            }
+			            
+			            
 			            /*else if (clickCount==2){
 			            	long duration = System.currentTimeMillis() - startTime;
 			                if(MIN_DURATION <= duration && duration<= MAX_DURATION){
@@ -144,8 +152,6 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 			                duration = 0;   
 			                return true;
 			            }*/
-			            moveDragStepL=0;
-			            moveDragStepR=0;
 		                break;
 		        }
 		        return false;  
@@ -159,8 +165,8 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
         final String encoding = "UTF-8";
         
         //final String style = "<style>body{width:100wv;position:absolute;font-size:1em}p,b,h1,h2,h3,h4,h5,h6,div,img{background-color:#fff;}table{width:100wv;}table img{width:initial}</style>";//,unset
-        final String style = "<style>body{font-size:1em;}p,b,h1,h2,h3,h4,h5,h6,div,img{height:auto;width:100%;background-color:#fff;}table{width:100wv;}table img{width:initial}</style>";//,unset
-        wv.loadDataWithBaseURL("", style+post.getDescription(), mimeType, encoding, "");
+        final String style = "<style>*{background-color:#222!important;color:#fff!important}body{font-size:2em;}p,b,h1,h2,h3,h4,h5,h6,div,img{height:auto;width:100%;background-color:#fff;}table{width:100wv;}table img{width:initial}</style>";//,unset
+        wv.loadDataWithBaseURL("", style+"<p>"+post.getDescription()+"</p>", mimeType, encoding, "");
         
     	Toolbar t = (Toolbar)findViewById(R.id.toolbar_actionbar);   	
     	setTitle(post.getTitle());
