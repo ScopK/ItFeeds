@@ -15,7 +15,6 @@ import com.scopyk.fydeph.APICallback;
 import com.scopyk.fydeph.R;
 import com.scopyk.fydeph.data.*;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,13 +29,18 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.internal.view.menu.MenuBuilder;
+import android.support.v7.widget.ActionMenuPresenter;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
 import android.text.InputType;
 import android.view.ContextThemeWrapper;
+import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -52,6 +56,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 	private DrawerListAdapter drawerListAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Folder selectedFolder;
+    private Toolbar toolbar;
     
 	
     @Override
@@ -69,8 +74,11 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				Post p = postListAdapter.getItem(arg2);
 				if (p==null){
-					if (!swipeRefreshLayout.isRefreshing()){						
-						new APICall(MainActivity.this).execute(Content.get().getQuery(postListAdapter.getLastPostId()),"2");
+					if (!swipeRefreshLayout.isRefreshing()){
+						if (postListAdapter.getPostsCount()==0)
+							new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
+						else
+							new APICall(MainActivity.this).execute(Content.get().getQuery(postListAdapter.getLastPostId()),"2");
 						setLoading(true);
 						postListAdapter.isLoading(true);
 					}
@@ -104,11 +112,11 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 					    public void onClick(DialogInterface dialog, int which) {
 					    	if (which==0){
 					    		Content.get().viewFolder(selectedFolder.getId());
-					    		setTitle(selectedFolder.getTitle());	
+					    		toolbar.setTitle(selectedFolder.getTitle());	
 					    	} else {
 						    	Feed f = selectedFolder.getFeeds().get(which-1);
 								Content.get().viewFeed(f.getId());
-								setTitle(f.getTitle());
+								toolbar.setTitle(f.getTitle());
 					    	}
 							new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
 							setLoading(true);
@@ -117,17 +125,17 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 					builder.show();
 				} else if (ml instanceof Feed) {
 					Content.get().viewFeed(ml.getId());
-					setTitle(ml.getTitle());
+					toolbar.setTitle(ml.getTitle());
 					new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
 					setLoading(true);
 				} else if (ml instanceof Tag) {
 					Content.get().viewTag(ml.getId());
-					setTitle(ml.getTitle());
+					toolbar.setTitle(ml.getTitle());
 					new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
 					setLoading(true);
 				} else if (ml instanceof Label && ml.getLabel().equals(getString(R.string.all_posts))) {
 					Content.get().viewAll();
-					setTitle(ml.getTitle());
+					toolbar.setTitle(ml.getTitle());
 					new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
 					setLoading(true);
 				} else return;
@@ -139,14 +147,15 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 		swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
 		swipeRefreshLayout.setColorSchemeResources(R.color.green,R.color.purple,
         											R.color.yellow,R.color.orange);
+		
 		swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-            	new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
-				setLoading(true);
+            	new APICall(MainActivity.this).execute("arch?token="+Content.get().getToken()+"&lock="+Content.get().getLock());
+		        //setLoadingScreen(true);
             }
         });
-		
+
 		/*
         rr.setOnScrollListener(new OnScrollListener() {
             @Override
@@ -181,6 +190,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 				setLoadingScreen(false);
 				new APICall(this).execute(Content.get().getQuery(),"1");
 				setLoading(true);
+				openOptionsMenu();closeOptionsMenu(); // Forces a call to onCreateOptionsMenu
 				break;
 			case 1: // GetPosts
 				Content.get().resetPosts();
@@ -271,12 +281,36 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 			postListAdapter.isLoading(false);
 	}
 	
-	 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+    	getMenuInflater().inflate(R.menu.main, menu);
+
+    	toolbar.setMenu((MenuBuilder)menu, new ActionMenuPresenter(this));
+    	
         return true;
+    }
+    
+    private boolean mZ = true;
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear(); //Clear view of previous menu
+        MenuInflater inflater = getMenuInflater();
+        if(mZ)
+            inflater.inflate(R.menu.main, menu);
+        else
+            inflater.inflate(R.menu.post_menu, menu);
+        
+        return super.onPrepareOptionsMenu(menu);
+    }
+    
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent e) {
+        switch(keycode) {
+            case KeyEvent.KEYCODE_MENU:
+                return false;
+        }
+        return super.onKeyDown(keycode, e);
     }
 
     @Override
@@ -299,10 +333,6 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 	        	LockDialog cdd=new LockDialog(this);
 	        	cdd.show();
 	        	break;
-	        case R.id.action_reload:
-		        new APICall(this).execute("arch?token="+Content.get().getToken()+"&lock="+Content.get().getLock());
-		        setLoadingScreen(true);
-		        break;
 	        case R.id.action_exit:
 	        	moveTaskToBack(true);
 	        	break;
@@ -340,30 +370,33 @@ public class MainActivity extends ActionBarActivity implements APICallback {
     }
     
     private void initBar(){
-    	Toolbar t = (Toolbar)findViewById(R.id.toolbar_actionbar);
-    	setSupportActionBar(t);
-
-    	t.setNavigationIcon(R.drawable.ic_drawer);
-/*
-    	t.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+    	toolbar = (Toolbar)findViewById(R.id.toolbar_actionbar);
+    	//setSupportActionBar(t);
+    	toolbar.setOnMenuItemClickListener(new OnMenuItemClickListener(){
 
 			@Override
 			public boolean onMenuItemClick(MenuItem arg0) {
-				if ()
-				
-				//System.exit(0);
+				// TODO Auto-generated method stub
 				return false;
 			}
+    		
+    	});
+    	//t.setMenu((MenuBuilder)m, new ActionMenuPresenter(this));
+    	
+    	toolbar.setTitle(this.getTitle());
 
-    	});*/
-    	//t.setLogo(R.drawable.ic_launcher);
+
+
+    	toolbar.setNavigationIcon(R.drawable.ic_drawer);
+    	
+
     	
     	DrawerLayout dl=(DrawerLayout)findViewById(R.id.drawer_layout);
     	
-    	ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, dl,t,R.string.login, R.string.logout);
+    	ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, dl,toolbar,R.string.login, R.string.logout);
         dl.setDrawerListener(mDrawerToggle);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     
     @Override

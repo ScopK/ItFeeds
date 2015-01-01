@@ -39,6 +39,7 @@ public class APICall extends AsyncTask<String, Void, String> {
         	else				callId = 0;       	
         	HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
         	HttpGet httpget = new HttpGet(APIROOT+params[0]); // Set the action you want to do
+        	httpget.setHeader("User-Agent", "Mozilla/5.0 (Linux; U; Android;) FydephApp");
         	HttpResponse response = httpclient.execute(httpget); // Executeit
         	HttpEntity entity = response.getEntity();
         	InputStream is = entity.getContent(); // Create an InputStream with the response
