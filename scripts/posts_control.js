@@ -6,21 +6,21 @@ $(document).ready(function(){
 		if ($("input").is(":focus:visible")) return;
 		if (!allowed) return false;
 		allowed = false;
-		if (e.which == 32 || e.which == 40){	// space
-	        var body = $("html, body");
-	        body.animate({scrollTop: body.scrollTop() + 200}, {duration: 210, easing: 'linear', queue: false});
-	        setTimeout(function() {allowed = true;}, 200);
-	        $("button:focus").blur();
-	        return false;
-		} else if (e.which == 38) {
-	        var body = $("html, body");
-	        body.animate({scrollTop: body.scrollTop() - 200}, {duration: 210, easing: 'linear', queue: false});
-	        setTimeout(function() {allowed = true;}, 200);
-	        $("button:focus").blur();
-	        return false;
-		}
-		if ($(".loading").css("animation-play-state") != "paused") return;
+		//if ($(".loading").css("animation-play-state") != "paused") return;
 		switch (e.which) {
+			case 32: //space
+			case 40: //down-arrow
+				var body = $("html, body");
+				body.animate({scrollTop: body.scrollTop() + 200}, {duration: 210, easing: 'linear', queue: false});
+				setTimeout(function() {allowed = true;}, 200);
+				$("button:focus").blur();
+				return false;
+			case 38: //up-arrow
+				var body = $("html, body");
+				body.animate({scrollTop: body.scrollTop() - 200}, {duration: 210, easing: 'linear', queue: false});
+				setTimeout(function() {allowed = true;}, 200);
+				$("button:focus").blur();
+				return false;
 			case 81: //q
 				showSearchDialog();
 				return false;
