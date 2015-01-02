@@ -92,7 +92,7 @@
                         <span id="totalPages">10</span> (<span id="percentSeen">0</span>)
                     </span>
                     <button class="button-panel" id="loadMore" onclick="loadMore()">Load More</button>
-					<button class="button-panel" id="searchButton" onclick="showSearchDialog(); return false;">Search</button>
+                    <button class="button-panel" id="searchButton" onclick="showSearchDialog(); return false;">Search</button>
                 </div>
             </div>
             <div id="content">
@@ -101,7 +101,8 @@
             </div>
         </div>
 
-        <button id="show-lateral-button" class="mouse-button" style="font-size:20px" onclick="toggleLateralMenu()">&lsaquo;</button>
+        <button id="show-lateral-button" class="mouse-button" onclick="toggleLateralMenu()">&lsaquo;</button>
+        <button id="show-video-button" class="mouse-button" style="display:none" onclick="$('#youtube_viewer_dialog').fadeIn(100);$('#show-video-button').hide()">Video Viewer</button>
         <button id="mouse_nav" oncontextmenu="return false;"></button>
         <div id="mouse_bottom" style="display:none">
             <button class="markunread mouse-button colored" onclick="toogleUnreadPost(true)"></button>
@@ -128,7 +129,7 @@
                 </table>
             </form>
         </div></div></div>
-		
+        
         <div id="search_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="search_content" class="dialog-dim">
             <form action="" method="POST">
                 <table><tr><th colspan="2">Search</th></tr>
@@ -199,7 +200,9 @@
         </div></div></div>
 
         <div id="youtube_viewer_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="youtube_viewer" class="dialog-dim" style="width:700px">
-            <table class="slim"><tr><th colspan="3">Youtube viewer</th>
+            <table class="slim"><tr><th colspan="3">Video viewer
+            <span id='ytv_window_controls'><button onclick="$('#youtube_viewer_dialog').fadeOut(100);$('#show-video-button').show()">·</button>
+                <button onclick="$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);">×</button></span></th>
             </tr><tr><td colspan="3" id="youtube_td" style="margin:0;padding:0;background-color:black"></td>
             </tr><tr>
             <td id="counter_videos" onclick="nextVideo()" style="color:white;font-weight:bold;background-color:black;cursor:pointer"></td>
@@ -207,6 +210,6 @@
             <td onclick="nextVideoMarkUnread()" style="background-color:#222;color:white;cursor:pointer;width:25%">also mark as unread</td>
             </tr></table>
         </div></div></div>
-		
+        
     </body>
 </html>

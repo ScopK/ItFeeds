@@ -162,6 +162,14 @@ button::-moz-focus-inner {
 	position:fixed;
 	top:0;
 	z-index:2;
+	font-size:20px;
+}
+
+#show-video-button{
+	position:fixed;
+	top:50px;
+	z-index:2;
+	font-size:10px;
 }
 
 #content{
@@ -855,4 +863,30 @@ div.tagname button{
 	background-image: url("../imgs/gear.png");
 	background-repeat: no-repeat;
 	background-position: center center;
+}
+
+#youtube_viewer_dialog tr{
+	position:relative;
+}
+
+#ytv_window_controls{
+	position:absolute;
+	right:5px;
+	top:4px;
+}
+
+#ytv_window_controls button{
+	border: 1px solid #000;
+	background-color: #111;
+	color:white;
+	height:30px;
+	width:30px;
+	text-align:center;
+	font-weight:bold;
+	font-size:20px;
+}
+
+#ytv_window_controls button:hover{
+	background-color: #333;
+
 }
