@@ -321,7 +321,7 @@ function loading_run() {
 }
 
 function loading_toggle(){
-    var status = $("#smallBall").css("animation-play-state");
+    var status = $("#loadingBar1").css("animation-play-state");
     if (status == "paused") loading_run();
     else                    loading_stop();
 }*/

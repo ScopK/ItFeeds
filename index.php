@@ -110,8 +110,9 @@
         </div>
 
         <div id="loading_panel" style="pointer-events:none;">
-            <div class="loading" id="smallBall"></div>
-            <div class="loading" id="bigBall"></div>
+            <div class="loading" id="loadingBar1"></div>
+            <div class="loading" id="loadingBar2"></div>
+            <div class="loading" id="loadingBar3"></div>
         </div>
 
         <!-- DIALOGS -->

@@ -21,6 +21,6 @@ function loading_toggle(){
 }
 
 function loading_check(){
-    var status = $("#smallBall").css("animation-play-state");
+    var status = $("#loadingBar1").css("animation-play-state");
     return status != "paused";
 }
