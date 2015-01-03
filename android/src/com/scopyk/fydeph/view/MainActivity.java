@@ -181,6 +181,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
         new APICall(this).execute("arch?token="+Content.get().getToken()+"&lock="+Content.get().getLock());
     }
 
+    private boolean toolbarHasMenu = false;
 	@Override
 	public void APIResponse(JSONObject json, int id, APICall parent) throws JSONException {
 		switch(id){
@@ -190,7 +191,10 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 				setLoadingScreen(false);
 				new APICall(this).execute(Content.get().getQuery(),"1");
 				setLoading(true);
-				openOptionsMenu();closeOptionsMenu(); // Forces a call to onCreateOptionsMenu
+				if(!toolbarHasMenu){
+					toolbarHasMenu=true;
+					openOptionsMenu();closeOptionsMenu(); // Forces a call to onCreateOptionsMenu
+				}
 				break;
 			case 1: // GetPosts
 				Content.get().resetPosts();
@@ -223,6 +227,32 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 				break;
 		}
 			
+	}
+	
+	@Override
+	public void openOptionsMenu(){
+		super.openOptionsMenu();
+		if (this.toolbarHasMenu){
+			updateToolbarIcons();
+		}
+	}
+	
+	public void updateToolbarIcons(){
+		Menu menu = toolbar.getMenu();
+		MenuItem item = menu.findItem(R.id.action_unread);
+    	boolean u = Content.get().getUnread();
+    	if (u)	item.setIcon(R.drawable.ic_unread);
+    	else	item.setIcon(R.drawable.ic_read);
+
+    	item = menu.findItem(R.id.action_fav);
+    	boolean f = Content.get().getFavorites();
+    	if (f)	item.setIcon(R.drawable.ic_fav);
+    	else	item.setIcon(R.drawable.ic_unfav);
+
+    	item = menu.findItem(R.id.action_order);
+    	boolean o = Content.get().getOrder();
+    	if (o)	item.setIcon(R.drawable.ic_newer);
+    	else	item.setIcon(R.drawable.ic_older);
 	}
 
 	
@@ -308,7 +338,8 @@ public class MainActivity extends ActionBarActivity implements APICallback {
     public boolean onKeyDown(int keycode, KeyEvent e) {
         switch(keycode) {
             case KeyEvent.KEYCODE_MENU:
-                return false;
+            	openOptionsMenu();
+                return true;
         }
         return super.onKeyDown(keycode, e);
     }

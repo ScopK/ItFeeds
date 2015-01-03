@@ -244,6 +244,15 @@ public class Content {
 		this.filter.viewNewersFirst(!i);
 		return !i;
 	}
+	public boolean getFavorites(){
+		return this.filter.isFavorite();
+	}
+	public boolean getUnread(){
+		return this.filter.isUnread();
+	}
+	public boolean getOrder(){
+		return this.filter.isNewFirst();
+	}
 	public String getQuery(String nextValue){
 		return this.filter.getQuery(nextValue);
 	}
