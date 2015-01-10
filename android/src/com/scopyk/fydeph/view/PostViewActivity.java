@@ -163,6 +163,7 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
         WebView wv = (WebView)findViewById(R.id.html_content);
         final String mimeType = "text/html";
         final String encoding = "UTF-8";
+        post = p;
         
         //final String style = "<style>body{width:100wv;position:absolute;font-size:1em}p,b,h1,h2,h3,h4,h5,h6,div,img{background-color:#fff;}table{width:100wv;}table img{width:initial}</style>";//,unset
         final String style = "<style>*{background-color:#222!important;color:#fff!important}body{font-size:2em;}p,b,h1,h2,h3,h4,h5,h6,div,img{height:auto;width:100%;background-color:#fff;}table{width:100wv;}table img{width:initial}</style>";//,unset
@@ -311,5 +312,20 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
 			setResult(21, resultIntent);
 		}
 		super.finish();
+	}
+	
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		outState.putString("lastPostId",post.getId());
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState){
+		super.onRestoreInstanceState(savedInstanceState);
+		
+		Post p = Content.get().getPost(savedInstanceState.getString("lastPostId"));
+		if (p != null) loadPost(p);
 	}
 }

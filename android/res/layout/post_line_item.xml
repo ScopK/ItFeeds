@@ -3,9 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="8dp"
-    android:paddingLeft="10dp"
+    android:paddingLeft="3dp"
     android:paddingRight="10dp"
+    android:minHeight="6dp"
     android:paddingTop="8dp" >
+    
+    <FrameLayout
+        android:id="@+id/statusBar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/post_title"
+        android:layout_alignBottom="@+id/post_date"
+
+        android:minWidth="3dp" >
+    </FrameLayout>
 
     <TextView
         android:id="@+id/post_title"
@@ -14,7 +26,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-    	android:text="@string/app_name"
+        android:paddingLeft="7dp"
+        android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearance" />
 
     <TextView
@@ -22,10 +35,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:paddingLeft="7dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/post_title"
         android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#777777" />
+
+
+
 
 </RelativeLayout>

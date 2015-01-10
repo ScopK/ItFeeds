@@ -8,10 +8,12 @@ import com.scopyk.fydeph.R;
 import com.scopyk.fydeph.data.Post;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 public class PostListAdapter extends BaseAdapter {
@@ -105,6 +107,7 @@ public class PostListAdapter extends BaseAdapter {
         
         View view;
         TextView title,date;
+        FrameLayout bar;
 		//if (convertView != null) 
 		//	view = convertView;
 		//else
@@ -115,9 +118,16 @@ public class PostListAdapter extends BaseAdapter {
 	    	title.setText(item.getTitle());
 	    	if (item.getUnread())
 	    		title.setTypeface(null, android.graphics.Typeface.BOLD);
+	    	
 	        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	        date = (TextView) view.findViewById(R.id.post_date);
 	    	date.setText(df.format(item.getDate()));
+	    	
+	    	if (item.getFavorite()){
+		    	bar = (FrameLayout) view.findViewById(R.id.statusBar);
+		    	//bar.setBackgroundColor(Color.parseColor("#ff0000"));
+		    	bar.setBackgroundColor(Color.RED);
+	    	}
 		}catch(Exception e){}
 
         return view;
