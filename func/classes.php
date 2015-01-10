@@ -31,6 +31,7 @@
 		public $folderId = "";
 		public $name = "";
 		public $upd_time = "";
+		public $max_unread = "";
 
 		public $link = "";
 		public $rss_link = "";

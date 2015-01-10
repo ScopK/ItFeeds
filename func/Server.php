@@ -7,6 +7,8 @@
     if (mysqli_connect_errno())
       die("Failed to connect to MySQL: " . mysqli_connect_error());
 
+	//mysqli_query($con,"SET GLOBAL time_zone = '+1:00';");
+
   	$pf = new PostsFetch();
   	$pf->setConnection($con);
 
@@ -15,11 +17,15 @@
 
 	$time = time();
 	while(true){
+		//file_put_contents ("log.txt", "# HB: ".date('Y-d-m H:i:s', time())."\n",FILE_APPEND);
 		echo date('Y-d-m H:i:s', time())."\r";
 		$feeds = mysqli_query($con,$sql);
 		foreach($feeds as $feed){
 			if (controlFeed($feed['id'],$feed['upd_time'])){
 				$pf->fetchFeed($feed);
+				$deleted = $pf->markUnread($feed);
+				if ($deleted>0)
+					file_put_contents ("log.txt", date('Y-d-m H:i:s', time())." DELETED $deleted POSTS FROM: ".$feed['name']." (".$feed['id'].")\n",FILE_APPEND);
 			}
 		}
 		mysqli_free_result($feeds);

@@ -128,6 +128,7 @@
 					file_put_contents ("log.txt", "FeedId: ".$feed['id']."\n",FILE_APPEND);
 					file_put_contents ("log.txt", print_r($post, true)."\n",FILE_APPEND);
 					file_put_contents ("log.txt", "$sql\n",FILE_APPEND);
+					file_put_contents ("log.txt", mysqli_error($this->con)."\n",FILE_APPEND);
 					file_put_contents ("log.txt", "###############################################\n",FILE_APPEND);
 					mysqli_stmt_close($stmt);
 					//die();
@@ -138,6 +139,30 @@
 			return 0;
 		}
 
-	}
+		public function markUnread($feed){
+			$feedid = $feed['id'];
 
+			$sql = "SELECT idx FROM posts WHERE id_feed=? AND unread='1' ORDER BY idx DESC LIMIT ".$feed['max_unread'].",1";
+			$stmt=mysqli_stmt_init($this->con);
+			if (mysqli_stmt_prepare($stmt,$sql)){
+				mysqli_stmt_bind_param($stmt,"s", $feedid);
+				mysqli_stmt_execute($stmt);
+				//$done = mysqli_affected_rows($this->con);
+				mysqli_stmt_bind_result($stmt,$idxLimit);
+				mysqli_stmt_fetch($stmt);
+			}
+			if (isset($idxLimit)){
+				$sql = "UPDATE posts SET unread='0' WHERE id_feed=? AND unread='1' AND idx <= ?";
+				$stmt=mysqli_stmt_init($this->con);
+				if (mysqli_stmt_prepare($stmt,$sql)){
+					mysqli_stmt_bind_param($stmt,"ss", $feedid, $idxLimit);
+					mysqli_stmt_execute($stmt);
+					$done = mysqli_affected_rows($this->con);
+					//mysqli_stmt_bind_result($stmt,$idxLimit);
+					mysqli_stmt_fetch($stmt);
+				}
+			}
+			return isset($done)?$done:0;
+		}
+	}
 ?>

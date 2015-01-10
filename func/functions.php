@@ -130,6 +130,7 @@
 
 			$e->folderId = $folderId;
 			$e->upd_time = $feed['upd_time'];
+			$e->max_unread = $feed['max_unread'];
 			$e->last_date_post = $feed['last_date_post'];
 
 			$e->link = $feed['link'];
@@ -163,6 +164,7 @@
 
 			$e->folderId = $feed['id_folder'];
 			$e->upd_time = $feed['upd_time'];
+			$e->max_unread = $feed['max_unread'];
 			$e->last_date_post = $feed['last_date_post'];
 
 			$e->link = $feed['link'];
