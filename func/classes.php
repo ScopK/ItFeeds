@@ -51,12 +51,14 @@
 		public $id = "";
 		public $idx = "";
 		public $feedId = "";
+		public $postId = null;
 		public $title = "";
 		public $description = "";
 		public $link = "";
 		public $unread = true;
 		public $favorite = false;
 		public $date = "";
+		public $date_updated = null;
 		public $tags = array();
 	}
 ?>

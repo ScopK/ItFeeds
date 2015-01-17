@@ -78,39 +78,65 @@
 		}
 
 		private function addIfPosible($feed,$post){
-			if (new DateTime($post->date) <= new DateTime($feed['last_date_post']))
-				return;
+			$add = false;
 
-			$sql = "SELECT id,title,description FROM posts WHERE id_feed=? AND link=?";
-			$stmt=mysqli_stmt_init($this->con);
-			if (mysqli_stmt_prepare($stmt,$sql)){
-				mysqli_stmt_bind_param($stmt,"ss", $feed['id'], $post->link);
-				mysqli_stmt_execute($stmt);
-				//$done = mysqli_affected_rows($this->con);
-				mysqli_stmt_bind_result($stmt,$id,$title,$description);
-				mysqli_stmt_fetch($stmt);
-			}
-			if ($id){
-				/*
-				if ($description != $post->description) {
-					$sql = "UPDATE posts SET title=?,description=? WHERE id=?";
+			if ($post->postId){
+				$sql = "SELECT id,updated FROM posts WHERE id_feed=? AND post_id=? AND updated<>?";
+				$stmt=mysqli_stmt_init($this->con);
+				if (mysqli_stmt_prepare($stmt,$sql)){
+					mysqli_stmt_bind_param($stmt,"sss", $feed['id'], $post->postId, $post->date_updated);
+					mysqli_stmt_execute($stmt);
+					//$done = mysqli_affected_rows($this->con);
+					mysqli_stmt_bind_result($stmt,$id,$updated);
+					mysqli_stmt_fetch($stmt);
+				}
+				if ($id){
+					$sql = "UPDATE posts SET title=?,description=?,updated=? WHERE id=?";
 					if (mysqli_stmt_prepare($stmt,$sql)){
-						mysqli_stmt_bind_param($stmt,"sss",$post->title,$post->description,$id);
+						mysqli_stmt_bind_param($stmt,"ssss",$post->title,$post->description,$post->date_updated,$id);
 						mysqli_stmt_execute($stmt);
 						$done = mysqli_affected_rows($this->con);
 					}
 					if ($done == 1)
-						echo "Updated\n";
-				}*/
-			} else {
+						file_put_contents("log.txt", date('Y-d-m H:i:s', time())." Updated post: $feed[name] - $id\n",FILE_APPEND);
+					else {
+						file_put_contents("log.txt", date('Y-d-m H:i:s', time())." Error Updating $feed[name] - $id\n",FILE_APPEND);
+						file_put_contents("log.txt", "# Title: ".$post->title."\n",FILE_APPEND);
+						file_put_contents("log.txt", "# Descr: ".$post->description."\n",FILE_APPEND);
+						file_put_contents("log.txt", "# Dateu: ".$post->date_updated."\n",FILE_APPEND);
+					}
+				} else
+					$add = true;
+			} 
+
+			if (new DateTime($post->date) <= new DateTime($feed['last_date_post']))
+				return;
+
+			if (!$post->postId){
+				$sql = "SELECT id FROM posts WHERE id_feed=? AND link=?";
+				$stmt=mysqli_stmt_init($this->con);
+				if (mysqli_stmt_prepare($stmt,$sql)){
+					mysqli_stmt_bind_param($stmt,"ss", $feed['id'], $post->link);
+					mysqli_stmt_execute($stmt);
+					//$done = mysqli_affected_rows($this->con);
+					mysqli_stmt_bind_result($stmt,$id);
+					mysqli_stmt_fetch($stmt);
+				}
+				if ($id)
+					file_put_contents("log.txt", date('Y-d-m H:i:s', time())." ID_feed & Link already exists, not adding again: $feed[name] - $id\n",FILE_APPEND);
+				else
+					$add = true;
+			}
+
+			if ($add){
 				$count =0;
 				repeat:
 				//$nid = getNewID();
-				$sql = "INSERT INTO posts(id,id_feed,title,description,link,unread,favorite,date) VALUES(newID(36,\"posts\"),?,?,?,?,'1','0',?)";
+				$sql = "INSERT INTO posts(id,id_feed,title,description,link,unread,favorite,date,post_id,updated) VALUES(newID(36,\"posts\"),?,?,?,?,'1','0',?,?,?)";
 				$stmt=mysqli_stmt_init($this->con);
 				$done = 0;
 				if (mysqli_stmt_prepare($stmt,$sql)){
-					mysqli_stmt_bind_param($stmt,"sssss",$feed['id'],$post->title,$post->description,$post->link,$post->date);
+					mysqli_stmt_bind_param($stmt,"sssssss",$feed['id'],$post->title,$post->description,$post->link,$post->date,$post->postId,$post->date_updated);
 					mysqli_stmt_execute($stmt);
 					$done = mysqli_affected_rows($this->con);
 				}
