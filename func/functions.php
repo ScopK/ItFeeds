@@ -381,6 +381,20 @@
 		return $hid<=$hidden && $username==$user;
 	}
 
+	function searchQueryFromArray($con, $search){
+		if (count($search)<1)
+			return "";
+		$str = "AND (";
+		$first = true;
+		foreach ($search as $key){
+			if ($first) $first = false;
+			else 		$str.= " OR ";
+			$val = mysqli_real_escape_string($con,"%$key%");
+			$str.= "title LIKE '$val' OR description LIKE '$val'";
+		}
+		$str.= ")";
+		return $str;
+	}
 
  	/**
 
@@ -388,17 +402,16 @@
 
  	*/
 
-	function getPostsFeed($user, $feedId, $favs, $unread, $sort, $page, $postspage, $filterStr){
+	function getPostsFeed($user, $feedId, $favs, $unread, $sort, $page, $postspage, $searchArr){
 		global $con;
 		$user = mysqli_real_escape_string($con,$user);
 		$feedId = mysqli_real_escape_string($con,$feedId);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$page = mysqli_real_escape_string($con,$page);
-		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
-		$filterSQL = ($filterStr)? "AND (title LIKE '$filterStr' OR description LIKE '$filterStr')":"";
+		$filterSQL = searchQueryFromArray($con, $searchArr);
 
 		$whereSQL = "id_feed='$feedId' $filterSQL $unreadSQL $favsSQL";
 
@@ -408,18 +421,17 @@
 		return $posts;
 	}
 
-	function getPostsFolder($user, $folderId, $favs, $unread, $sort, $page, $postspage, $filterStr){
+	function getPostsFolder($user, $folderId, $favs, $unread, $sort, $page, $postspage, $searchArr){
 		global $con;
 		global $hidden;
 		$user = mysqli_real_escape_string($con,$user);
 		$folderId = mysqli_real_escape_string($con,$folderId);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$page = mysqli_real_escape_string($con,$page);
-		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
-		$filterSQL = ($filterStr)? "AND (title LIKE '$filterStr' OR description LIKE '$filterStr')":"";
+		$filterSQL = searchQueryFromArray($con, $searchArr);
 		$hiddenSQL = ($hidden)? "WHERE" : "JOIN folders fo ON f.id_folder=fo.id WHERE fo.hidden='0' AND";
 
 		$whereSQL = "id_feed IN (SELECT f.id FROM feeds f $hiddenSQL f.id_folder='$folderId') $filterSQL $unreadSQL $favsSQL";
@@ -430,13 +442,12 @@
 		return $posts;
 	}
 
-	function getPostsTag($tagId, $favs, $unread, $sort, $page, $postspage, $filterStr){
+	function getPostsTag($tagId, $favs, $unread, $sort, $page, $postspage, $searchArr){
 		global $con;
 		global $hidden;
 		$tagId = mysqli_real_escape_string($con,$tagId);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$page = mysqli_real_escape_string($con,$page);
-		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		// uncomment to don't use favorites and unread vars
 		//$sql = "SELECT * FROM posts WHERE id IN (SELECT id_post FROM post_tags WHERE id_tag='$tagId') ORDER BY `idx` $sort LIMIT $page,$postspage";
@@ -444,7 +455,7 @@
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
-		$filterSQL = ($filterStr)? "AND (title LIKE '$filterStr' OR description LIKE '$filterStr')":"";
+		$filterSQL = searchQueryFromArray($con, $searchArr);
 		$hiddenSQL = ($hidden)? "WHERE" : "JOIN tags t ON t.id=pt.id_tag WHERE t.hidden='0' AND";
 
 		$whereSQL = "id IN (SELECT pt.id_post FROM post_tags pt $hiddenSQL pt.id_tag='$tagId') $filterSQL $unreadSQL $favsSQL";
@@ -455,7 +466,7 @@
 		return $posts;
 	}
 
-	function getPostsAll($user, $favs, $unread, $sort, $page, $postspage, $filterStr){
+	function getPostsAll($user, $favs, $unread, $sort, $page, $postspage, $searchArr){
 		global $con;
 		global $hidden;
 		$user = mysqli_real_escape_string($con,$user);
@@ -463,12 +474,11 @@
 		$unread = mysqli_real_escape_string($con,$unread);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$page = mysqli_real_escape_string($con,$page);
-		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 		$hiddenSQL = ($hidden)? "" : "AND hidden='0'";
-		$filterSQL = ($filterStr)? "AND (title LIKE '$filterStr' OR description LIKE '$filterStr')":"";
+		$filterSQL = searchQueryFromArray($con, $searchArr);
 
 		$whereSQL = "id_feed IN (SELECT id FROM feeds WHERE id_folder IN (".
 						"SELECT id FROM folders WHERE user='$user' $hiddenSQL)) $filterSQL $unreadSQL $favsSQL";
@@ -488,25 +498,24 @@
 //CREATE TEMPORARY TABLE IF NOT EXISTS tt AS (SELECT (@cnt:=@cnt+1) AS idx, p.* FROM posts AS p CROSS JOIN (SELECT @cnt := 0) AS x ORDER BY p.date);
 //SELECT id FROM tt s WHERE idx >= (SELECT idx FROM s WHERE id="50CBFC56-4E29-4519-A649-8D5CDF7ACF15") LIMIT 0,5;
 
-	function getPostsNextFeed($user, $feedId, $favs, $unread, $sort, $postspage, $nextId, $filterStr){
+	function getPostsNextFeed($user, $feedId, $favs, $unread, $sort, $postspage, $nextId, $searchArr){
 		global $con;
 		$user = mysqli_real_escape_string($con,$user);
 		$feedId = mysqli_real_escape_string($con,$feedId);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$postspage = mysqli_real_escape_string($con,$postspage);
 		$nextId = mysqli_real_escape_string($con,$nextId);
-		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
-		$filterSQL = ($filterStr)? "AND (title LIKE '$filterStr' OR description LIKE '$filterStr')":"";
+		$filterSQL = searchQueryFromArray($con, $searchArr);
 
 		$whereSQL = "id_feed='$feedId' $filterSQL $unreadSQL $favsSQL";
 
 		return getPosts($whereSQL, $sort, $nextId, 0, $postspage);
 	}
 
-	function getPostsNextFolder($user, $folderId, $favs, $unread, $sort, $postspage, $nextId, $filterStr){
+	function getPostsNextFolder($user, $folderId, $favs, $unread, $sort, $postspage, $nextId, $searchArr){
 		global $con;
 		global $hidden;
 		$user = mysqli_real_escape_string($con,$user);
@@ -514,11 +523,10 @@
 		$sort = mysqli_real_escape_string($con,$sort);
 		$postspage = mysqli_real_escape_string($con,$postspage);
 		$nextId = mysqli_real_escape_string($con,$nextId);
-		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
-		$filterSQL = ($filterStr)? "AND (title LIKE '$filterStr' OR description LIKE '$filterStr')":"";
+		$filterSQL = searchQueryFromArray($con, $searchArr);
 		$hiddenSQL = ($hidden)? "WHERE" : "JOIN folders fo ON f.id_folder=fo.id WHERE fo.hidden='0' AND";
 
 		$whereSQL = "id_feed IN (SELECT f.id FROM feeds f $hiddenSQL f.id_folder='$folderId') $filterSQL $unreadSQL $favsSQL";
@@ -526,18 +534,17 @@
 		return getPosts($whereSQL, $sort, $nextId, 0, $postspage);
 	}
 
-	function getPostsNextTag($tagId, $favs, $unread, $sort, $postspage, $nextId, $filterStr){
+	function getPostsNextTag($tagId, $favs, $unread, $sort, $postspage, $nextId, $searchArr){
 		global $con;
 		global $hidden;
 		$tagId = mysqli_real_escape_string($con,$tagId);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$postspage = mysqli_real_escape_string($con,$postspage);
 		$nextId = mysqli_real_escape_string($con,$nextId);
-		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
-		$filterSQL = ($filterStr)? "AND (title LIKE '$filterStr' OR description LIKE '$filterStr')":"";
+		$filterSQL = searchQueryFromArray($con, $searchArr);
 		$hiddenSQL = ($hidden)? "WHERE" : "JOIN tags t ON t.id=pt.id_tag WHERE t.hidden='0' AND";
 
 		$whereSQL = "id IN (SELECT pt.id_post FROM post_tags pt $hiddenSQL pt.id_tag='$tagId') $filterSQL $unreadSQL $favsSQL";
@@ -545,7 +552,7 @@
 		return getPosts($whereSQL, $sort, $nextId, 0, $postspage);
 	}
 
-	function getPostsNextAll($user, $favs, $unread, $sort, $postspage, $nextId, $filterStr){
+	function getPostsNextAll($user, $favs, $unread, $sort, $postspage, $nextId, $searchArr){
 		global $con;
 		global $hidden;
 		$user = mysqli_real_escape_string($con,$user);
@@ -553,12 +560,11 @@
 		$unread = mysqli_real_escape_string($con,$unread);
 		$sort = mysqli_real_escape_string($con,$sort);
 		$nextId = mysqli_real_escape_string($con,$nextId);
-		if ($filterStr) $filterStr = mysqli_real_escape_string($con,"%$filterStr%");
 
 		$favsSQL = ($favs==1)? "AND favorite='1'" : "";
 		$unreadSQL = ($unread==1)? "AND unread='1'" : "";
 		$hiddenSQL = ($hidden)? "" : "AND hidden='0'";
-		$filterSQL = ($filterStr)? "AND (title LIKE '$filterStr' OR description LIKE '$filterStr')":"";
+		$filterSQL = searchQueryFromArray($con, $searchArr);
 
 		$whereSQL = "id_feed IN (SELECT id FROM feeds WHERE id_folder IN (".
 						"SELECT id FROM folders WHERE user='$user' $hiddenSQL)) $filterSQL $unreadSQL $favsSQL";

@@ -19,6 +19,9 @@
 	$sort = isset($_REQUEST['sortBy'])?$_REQUEST['sortBy']:null;
 
 	$public = isset($_REQUEST['public']);
+
+	if ($search != "")	$search = explode("::",$search);
+	else 				$search = array();
 	
 // CHECK INPUTS
 	if (isset($feedId))	$mode=0;
