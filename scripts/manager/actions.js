@@ -99,6 +99,7 @@ function editFeed(){
 			var feed = folders[prevIdxFolder].feeds[prevIdxFeed];
 			feed['name'] = result['name'];
 			feed['rss_link'] = result['rss_link'];
+			feed['max_unread'] = result['max_unread'];
 			feed['link'] = result['link'];
 			feed['enabled'] = result['enabled'];
 			feed['upd_time'] = result['upd_time'];

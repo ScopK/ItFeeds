@@ -31,6 +31,7 @@
 		public $folderId = "";
 		public $name = "";
 		public $upd_time = "";
+		public $max_unread = "";
 
 		public $link = "";
 		public $rss_link = "";
@@ -50,12 +51,14 @@
 		public $id = "";
 		public $idx = "";
 		public $feedId = "";
+		public $postId = null;
 		public $title = "";
 		public $description = "";
 		public $link = "";
 		public $unread = true;
 		public $favorite = false;
 		public $date = "";
+		public $date_updated = null;
 		public $tags = array();
 	}
 ?>

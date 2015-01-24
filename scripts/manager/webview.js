@@ -238,6 +238,7 @@ function showCleanFeed(){
 	$("#clean_feed input[name='rlink']").val(feed['rss_link']);
 	$("#clean_feed input[name='link']").val(feed['link']);
 	$("#clean_feed input[name='uptime']").val(feed['upd_time']);
+	$("#clean_feed input[name='maxunr']").val(feed['max_unread']);
 	$("#clean_feed input[name='ena']").prop('checked',(feed['enabled'] == '1'));
 
 	$("#clean_feed input[name='days']").val(3);

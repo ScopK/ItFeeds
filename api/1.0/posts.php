@@ -40,6 +40,9 @@
 	$public = isset($_REQUEST['public']);
 
 // CHECK INPUTS
+	if ($search != "")	$search = explode("::",$search);
+	else 				$search = array();
+
 	if (isset($feedId))	$mode=0;
 	elseif (isset($folderId)) $mode=1;
 	elseif (isset($tagId)) $mode=2;

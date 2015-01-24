@@ -7,6 +7,8 @@
     if (mysqli_connect_errno())
       die("Failed to connect to MySQL: " . mysqli_connect_error());
 
+	//mysqli_query($con,"SET GLOBAL time_zone = '+1:00';");
+
   	$pf = new PostsFetch();
   	$pf->setConnection($con);
 
@@ -20,6 +22,7 @@
 		foreach($feeds as $feed){
 			if (controlFeed($feed['id'],$feed['upd_time'])){
 				$pf->fetchFeed($feed);
+				$pf->markUnread($feed);
 			}
 		}
 		mysqli_free_result($feeds);

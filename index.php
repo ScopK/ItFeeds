@@ -19,7 +19,11 @@
         <title>Fydeph - <?=$log_user?></title>
         <link rel="shortcut icon" href="imgs/icon.png" />
         <link rel="stylesheet" type="text/css" href="style/anims.css">
-        <link rel="stylesheet" type="text/css" href="style/style.css">
+    <?php if (isset($_GET['old'])) { ?>
+        <link rel="stylesheet" type="text/css" href="style/style_old.css">
+    <?php } else { ?>
+        <link rel="stylesheet" type="text/css" href="style/style.css?color=EF7502">
+    <?php } ?>
         <script src="scripts/lib/jquery.min.js"></script>
         <script src="scripts/lib/jsanims.js"></script>
         <script src="scripts/lib/contextmenu.js"></script>
@@ -34,8 +38,6 @@
         $(document).ready(function(){
             $(".background-modal").hide();
             $("#managerLink").attr("href","./manager.php"+location.search);
-            //loading_run();
-            randomColors();
         });
         </script>
     </head>
@@ -58,7 +60,7 @@
                             <option value="1" title="All unselected posts are minimized">Minimized Mode</option>
                             <option value="2" title="Nothing is minimized">Never minimize</option>
                         </select></td>
-                        <td style="color:#666;margin-left:5px">Key 'G'</td>
+                        <td style="color:#444;margin-left:5px">Key 'G'</td>
                     </tr><tr>
                         <td>Auto mark read</td>
                         <td><select id="autoread_mode" style="width:90%" class="select-panel" onchange="change_autoreadmode(this.value,false)">
@@ -66,7 +68,7 @@
                             <option value="1" title="Mark as read while scrolling">On scroll</option>
                             <option value="2" title="Don't mark as read automatically">Never</option>
                         </select></td>
-                        <td style="color:#666;margin-left:5px"><!--Key ''--></td>
+                        <td style="color:#444;margin-left:5px"><!--Key ''--></td>
                     </tr></table>
                     
                     <button class="button-panel" style="text-align:left;width:100%" onclick="showPasswordChangeDialog();return false">Change password</button>
@@ -200,15 +202,15 @@
         </div></div></div>
 
         <div id="youtube_viewer_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="youtube_viewer" class="dialog-dim" style="width:700px">
-            <table class="slim"><tr><th colspan="3">Video viewer
+            <table class="slim"><tr><th>Video viewer
             <span id='ytv_window_controls'><button onclick="$('#youtube_viewer_dialog').fadeOut(100);$('#show-video-button').show()">·</button>
                 <button onclick="$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);">×</button></span></th>
-            </tr><tr><td colspan="3" id="youtube_td" style="margin:0;padding:0;background-color:black"></td>
-            </tr><tr>
-            <td id="counter_videos" onclick="nextVideo()" style="color:white;font-weight:bold;background-color:black;cursor:pointer"></td>
-            <td onclick="nextPostVideo()" style="background-color:#333;color:white;cursor:pointer;width:33%">Next</td>
-            <td onclick="nextVideoMarkUnread()" style="background-color:#222;color:white;cursor:pointer;width:25%">also mark as unread</td>
-            </tr></table>
+            </tr><tr><td id="youtube_td" style="margin:0;padding:0"></td>
+            </tr><tr><td id="ytv_controls">
+            <button style="background-color:#aaa" id="counter_videos" onclick="nextVideo()"></button>
+            <button style="background-color:#ccc" onclick="nextPostVideo()">Next</button>
+            <button style="background-color:#eee" onclick="nextVideoMarkUnread()">also mark as unread</button>
+            </td></tr></table>
         </div></div></div>
         
     </body>

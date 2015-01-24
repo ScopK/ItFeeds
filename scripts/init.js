@@ -112,48 +112,6 @@ function initialize(reload,onlyCount){
 	});
 }
 
-function randomColors(){
-	var bright = "#C8F56F";
-	var dark = "#9acc37";
-	/*
-    var hueSel = Math.random();
-    if (hueSel < 0.3)
-        var hue = 'rgb(255,'+ (Math.floor(Math.random()*155)+100) +','+ (Math.floor(Math.random()*155)+100) +')';
-    else if (hueSel <= 0.6)
-        var hue = 'rgb('+ (Math.floor(Math.random()*155)+100) +',255,'+ (Math.floor(Math.random()*155)+100) +')';
-    else
-        var hue = 'rgb('+ (Math.floor(Math.random()*155)+100) +','+ (Math.floor(Math.random()*155)+100) +',255)';
-    //$("body").css("background-color",hue);
-	bright = hue;
-	dark = hue;
-    /**/
-    $.each(document.styleSheets[1].cssRules, function(){
-        if (this.selectorText == ".feed.selected, .tag.selected, .folder.selected")
-            this.style.backgroundColor = bright;
-        else if (this.selectorText == ".post.unread .header")
-            this.style.backgroundColor = bright;
-        else if (this.selectorText == ".mouse-button.colored")
-            this.style.backgroundColor = dark;
-
-	    else if (this.selectorText == ".highlight-color"){
-			this.style.backgroundColor = dark;
-			this.style.borderColor = dark;
-	    }
-	    else if (this.selectorText == ".highlight-color:active"){
-			this.style.backgroundColor = bright;
-			this.style.borderColor = bright;
-	    }
-	    else if (this.selectorText == ".button-panel.marked:active"){
-			this.style.backgroundColor = bright;
-			this.style.borderColor = bright;
-	    }
-	    else if (this.selectorText == ".button-panel:active"){
-			this.style.backgroundColor = bright;
-			this.style.borderColor = bright;
-	    }
-    });
-}
-
 function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
