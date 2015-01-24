@@ -1,3 +1,14 @@
+<?php
+	header("content-type: text/css");
+	$color = isset($_GET['color'])?"#".$_GET['color']:"#EF7502";//"#C8F56F";
+
+$hsv = hex2hsv($color);
+$hsv[1] = 99; $hsv[2]=94;
+$dark = hsv2hex($hsv);
+$hsv[0] += 15;
+$hsv[1] = 39; $hsv[2]=100;
+$bright = hsv2hex($hsv);
+?>
 /* FONTS */
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:600);
@@ -72,7 +83,7 @@ button::-moz-focus-inner {
 #page {
 	display:none;
 	position:relative;
-	background-color: rgba(255,255,255,0.9);
+	background-color: #f5f5f5;
 	margin: auto 40px;
 
 	overflow:hidden;
@@ -82,7 +93,7 @@ button::-moz-focus-inner {
 	position:fixed;
 	top:0; bottom:0;
 
-	background-color: #fff;
+	background-color: #e5e5e5;
 	padding: 10px;
 	width: 300px;
 	float:left;
@@ -154,7 +165,7 @@ button::-moz-focus-inner {
 }
 
 .mouse-button.colored{
-	background-color: #E2F875;
+	background-color: <?= $dark ?>;
 	color:white;
 }
 
@@ -167,12 +178,10 @@ button::-moz-focus-inner {
 #content{
 	position:relative;
 	margin-left: 320px;
-	padding: 0px;
 	transition: margin 0.4s;
 }
 
 #navopts_top{
-	background-color: #000;
 	text-align: center;
 	height: 30px;
 	margin: -10px -10px 10px;
@@ -183,7 +192,6 @@ button::-moz-focus-inner {
 	position:absolute;
 	bottom:0;
 	width:100%;
-	background-color: #000;
 	text-align: center;
 	height: 30px;
 	margin: 0 -10px;
@@ -207,7 +215,6 @@ LATERAL MENU FOLDER STYLES
 
 .folder {
 	padding: 5px;
-	border-bottom: 1px dotted rgba(0,0,0,0.5);
 	cursor:pointer;
 	overflow:hidden;
 }
@@ -228,13 +235,17 @@ LATERAL MENU FOLDER STYLES
 	border-radius:3px;
 }
 
+.feed{
+	border-left: 2px solid transparent;
+}
+
 .tag{
 	margin: 1px;
 	display: inline-block;
 }
 
 #tags{
-	border-top: 2px solid #888;
+	border-top: 1px dotted rgba(0,0,0,0.1);
 	padding-top: 10px;
 	margin-top: 10px;
 }
@@ -244,12 +255,16 @@ LATERAL MENU FOLDER STYLES
 	color: #444;
 }
 
-.feed:hover, .tag:hover{
-	background-color: #ddd;
+.feed:hover{
+	border-color: #333;
+}
+
+.tag:hover{
+	background-color: rgba(0,0,0,0.1);
 }
 
 .feed.selected, .tag.selected, .folder.selected{
-	background-color: #E2F875;
+	background-color: rgba(0,0,0,0.1);
 	border-radius: 3px;
 }
 
@@ -298,9 +313,8 @@ LATERAL MENU FOLDER STYLES
 	color: #777;
 }
 
-.folderHeader:hover{
-	background-color: #aaa;
-	border-radius:2px;
+.folderHeader:hover .expander {
+	border-right: 2px solid #333;
 }
 
 .folderTitle{
@@ -313,19 +327,18 @@ LATERAL MENU FOLDER STYLES
 .expander{
 	display: inline-table;
 	text-align: center;
-	background-color: rgba(0,0,0,0.0);
-	margin: 1px 5px 1px 1px;
-	padding: 2px 6px;
+	margin-right: 4px;
+	padding: 3px 7px;
 	font-size: 13.5px;
-	border-width: 0;
+	border: 2px solid transparent;
+	border-radius:0px;
 	width: 30px;
-	background-color: #fff;
-	border: 1px solid #fff;
+	background-color: transparent;
 }
 
 .expander:hover{
-	background-color: #eee;
-	border-color: #ddd;
+	background-color: <?= $dark ?>;
+	color: white;
 }
 
 .select-panel{
@@ -341,7 +354,8 @@ LATERAL MENU FOLDER STYLES
 	background-color: #404040;
 }
 
-.button-panel{
+
+#settings_panel .button-panel{
 	background-color: #555;
 	padding: 5px;
 	border: 2px solid black;
@@ -354,54 +368,55 @@ LATERAL MENU FOLDER STYLES
 	transition: border-color 0.2s,background-color 0.3s;
 }
 
-.button-panel:hover{
+
+#settings_panel .button-panel:hover{
 	border-color: #404040;
 	background-color: #404040;
 }
 
-.button-panel:active{
-	border-color: #E2F875;
-	background-color: #E2F875;
+#settings_panel .button-panel:active{
+	border-color: <?= $bright ?>;
+	background-color: <?= $bright ?>;
 }
 
-.button-panel:disabled{
+#settings_panel .button-panel:disabled{
 	color: #333;
 }
-.button-panel:disabled:hover, .button-panel.disabled:hover{
+#settings_panel .button-panel:disabled:hover, #settings_panel .button-panel.disabled:hover{
 	background-color: #555;
 	border: 2px solid black;
 }
 
-.button-panel.marked{
+#settings_panel .button-panel.marked{
 	background-color: #AAA;
 		border-color: #AAA;
 	transition: border-color 0.2s,background-color 0.3s;
 }
 
-.button-panel.marked:hover{
+#settings_panel .button-panel.marked:hover{
 	border-color: black;
 	background-color: #888;
 }
 
-.button-panel.marked:active{
-	border-color: black;
-	background-color: #E2F875;
+#settings_panel .button-panel.marked:active{
+	border-color: <?= $bright ?>;
+	background-color: <?= $bright ?>;
 }
 
-.highlight-color{
+#settings_panel .highlight-color{
 	border-radius:2px;
-	background-color: #96B20E;
-	border: 1px solid #96B20E;
+	background-color: <?= $dark ?>;
+	border: 1px solid <?= $dark ?>;
 }
 
-.highlight-color:hover{
+#settings_panel .highlight-color:hover{
 	border-color: #444;
 	background-color: #444;
 }
 
-.highlight-color:active{
-	border-color: #E2F875;
-	background-color: #E2F875;
+#settings_panel .highlight-color:active{
+	border-color: <?= $bright ?>;
+	background-color: <?= $bright ?>;
 }
 
 #settings_panel button,#settings_panel a{
@@ -415,6 +430,44 @@ LATERAL MENU FOLDER STYLES
 	margin:3px 0;
 }
 
+#navopts_top .button-panel,
+#navopts_bottom .button-panel{
+	background-color:transparent;
+	padding: 5px 7px;
+	margin: 0 0;
+	border: solid transparent;
+	border-width: 0 0 2px;
+	cursor:pointer;
+	transition: all 0.2s;
+}
+
+#navopts_top .button-panel:hover,
+#navopts_bottom .button-panel:hover{
+	border-color: rgba(0,0,0,0.4);
+}
+
+#navopts_top .button-panel.marked,
+#navopts_bottom .button-panel.marked{
+	border-color: <?= $dark ?>;
+}
+
+#navopts_top .button-panel:active,
+#navopts_bottom .button-panel:active{
+	background-color: rgba(0,0,0,0.1);
+}
+
+#navopts_top .highlight-color,
+#navopts_bottom .highlight-color{
+	color: <?= $dark ?>;
+	border-width: 0 0 2px;
+}
+
+#navopts_top .highlight-color:hover,
+#navopts_bottom .highlight-color:hover{
+	border-color: <?= $dark ?>;
+}
+
+
 
 /*############################################################################################################
 POSTS
@@ -422,7 +475,7 @@ POSTS
 ############################################################################################################*/
 
 #posts_panel{
-	padding-top: 0px;
+	padding: 7px;
 	margin: 0;
 }
 
@@ -440,6 +493,10 @@ POSTS
 	display: table-cell;
 	vertical-align: middle;
 	padding-left:15px;
+
+	border: solid <?= $dark ?>;
+	border-width: 0 0 2px 0;
+	border-radius: 4px 4px 0 0;
 }
 
 .post.selected .header{
@@ -447,7 +504,7 @@ POSTS
 }
 
 .post.unread .header{
-	background-color: #E2F875;
+	background-color: <?= $bright ?>;
 }
 
 .post .title{
@@ -603,9 +660,6 @@ button.lock-icon.highlight-color{
 }
 
 .post .description{
-    background-image: url("../imgs/backPosts.png");
-    background-repeat: repeat-x;
-
 	/*margin: 25px 25px 0px;
 	padding-bottom:50px;*/
 	padding: 25px 25px 50px;
@@ -622,7 +676,6 @@ PAGES
 #pages {
 	display: inline-block;
 	margin-top: 5px;
-	color:white;
 }
 
 #pages #totalPages{
@@ -856,3 +909,87 @@ div.tagname button{
 	background-repeat: no-repeat;
 	background-position: center center;
 }
+
+<?php
+function hsv2rgb($hsv) {
+    $H = $hsv[0]/360.;
+    $S = $hsv[1]/100.;
+    $V = $hsv[2]/100.;
+    $H *= 6;
+    $I = floor($H);
+    $F = $H - $I;
+    $M = $V * (1 - $S);
+    $N = $V * (1 - $S * $F);
+    $K = $V * (1 - $S * (1 - $F));
+    switch ($I) {
+        case 0:
+            list($R,$G,$B) = array($V,$K,$M);
+            break;
+        case 1:
+            list($R,$G,$B) = array($N,$V,$M);
+            break;
+        case 2:
+            list($R,$G,$B) = array($M,$V,$K);
+            break;
+        case 3:
+            list($R,$G,$B) = array($M,$N,$V);
+            break;
+        case 4:
+            list($R,$G,$B) = array($K,$M,$V);
+            break;
+        case 5:
+        case 6: //for when $H=1 is given
+            list($R,$G,$B) = array($V,$M,$N);
+            break;
+    }
+    return array(round($R*255), round($G*255), round($B*255));
+}
+function rgb2hsv($rgb){
+    $R = ($rgb[0] / 255.);
+    $G = ($rgb[1] / 255.);
+    $B = ($rgb[2] / 255.);
+    $maxRGB = max($R, $G, $B);
+    $minRGB = min($R, $G, $B);
+    $chroma = $maxRGB - $minRGB;
+    $computedV = 100 * $maxRGB;
+    if ($chroma == 0)
+        return array(0, 0, $computedV);
+    $computedS = 100 * ($chroma / $maxRGB);
+    if ($R == $minRGB)
+        $h = 3 - (($G - $B) / $chroma);
+    elseif ($B == $minRGB)
+        $h = 1 - (($R - $G) / $chroma);
+    else // $G == $minRGB
+        $h = 5 - (($B - $R) / $chroma);
+    $computedH = 60 * $h;
+    return array($computedH, $computedS, $computedV);
+}
+function hex2rgb($hex) {
+   $hex = str_replace("#", "", $hex);
+
+   if(strlen($hex) == 3) {
+      $r = hexdec(substr($hex,0,1).substr($hex,0,1));
+      $g = hexdec(substr($hex,1,1).substr($hex,1,1));
+      $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+   } else {
+      $r = hexdec(substr($hex,0,2));
+      $g = hexdec(substr($hex,2,2));
+      $b = hexdec(substr($hex,4,2));
+   }
+   $rgb = array($r, $g, $b);
+   return $rgb;
+}
+function rgb2hex($rgb) {
+   $hex = "#";
+   $hex .= str_pad(dechex($rgb[0]), 2, "0", STR_PAD_LEFT);
+   $hex .= str_pad(dechex($rgb[1]), 2, "0", STR_PAD_LEFT);
+   $hex .= str_pad(dechex($rgb[2]), 2, "0", STR_PAD_LEFT);
+   return $hex;
+}
+function hex2hsv($hex){
+	return rgb2hsv(hex2rgb($hex));
+}
+function hsv2hex($hsv){
+	return rgb2hex(hsv2rgb($hsv));
+}
+?>

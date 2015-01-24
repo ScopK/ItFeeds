@@ -19,7 +19,11 @@
         <title>Fydeph - <?=$log_user?></title>
         <link rel="shortcut icon" href="imgs/icon.png" />
         <link rel="stylesheet" type="text/css" href="style/anims.css">
-        <link rel="stylesheet" type="text/css" href="style/style.css">
+    <?php if (isset($_GET['old'])) { ?>
+        <link rel="stylesheet" type="text/css" href="style/style_old.css">
+    <?php } else { ?>
+        <link rel="stylesheet" type="text/css" href="style/style.css?color=EF7502">
+    <?php } ?>
         <script src="scripts/lib/jquery.min.js"></script>
         <script src="scripts/lib/jsanims.js"></script>
         <script src="scripts/lib/contextmenu.js"></script>
@@ -34,8 +38,6 @@
         $(document).ready(function(){
             $(".background-modal").hide();
             $("#managerLink").attr("href","./manager.php"+location.search);
-            //loading_run();
-            randomColors();
         });
         </script>
     </head>
