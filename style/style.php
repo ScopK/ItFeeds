@@ -8,8 +8,6 @@ $dark = hsv2hex($hsv);
 $hsv[0] += 15;
 $hsv[1] = 39; $hsv[2]=100;
 $bright = hsv2hex($hsv);
-$hsv[1]+=23;
-$middle = hsv2hex($hsv);
 ?>
 /* FONTS */
 
@@ -114,7 +112,7 @@ button::-moz-focus-inner {
 
 #settings_panel{
 	position:absolute;
-	background-color:#8a8a8a;
+	background-color:#444;
 	z-index:1;
 	height:100%;
 	top:0;	left:0;	right:0; bottom:0;
@@ -502,17 +500,25 @@ POSTS
 	vertical-align: middle;
 	padding-left:15px;
 
-	border: solid <?= $dark ?>;
-	border-width: 0 0 2px 0;
+	border: solid #666;
+	border-width: 0 0 1px 0;
 	border-radius: 4px 4px 0 0;
+	padding-bottom:1px;
 }
 
 .post.selected .header{
-	background-color: <?= $middle ?> !important;
+	padding-bottom:0px;
+	border-bottom-width: 2px;
+	box-shadow: 0 5px 14px -5px black;
+}
+
+.post.selected.unread .header{
+	box-shadow: 0 5px 14px -5px <?= $dark ?>;
 }
 
 .post.unread .header{
 	background-color: <?= $bright ?>;
+	border-color: <?= $dark ?>;
 }
 
 .post .title{
