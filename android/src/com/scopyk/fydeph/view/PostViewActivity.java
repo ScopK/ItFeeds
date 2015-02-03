@@ -75,6 +75,7 @@ public class PostViewActivity extends ActionBarActivity implements APICallback {
         String postid = this.getIntent().getStringExtra("postId");
         this.post = Content.get().getPost(postid);
     	Toolbar t = (Toolbar)findViewById(R.id.toolbar_actionbar);
+    	t.setBackgroundColor(this.getIntent().getIntExtra("color", getResources().getColor(R.color.green)));
     	t.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {

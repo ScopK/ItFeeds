@@ -2,10 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eee"
+    android:minHeight="6dp"
     android:paddingBottom="8dp"
     android:paddingLeft="3dp"
     android:paddingRight="10dp"
-    android:minHeight="6dp"
     android:paddingTop="8dp" >
     
     <FrameLayout

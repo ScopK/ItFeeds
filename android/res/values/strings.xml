@@ -35,5 +35,11 @@
     <string name="feed_prompt">Choose a feed</string>
     <string name="prev">Prev</string>
     <string name="load_more">Load More</string>
+    
+    <string name="newer">Most recent first</string>
+    <string name="older">Least recent first</string>
+    <string name="unread_only">Unread only</string>
+    <string name="favs_only">Favorites only</string>
+    <string name="show_all">Show all</string>
 
 </resources>

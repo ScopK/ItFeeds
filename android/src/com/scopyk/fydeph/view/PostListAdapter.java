@@ -21,7 +21,9 @@ public class PostListAdapter extends BaseAdapter {
 	 private List<Post> list;
 	 private LayoutInflater mInflater;
 	 private boolean hasLoadMore;
+	 private int loadMoreColor = -1;
 	 private View nullView;
+	 
 	 
 	 public PostListAdapter(Context activity, int textViewResourceId,List<Post> list){
 		 this.list = list;
@@ -95,13 +97,20 @@ public class PostListAdapter extends BaseAdapter {
 		 int i=(this.hasLoadMore)?2:1;
 		 return this.list.get(this.list.size()-i).getId();
 	 }
+	 
+	 public void setLoadMoreColor(int color){
+		 loadMoreColor = color;
+	 }
 
 	 @Override
 	 public View getView(int position, View convertView, ViewGroup parent) {
         Post item = list.get(position);
         if (item == null){
-        	if (nullView==null)
+        	if (nullView==null){
         		nullView = mInflater.inflate(R.layout.loadmore_line_item, parent, false);
+	        	if (loadMoreColor != -1)
+	        		nullView.setBackgroundColor(loadMoreColor);
+        	}
     		return nullView;
         }
         

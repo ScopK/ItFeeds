@@ -45,7 +45,10 @@
                     android:id="@+id/postlistview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:divider="#d0d0d0f0"
+                    android:dividerHeight="1px"
                     tools:listitem="@layout/post_line_item" >
+
                 </ListView>
             </android.support.v4.widget.SwipeRefreshLayout>
         </LinearLayout>

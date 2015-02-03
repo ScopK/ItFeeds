@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,6 +58,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
     private SwipeRefreshLayout swipeRefreshLayout;
     private Folder selectedFolder;
     private Toolbar toolbar;
+    private int color;
     
 	
     @Override
@@ -64,9 +66,12 @@ public class MainActivity extends ActionBarActivity implements APICallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initBar();
-        setLoadingScreen(true);  
-        
+        setLoadingScreen(true); 
+
         postListAdapter = new PostListAdapter(this, android.R.id.text1, new ArrayList<Post>());
+        //setColor(Color.parseColor("#F07602"));
+        setColor(getResources().getColor(R.color.green));
+        
         ListView rr = (ListView)findViewById(R.id.postlistview);
         rr.setAdapter(postListAdapter);
         rr.setOnItemClickListener(new OnItemClickListener() {
@@ -86,6 +91,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 				}
 		        Intent intentApp = new Intent(MainActivity.this, PostViewActivity.class);
 				intentApp.putExtra("postId", (String)p.getId());
+				intentApp.putExtra("color", color);
 				startActivityForResult(intentApp,37);
 			}
 		});  
@@ -112,11 +118,11 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 					    public void onClick(DialogInterface dialog, int which) {
 					    	if (which==0){
 					    		Content.get().viewFolder(selectedFolder.getId());
-					    		toolbar.setTitle(selectedFolder.getTitle());	
+					    		setTitle(selectedFolder.getTitle(),false);	
 					    	} else {
 						    	Feed f = selectedFolder.getFeeds().get(which-1);
 								Content.get().viewFeed(f.getId());
-								toolbar.setTitle(f.getTitle());
+								setTitle(f.getTitle(),false);
 					    	}
 							new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
 							setLoading(true);
@@ -125,17 +131,17 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 					builder.show();
 				} else if (ml instanceof Feed) {
 					Content.get().viewFeed(ml.getId());
-					toolbar.setTitle(ml.getTitle());
+					setTitle(ml.getTitle(),false);
 					new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
 					setLoading(true);
 				} else if (ml instanceof Tag) {
 					Content.get().viewTag(ml.getId());
-					toolbar.setTitle(ml.getTitle());
+					setTitle(ml.getTitle(),false);
 					new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
 					setLoading(true);
 				} else if (ml instanceof Label && ml.getLabel().equals(getString(R.string.all_posts))) {
 					Content.get().viewAll();
-					toolbar.setTitle(ml.getTitle());
+					setTitle(getString(R.string.app_name),false);
 					new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
 					setLoading(true);
 				} else return;
@@ -371,6 +377,8 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 	        	boolean u = Content.get().toggleUnread();
 	        	if (u)	item.setIcon(R.drawable.ic_unread);
 	        	else	item.setIcon(R.drawable.ic_read);
+	        	if (u)	setTitle(getString(R.string.unread_only),true);
+	        	else	setTitle(getString(R.string.show_all),true);
             	new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
 				setLoading(true);
 	        	break;
@@ -378,6 +386,8 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 	        	boolean f = Content.get().toggleFavorites();
 	        	if (f)	item.setIcon(R.drawable.ic_fav);
 	        	else	item.setIcon(R.drawable.ic_unfav);
+	        	if (f)	setTitle(getString(R.string.favs_only),true);
+	        	else	setTitle(getString(R.string.show_all),true);
             	new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
 				setLoading(true);
 	        	break;
@@ -385,6 +395,9 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 	        	boolean o = Content.get().toggleOrder();
 	        	if (o)	item.setIcon(R.drawable.ic_newer);
 	        	else	item.setIcon(R.drawable.ic_older);
+	        	if (o)	setTitle(getString(R.string.newer),true);
+	        	else	setTitle(getString(R.string.older),true);	        	
+	        	
             	new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
 				setLoading(true);
 	        	break;
@@ -404,30 +417,31 @@ public class MainActivity extends ActionBarActivity implements APICallback {
     	toolbar = (Toolbar)findViewById(R.id.toolbar_actionbar);
     	//setSupportActionBar(t);
     	toolbar.setOnMenuItemClickListener(new OnMenuItemClickListener(){
-
 			@Override
 			public boolean onMenuItemClick(MenuItem arg0) {
 				// TODO Auto-generated method stub
 				return false;
 			}
-    		
     	});
     	//t.setMenu((MenuBuilder)m, new ActionMenuPresenter(this));
     	
     	toolbar.setTitle(this.getTitle());
-
-
-
     	toolbar.setNavigationIcon(R.drawable.ic_drawer);
-    	
 
-    	
     	DrawerLayout dl=(DrawerLayout)findViewById(R.id.drawer_layout);
     	
     	ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, dl,toolbar,R.string.login, R.string.logout);
         dl.setDrawerListener(mDrawerToggle);
-
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    
+    void setColor(int c){
+    	color = c;
+    	toolbar.setBackgroundColor(color);
+    	postListAdapter.setLoadMoreColor(color);
+    	
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(color);
     }
     
     @Override
@@ -437,6 +451,32 @@ public class MainActivity extends ActionBarActivity implements APICallback {
     		postListAdapter.notifyDataSetChanged();
     	if (drawerListAdapter!=null)
     		drawerListAdapter.notifyDataSetChanged();
+    }
+    
+    private CharSequence oldTitle;
+    private Handler handler;
+    private Runnable runnable;
+    public void setTitle(String str, boolean timed){
+    	if (timed){
+    		if (oldTitle==null)
+    			oldTitle = toolbar.getTitle();
+    	} else
+    		oldTitle = null;
+    	toolbar.setTitle(str);
+    	
+    	if (handler == null) handler = new Handler();
+    	handler.removeCallbacks(runnable);
+    	if (timed){
+    		runnable = new Runnable() {
+    		    @Override
+    		    public void run() {
+    		    	if (oldTitle != null)
+    		    		toolbar.setTitle(oldTitle);
+    		    	oldTitle=null;
+    		    }
+    		};
+    		handler.postDelayed(runnable, 2500);
+    	}
     }
 
     
