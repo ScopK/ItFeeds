@@ -67,7 +67,7 @@
 		case 2: // tags
 			if ($public && isTagPublic($tagId)){
 				$hidden = 1;
-				$posts = getPostsNextTag($tagId, 0, 0, $sort, $postsPage, $nextId, "");
+				$posts = getPostsNextTag($tagId, 0, 0, $sort, $postsPage, $nextId, array());
 				echo json_encode($posts);
 				break;
 			}
