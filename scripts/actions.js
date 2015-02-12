@@ -103,20 +103,30 @@ function showAddTagsDialog(idx){
 
 var videos;
 var idxVideo;
-function searchYoutubeVideo(){
+function searchYoutubeVideo(findNext){
+	findNext = (typeof findNext === 'undefined')? false : findNext;
 	if (postIdxSelected>0){
-		var id = posts[postIdxSelected-1]['id'];
+		var postidx = postIdxSelected;
+		var postid = posts[postIdxSelected-1]['id'];
 		loading_run();
 		$.ajax({
 			url: "./ajax/get_youtube_code.php",
 			type: "GET",
-			data: "postid="+id,
+			data: "postid="+postid,
 			dataType : "json",
 			success: function(result){
 				if (result.length>0){
+					var post = posts[postidx-1];
 					videos=result;
 					idxVideo=0;
 					$("#youtube_viewer_dialog").show();
+					$("#youtube_viewer_dialog").attr("postid",postid);
+					$("#youtube_viewer_dialog").attr("postidx",postidx);
+					console.log(post);
+					if (post.unread==1)
+						$("#youtube_viewer_dialog").addClass("selected");
+					else
+						$("#youtube_viewer_dialog").removeClass("selected");
 					if (result[0].indexOf("/")>=0)
 						var html = "<iframe src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+result[0]+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
 					else
@@ -129,7 +139,11 @@ function searchYoutubeVideo(){
 			},
 			error: function (request, status, error){
 				if (request.responseText=="Code not found"){
-					showMessage("No videos were found");	
+					showMessage("No videos were found");
+					if (findNext && postidx < posts.length){
+						nextPost();
+						searchYoutubeVideo();
+					}
 				} else {
 					showMessage("JS Error "+request.status+": "+request.responseText);
 				}
@@ -154,13 +168,10 @@ function nextVideo(){
 		$("#counter_videos").html("Next video ("+(idxVideo+1)+"/"+videos.length+")");
 	}
 }
-function nextPostVideo(){
+function nextPostVideo(findNext){
+	findNext = (typeof findNext === 'undefined')? false : findNext;
 	nextPost();
-	searchYoutubeVideo();
-}
-function nextVideoMarkUnread(){
-	markPost(0, 1, postIdxSelected);
-	nextPostVideo();
+	searchYoutubeVideo(findNext);
 }
 
 function showSearchDialog(){

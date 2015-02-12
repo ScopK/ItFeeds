@@ -203,13 +203,15 @@
 
         <div id="youtube_viewer_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="youtube_viewer" class="dialog-dim" style="width:700px">
             <table class="slim"><tr><th>Video viewer
-            <span id='ytv_window_controls'><button onclick="$('#youtube_viewer_dialog').fadeOut(100);$('#show-video-button').show()">·</button>
-                <button onclick="$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);">×</button></span></th>
+            <span id='ytv_window_controls'>
+                <button id='video_unread_button' onclick="toogleUnreadVideoPost(false,$('#youtube_viewer_dialog').attr('postid'))">&nbsp;</button>
+                <button onclick="$('#youtube_viewer_dialog').fadeOut(100);$('#show-video-button').show()">·</button>
+                <button onclick="$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);">×</button>
+            </span></th>
             </tr><tr><td id="youtube_td" style="margin:0;padding:0"></td>
             </tr><tr><td id="ytv_controls">
             <button style="background-color:#aaa" id="counter_videos" onclick="nextVideo()"></button>
-            <button style="background-color:#ccc" onclick="nextPostVideo()">Next</button>
-            <button style="background-color:#eee" onclick="nextVideoMarkUnread()">also mark as unread</button>
+            <button style="background-color:#ccc" onclick="nextPostVideo(true)">Next</button>
             </td></tr></table>
         </div></div></div>
         

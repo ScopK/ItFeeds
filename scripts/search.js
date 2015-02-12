@@ -19,6 +19,19 @@ function findFeedIndex(id){
 	return res;
 }
 
+function findPostIndex(id){
+	var index = -1;
+	var idx = 0;
+	$.each(posts,function(){
+		if (this.id == id){
+			index = idx;
+			return;
+		}
+		idx++;
+	});
+	return index;
+}
+
 function findFolderIndex(id){
 	var index = -1;
 	var fo = 0;

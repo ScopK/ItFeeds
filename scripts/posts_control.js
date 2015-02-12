@@ -278,6 +278,18 @@ function toogleUnreadPost(click,idx){
 	markPost(0,val,idx,click);
 }
 
+function toogleUnreadVideoPost(click,id){
+	click = (typeof click !== 'undefined')? click : false;
+	var idx = findPostIndex(id);
+	if (idx>=0){
+		var val = (posts[idx].unread == 1)?0:1;
+		markPost(0,val,idx+1,click);
+	} else {
+		var val = $("#youtube_viewer_dialog").hasClass("selected")?0:1;
+		markVideoPost(0,val,id,click);
+	}
+}
+
 function toogleFavPost(click,idx){
 	click = (typeof click !== 'undefined')? click : false;
 	idx = (typeof idx !== 'undefined')? idx : postIdxSelected;
@@ -310,10 +322,14 @@ function markPost(field, value, postidx, click){
 						$(".post[idxpost='"+postidx+"']").removeClass("unread");
 						folder.unread--;
 						folder.feeds[idx[1]].unread--;
+						if ($("#youtube_viewer_dialog").attr("postid") == post.id)
+							$("#youtube_viewer_dialog").removeClass("selected");
 					} else {
 						$(".post[idxpost='"+postidx+"']").addClass("unread");
 						folder.unread++;
 						folder.feeds[idx[1]].unread++;
+						if ($("#youtube_viewer_dialog").attr("postid") == post.id)
+							$("#youtube_viewer_dialog").addClass("selected");
 					}
 					updateCounts(idx);
 				} else {
@@ -342,6 +358,33 @@ function markPost(field, value, postidx, click){
 				}
 			}
 			enableControls();
+		},
+		error: function (request, status, error){
+			showMessage("An error ocurred marking post<br/>"+error);
+		},
+		complete: function(){
+			loading_stop();
+		}
+	});
+}
+
+function markVideoPost(field, value, postid, click){
+	click = (typeof click !== 'undefined')? click : false;
+
+	var fieldname = (field==0)? "unread":"fav";
+	loading_run();
+	$.ajax({
+		url: "./ajax/mark_post.php",
+		type: "POST",
+		data: "postid="+postid+"&"+fieldname+"="+value,
+		dataType : "json",
+		success: function(result){
+			if (field==0){ // read/unread
+				if ($("#youtube_viewer_dialog").attr("postid") == postid){
+					if (value==0) $("#youtube_viewer_dialog").removeClass("selected");
+					else		  $("#youtube_viewer_dialog").addClass("selected");
+				}
+			}
 		},
 		error: function (request, status, error){
 			showMessage("An error ocurred marking post<br/>"+error);

@@ -814,7 +814,7 @@ VIDEO DIALOG
 #ytv_controls button{
 	font-weight:bold;
 	border:0;
-	width:33.333%;
+	width:50%;
 	height:100%;
 	padding:10px;
 	margin:0;
@@ -824,6 +824,24 @@ VIDEO DIALOG
 
 #ytv_controls button:hover{
 	color: #333;
+}
+
+#youtube_viewer_dialog.selected th{
+	box-shadow: 0px 5px 14px 0px #F07602;
+	background-color: #FFE59C;
+	border-bottom-color: #F07602;
+}
+
+#video_unread_button{
+	background-position: 1px 1px;
+}
+
+#youtube_viewer_dialog #video_unread_button{
+	background-image: url("../imgs/read.png");
+}
+
+#youtube_viewer_dialog.selected #video_unread_button{
+	background-image: url("../imgs/unread.png");
 }
 
 /*###########################################################################################################
