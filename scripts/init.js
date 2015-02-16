@@ -59,7 +59,7 @@ $(document).ready(function(){
 		idleTime++;
 		reloadTime++;
 		if (reloadTime >= 4){ //2 minutes
-			initialize(postIdxSelected==0 && idleTime>=4,true);
+			initialize(postIdxSelected==0 && idleTime>=4);
 			reloadTime=0;
 			idleTime=0;
 		}
@@ -83,9 +83,8 @@ function situatePostControls(){
 	});
 }
 
-function initialize(reload,onlyCount){
+function initialize(reload){
 	if (reload==undefined) reload = true;
-	if (onlyCount==undefined) onlyCount = false;
 	loading_run();
 	$.ajax({
 		url: "./ajax/get_user_info.php",
@@ -94,12 +93,9 @@ function initialize(reload,onlyCount){
 		success: function(result){
 			folders = result.folders;
 			tags = result.tags;
-			if (onlyCount)
-				updateNewCounters()
-			else {
-				displayFolders();
-				displayTags();
-			}
+			displayFolders();
+			displayTags();
+
 			if (reload)
 				reloadPosts();
 		},

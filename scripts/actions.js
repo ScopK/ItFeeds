@@ -42,17 +42,17 @@ function logout(){
 	});
 }
 
-function toogleViewFeeds(me){
+function toogleViewFeeds(me,sec){
 	var hid = $(me).html();
 
 	if (hid == '+'){
-		$(me).closest(".folder").find(".folderfeeds").slideDown();
+		$(me).closest(".folder").find(".folderfeeds").slideDown(sec);
 		$(me).html("-");
 	} else {
-		$(me).closest(".folder").find(".folderfeeds").slideUp();
+		$(me).closest(".folder").find(".folderfeeds").slideUp(sec);
 		$(me).html("+");
 	}
-	stopPropagation();
+	//stopPropagation();
 }
 
 function toggleFavs(me){
@@ -364,18 +364,17 @@ function openNewWindowFolder(folderid){
 //#################### CONTEXT MENU
 function cmTag(e,context){
 	var arr = [{
-	/*	name: "Console.log(context)",
-		function: function(){console.log(this)},
-		context: context
-	},{/**/
 		name: "Open in new window",
 		function: function(){
 			openNewWindowTag($(this).attr("idtag"));
 		},
 		context: context
+	},{
+		type: "separator"
 	}];
+
 	if ($(context).hasClass("public"))
-		arr.push({ type: "separator" },{
+		arr.push({
 			name: "Open with public tag viewer",
 			function: function(){
 				var id = $(this).attr("idtag");
@@ -383,6 +382,25 @@ function cmTag(e,context){
 			},
 			context: context
 		});
+	arr.push({
+		name: "Edit options",
+		type: "folder",
+		options: [
+			{
+				name: "Settings",
+				function: function(){
+					var idx = this.getAttribute("idxtag");
+					showSettings_tag(idx);
+				},
+				context: context
+			},{
+				name: "Delete",
+				function: function(){
+					alert("Work in progress...");
+				},
+				context: context
+			}]
+	});
 	setCMContent(arr);
 	showCM(e.clientX,e.clientY)
 	return false;
@@ -390,10 +408,6 @@ function cmTag(e,context){
 
 function cmFeed(e,context){
 	var arr = [{
-	/*	name: "Console.log(context)",
-		function: function(){console.log(this)},
-		context: context
-	},{/**/
 		name: "Open in new window",
 		function: function(){
 			openNewWindowFeed($(this).attr("idfeed"));
@@ -415,7 +429,34 @@ function cmFeed(e,context){
 			window.open(folders[fo].feeds[fe].rss_link, '_blank', '');
 		},
 		context: context
-	}];
+	},{
+		type: "separator"
+	},{
+		name: "Edit options",
+		type: "folder",
+		options: [
+			{
+				name: "Settings",
+				function: function(){
+					var fidx = this.getAttribute("idxfolder");
+					var idx = this.getAttribute("idxfeed");
+					showSettings_feed(fidx,idx);
+				},
+				context: context
+			},{
+				name: "Clean",
+				function: function(){
+					alert("Work in progress...");
+				},
+				context: context
+			},{
+				name: "Delete",
+				function: function(){
+					alert("Work in progress...");
+				},
+				context: context
+			}]
+		}];
 
 	setCMContent(arr);
 	showCM(e.clientX,e.clientY);
@@ -425,16 +466,44 @@ function cmFeed(e,context){
 
 function cmFolder(e,context){
 	var arr = [{
-	/*	name: "Console.log(context)",
-		function: function(){console.log(this)},
-		context: context
-	},{/**/
 		name: "Open in new window",
 		function: function(){
 			openNewWindowFolder($(this).attr("idfolder"));
 		},
 		context: context
-	}];
+	},{
+		type: "separator"
+	},{
+		name: "Edit options",
+		type: "folder",
+		options: [
+			{
+				name: "Add Feed",
+				function: function(){
+					alert("Work in progress...");
+				},
+				context: context
+			},{
+				name: "Settings",
+				function: function(){
+					var idx = this.getAttribute("idxfolder");
+					showSettings_folder(idx);
+				},
+				context: context
+			},{
+				name: "Clean",
+				function: function(){
+					alert("Work in progress...");
+				},
+				context: context
+			},{
+				name: "Delete",
+				function: function(){
+					alert("Work in progress...");
+				},
+				context: context
+			}]
+		}];
 
 	setCMContent(arr);
 	showCM(e.clientX,e.clientY)

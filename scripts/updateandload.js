@@ -1,4 +1,11 @@
 function displayFolders() {
+
+	var idsExtended = [];
+	$.each($("#folders .folder:not(.selected)"),function(){
+		if ($(this).find(".folderfeeds")[0].style.display=="block")
+			idsExtended.push(this.getAttribute("idfolder"));
+	});
+
 	var html = '';
 	var feedHtml = '';
 	$.each(folders,function(index){
@@ -11,33 +18,15 @@ function displayFolders() {
 	$("#folders").html(html);
 	$("#feeds").html(feedHtml);
 
+	idsExtended.forEach(function(id){
+		toogleViewFeeds($(".folder[idfolder='"+id+"'] .expander")[0],0);
+	});
+
 	if (get.feed != undefined){
 		$(".feed[idFeed='"+get.feed+"']").closest(".folderfeeds").show();
 		$(".feed[idFeed='"+get.feed+"']").closest(".folder").find("button").html("-");
 	}
 	setFeedsActions();
-}
-
-function updateNewCounters() {
-	$.each(folders,function(index){
-		var folder = $(".folder[idxfolder='"+index+"']");
-		if (folder.length>0){
-			var folderCounter = folder.find(".folderTitle .count");
-			var field = folderCounter.find(".num");
-			field.html(this.unread);
-			if (this.unread>0)	folderCounter.removeClass("hidden");
-			else				folderCounter.addClass("hidden");
-		} else {
-			folder = $("#feeds");
-		}
-		$.each(this.feeds,function(index){
-			var feedCounter = folder.find(".feed[idxfeed='"+index+"'] .count");
-			var field = feedCounter.find(".num");
-			field.html(this.unread);
-			if (this.unread>0)	feedCounter.removeClass("hidden");
-			else				feedCounter.addClass("hidden");
-		});
-	});
 }
 
 function displayTags() {

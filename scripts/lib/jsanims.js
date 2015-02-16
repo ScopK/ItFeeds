@@ -3,7 +3,8 @@ var loading_stacks=0;
 /** LOADING ANIMATIONS CONTROL **/
 function loading_stop() {
 	loading_stacks--;
-	if (loading_stacks == 0){
+	if (loading_stacks <= 0){
+        loading_stacks=0;
 	    $(".loading").css("animation-play-state","paused");
 	    $("#loading_panel").fadeOut();
 	}
