@@ -223,6 +223,22 @@ function ajaxMorePosts(args){
 				$("#loadMore").prop('disabled',false);
 				$("#loadMoreLabel").removeClass('disabled');
 			}
+
+			var deleteSince = ($(".post").length) - ((get.postspage?get.postspage:10)*3);
+			if (deleteSince > 0){
+				var ps = $(".post:lt("+deleteSince+")");
+				var height = 0;
+				$.each(ps,function(){
+					height+=this.scrollHeight
+				});
+				var body = $("html, body");
+				body.animate({scrollTop: body.scrollTop() - height}, {duration: 0});
+				for (var i; i<deleteSince;i++)
+					posts[i] = undefined;
+					//posts.shift();
+				ps.remove();
+				firstPostIdx += deleteSince;
+			}
 		},
 		error: function (request, status, error){
 			showMessage("Error getting posts<br/>"+error);
