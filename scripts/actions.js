@@ -302,6 +302,7 @@ function hideLateralMenu(){
     $("#lateral_menu").addClass("hidden");
 	$("#content").css("margin-left","0");
 	$('#settings_panel').addClass('hidden');
+	$("#more-options-button").addClass("hidden");
 	setCookie("fullscreen","1",1);
 }
 
@@ -309,6 +310,7 @@ function showLateralMenu(){
 	$("#show-lateral-button").html("&lsaquo;");
 	$("#content").css("margin-left",$("#lateral_menu").outerWidth()+"px");
     $("#lateral_menu").removeClass("hidden");
+    $("#more-options-button").removeClass("hidden");
     deleteCookie("fullscreen");
 }
 
@@ -511,6 +513,39 @@ function cmFolder(e,context){
 				},
 				context: context
 			}]
+		}];
+
+	setCMContent(arr);
+	showCM(e.clientX,e.clientY)
+	return false;
+}
+
+function cmMore(e,context){
+	var arr = [
+		{
+			name: "Add Feed",
+			function: function(){
+				var idx = 0;
+				folders.some(function(el){
+					if (el.name == "null")
+						return true;
+					idx++;
+				});
+				showCreate_feed(idx);
+			},
+			context: context
+		},{
+			name: "Add Folder",
+			function: function(){
+				showCreate_folder();
+			},
+			context: context
+		},{
+			name: "Clean",
+			function: function(){
+				showClean_all();
+			},
+			context: context
 		}];
 
 	setCMContent(arr);

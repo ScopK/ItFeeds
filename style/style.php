@@ -177,9 +177,31 @@ button::-moz-focus-inner {
 
 #show-video-button{
 	position:fixed;
-	top:50px;
+	top:100px;
 	z-index:2;
 	font-size:10px;
+}
+
+#more-options-button{
+	position:fixed;
+	top:50px;
+	z-index:2;
+	font-size:26px;
+	background-color:#E5E5E5;
+	color:#222;
+	transition: background-color 0.15s,margin 0.3s, z-index 0s 0.3s;
+}
+
+#more-options-button:hover{
+	/*background-color:#7DA628;*/
+	background-color:#BBB;
+}
+
+#more-options-button.hidden{
+	/*background-color:#7DA628;*/
+	transition-delay: 0s;
+	margin-left: 40px;
+	z-index:-1;
 }
 
 #content{

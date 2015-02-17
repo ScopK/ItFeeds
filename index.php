@@ -105,6 +105,7 @@
         </div>
 
         <button id="show-lateral-button" class="mouse-button" onclick="toggleLateralMenu()">&lsaquo;</button>
+        <button id="more-options-button" class="mouse-button" onclick="return cmMore(event,this);" oncontextmenu="return cmMore(event,this);">+</button>
         <button id="show-video-button" class="mouse-button" style="display:none" onclick="$('#youtube_viewer_dialog').fadeIn(100);$('#show-video-button').hide()">Video Viewer</button>
         <button id="mouse_nav" oncontextmenu="return false;"></button>
         <div id="mouse_bottom" style="display:none">
@@ -325,6 +326,23 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="cleanFeed(); return false;">Confirm</button>
+                        <button onclick="$('#cleaning_dialog').fadeOut(100);return false;">Cancel</button>
+                    </td></tr>
+                    </table>
+                </form>
+            </span>
+            <span class="all-tab tab">
+                <form action="" method="GET">
+                    <table class="slim"><tr><th colspan="2" class="title">Clean posts</th>
+                    </tr><tr>
+                        <td align="center" colspan="2" style="width:50%;padding-right:10px">Delete posts older than
+                        <input id="clean_all_days" style="width:30px; text-align:center" type="text" name="fname" autocomplete="off" /> days</td>
+                    </tr><tr>
+                        <td align="right"><input id="clean_all_unread" type="checkbox" name="hid" /></td>
+                        <td align="left" style="width:55%;padding-left:5px"><label for="clean_all_unread">Include unread</label></td>
+                    </tr><tr>
+                    <td colspan="2" class="dialog_buttons">
+                        <button class="confirmButton" onclick="cleanAll(); return false;">Confirm</button>
                         <button onclick="$('#cleaning_dialog').fadeOut(100);return false;">Cancel</button>
                     </td></tr>
                     </table>

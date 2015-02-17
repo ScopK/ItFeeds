@@ -190,6 +190,15 @@ function showClean_feed(idxf,idx){
 	$("#clean_feed_unread").prop("checked",false);
 }
 
+function showClean_all(){
+	$("#cleaning_dialog .tab:not(.all-tab)").hide();
+	$("#cleaning_dialog .all-tab").show();
+	$("#cleaning_dialog").show();
+
+	$("#clean_all_days").val("3");
+	$("#clean_all_unread").prop("checked",false);
+}
+
 
 //###############################################
 
@@ -213,6 +222,30 @@ function cleanFolder(){
 			displayFolders();
 
 			showMessage("Cleaned "+cleaned+" posts",true);
+			$('#cleaning_dialog').fadeOut(100);
+		},
+		error: function (request, status, error){
+			showMessage("Error "+request.status+": "+request.statusText);
+		},
+		complete: function(){
+			loading_stop();
+		}
+	});
+}
+
+function cleanAll(){
+	var days = $("#clean_all_days").val();
+	var unread = $("#clean_all_unread").prop("checked");
+
+	$.ajax({
+		url: "./ajax/manager/clean_all.php",
+		type: "POST",
+		data: "days="+days+(unread?"&unread=on":""),
+		dataType : "json",
+		success: function(result){
+			initialize(false);
+
+			showMessage("Cleaned "+result.postsDeleted+" posts",true);
 			$('#cleaning_dialog').fadeOut(100);
 		},
 		error: function (request, status, error){
@@ -420,7 +453,10 @@ function showCreate_feed(folder_idx){
 	$("#create_dialog .feed-tab").show();
 	$("#create_dialog").show();
 
-	$("#create_dialog .feed-tab .title").html("Create new feed for '"+f.name+"'");
+	if (f.name=="null")
+		$("#create_dialog .feed-tab .title").html("Create new feed");
+	else
+		$("#create_dialog .feed-tab .title").html("Create new feed for '"+f.name+"'");
 	$("#create_idx_folder").val(folder_idx);
 
 	$("#create_feed_name").val("");
