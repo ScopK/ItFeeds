@@ -50,6 +50,7 @@
 	$feed->rss_link = $query['rss_link'];
 	$feed->last_date_post = $query['last_date_post'];
 	$feed->enabled = $query['enabled'];
+	$feed->max_unread = $query['max_unread'];
 	$feed->deleted = $query['deleted'];
 
 	mysqli_free_result($res);

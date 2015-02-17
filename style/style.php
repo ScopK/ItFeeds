@@ -751,6 +751,16 @@ DIALOGS
 	padding: 3px 7px;
 }
 
+.background-modal .delete{
+	background-color: #faa;
+	box-shadow:0px 0px 30px -5px #F00;
+}
+
+.background-modal .delete th{
+	background-color: #a55;
+	border-bottom: 1px solid #a55;
+}
+
 /*################################################################
 TAG DIALOG
 ###################################################################

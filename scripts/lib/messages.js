@@ -4,7 +4,7 @@
 	styl.innerHTML+="	font-family:'Noto Sans','Lucida Sans Unicode', 'Lucida Grande', sans-serif;\n";
 	styl.innerHTML+="}\n";
 	styl.innerHTML+="#top_message{\n";
-	styl.innerHTML+="	z-index:3;\n";
+	styl.innerHTML+="	z-index:30;\n";
 	styl.innerHTML+="	position:fixed;\n";
 	styl.innerHTML+="	top:-50px;\n";
 	styl.innerHTML+="	left:0;\n";
@@ -24,7 +24,7 @@
 	styl.innerHTML+="	margin: 1em 0px;\n";
 	styl.innerHTML+="}\n";
 	styl.innerHTML+="#popup_message{\n";
-	styl.innerHTML+="	z-index:3;\n";
+	styl.innerHTML+="	z-index:30;\n";
 	styl.innerHTML+="	position:fixed;\n";
 	styl.innerHTML+="	right:50px;\n";
 	styl.innerHTML+="	text-align:center;\n";

@@ -393,10 +393,11 @@ function cmTag(e,context){
 					showSettings_tag(idx);
 				},
 				context: context
-			},{
+			},{ type : "separator" },{
 				name: "Delete",
 				function: function(){
-					alert("Work in progress...");
+					var idx = this.getAttribute("idxtag");
+					showDelete_tag(idx);
 				},
 				context: context
 			}]
@@ -446,13 +447,17 @@ function cmFeed(e,context){
 			},{
 				name: "Clean",
 				function: function(){
-					alert("Work in progress...");
+					var fidx = this.getAttribute("idxfolder");
+					var idx = this.getAttribute("idxfeed");
+					showClean_feed(fidx,idx);
 				},
 				context: context
-			},{
+			},{ type : "separator" },{
 				name: "Delete",
 				function: function(){
-					alert("Work in progress...");
+					var fidx = this.getAttribute("idxfolder");
+					var idx = this.getAttribute("idxfeed");
+					showDelete_feed(fidx,idx);
 				},
 				context: context
 			}]
@@ -480,7 +485,8 @@ function cmFolder(e,context){
 			{
 				name: "Add Feed",
 				function: function(){
-					alert("Work in progress...");
+					var idx = this.getAttribute("idxfolder");
+					showCreate_feed(idx);
 				},
 				context: context
 			},{
@@ -493,13 +499,15 @@ function cmFolder(e,context){
 			},{
 				name: "Clean",
 				function: function(){
-					alert("Work in progress...");
+					var idx = this.getAttribute("idxfolder");
+					showClean_folder(idx);
 				},
 				context: context
-			},{
+			},{ type : "separator" },{
 				name: "Delete",
 				function: function(){
-					alert("Work in progress...");
+					var idx = this.getAttribute("idxfolder");
+					showDelete_folder(idx);
 				},
 				context: context
 			}]
