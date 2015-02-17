@@ -412,7 +412,7 @@ LATERAL MENU FOLDER STYLES
 
 #settings_panel .highlight-color{
 	background-color: <?= $dark ?>;
-	border: 1px solid <?= $bright ?>;
+	border: 1px solid <?= $dark ?>;
 }
 
 #settings_panel .highlight-color:hover{

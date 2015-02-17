@@ -218,117 +218,117 @@
 
         <div id="settings_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim" style="width:700px">
             <span class="folder-tab tab">
-                <input id="edit_idx_folder" type="hidden" name="idx" />
-                <table class="slim"><tr><th colspan="2" class="title"></th>
-                </tr><tr>
-                    <td align="right" style="width:50%;padding-right:10px">Folder name</td>
-                    <td align="left"><input id="edit_name_folder" type="text" name="fname" autocomplete="off" /></td>
-                </tr><tr>
-                </tr><tr>
-                    <td align="right" style="width:50%;padding-right:10px"><label for="edit_hidden_folder">Hidden</label></td>
-                    <td align="left"><input id="edit_hidden_folder" type="checkbox" name="hid" /></td>
-                </tr><tr>
-                <tr><td colspan="2" class="dialog_buttons">
-                    <button class="searchButton" onclick="editFolder(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#settings_dialog').fadeOut(100);return false;">Cancel</button>
-                </td></tr>
-                </table>
+                <form action="" method="GET">
+                    <input id="edit_idx_folder" type="hidden" name="idx" />
+                    <table class="slim"><tr><th colspan="2" class="title"></th>
+                    </tr><tr>
+                        <td align="right" style="width:50%;padding-right:10px">Folder name</td>
+                        <td align="left"><input id="edit_name_folder" type="text" name="fname" autocomplete="off" /></td>
+                    </tr><tr>
+                        <td align="right" style="width:50%;padding-right:10px"><label for="edit_hidden_folder">Hidden</label></td>
+                        <td align="left"><input id="edit_hidden_folder" type="checkbox" name="hid" /></td>
+                    </tr><tr>
+                    <td colspan="2" class="dialog_buttons">
+                        <button class="confirmButton" onclick="editFolder(); return false;">Confirm</button>
+                        <button onclick="$('#settings_dialog').fadeOut(100);return false;">Cancel</button>
+                    </td></tr>
+                    </table>
+                </form>
             </span>
             <span class="tag-tab tab">
-                <input id="edit_idx_tag" type="hidden" name="idx" />
-                <table class="slim"><tr><th colspan="2" class="title"></th>
-                </tr><tr>
-                    <td align="right" style="width:50%;padding-right:10px">Tag name</td>
-                    <td align="left"><input id="edit_name_tag" type="text" name="fname" autocomplete="off" /></td>
-                </tr><tr>
-                </tr><tr>
-                    <td align="right" style="width:50%;padding-right:10px"><label for="edit_hidden_tag">Hidden</label></td>
-                    <td align="left"><input id="edit_hidden_tag" type="checkbox" name="hid" /></td>
-                </tr><tr>
-                </tr><tr>
-                    <td align="right" style="width:50%;padding-right:10px"><label for="edit_public_tag">Public</label></td>
-                    <td align="left"><input id="edit_public_tag" type="checkbox" name="pub" /></td>
-                </tr><tr>
-                <tr><td colspan="2" class="dialog_buttons">
-                    <button class="searchButton" onclick="editTag(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#settings_dialog').fadeOut(100);return false;">Cancel</button>
-                </td></tr>
-                </table>
+                <form action="" method="GET">
+                    <input id="edit_idx_tag" type="hidden" name="idx" />
+                    <table class="slim"><tr><th colspan="2" class="title"></th>
+                    </tr><tr>
+                        <td align="right" style="width:50%;padding-right:10px">Tag name</td>
+                        <td align="left"><input id="edit_name_tag" type="text" name="fname" autocomplete="off" /></td>
+                    </tr><tr>
+                        <td align="right" style="width:50%;padding-right:10px"><label for="edit_hidden_tag">Hidden</label></td>
+                        <td align="left"><input id="edit_hidden_tag" type="checkbox" name="hid" /></td>
+                    </tr><tr>
+                        <td align="right" style="width:50%;padding-right:10px"><label for="edit_public_tag">Public</label></td>
+                        <td align="left"><input id="edit_public_tag" type="checkbox" name="pub" /></td>
+                    </tr><tr>
+                    <td colspan="2" class="dialog_buttons">
+                        <button class="confirmButton" onclick="editTag(); return false;">Confirm</button>
+                        <button onclick="$('#settings_dialog').fadeOut(100);return false;">Cancel</button>
+                    </td></tr>
+                    </table>
+                </form>
             </span>
             <span class="feed-tab tab">
-                <input id="edit_idx_folderfeed" type="hidden" name="fidx" />
-                <input id="edit_idx_feed" type="hidden" name="idx" />
-                <table class="slim"><tr><th colspan="3" class="title"></th>
-                </tr><tr>
-                    <td align="right" style="width:33%;padding-right:10px">Feed name</td>
-                    <td align="left" colspan="2"><input id="edit_name_feed" type="text" name="fname" autocomplete="off" /></td>
-                </tr><tr>
-                </tr><tr>
-                    <td align="right" style="width:33%;padding-right:10px">Feed URL</td>
-                    <td align="left"><input style="width:350px" id="edit_rss_feed" type="text" name="rss" autocomplete="off" /></td>
-                    <td align="left" style="width:100px">&#8611;</td>
-                </tr><tr>
-                </tr><tr>
-                    <td align="right" style="width:33%;padding-right:10px">Link</td>
-                    <td align="left"><input style="width:350px" id="edit_link_feed" type="text" name="link" autocomplete="off" /></td>
-                    <td align="left" style="width:100px">&#8611;</td>
-                </tr><tr>
-                </tr><tr>
-                    <td align="right" style="width:33%;padding-right:10px">Update time</td>
-                    <td align="left" colspan="2"><input id="edit_upd_feed" type="text" name="upd" autocomplete="off" style="width:40px"/></td>
-                </tr><tr>
-                </tr><tr>
-                    <td align="right" style="width:33%;padding-right:10px">Max. unread</td>
-                    <td align="left" colspan="2"><input id="edit_max_feed" type="text" name="max" autocomplete="off" style="width:40px"/></td>
-                </tr><tr>
-                </tr><tr>
-                    <td align="right" style="width:33%;padding-right:10px"><label for="edit_enabled_feed">Enabled</label></td>
-                    <td align="left" colspan="2"><input id="edit_enabled_feed" type="checkbox" name="en" /></td>
-                </tr><tr>
-                <tr><td colspan="3" class="dialog_buttons">
-                    <button class="searchButton" onclick="editFeed(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#settings_dialog').fadeOut(100);return false;">Cancel</button>
-                </td></tr>
-                </table>
+                <form action="" method="GET">
+                    <input id="edit_idx_folderfeed" type="hidden" name="fidx" />
+                    <input id="edit_idx_feed" type="hidden" name="idx" />
+                    <table class="slim"><tr><th colspan="3" class="title"></th>
+                    </tr><tr>
+                        <td align="right" style="width:33%;padding-right:10px">Feed name</td>
+                        <td align="left" colspan="2"><input id="edit_name_feed" type="text" name="fname" autocomplete="off" /></td>
+                    </tr><tr>
+                        <td align="right" style="width:33%;padding-right:10px">Feed URL</td>
+                        <td align="left"><input style="width:350px" id="edit_rss_feed" type="text" name="rss" autocomplete="off" /></td>
+                        <td align="left" style="width:100px">&#8611;</td>
+                    </tr><tr>
+                        <td align="right" style="width:33%;padding-right:10px">Link</td>
+                        <td align="left"><input style="width:350px" id="edit_link_feed" type="text" name="link" autocomplete="off" /></td>
+                        <td align="left" style="width:100px">&#8611;</td>
+                    </tr><tr>
+                        <td align="right" style="width:33%;padding-right:10px">Update time</td>
+                        <td align="left" colspan="2"><input id="edit_upd_feed" type="text" name="upd" autocomplete="off" style="width:40px"/></td>
+                    </tr><tr>
+                        <td align="right" style="width:33%;padding-right:10px">Max. unread</td>
+                        <td align="left" colspan="2"><input id="edit_max_feed" type="text" name="max" autocomplete="off" style="width:40px"/></td>
+                    </tr><tr>
+                        <td align="right" style="width:33%;padding-right:10px"><label for="edit_enabled_feed">Enabled</label></td>
+                        <td align="left" colspan="2"><input id="edit_enabled_feed" type="checkbox" name="en" /></td>
+                    </tr><tr>
+                    <td colspan="3" class="dialog_buttons">
+                        <button class="confirmButton" onclick="editFeed(); return false;">Confirm</button>
+                        <button onclick="$('#settings_dialog').fadeOut(100);return false;">Cancel</button>
+                    </td></tr>
+                    </table>
+                </form>
             </span>
         </div></div></div>
 
 
         <div id="cleaning_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim" style="width:700px">
             <span class="folder-tab tab">
-                <input id="clean_idx_folder" type="hidden" name="idx" />
-                <table class="slim"><tr><th colspan="2" class="title"></th>
-                </tr><tr>
-                    <td align="center" colspan="2" style="width:50%;padding-right:10px">Delete posts older than
-                    <input id="clean_folder_days" style="width:30px; text-align:center" type="text" name="fname" autocomplete="off" /> days</td>
-                </tr><tr>
-                </tr><tr>
-                    <td align="right"><input id="clean_folder_unread" type="checkbox" name="hid" /></td>
-                    <td align="left" style="width:55%;padding-left:5px"><label for="clean_folder_unread">Include unread</label></td>
-                </tr><tr>
-                <tr><td colspan="2" class="dialog_buttons">
-                    <button class="searchButton" onclick="cleanFolder(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#cleaning_dialog').fadeOut(100);return false;">Cancel</button>
-                </td></tr>
-                </table>
+                <form action="" method="GET">
+                    <input id="clean_idx_folder" type="hidden" name="idx" />
+                    <table class="slim"><tr><th colspan="2" class="title"></th>
+                    </tr><tr>
+                        <td align="center" colspan="2" style="width:50%;padding-right:10px">Delete posts older than
+                        <input id="clean_folder_days" style="width:30px; text-align:center" type="text" name="fname" autocomplete="off" /> days</td>
+                    </tr><tr>
+                        <td align="right"><input id="clean_folder_unread" type="checkbox" name="hid" /></td>
+                        <td align="left" style="width:55%;padding-left:5px"><label for="clean_folder_unread">Include unread</label></td>
+                    </tr><tr>
+                    <td colspan="2" class="dialog_buttons">
+                        <button class="confirmButton" onclick="cleanFolder(); return false;">Confirm</button>
+                        <button onclick="$('#cleaning_dialog').fadeOut(100);return false;">Cancel</button>
+                    </td></tr>
+                    </table>
+                </form>
             </span>
             <span class="feed-tab tab">
-                <input id="clean_idx_folderfeed" type="hidden" name="idx" />
-                <input id="clean_idx_feed" type="hidden" name="idx" />
-                <table class="slim"><tr><th colspan="2" class="title"></th>
-                </tr><tr>
-                    <td align="center" colspan="2" style="width:50%;padding-right:10px">Delete posts older than
-                    <input id="clean_feed_days" style="width:30px; text-align:center" type="text" name="fname" autocomplete="off" /> days</td>
-                </tr><tr>
-                </tr><tr>
-                    <td align="right"><input id="clean_feed_unread" type="checkbox" name="hid" /></td>
-                    <td align="left" style="width:55%;padding-left:5px"><label for="clean_feed_unread">Include unread</label></td>
-                </tr><tr>
-                <tr><td colspan="2" class="dialog_buttons">
-                    <button class="searchButton" onclick="cleanFeed(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#cleaning_dialog').fadeOut(100);return false;">Cancel</button>
-                </td></tr>
-                </table>
+                <form action="" method="GET">
+                    <input id="clean_idx_folderfeed" type="hidden" name="idx" />
+                    <input id="clean_idx_feed" type="hidden" name="idx" />
+                    <table class="slim"><tr><th colspan="2" class="title"></th>
+                    </tr><tr>
+                        <td align="center" colspan="2" style="width:50%;padding-right:10px">Delete posts older than
+                        <input id="clean_feed_days" style="width:30px; text-align:center" type="text" name="fname" autocomplete="off" /> days</td>
+                    </tr><tr>
+                        <td align="right"><input id="clean_feed_unread" type="checkbox" name="hid" /></td>
+                        <td align="left" style="width:55%;padding-left:5px"><label for="clean_feed_unread">Include unread</label></td>
+                    </tr><tr>
+                    <td colspan="2" class="dialog_buttons">
+                        <button class="confirmButton" onclick="cleanFeed(); return false;">Confirm</button>
+                        <button onclick="$('#cleaning_dialog').fadeOut(100);return false;">Cancel</button>
+                    </td></tr>
+                    </table>
+                </form>
             </span>
         </div></div></div>
 
@@ -342,9 +342,9 @@
                 </tr><tr>
                     <td align="center" ><input id="delete_folder_pass" type="password" name="fname" autocomplete="off" /></td>
                 </tr><tr>
-                    <td class="dialog_buttons">
-                    <button class="searchButton" onclick="deleteFolder(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#delete_dialog').fadeOut(100);return false;">Cancel</button>
+                <td class="dialog_buttons">
+                    <button class="confirmButton" onclick="deleteFolder(); return false;">Confirm</button>
+                    <button onclick="$('#delete_dialog').fadeOut(100);return false;">Cancel</button>
                 </td></tr>
                 </table>
             </span>
@@ -355,9 +355,9 @@
                 </tr><tr>
                     <td align="center">You are about to delete feed '<span class="feedname"></span>'.</td>
                 </tr><tr>
-                    <td class="dialog_buttons">
-                    <button class="searchButton" onclick="deleteFeed(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#delete_dialog').fadeOut(100);return false;">Cancel</button>
+                <td class="dialog_buttons">
+                    <button class="confirmButton" onclick="deleteFeed(); return false;">Confirm</button>
+                    <button onclick="$('#delete_dialog').fadeOut(100);return false;">Cancel</button>
                 </td></tr>
                 </table>
             </span>
@@ -367,9 +367,9 @@
                 </tr><tr>
                     <td align="center">You are about to delete tag '<span class="tagname"></span>'.</td>
                 </tr><tr>
-                    <td class="dialog_buttons">
-                    <button class="searchButton" onclick="deleteTagMan(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#delete_dialog').fadeOut(100);return false;">Cancel</button>
+                <td class="dialog_buttons">
+                    <button class="confirmButton" onclick="deleteTagMan(); return false;">Confirm</button>
+                    <button onclick="$('#delete_dialog').fadeOut(100);return false;">Cancel</button>
                 </td></tr>
                 </table>
             </span>
@@ -377,37 +377,39 @@
 
         <div id="create_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim" style="width:700px">
             <span class="folder-tab tab">
-                <table class="slim"><tr><th colspan="2" class="title">Create new Folder</th>
-                </tr><tr>
-                    <td align="right" style="width:45%;padding-right:10px">Folder name</td>
-                    <td align="left"><input id="create_folder_name" type="text" name="link" autocomplete="off" /></td>
-                </tr><tr>
+                <form action="" method="GET">
+                    <table class="slim"><tr><th colspan="2" class="title">Create new Folder</th>
+                    </tr><tr>
+                        <td align="right" style="width:45%;padding-right:10px">Folder name</td>
+                        <td align="left"><input id="create_folder_name" type="text" name="link" autocomplete="off" /></td>
+                    </tr><tr>
                     <td class="dialog_buttons" colspan="2">
-                    <button class="searchButton" onclick="createFolder(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#create_dialog').fadeOut(100);return false;">Cancel</button>
-                </td></tr>
-                </table>
+                        <button class="confirmButton" onclick="createFolder(); return false;">Confirm</button>
+                        <button onclick="$('#create_dialog').fadeOut(100);return false;">Cancel</button>
+                    </td></tr>
+                    </table>
+                </form>
             </span>
             <span class="feed-tab tab">
-                <input id="create_idx_folder" type="hidden" name="idx" />
-                <table class="slim"><tr><th colspan="2" class="title"></th>
-                </tr><tr>
-                    <td align="right" style="width:33%;padding-right:10px">Feed name</td>
-                    <td align="left"><input id="create_feed_name" type="text" name="fname" autocomplete="off" /></td>
-                </tr><tr>
-                </tr><tr>
-                    <td align="right" style="width:33%;padding-right:10px">Feed URL</td>
-                    <td align="left"><input style="width:350px" id="create_feed_rss" type="text" name="rss" autocomplete="off" /></td>
-                </tr><tr>
-                </tr><tr>
-                    <td align="right" style="width:33%;padding-right:10px">Link</td>
-                    <td align="left"><input style="width:350px" id="create_feed_link" type="text" name="link" autocomplete="off" /></td>
-                </tr><tr>
-                <tr><td colspan="2" class="dialog_buttons">
-                    <button class="searchButton" onclick="createFeed(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#create_dialog').fadeOut(100);return false;">Cancel</button>
-                </td></tr>
-                </table>
+                <form action="" method="GET">
+                    <input id="create_idx_folder" type="hidden" name="idx" />
+                    <table class="slim"><tr><th colspan="2" class="title"></th>
+                    </tr><tr>
+                        <td align="right" style="width:33%;padding-right:10px">Feed name</td>
+                        <td align="left"><input id="create_feed_name" type="text" name="fname" autocomplete="off" /></td>
+                    </tr><tr>
+                        <td align="right" style="width:33%;padding-right:10px">Feed URL</td>
+                        <td align="left"><input style="width:350px" id="create_feed_rss" type="text" name="rss" autocomplete="off" /></td>
+                    </tr><tr>
+                        <td align="right" style="width:33%;padding-right:10px">Link</td>
+                        <td align="left"><input style="width:350px" id="create_feed_link" type="text" name="link" autocomplete="off" /></td>
+                    </tr><tr>
+                    <td colspan="2" class="dialog_buttons">
+                        <button class="confirmButton" onclick="createFeed(); return false;">Confirm</button>
+                        <button onclick="$('#create_dialog').fadeOut(100);return false;">Cancel</button>
+                    </td></tr>
+                    </table>
+                </form>
             </span>
         </div></div></div>
         
