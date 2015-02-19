@@ -217,16 +217,16 @@
             </td></tr></table>
         </div></div></div>
 
-        <div id="settings_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim" style="width:700px">
+        <div id="settings_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim" style="width:600px">
             <span class="folder-tab tab">
                 <form action="" method="GET">
                     <input id="edit_idx_folder" type="hidden" name="idx" />
                     <table class="slim"><tr><th colspan="2" class="title"></th>
                     </tr><tr>
-                        <td align="right" style="width:50%;padding-right:10px">Folder name</td>
+                        <td align="right" style="width:45%;padding-right:10px">Folder name</td>
                         <td align="left"><input id="edit_name_folder" type="text" name="fname" autocomplete="off" /></td>
                     </tr><tr>
-                        <td align="right" style="width:50%;padding-right:10px"><label for="edit_hidden_folder">Hidden</label></td>
+                        <td align="right" style="width:45%;padding-right:10px"><label for="edit_hidden_folder">Hidden</label></td>
                         <td align="left"><input id="edit_hidden_folder" type="checkbox" name="hid" /></td>
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
@@ -241,13 +241,13 @@
                     <input id="edit_idx_tag" type="hidden" name="idx" />
                     <table class="slim"><tr><th colspan="2" class="title"></th>
                     </tr><tr>
-                        <td align="right" style="width:50%;padding-right:10px">Tag name</td>
+                        <td align="right" style="width:40%;padding-right:10px">Tag name</td>
                         <td align="left"><input id="edit_name_tag" type="text" name="fname" autocomplete="off" /></td>
                     </tr><tr>
-                        <td align="right" style="width:50%;padding-right:10px"><label for="edit_hidden_tag">Hidden</label></td>
+                        <td align="right" style="width:40%;padding-right:10px"><label for="edit_hidden_tag">Hidden</label></td>
                         <td align="left"><input id="edit_hidden_tag" type="checkbox" name="hid" /></td>
                     </tr><tr>
-                        <td align="right" style="width:50%;padding-right:10px"><label for="edit_public_tag">Public</label></td>
+                        <td align="right" style="width:40%;padding-right:10px"><label for="edit_public_tag">Public</label></td>
                         <td align="left"><input id="edit_public_tag" type="checkbox" name="pub" /></td>
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
@@ -263,24 +263,24 @@
                     <input id="edit_idx_feed" type="hidden" name="idx" />
                     <table class="slim"><tr><th colspan="3" class="title"></th>
                     </tr><tr>
-                        <td align="right" style="width:33%;padding-right:10px">Feed name</td>
+                        <td align="right" style="width:30%;padding-right:10px">Feed name</td>
                         <td align="left" colspan="2"><input id="edit_name_feed" type="text" name="fname" autocomplete="off" /></td>
                     </tr><tr>
-                        <td align="right" style="width:33%;padding-right:10px">Feed URL</td>
+                        <td align="right" style="width:30%;padding-right:10px">Feed URL</td>
                         <td align="left"><input style="width:350px" id="edit_rss_feed" type="text" name="rss" autocomplete="off" /></td>
                         <td align="left" style="width:100px">&#8611;</td>
                     </tr><tr>
-                        <td align="right" style="width:33%;padding-right:10px">Link</td>
+                        <td align="right" style="width:30%;padding-right:10px">Link</td>
                         <td align="left"><input style="width:350px" id="edit_link_feed" type="text" name="link" autocomplete="off" /></td>
                         <td align="left" style="width:100px">&#8611;</td>
                     </tr><tr>
-                        <td align="right" style="width:33%;padding-right:10px">Update time</td>
+                        <td align="right" style="width:30%;padding-right:10px">Update time</td>
                         <td align="left" colspan="2"><input id="edit_upd_feed" type="text" name="upd" autocomplete="off" style="width:40px"/></td>
                     </tr><tr>
-                        <td align="right" style="width:33%;padding-right:10px">Max. unread</td>
+                        <td align="right" style="width:30%;padding-right:10px">Max. unread</td>
                         <td align="left" colspan="2"><input id="edit_max_feed" type="text" name="max" autocomplete="off" style="width:40px"/></td>
                     </tr><tr>
-                        <td align="right" style="width:33%;padding-right:10px"><label for="edit_enabled_feed">Enabled</label></td>
+                        <td align="right" style="width:30%;padding-right:10px"><label for="edit_enabled_feed">Enabled</label></td>
                         <td align="left" colspan="2"><input id="edit_enabled_feed" type="checkbox" name="en" /></td>
                     </tr><tr>
                     <td colspan="3" class="dialog_buttons">
@@ -293,7 +293,7 @@
         </div></div></div>
 
 
-        <div id="cleaning_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim" style="width:700px">
+        <div id="cleaning_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim">
             <span class="folder-tab tab">
                 <form action="" method="GET">
                     <input id="clean_idx_folder" type="hidden" name="idx" />
@@ -303,7 +303,7 @@
                         <input id="clean_folder_days" style="width:30px; text-align:center" type="text" name="fname" autocomplete="off" /> days</td>
                     </tr><tr>
                         <td align="right"><input id="clean_folder_unread" type="checkbox" name="hid" /></td>
-                        <td align="left" style="width:55%;padding-left:5px"><label for="clean_folder_unread">Include unread</label></td>
+                        <td align="left" style="width:60%;padding-left:5px"><label for="clean_folder_unread">Include unread</label></td>
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="cleanFolder(); return false;">Confirm</button>
@@ -322,7 +322,7 @@
                         <input id="clean_feed_days" style="width:30px; text-align:center" type="text" name="fname" autocomplete="off" /> days</td>
                     </tr><tr>
                         <td align="right"><input id="clean_feed_unread" type="checkbox" name="hid" /></td>
-                        <td align="left" style="width:55%;padding-left:5px"><label for="clean_feed_unread">Include unread</label></td>
+                        <td align="left" style="width:60%;padding-left:5px"><label for="clean_feed_unread">Include unread</label></td>
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="cleanFeed(); return false;">Confirm</button>
@@ -339,7 +339,7 @@
                         <input id="clean_all_days" style="width:30px; text-align:center" type="text" name="fname" autocomplete="off" /> days</td>
                     </tr><tr>
                         <td align="right"><input id="clean_all_unread" type="checkbox" name="hid" /></td>
-                        <td align="left" style="width:55%;padding-left:5px"><label for="clean_all_unread">Include unread</label></td>
+                        <td align="left" style="width:60%;padding-left:5px"><label for="clean_all_unread">Include unread</label></td>
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="cleanAll(); return false;">Confirm</button>
@@ -351,7 +351,7 @@
         </div></div></div>
 
 
-        <div id="delete_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim" style="width:700px">
+        <div id="delete_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim">
             <span class="folder-tab tab">
                 <input id="delete_idx_folder" type="hidden" name="idx" />
                 <table class="slim delete"><tr><th class="title"></th>
@@ -393,12 +393,12 @@
             </span>
         </div></div></div>
 
-        <div id="create_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim" style="width:700px">
+        <div id="create_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim" style="width:500px">
             <span class="folder-tab tab">
                 <form action="" method="GET">
                     <table class="slim"><tr><th colspan="2" class="title">Create new Folder</th>
                     </tr><tr>
-                        <td align="right" style="width:45%;padding-right:10px">Folder name</td>
+                        <td align="right" style="width:40%;padding-right:10px">Folder name</td>
                         <td align="left"><input id="create_folder_name" type="text" name="link" autocomplete="off" /></td>
                     </tr><tr>
                     <td class="dialog_buttons" colspan="2">
@@ -411,15 +411,15 @@
             <span class="feed-tab tab">
                 <form action="" method="GET">
                     <input id="create_idx_folder" type="hidden" name="idx" />
-                    <table class="slim"><tr><th colspan="2" class="title"></th>
+                    <table class="slim"><tr><th colspan="2" class="title" ></th>
                     </tr><tr>
-                        <td align="right" style="width:33%;padding-right:10px">Feed name</td>
+                        <td align="right" style="width:22%;padding-right:10px">Feed name</td>
                         <td align="left"><input id="create_feed_name" type="text" name="fname" autocomplete="off" /></td>
                     </tr><tr>
-                        <td align="right" style="width:33%;padding-right:10px">Feed URL</td>
+                        <td align="right" style="width:22%;padding-right:10px">Feed URL</td>
                         <td align="left"><input style="width:350px" id="create_feed_rss" type="text" name="rss" autocomplete="off" /></td>
                     </tr><tr>
-                        <td align="right" style="width:33%;padding-right:10px">Link</td>
+                        <td align="right" style="width:22%;padding-right:10px">Link</td>
                         <td align="left"><input style="width:350px" id="create_feed_link" type="text" name="link" autocomplete="off" /></td>
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">

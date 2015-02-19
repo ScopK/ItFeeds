@@ -194,8 +194,7 @@ button::-moz-focus-inner {
 }
 
 #more-options-button:hover{
-	/*background-color:#7DA628;*/
-	background-color:#BBB;
+	box-shadow: inset 0px 0px 30px 3px yellowgreen, 0px 0px 5px 0px yellowgreen;
 }
 
 #more-options-button.hidden{

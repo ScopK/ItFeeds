@@ -525,6 +525,12 @@ function cmFolder(e,context){
 function cmMore(e,context){
 	var arr = [
 		{
+			name: "Add Folder",
+			function: function(){
+				showCreate_folder();
+			},
+			context: context
+		},{
 			name: "Add Feed",
 			function: function(){
 				var idx = 0;
@@ -534,12 +540,6 @@ function cmMore(e,context){
 					idx++;
 				});
 				showCreate_feed(idx);
-			},
-			context: context
-		},{
-			name: "Add Folder",
-			function: function(){
-				showCreate_folder();
 			},
 			context: context
 		},{
