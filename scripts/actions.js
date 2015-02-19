@@ -303,6 +303,7 @@ function hideLateralMenu(){
 	$("#content").css("margin-left","0");
 	$('#settings_panel').addClass('hidden');
 	$("#more-options-button").addClass("hidden");
+	$("#show-video-button").css("top","50px");
 	setCookie("fullscreen","1",1);
 }
 
@@ -311,6 +312,7 @@ function showLateralMenu(){
 	$("#content").css("margin-left",$("#lateral_menu").outerWidth()+"px");
     $("#lateral_menu").removeClass("hidden");
     $("#more-options-button").removeClass("hidden");
+	$("#show-video-button").css("top","100px");
     deleteCookie("fullscreen");
 }
 

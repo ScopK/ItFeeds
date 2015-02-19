@@ -15,6 +15,7 @@ var get;
 readGetParameters();
 
 $(document).ready(function(){
+	$("#more-options-button").hide();
 	$("#page").hide();
 	initialize();
 	//################# Blank space at the end of page
@@ -104,6 +105,7 @@ function initialize(reload){
 		},
 		complete: function(){
 			$("#page").show();
+			$("#more-options-button").show();
 			loading_stop();
 		}
 	});

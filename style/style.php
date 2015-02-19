@@ -180,6 +180,7 @@ button::-moz-focus-inner {
 	top:100px;
 	z-index:2;
 	font-size:10px;
+	transition: top 0.3s;
 }
 
 #more-options-button{
@@ -189,7 +190,7 @@ button::-moz-focus-inner {
 	font-size:26px;
 	background-color:#E5E5E5;
 	color:#222;
-	transition: background-color 0.15s,margin 0.3s, z-index 0s 0.3s;
+	transition: background-color 0.15s,margin 0.25s, z-index 0s 0.25s;
 }
 
 #more-options-button:hover{

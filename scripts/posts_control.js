@@ -68,6 +68,7 @@ $(document).ready(function(){
 		    	break;
 		    case 116: //f5
 		    	$("#page").hide();
+				$("#more-options-button").hide();
 		    	initialize();
 		    	return false;
 		    case 68: //d
