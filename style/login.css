@@ -33,7 +33,9 @@
 
 
 body{
-	background-color:#444;
+	/*background-color:#444;*/
+	background: linear-gradient(to top, #111,#111,#222,#111,#111);
+	height:100vh;
 }
 body, button, input{
 	/*font-family: "Segoe UI",dejavu sans,"Verdana","Trebuchet MS",Tahoma,sans-serif;*/
@@ -41,62 +43,69 @@ body, button, input{
 	margin:0;
 	overflow: hidden;
 }
-.tab{
-	height:100vh; width:100%;
-	position:relative;
-	margin:0; padding:0;
-	text-align:center;
-	background-attachment: fixed;
-	/*background-repeat: no-repeat;
-	background-size: 100%;*/
-}
-#logintab{
-	/*background: linear-gradient(to left, violet, orangered);*/
-	background-image: url("../imgs/back.jpg");
-	background-position: center bottom;
-}
-#registertab{
-	/*background: linear-gradient(to left, cyan, yellowgreen);*/
-	background-image: url("../imgs/back.jpg");
-	margin-top: 25px;
-	background-position: center top;
-}
-#dialog, #r_dialog{
+.tab {
+	display:inline-block;
 	position:absolute;
-	margin:auto;top:0;bottom:100px;left:0;right:0;
-	width: 255px; height: 155px;
-	padding-bottom:5px;
+	height:100vh;
+	width:100vw;
 
-	background-color:#fff;
-	border: 2px solid #000;
+	transition: left 0.5s, right 0.5s, opacity 0.2s 0.2s, visibility 0s 0s;
 }
+#logintab{ right:0%; }
+#registertab{ left:0%; }
+
+#registertab.hidden{
+	transition-delay: 0s, 0s, 0.1s, 0.5s;
+	left: 20%;
+	opacity: 0;
+	visibility:hidden;
+}
+#logintab.hidden{
+	transition-delay: 0s, 0s, 0.1s, 0.5s;
+	right: 20%;
+	opacity: 0;
+	visibility:hidden;
+}
+
+#dialog,#r_dialog{
+	position:absolute;
+	width: 270px;
+
+	right:0;left:0;
+	bottom:70px; top:0; margin: auto;
+	box-shadow: 0px 0px 40px -10px white;/*,inset 0px 0px 10px -5px black;*/
+	background-color: #ddd;
+	padding: 15px 0;
+}
+
+#dialog{
+	height:172px;
+}
+
 #r_dialog{
-	top:70px; bottom:200px;
-	height:250px;
+	height:271px;
 }
-#dialog table , #r_dialog table {
+
+table {
 	border-spacing: 0;
-	width:100%;height:100%;text-align:center;
+	width:0;height:100%;text-align:left;
+	padding-left:20px;
 }
-#dialog table th , #r_dialog table th {
-	background-color: #000;
-	color: #fff;
+th {
 	padding: 5px 0;
+	font-family: "Noto sans";
+	font-size:15px;
 }
-#dialog table td , #r_dialog table td {
-	margin:0;
+td {
+	padding: 4px;
 }
+
 button::-moz-focus-inner { border:0; }
 button{
 	font-size: small;
-	margin: 0 10px;
-	padding: 5px;
-	border-radius: 3px;
+	margin: 5px 10px 0;
+	padding: 5px 10px;
 	border: 1px solid #777;
-}
-th {
-	font-family: "Noto sans";
-	font-size:15px;
 }
 
 button:hover{ background-color: #eaeaea; }
@@ -114,22 +123,3 @@ input[type=password]:focus, input[type=text]:focus{
 	border-color: #7a7c80;
 }
 
-
-
-
-h1,h2{
-	margin:0;
-}
-
-h1{
-    animation-name: goup;
-    animation-duration: .5s;
-    animation-direction: alternate;
-    animation-iteration-count: infinite;
-	animation-timing-function: linear;
-}
-@keyframes goup {
-    0%   {margin-bottom:-5px;}
-		50% {padding-top:1px;}
-    100% {margin-bottom:-10px;}
-}

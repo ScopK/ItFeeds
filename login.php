@@ -41,28 +41,16 @@
 			else doReg(user,pass,kw);
 		}
 		function moveToReg() {
-			var toY = document.getElementById("registertab").offsetTop-window.scrollY;
-			if (toY > 50) toY=50;
-			window.scroll(0,window.scrollY+toY);
-			if (toY == 50)
-				setTimeout(moveToReg, 10);
-			else{
-				document.getElementById('r_username_field').focus();
-				document.getElementById("arrowslog").style.display="";
-				logintab = false;
-			}
+			var r = document.getElementById("registertab");
+			var l = document.getElementById("logintab");
+			r.className="tab";
+			l.className="tab hidden";
 		}
 		function moveToLog() {
-			var toY = window.scrollY;
-			if (toY > 50) toY=50;
-			window.scroll(0,window.scrollY-toY);
-			if (toY == 50)
-				setTimeout(moveToLog, 10);
-			else {
-				document.getElementById('username_field').focus();
-				document.getElementById("arrowslog").style.display="none";
-				logintab = true;
-			}
+			var r = document.getElementById("registertab");
+			var l = document.getElementById("logintab");
+			l.className="tab";
+			r.className="tab hidden";
 		}
 		function doLogin(user,pass) {
 			var xmlhttp;
@@ -119,9 +107,9 @@
 		<div id="dialog">
 		<form style="height:100%">
 			<table ><tr><th colspan="2">User login</th></tr>
-				<tr><td colspan="2"><input id="username_field" style="width: 167px;font-size: 13px;" autocomplete="off" placeholder="Username" type="text">
+				<tr><td colspan="2"><input id="username_field" autocomplete="off" placeholder="Username" type="text">
 				</td></tr>
-				<tr><td colspan="2"><input id="password_field" style="width: 140px;font-size: 11px;" type="password" autocomplete="off" placeholder="Password"/>
+				<tr><td colspan="2"><input id="password_field" type="password" autocomplete="off" placeholder="Password"/>
 				</td></tr>
 				<tr><td align="right"><button onclick="login(this); return false;">Login</button></td>
 					 <td align="left"><button onclick="moveToReg(); return false;">Register</button></td></tr>
@@ -129,29 +117,25 @@
 		</form>
 		</div>
 	</div>
-	<div id="registertab" class="tab">
-		<div id="arrowslog" onclick="moveToLog();" style="display:none;cursor:pointer;color:#333">
-			<h1>▲</h1><h2>▲</h2>
-		</div>
-
+	<div id="registertab" class="tab hidden">
 		<div id="r_dialog">
 		<form style="height:100%">
 			<table ><tr><th colspan="2">User register</th></tr>
-				<tr><td><input id="r_username_field" style="width: 167px;font-size: 13px;" autocomplete="off" placeholder="Username" type="text">
+				<tr><td colspan="2"><input id="r_username_field" autocomplete="off" placeholder="Username" type="text">
 				</td></tr>
-				<tr><td><input id="r_password_field" style="width: 167px;font-size: 13px;margin-top:5px" type="password" autocomplete="off" placeholder="Password"/>
+				<tr><td colspan="2"><input id="r_password_field" type="password" autocomplete="off" placeholder="Password"/>
 				</td></tr>
-				<tr><td><input id="r_password_field2" style="width: 167px;font-size: 13px" type="password" autocomplete="off" placeholder="Repeat Password"/>
+				<tr><td colspan="2"><input id="r_password_field2" type="password" autocomplete="off" placeholder="Repeat Password"/>
 				</td></tr>
-				<tr><td><input id="r_keyword_field" style="width: 140px; font-size: 11px;margin-top:5px" type="password" autocomplete="off" placeholder="Lock keyword"/>
+				<tr><td colspan="2"><input id="r_keyword_field" type="password" autocomplete="off" placeholder="Lock keyword"/>
 				</td></tr>
-				<tr><td><input id="r_keyword_field2" style="width: 140px; font-size: 11px;" type="password" autocomplete="off" placeholder="Repeat lock keyword"/>
+				<tr><td colspan="2"><input id="r_keyword_field2" type="password" autocomplete="off" placeholder="Repeat lock keyword"/>
 				</td></tr>
-				<tr><td align="center"><button onclick="register(this); return false;" style="width:200px">Register</button></td></tr>
+				<tr><td align="center"><button onclick="register(this); return false;">Register</button></td><td>
+										<button onclick="moveToLog(); return false;">Back</button></td></tr>
 			</table>
 		</form>
 		</div>
 	</div>
 	</body>
 </html>
-ml>
