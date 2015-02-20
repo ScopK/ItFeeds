@@ -840,21 +840,22 @@ VIDEO DIALOG
 #ytv_window_controls button:hover{
 	background-color: #f0f0f0;
 }
-#ytv_controls{
-	padding:0;
+.ytv_controls{
+	padding:0!important;
+	width:50%;
 }
-#ytv_controls button{
+.ytv_controls button{
 	font-weight:bold;
 	border:0;
-	width:50%;
-	height:100%;
+	width:100%;
+	/*height:100%;*/
 	padding:10px;
 	margin:0;
 	cursor:pointer;
 	display:table-cell;
 }
 
-#ytv_controls button:hover{
+.ytv_controls button:hover{
 	color: #333;
 }
 

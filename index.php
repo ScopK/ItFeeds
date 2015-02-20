@@ -106,7 +106,7 @@
 
         <button id="show-lateral-button" class="mouse-button" onclick="toggleLateralMenu()">&lsaquo;</button>
         <button id="more-options-button" class="mouse-button" onclick="return cmMore(event,this);" oncontextmenu="return cmMore(event,this);">+</button>
-        <button id="show-video-button" class="mouse-button" style="display:none" onclick="$('#youtube_viewer_dialog').fadeIn(100);$('#show-video-button').hide()">Video Viewer</button>
+        <button id="show-video-button" class="mouse-button" style="display:none;padding:0" onclick="$('#youtube_viewer_dialog').fadeIn(100);$('#show-video-button').hide()">Video Viewer</button>
         <button id="mouse_nav" oncontextmenu="return false;"></button>
         <div id="mouse_bottom" style="display:none">
             <button class="markunread mouse-button colored" onclick="toogleUnreadPost(true)"></button>
@@ -204,15 +204,16 @@
         </div></div></div>
 
         <div id="youtube_viewer_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="youtube_viewer" class="dialog-dim" style="width:700px">
-            <table class="slim"><tr><th>Video viewer
+            <table class="slim"><tr><th style="position:relative;" colspan="2">Video viewer
             <span id='ytv_window_controls'>
                 <button id='video_unread_button' onclick="toogleUnreadVideoPost(false,$('#youtube_viewer_dialog').attr('postid'))">&nbsp;</button>
                 <button onclick="$('#youtube_viewer_dialog').fadeOut(100);$('#show-video-button').show()">·</button>
                 <button onclick="$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);">×</button>
             </span></th>
-            </tr><tr><td id="youtube_td" style="margin:0;padding:0"></td>
-            </tr><tr><td id="ytv_controls">
+            </tr><tr><td id="youtube_td" style="margin:0;padding:0" colspan="2"></td>
+            </tr><tr><td class="ytv_controls">
             <button style="background-color:#aaa" id="counter_videos" onclick="nextVideo()"></button>
+                </td><td class="ytv_controls">
             <button style="background-color:#ccc" onclick="nextPostVideo(true)">Next</button>
             </td></tr></table>
         </div></div></div>
