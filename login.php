@@ -60,8 +60,8 @@
 				xmlhttp = newActiveXObject("Microsoft.XMLHTTP");
 
 			xmlhttp.onreadystatechange=function() {
-				console.log(xmlhttp);
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+					document.getElementById("logintab").className="tab hidden";
 					var data = "<?=http_build_query($_REQUEST);?>";
 					if (data.indexOf("manager=1")>=0){
 						var i = data.indexOf("manager=1");
