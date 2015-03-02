@@ -61,6 +61,7 @@ function addCMContent(root,array){
 			var di = document.createElement('div');
 
 			var showContext = function(){
+				clearTimeout(closeFolderTimer);
 				var folders = root.getElementsByClassName("contextual-folder");
 				for (var i=0;i<folders.length;i++)
 					if (folders[i]!=contextFolder)
@@ -90,6 +91,7 @@ function addCMContent(root,array){
 			}
 			di.onmouseleave=function(){
 				clearTimeout(tout);
+				tout=undefined;
 			}
 			contextFolder.onmouseenter = function(){
 				di.className="cm-item folder active";
@@ -119,6 +121,7 @@ function addCMContent(root,array){
 				var folders = root.getElementsByClassName("contextual-folder");
 				for (var i=0;i<folders.length;i++){
 					if (folders[i].style.visibility != "hidden"){
+						clearTimeout(tout);
 						closeFolderTimer = setTimeout(function(){
 							//var folders = root.getElementsByClassName("contextual-folder");
 							for (var i=0;i<folders.length;i++)
@@ -141,7 +144,8 @@ function showCM(x,y){
 	var cmw = cm.offsetWidth;
 	var cmh = cm.offsetHeight;
 
-	x-=cmw/2.5;
+	//x-=cmw/2.5;
+	x-=40;
 	if (x<0) x=0;
 	
 	if ((x+cmw)>ww) x=ww-cmw;

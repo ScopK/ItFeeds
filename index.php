@@ -431,6 +431,25 @@
                 </form>
             </span>
         </div></div></div>
+
+        <div id="move_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim" style="width:400px">
+            <span class="feed-tab tab">
+                <form action="" method="GET">
+                    <input id="move_idx_folderfeed" type="hidden" name="idx" />
+                    <input id="move_idx_feed" type="hidden" name="idx" />
+                    <table class="slim"><tr><th colspan="2" class="title" ></th>
+                    </tr><tr>
+                        <td align="right" style="width:47%;padding-right:10px">Select folder</td>
+                        <td align="left"><select name="move_feed_to" id="move_feed_to"></select></td>
+                    </tr><tr>
+                    <td colspan="2" class="dialog_buttons">
+                        <button class="confirmButton" onclick="moveFeed(); return false;">Confirm</button>
+                        <button onclick="$('#move_dialog').fadeOut(100);return false;">Cancel</button>
+                    </td></tr>
+                    </table>
+                </form>
+            </span>
+        </div></div></div>
         
     </body>
 </html>

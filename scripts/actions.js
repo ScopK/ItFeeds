@@ -449,6 +449,14 @@ function cmFeed(e,context){
 				},
 				context: context
 			},{
+				name: "Move",
+				function: function(){
+					var fidx = this.getAttribute("idxfolder");
+					var idx = this.getAttribute("idxfeed");
+					showMove_feed(fidx,idx);
+				},
+				context: context
+			},{
 				name: "Clean",
 				function: function(){
 					var fidx = this.getAttribute("idxfolder");

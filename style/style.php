@@ -770,7 +770,20 @@ DIALOGS
 
 .dialog_buttons button{
 	margin: 0 6px 5px;
-	padding: 3px 7px;
+	padding: 5px 8px;
+	background-color: #ececec;
+	border: 1px solid #acacac;
+	border-radius: 3px;
+}
+
+#delete_dialog button{
+	background-color: #ff8b8b;
+	border: 1px solid #bc5656;
+}
+
+.dialog_buttons button:active, #delete_dialog button:active{
+	border-width: 2px;
+	padding: 4px 7px;
 }
 
 .background-modal .delete{
