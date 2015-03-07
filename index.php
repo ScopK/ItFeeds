@@ -38,7 +38,6 @@
         <script>
         $(document).ready(function(){
             $(".background-modal").hide();
-            $("#managerLink").attr("href","./manager.php"+location.search);
         });
         </script>
     </head>
@@ -49,8 +48,7 @@
                     <button class="button-panel" style="position:absolute;top:0;right:0;width:35px;margin:10px" onclick="$('#settings_panel').addClass('hidden')">X</button>
 
                     <p style="margin-left:6px"><b>Logged as <?=$log_user?></b></p>
-                    <a class="button-panel" id="managerLink" href="./manager.php">Advanced Manager</a>
-                    <button class="button-panel <?php echo ($hid_user)?"highlight-color":"";?> lock-icon" id="unlockButton" style="width:14.5%" onclick="showUnlockDialog();return false">&nbsp;</button>
+                    <button class="button-panel <?= ($hid_user)?"highlight-color":"";?> lock-icon" id="unlockButton" style="padding-right:30px" onclick="showUnlockDialog();return false"><?= ($hid_user)?"Unlocked":"Unlock";?></button>
                     <button class="button-panel" style="float:right" onclick="logout()">Logout</button>
                     <hr/>
 

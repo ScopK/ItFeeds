@@ -642,7 +642,7 @@ POSTS
 
 button.lock-icon{
 	background-repeat: no-repeat;
-	background-position:center;
+	background-position: right 10px top 6px;
 	background-image: url("../imgs/locked.png");
 }
 

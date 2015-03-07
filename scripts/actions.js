@@ -17,13 +17,7 @@ function updateUrl(){
 			args+="&";
 		args+=this+"="+get[this];
 	});
-	if (args.length>0){
-		var page = "./index.php?"+args;
-		$("#managerLink").attr("href","./manager.php?"+args);
-	} else {
-		var page = "./index.php";
-		$("#managerLink").attr("href","./manager.php");
-	}
+	var page = "./index.php"+(args.length>0?("?"+args):"");
 	window.history.pushState("", "", page);
 }
 
@@ -284,8 +278,10 @@ function unlockAction(){
 			reloadPosts();
 			if (result.unlocked=="true"){
 				$('#unlockButton').addClass("highlight-color");
+				$('#unlockButton').html("Unlocked");
 			} else {
 				$('#unlockButton').removeClass("highlight-color");
+				$('#unlockButton').html("Unlock");
 			}
 		},
 		error: function (request, status, error){
