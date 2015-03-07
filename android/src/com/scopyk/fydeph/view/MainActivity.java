@@ -70,7 +70,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
 
         postListAdapter = new PostListAdapter(this, android.R.id.text1, new ArrayList<Post>());
         //setColor(Color.parseColor("#F07602"));
-        setColor(getResources().getColor(R.color.green));
+        setColor(getResources().getColor(R.color.blue));
         
         ListView rr = (ListView)findViewById(R.id.postlistview);
         rr.setAdapter(postListAdapter);
@@ -438,7 +438,7 @@ public class MainActivity extends ActionBarActivity implements APICallback {
     void setColor(int c){
     	color = c;
     	toolbar.setBackgroundColor(color);
-    	postListAdapter.setLoadMoreColor(color);
+    	//postListAdapter.setLoadMoreColor(color);
     	
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(color);
