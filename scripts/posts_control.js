@@ -2,7 +2,7 @@ $(document).ready(function(){
     var allowed = true;
 	$(document).keydown(function(e) { 
 		if (e.ctrlKey || e.altKey || e.shiftKey) return;
-    	if (e.which == 27 && $(".background-modal").is(":visible")) $('.background-modal').fadeOut(100);
+    	if (e.which == 27 && $(".background-modal").is(":visible")){ $('.background-modal').fadeOut(100); closeModal(); }
 		if ($("input").is(":focus:visible")) return;
 		if (!allowed) return false;
 		allowed = false;
@@ -222,6 +222,7 @@ function addTag(){
 
 		$("#newtagField").val("");
 		$('#add_tag').fadeOut(100);
+		closeModal();
 	} else
 		showMessage("Select or write a tag");
 }

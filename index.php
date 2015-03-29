@@ -42,6 +42,7 @@
         </script>
     </head>
     <body>
+    <div id="main">
         <div id="page">
             <div id="lateral_menu">
                 <div id="settings_panel" class="hidden">
@@ -104,14 +105,14 @@
 
         <button id="show-lateral-button" class="mouse-button" onclick="toggleLateralMenu()">&lsaquo;</button>
         <button id="more-options-button" class="mouse-button" onclick="return cmMore(event,this);" oncontextmenu="return cmMore(event,this);">+</button>
-        <button id="show-video-button" class="mouse-button" style="display:none;padding:0" onclick="$('#youtube_viewer_dialog').fadeIn(100);$('#show-video-button').hide()">Video Viewer</button>
+        <button id="show-video-button" class="mouse-button" style="display:none;padding:0" onclick="$('#youtube_viewer_dialog').fadeIn(100);openModal();$('#show-video-button').hide()">Video Viewer</button>
         <button id="mouse_nav" oncontextmenu="return false;"></button>
         <div id="mouse_bottom" style="display:none">
             <button class="markunread mouse-button colored" onclick="toogleUnreadPost(true)"></button>
             <button class="markfav mouse-button" onclick="toogleFavPost(true)"></button>
             <button class="addtag mouse-button" onclick="showAddTagsDialog();"></button>
         </div>
-
+    </div>
         <div id="loading_panel" style="pointer-events:none;">
             <div class="loading" id="loadingBar1"></div>
             <div class="loading" id="loadingBar2"></div>
@@ -126,7 +127,7 @@
                 <tr><td><input id="newtagField" type="text" name="newtagname" autocomplete="off" /></td></tr>
                 <tr><td colspan="2" class="dialog_buttons">
                     <button class="addTag" onclick="addTag(); return false;">Add</button>
-                    <button class="cancelAddTag" onclick="$('#add_tag').fadeOut(100);return false;">Cancel</button>
+                    <button class="cancelAddTag" onclick="$('#add_tag').fadeOut(100);closeModal();return false;">Cancel</button>
                 </td></tr>
                 </table>
             </form>
@@ -138,7 +139,7 @@
                 <tr><td><input id="searchField" type="text" name="newtagname" autocomplete="off" /></td></tr>
                 <tr><td colspan="2" class="dialog_buttons">
                     <button class="searchButton" onclick="searchAction(); return false;">Add</button>
-                    <button class="cancelAddTag" onclick="$('#search_dialog').fadeOut(100);return false;">Cancel</button>
+                    <button class="cancelAddTag" onclick="$('#search_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                 </td></tr>
                 </table>
             </form>
@@ -159,7 +160,7 @@
                 </tr><tr>
                 <td colspan="2" class="dialog_buttons">
                     <button class="searchButton" onclick="changePasswordAction(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#pwchange_dialog').fadeOut(100);return false;">Cancel</button>
+                    <button class="cancelAddTag" onclick="$('#pwchange_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                 </td></tr>
                 </table>
             </form>
@@ -180,7 +181,7 @@
                 </tr><tr>
                 <td colspan="2" class="dialog_buttons">
                     <button class="searchButton" onclick="changeLockPasswordAction(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#pwlchange_dialog').fadeOut(100);return false;">Cancel</button>
+                    <button class="cancelAddTag" onclick="$('#pwlchange_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                 </td></tr>
                 </table>
             </form>
@@ -195,7 +196,7 @@
                 </tr><tr>
                 <tr><td colspan="2" class="dialog_buttons">
                     <button class="searchButton" onclick="unlockAction(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#unlock_dialog').fadeOut(100);return false;">Cancel</button>
+                    <button class="cancelAddTag" onclick="$('#unlock_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                 </td></tr>
                 </table>
             </form>
@@ -205,8 +206,8 @@
             <table class="slim"><tr><th style="position:relative;" colspan="2">Video viewer
             <span id='ytv_window_controls'>
                 <button id='video_unread_button' onclick="toogleUnreadVideoPost(false,$('#youtube_viewer_dialog').attr('postid'))">&nbsp;</button>
-                <button onclick="$('#youtube_viewer_dialog').fadeOut(100);$('#show-video-button').show()">·</button>
-                <button onclick="$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);">×</button>
+                <button onclick="$('#youtube_viewer_dialog').fadeOut(100);closeModal();$('#show-video-button').show()">·</button>
+                <button onclick="$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);closeModal();">×</button>
             </span></th>
             </tr><tr><td id="youtube_td" style="margin:0;padding:0" colspan="2"></td>
             </tr><tr><td class="ytv_controls">
@@ -230,7 +231,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="editFolder(); return false;">Confirm</button>
-                        <button onclick="$('#settings_dialog').fadeOut(100);return false;">Cancel</button>
+                        <button onclick="$('#settings_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -251,7 +252,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="editTag(); return false;">Confirm</button>
-                        <button onclick="$('#settings_dialog').fadeOut(100);return false;">Cancel</button>
+                        <button onclick="$('#settings_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -284,7 +285,7 @@
                     </tr><tr>
                     <td colspan="3" class="dialog_buttons">
                         <button class="confirmButton" onclick="editFeed(); return false;">Confirm</button>
-                        <button onclick="$('#settings_dialog').fadeOut(100);return false;">Cancel</button>
+                        <button onclick="$('#settings_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -306,7 +307,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="cleanFolder(); return false;">Confirm</button>
-                        <button onclick="$('#cleaning_dialog').fadeOut(100);return false;">Cancel</button>
+                        <button onclick="$('#cleaning_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -325,7 +326,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="cleanFeed(); return false;">Confirm</button>
-                        <button onclick="$('#cleaning_dialog').fadeOut(100);return false;">Cancel</button>
+                        <button onclick="$('#cleaning_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -342,7 +343,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="cleanAll(); return false;">Confirm</button>
-                        <button onclick="$('#cleaning_dialog').fadeOut(100);return false;">Cancel</button>
+                        <button onclick="$('#cleaning_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -361,7 +362,7 @@
                 </tr><tr>
                 <td class="dialog_buttons">
                     <button class="confirmButton" onclick="deleteFolder(); return false;">Confirm</button>
-                    <button onclick="$('#delete_dialog').fadeOut(100);return false;">Cancel</button>
+                    <button onclick="$('#delete_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                 </td></tr>
                 </table>
             </span>
@@ -374,7 +375,7 @@
                 </tr><tr>
                 <td class="dialog_buttons">
                     <button class="confirmButton" onclick="deleteFeed(); return false;">Confirm</button>
-                    <button onclick="$('#delete_dialog').fadeOut(100);return false;">Cancel</button>
+                    <button onclick="$('#delete_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                 </td></tr>
                 </table>
             </span>
@@ -386,7 +387,7 @@
                 </tr><tr>
                 <td class="dialog_buttons">
                     <button class="confirmButton" onclick="deleteTagMan(); return false;">Confirm</button>
-                    <button onclick="$('#delete_dialog').fadeOut(100);return false;">Cancel</button>
+                    <button onclick="$('#delete_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                 </td></tr>
                 </table>
             </span>
@@ -402,7 +403,7 @@
                     </tr><tr>
                     <td class="dialog_buttons" colspan="2">
                         <button class="confirmButton" onclick="createFolder(); return false;">Confirm</button>
-                        <button onclick="$('#create_dialog').fadeOut(100);return false;">Cancel</button>
+                        <button onclick="$('#create_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -423,7 +424,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="createFeed(); return false;">Confirm</button>
-                        <button onclick="$('#create_dialog').fadeOut(100);return false;">Cancel</button>
+                        <button onclick="$('#create_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -442,7 +443,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="moveFeed(); return false;">Confirm</button>
-                        <button onclick="$('#move_dialog').fadeOut(100);return false;">Cancel</button>
+                        <button onclick="$('#move_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
                     </td></tr>
                     </table>
                 </form>

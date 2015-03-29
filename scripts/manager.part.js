@@ -11,6 +11,7 @@ function showSettings_folder(idx){
 	$("#settings_dialog .tab:not(.folder-tab)").hide();
 	$("#settings_dialog .folder-tab").show();
 	$("#settings_dialog").fadeIn(100);
+	openModal();
 
 	$("#settings_dialog .folder-tab .title").html("Edit folder: "+f.name);
 	$("#edit_name_folder").val(f.name);
@@ -23,6 +24,7 @@ function showSettings_feed(idxf,idx){
 	$("#settings_dialog .tab:not(.feed-tab)").hide();
 	$("#settings_dialog .feed-tab").show();
 	$("#settings_dialog").fadeIn(100);
+	openModal();
 
 	$("#settings_dialog .feed-tab .title").html("Edit Feed: "+f.name);
 	$("#edit_name_feed").val(f.name);
@@ -40,6 +42,7 @@ function showSettings_tag(idx){
 	$("#settings_dialog .tab:not(.tag-tab)").hide();
 	$("#settings_dialog .tag-tab").show();
 	$("#settings_dialog").fadeIn(100);
+	openModal();
 
 	$("#settings_dialog .tag-tab .title").html("Edit Tag: "+t.name);
 	$("#edit_name_tag").val(t.name);
@@ -80,6 +83,7 @@ function editFolder(){
 		}
 	});
 	$('#settings_dialog').fadeOut(100);
+	closeModal();
 }
 
 function editFeed(){
@@ -121,6 +125,7 @@ function editFeed(){
 		}
 	});
 	$('#settings_dialog').fadeOut(100);
+	closeModal();
 }
 
 function editTag(){
@@ -155,6 +160,7 @@ function editTag(){
 		}
 	});
 	$('#settings_dialog').fadeOut(100);
+	closeModal();
 }
 
 //###############################################
@@ -170,6 +176,7 @@ function showClean_folder(idx){
 	$("#cleaning_dialog .tab:not(.folder-tab)").hide();
 	$("#cleaning_dialog .folder-tab").show();
 	$("#cleaning_dialog").fadeIn(100);
+	openModal();
 
 	$("#clean_idx_folder").val(idx);
 	$("#cleaning_dialog .folder-tab .title").html("Clean folder posts: "+f.name);
@@ -182,6 +189,7 @@ function showClean_feed(idxf,idx){
 	$("#cleaning_dialog .tab:not(.feed-tab)").hide();
 	$("#cleaning_dialog .feed-tab").show();
 	$("#cleaning_dialog").fadeIn(100);
+	openModal();
 
 	$("#clean_idx_folderfeed").val(idxf);
 	$("#clean_idx_feed").val(idx);
@@ -194,6 +202,7 @@ function showClean_all(){
 	$("#cleaning_dialog .tab:not(.all-tab)").hide();
 	$("#cleaning_dialog .all-tab").show();
 	$("#cleaning_dialog").fadeIn(100);
+	openModal();
 
 	$("#clean_all_days").val("3");
 	$("#clean_all_unread").prop("checked",false);
@@ -231,6 +240,7 @@ function cleanFolder(){
 		}		
 	});
 	$('#cleaning_dialog').fadeOut(100);
+	closeModal();
 }
 
 function cleanAll(){
@@ -255,6 +265,7 @@ function cleanAll(){
 		}
 	});
 	$('#cleaning_dialog').fadeOut(100);
+	closeModal();
 }
 
 function cleanFeed(){
@@ -292,6 +303,7 @@ function cleanFeed(){
 		}
 	});
 	$('#cleaning_dialog').fadeOut(100);
+	closeModal();
 }
 
 
@@ -308,6 +320,7 @@ function showDelete_folder(idx){
 	$("#delete_dialog .tab:not(.folder-tab)").hide();
 	$("#delete_dialog .folder-tab").show();
 	$("#delete_dialog").fadeIn(100);
+	openModal();
 
 	$("#delete_idx_folder").val(idx);
 	$("#delete_folder_pass").val("");
@@ -320,6 +333,7 @@ function showDelete_feed(idxf,idx){
 	$("#delete_dialog .tab:not(.feed-tab)").hide();
 	$("#delete_dialog .feed-tab").show();
 	$("#delete_dialog").fadeIn(100);
+	openModal();
 
 	$("#delete_idx_folderfeed").val(idxf);
 	$("#delete_idx_feed").val(idx);
@@ -332,6 +346,7 @@ function showDelete_tag(idx){
 	$("#delete_dialog .tab:not(.tag-tab)").hide();
 	$("#delete_dialog .tag-tab").show();
 	$("#delete_dialog").fadeIn(100);
+	openModal();
 
 	$("#delete_idx_tag").val(idx);
 	$("#delete_dialog .tag-tab .title").html("Delete tag: "+t.name);
@@ -370,6 +385,7 @@ function deleteFeed(){
 		}
 	});
 	$('#delete_dialog').fadeOut(100);
+	closeModal();
 }
 
 function deleteFolder(){
@@ -400,6 +416,7 @@ function deleteFolder(){
 		}
 	});
 	$('#delete_dialog').fadeOut(100);
+	closeModal();
 }
 
 function deleteTagMan(){
@@ -429,6 +446,7 @@ function deleteTagMan(){
 		}
 	});
 	$('#delete_dialog').fadeOut(100);
+	closeModal();
 }
 
 //###############################################
@@ -443,6 +461,7 @@ function showCreate_folder(){
 	$("#create_dialog .tab:not(.folder-tab)").hide();
 	$("#create_dialog .folder-tab").show();
 	$("#create_dialog").fadeIn(100);
+	openModal();
 
 	$("#create_folder_name").val("");
 }
@@ -452,6 +471,7 @@ function showCreate_feed(folder_idx){
 	$("#create_dialog .tab:not(.feed-tab)").hide();
 	$("#create_dialog .feed-tab").show();
 	$("#create_dialog").fadeIn(100);
+	openModal();
 
 	if (f.name=="null")
 		$("#create_dialog .feed-tab .title").html("Create new feed");
@@ -491,7 +511,8 @@ function createFolder(){
 			loading_stop();
 		}
 	});
-	$("#create_dialog").hide();
+	$("#create_dialog").fadeOut(100);
+	closeModal();
 }
 
 function createFeed(){
@@ -524,7 +545,8 @@ function createFeed(){
 			loading_stop();
 		}
 	});
-	$("#create_dialog").hide();
+	$("#create_dialog").fadeOut(100);
+	closeModal();
 }
 
 //###############################################
@@ -541,6 +563,7 @@ function showMove_feed(idxf,idx){
 	//$("#move_dialog .tab:not(.feed-tab)").hide();
 	//$("#move_dialog .feed-tab").show();
 	$("#move_dialog").fadeIn(100);
+	openModal();
 
 	$("#move_dialog .feed-tab .title").html("Move Feed: "+f.name);
 	$("#move_idx_folderfeed").val(idxf);
@@ -593,5 +616,6 @@ function moveFeed(){
 			loading_stop();
 		}
 	});
-	$("#move_dialog").hide();
+	$("#move_dialog").fadeOut(100);
+	closeModal();
 }

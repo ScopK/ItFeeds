@@ -729,7 +729,7 @@ DIALOGS
 	top:0; left:0;
 	height: 100%;
 	width: 100%;
-	background-color: rgba(20,20,20,0.9);
+	background-color: rgba(20,20,20,0.78);
 	z-index: 10;
 }
 

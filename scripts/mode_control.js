@@ -105,6 +105,7 @@ function setTagsActions(){
 
 function searchAction(){
 	$('#search_dialog').fadeOut(100);
+	closeModal();
 	get.page = undefined;
 	var query = encodeURIComponent($("#searchField").val());
 	if (query.length > 0){

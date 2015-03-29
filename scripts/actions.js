@@ -92,6 +92,7 @@ function showAddTagsDialog(idx){
 		$('#add_tag p').removeClass("selected");
 		$('#newtagField').val("");
 		$('#newtagField').focus();
+		openModal();
 	}
 }
 
@@ -113,10 +114,10 @@ function searchYoutubeVideo(findNext){
 					var post = posts[postidx-1];
 					videos=result;
 					idxVideo=0;
-					$("#youtube_viewer_dialog").show();
+					$("#youtube_viewer_dialog").fadeIn(100);
 					$("#youtube_viewer_dialog").attr("postid",postid);
 					$("#youtube_viewer_dialog").attr("postidx",postidx);
-					console.log(post);
+					openModal();
 					if (post.unread==1)
 						$("#youtube_viewer_dialog").addClass("selected");
 					else
@@ -172,6 +173,7 @@ function showSearchDialog(){
 	$('#search_dialog').fadeIn(100);
 	$('#searchField').val("");
 	$('#searchField').focus();
+	openModal();
 }
 
 function showPasswordChangeDialog(){
@@ -180,6 +182,7 @@ function showPasswordChangeDialog(){
 	$("#oldPassField").val("").focus();
 	$("#newPassField").val("");
 	$("#newPass2Field").val("");
+	openModal();
 }
 
 function showLockPasswordChangeDialog(){
@@ -188,6 +191,7 @@ function showLockPasswordChangeDialog(){
 	$("#oldLPassField").val("").focus();
 	$("#newLPassField").val("");
 	$("#newLPass2Field").val("");
+	openModal();
 }
 
 function showUnlockDialog(){
@@ -199,6 +203,7 @@ function showUnlockDialog(){
 	}
 	$('#unlock_dialog').fadeIn(100);
 	$('#lockPassField').val("").focus();
+	openModal();
 }
 
 function changePasswordAction(){
@@ -216,6 +221,7 @@ function changePasswordAction(){
 		success: function(result){
 			if (result=="ok"){
 				$('#pwchange_dialog').fadeOut(100);
+				closeModal();
 			} else {
 				showMessage("An error ocurred. Try again.");
 				$("#oldPassField").val("");
@@ -246,6 +252,7 @@ function changeLockPasswordAction(){
 		success: function(result){
 			if (result=="ok"){
 				$('#pwlchange_dialog').fadeOut(100);
+				closeModal();
 			} else {
 				showMessage("An error ocurred. Try again.");
 				$("#oldLPassField").val("");
@@ -264,6 +271,7 @@ function changeLockPasswordAction(){
 function unlockAction(){
 	var unlockp = $("#lockPassField").val();
 	$('#unlock_dialog').fadeOut(100);
+	closeModal();
 	loading_run();
 	$.ajax({
 		url: "./ajax/login_hidden.php",
@@ -557,4 +565,20 @@ function cmMore(e,context){
 	setCMContent(arr);
 	showCM(e.clientX,e.clientY)
 	return false;
+}
+
+function openModal(){
+	blur(true);
+}
+
+function closeModal(){
+	blur(false);
+}
+
+function blur(val){
+	var style = document.getElementById("main").style;
+	if (typeof val=="undefined"){
+		val = style.filter=="";
+	}
+	style.filter = val?"blur(3px)":"";
 }
