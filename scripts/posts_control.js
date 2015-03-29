@@ -142,7 +142,7 @@ function selectPost(idx){
 	$(".post[idxpost='"+postIdxSelected+"']").addClass("selected");
 	$(".post[idxpost='"+postIdxSelected+"']").removeClass("minimized");
 
-	if (posts[idx-1].unread == 1 && getCookie("autoreadmode") == 0)
+	if (post.unread == 1 && getCookie("autoreadmode") == 0 && (typeof post.lockautomark == "undefined" || !post.lockautomark))
 		markPost(0, 0, idx);
 
 	var postspage = (get.postspage)?get.postspage:10;
@@ -274,6 +274,7 @@ function toggleMinimize(idx,value){
 function toogleUnreadPost(click,idx){
 	click = (typeof click !== 'undefined')? click : false;
 	idx = (typeof idx !== 'undefined')? idx : postIdxSelected;
+	posts[idx-1].lockautomark = true;
 
 	var val = (posts[idx-1].unread == 1)?0:1;
 	markPost(0,val,idx,click);
@@ -283,6 +284,7 @@ function toogleUnreadVideoPost(click,id){
 	click = (typeof click !== 'undefined')? click : false;
 	var idx = findPostIndex(id);
 	if (idx>=0){
+		posts[idx].lockautomark = true;
 		var val = (posts[idx].unread == 1)?0:1;
 		markPost(0,val,idx+1,click);
 	} else {
@@ -313,6 +315,7 @@ function markPost(field, value, postidx, click){
 		data: "postid="+posts[postidx-1].id+"&"+fieldname+"="+value,
 		dataType : "json",
 		success: function(result){
+			result.lockautomark = posts[postidx-1].lockautomark;
 			posts[postidx-1] = result;
 			var post = posts[postidx-1];
 			if (field==0){ // read/unread
