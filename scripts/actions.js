@@ -117,17 +117,18 @@ function searchYoutubeVideo(findNext){
 					$("#youtube_viewer_dialog").fadeIn(100);
 					$("#youtube_viewer_dialog").attr("postid",postid);
 					$("#youtube_viewer_dialog").attr("postidx",postidx);
+					$("#youtube_viewer_dialog .title").html(post.title);
 					openModal();
 					if (post.unread==1)
 						$("#youtube_viewer_dialog").addClass("selected");
 					else
 						$("#youtube_viewer_dialog").removeClass("selected");
-					if (result[0].indexOf("/")>=0)
-						var html = "<iframe src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+result[0]+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
+					if (videos[0].indexOf("/")>=0)
+						var html = "<iframe src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+videos[0]+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
 					else
-						var html = "<iframe src='http://www.youtube.com/embed/"+result[0]+"?autoplay=1&theme=light' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
+						var html = "<iframe src='http://www.youtube.com/embed/"+videos[0]+"?autoplay=1&theme=light' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
 					$("#youtube_td").html(html);
-					$("#counter_videos").html("Next video ("+1+"/"+result.length+")");
+					$("#counter_videos").html("Next video ("+1+"/"+videos.length+")");
 				} else {
 					showMessage("No videos were found");
 				}

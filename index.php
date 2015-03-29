@@ -203,7 +203,7 @@
         </div></div></div>
 
         <div id="youtube_viewer_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="youtube_viewer" class="dialog-dim" style="width:700px">
-            <table class="slim"><tr><th style="position:relative;" colspan="2">Video viewer
+            <table class="slim"><tr><th style="position:relative;" colspan="2"><span class="title">Video viewer</span>
             <span id='ytv_window_controls'>
                 <button id='video_unread_button' onclick="toogleUnreadVideoPost(false,$('#youtube_viewer_dialog').attr('postid'))">&nbsp;</button>
                 <button onclick="$('#youtube_viewer_dialog').fadeOut(100);closeModal();$('#show-video-button').show()">·</button>
