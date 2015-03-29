@@ -318,7 +318,7 @@ function loading_stop() {
 
 function loading_run() {
     $(".loading").css("animation-play-state","running");
-    $("#loading_panel").show();
+    $("#loading_panel").fadeIn(100);
 }
 
 function loading_toggle(){

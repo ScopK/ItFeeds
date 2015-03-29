@@ -12,13 +12,13 @@ function loading_stop() {
 
 function loading_run() {
     $(".loading").css("animation-play-state","running");
-    $("#loading_panel").show();
+    $("#loading_panel").fadeIn(100);
     loading_stacks++;
 }
 
 function loading_toggle(){
     if (loading_check()) loading_stop();
-    else                    loading_run();
+    else                 loading_run();
 }
 
 function loading_check(){
