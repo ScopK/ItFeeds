@@ -213,7 +213,7 @@ function ajaxMorePosts(args){
 				$("#loadMoreLabel").removeClass('disabled');
 			}
 
-			var deleteSince = ($(".post").length) - ((get.postspage?get.postspage:10)*3);
+			var deleteSince = ($(".post").length) - ((get.postspage?get.postspage:10)*6);
 			if (deleteSince > 0){
 				var ps = $(".post:lt("+deleteSince+")");
 				var height = 0;
