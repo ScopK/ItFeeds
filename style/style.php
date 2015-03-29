@@ -841,17 +841,19 @@ VIDEO DIALOG
 }
 
 #ytv_window_controls button{
-	border: 1px solid #f0f0f0;
-	background-color: #fff;
+	border: 1px solid transparent;
+	background-color: rgba(255,255,255,0.7);
 	height:30px;
 	width:30px;
 	text-align:center;
 	font-weight:bold;
 	font-size:20px;
+	margin-top:1px;
+	border-radius:3px;
 }
 
 #ytv_window_controls button:hover{
-	background-color: #f0f0f0;
+	background-color: rgba(255,255,255,0.9);
 }
 .ytv_controls{
 	padding:0!important;
@@ -958,6 +960,7 @@ div.tagname button{
 .post.minimized .header{
 	border-bottom:1px dotted rgba(0,0,0,0.5);
 	border-top:1px solid transparent;
+	box-shadow:unset;
 }
 
 #mouse_nav{
