@@ -7,7 +7,7 @@ div#loading_panel{
     background-color: rgba(20,20,20,0.7);
     box-shadow:0 0 4px 1px rgba(20,20,20,0.8);
     border: 5px solid rgba(255,255,255,0);
-    z-index: 10;
+    z-index: 20;
 }
 
 div.loading{
