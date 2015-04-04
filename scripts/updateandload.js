@@ -141,16 +141,20 @@ function ajaxPosts(args){
 			$("#totalPages").html(totalPosts);
 			$("#percentSeen").html(pagesLoaded+"/"+totalPages);
 
-			posts = result.posts;
-			$.each(posts,function(){
-				var ixs = findFeedIndex(this.feedId);
-				var html = getHTMLPost(this,postCount++);
-				var jhtml = $(html);
+			posts = [];
+			$.each(result.posts,function(){
+				var jhtml = $("<span>"+this.description+"</span>");
 				jhtml.find("script").remove();
 				//jhtml.find("iframe").prop("sandbox",true);
 				jhtml.find("video").prop("controls",true);
 				jhtml.find("a").attr("target","_blank");
-				$("#posts_panel").append(jhtml[0].outerHTML);
+				while (jhtml.children().last().prop("tagName") == "BR") jhtml.children().last().remove();
+				this.description = jhtml.html();
+
+				posts.push(this);
+
+				var html = getHTMLPost(this,postCount++);
+				$("#posts_panel").append(html);
 				updateControlTags(postCount-1);
 			});
 			postsInit(true);
@@ -195,16 +199,21 @@ function ajaxMorePosts(args){
 		dataType : "json",
 		success: function(result){
 			$.each(result.posts,function(){
-				posts.push(this);
-				var html = getHTMLPost(this,postCount++);
-				var jhtml = $(html);
+				var jhtml = $("<span>"+this.description+"</span>");
 				jhtml.find("script").remove();
 				//jhtml.find("iframe").prop("sandbox",true);
 				jhtml.find("video").prop("controls",true);
 				jhtml.find("a").attr("target","_blank");
-				$("#posts_panel").append(jhtml[0].outerHTML);
+				while (jhtml.children().last().prop("tagName") == "BR") jhtml.children().last().remove();
+				this.description = jhtml.html();
+
+				posts.push(this);
+
+				var html = getHTMLPost(this,postCount++);
+				$("#posts_panel").append(html);
 				updateControlTags(postCount-1);
 			});
+
 			pagesLoaded++;
 			$("#percentSeen").html(pagesLoaded+"/"+totalPages);
 			postsInit(false);
