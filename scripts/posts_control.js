@@ -142,6 +142,7 @@ function selectPost(idx){
 	$(".post[idxpost='"+postIdxSelected+"']").addClass("selected");
 	$(".post[idxpost='"+postIdxSelected+"']").removeClass("minimized");
 
+	var post = posts[idx-1];
 	if (post.unread == 1 && getCookie("autoreadmode") == 0 && (typeof post.lockautomark == "undefined" || !post.lockautomark))
 		markPost(0, 0, idx);
 
