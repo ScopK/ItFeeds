@@ -221,20 +221,20 @@
 
 	function checkUserPassword($user,$pass){
 		global $con;
-		$sql = "SELECT username FROM users WHERE username=? AND password=?";
+		$sql = "SELECT username,fav_color FROM users WHERE username=? AND password=?";
 		$stmt=mysqli_stmt_init($con);
 		if (mysqli_stmt_prepare($stmt,$sql)){
 
 			mysqli_stmt_bind_param($stmt,"ss", $user, $pass); // Bind parameters
 			mysqli_stmt_execute($stmt); // Execute query
 
-			mysqli_stmt_bind_result($stmt,$username); // Bind result variables
+			mysqli_stmt_bind_result($stmt,$username,$color); // Bind result variables
 			mysqli_stmt_fetch($stmt); // Fetch value
 
 			mysqli_stmt_close($stmt); // Close statement
 		}
 		if(isset($username))
-			return $username;
+			return array('user'=>$username,'color'=>$color);
 		return false;
 	}
 

@@ -2,12 +2,19 @@
 	header("content-type: text/css");
 	$color = isset($_GET['color'])?"#".$_GET['color']:"#EF7502";//"#C8F56F";
 
-$hsv = hex2hsv($color);
-$hsv[1] = 99; $hsv[2]=94;
-$dark = hsv2hex($hsv);
-$hsv[0] += 15;
-$hsv[1] = 39; $hsv[2]=100;
-$bright = hsv2hex($hsv);
+	$hsv = hex2hsv($color);
+	$hsv[1] = 100; $hsv[2]=94;
+	if ($hsv[0]>50 && 200>$hsv[0]){
+		$hsv[2]=80;
+	}
+	$dark = hsv2hex($hsv);
+	//$hsv[0] += 15;
+	$hsv[1] = 29; $hsv[2]=100;
+	if ($hsv[0]>50 && 200>$hsv[0]){
+		$hsv[1]=33;
+		$hsv[2]=95;
+	}
+	$bright = hsv2hex($hsv);
 ?>
 /* FONTS */
 

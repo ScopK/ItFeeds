@@ -14,7 +14,8 @@
 	}
 	$user=$_REQUEST['user'];
 	$pass=$_REQUEST['pass'];
-	if ($user=checkUserPassword($user,$pass)){
+	if ($info=checkUserPassword($user,$pass)){
+		$user = $info['user'];
 		retry:
 
 		$res = mysqli_query($con,"SELECT * FROM active_user WHERE user='$user'");
@@ -33,7 +34,8 @@
 	}
 
 	/*
-	if ($user=checkUserPassword($user,$pass)){
+	if ($info=checkUserPassword($user,$pass)){
+		$user = $info['user'];
 		mysqli_query($con,"INSERT INTO active_user(user,token) VALUES('$user',newID(36,\"active_user\"))");
 
 		$res = mysqli_query($con,"SELECT * FROM active_user WHERE id='".mysqli_insert_id($con)."'");
