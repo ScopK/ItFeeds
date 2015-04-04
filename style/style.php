@@ -837,6 +837,12 @@ VIDEO DIALOG
 ###################################################################
 #################################################################*/
 
+#youtube_viewer_dialog.minimized{
+	opacity:0;
+	visibility:hidden;
+	pointer-events:none;
+}
+
 #youtube_viewer_dialog tr{
 	position:relative;
 }

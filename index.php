@@ -103,9 +103,9 @@
             </div>
         </div>
 
-        <button id="show-lateral-button" class="mouse-button" onclick="toggleLateralMenu()">&lsaquo;</button>
+        <button id="show-lateral-button" class="mouse-button" onclick="toggleLateralMenu();">&lsaquo;</button>
         <button id="more-options-button" class="mouse-button" onclick="return cmMore(event,this);" oncontextmenu="return cmMore(event,this);">+</button>
-        <button id="show-video-button" class="mouse-button" style="display:none;padding:0" onclick="$('#youtube_viewer_dialog').fadeIn(100);openModal();$('#show-video-button').hide()">Video Viewer</button>
+        <button id="show-video-button" class="mouse-button" style="display:none;padding:0" onclick="maxPlayer()">Video Viewer</button>
         <button id="mouse_nav" oncontextmenu="return false;"></button>
         <div id="mouse_bottom" style="display:none">
             <button class="markunread mouse-button colored" onclick="toogleUnreadPost(true)"></button>
@@ -206,7 +206,7 @@
             <table class="slim"><tr><th style="position:relative;" colspan="2"><span class="title">Video viewer</span>
             <span id='ytv_window_controls'>
                 <button id='video_unread_button' onclick="toogleUnreadVideoPost(false,$('#youtube_viewer_dialog').attr('postid'))">&nbsp;</button>
-                <button onclick="$('#youtube_viewer_dialog').fadeOut(100);closeModal();$('#show-video-button').show()">·</button>
+                <button onclick="minPlayer()">·</button>
                 <button onclick="$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);closeModal();">×</button>
             </span></th>
             </tr><tr><td id="youtube_td" style="margin:0;padding:0" colspan="2"></td>

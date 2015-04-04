@@ -115,10 +115,10 @@ function searchYoutubeVideo(findNext){
 					videos=result;
 					idxVideo=0;
 					$("#youtube_viewer_dialog").fadeIn(100);
+					maxPlayer();
 					$("#youtube_viewer_dialog").attr("postid",postid);
 					$("#youtube_viewer_dialog").attr("postidx",postidx);
 					$("#youtube_viewer_dialog .title").html(post.title);
-					openModal();
 					if (post.unread==1)
 						$("#youtube_viewer_dialog").addClass("selected");
 					else
@@ -168,6 +168,16 @@ function nextPostVideo(findNext){
 	findNext = (typeof findNext === 'undefined')? false : findNext;
 	nextPost();
 	searchYoutubeVideo(findNext);
+}
+function minPlayer(){
+	$('#youtube_viewer_dialog').addClass("minimized");
+	closeModal();
+	$('#show-video-button').show();
+}
+function maxPlayer(){
+	$('#youtube_viewer_dialog').removeClass("minimized");
+	openModal();
+	$('#show-video-button').hide();
 }
 
 function showSearchDialog(){
