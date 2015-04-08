@@ -57,7 +57,6 @@ body {
 	background-color: #eee;
 }
 #title-bar a {
-	color:white;
 	text-decoration:none;
 }
 #title-bar a:hover {
@@ -71,10 +70,15 @@ body {
 	padding:0 10px;
 	font-size:1.0em;
 	font-weight:bold;
+	cursor:pointer;
 }
 #feedname a {
 	display:table-cell;
 	vertical-align:middle;
+	color:white;
+}
+#feedname:hover a {
+	text-decoration:underline;
 }
 #postinfo{
 	display:table-cell;

@@ -22,6 +22,16 @@
 @import url(http://fonts.googleapis.com/css?family=Montserrat);
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans:700);
 @import url(http://fonts.googleapis.com/css?family=Roboto:400);
+
+::-moz-selection {
+    color: black;
+    background: <?= $bright ?>;
+}
+::selection {
+    color: black;
+    background: <?= $bright ?>;
+}
+
 /*
 @font-face {
   font-family: 'Open Sans';
@@ -77,7 +87,7 @@ body {
     background-attachment: fixed;
     background-size: 100% 100%;
   	/*background-blend-mode: color-burn;*/
-    background-color:#292929;
+    background-color:#383838;
     overflow-y: scroll;
 }
 button::-moz-focus-inner {
@@ -90,7 +100,7 @@ button::-moz-focus-inner {
 #page {
 	display:none;
 	position:relative;
-	background-color: #f5f5f5;
+	background-color: #fff;
 	margin: auto 40px;
 
 	overflow:hidden;
@@ -100,26 +110,26 @@ button::-moz-focus-inner {
 	position:fixed;
 	top:0; bottom:0;
 
-	background-color: #e5e5e5;
+	background-color: #eee;
 	padding: 10px;
 	width: 300px;
 	float:left;
 	font-size: 12.5px;
-	/*transition: margin-left 0.4s, border 0.4s;*/
 	border-right: 0px solid #000;
-	z-index:1;
-	transition: opacity 0.4s, visibility 0s 0s;
+	z-index:0;
+	transition: opacity 0.4s, visibility 0s 0s, z-index 0s 0.35s;
 }
 
 #lateral_menu.hidden{
-	transition-delay: 0s,0.4s;
+	transition-delay: 0s,0.4s,0s;
 	opacity: 0;
 	visibility: hidden;
+	z-index:1;
 }
 
 #settings_panel{
 	position:absolute;
-	background-color:#444;
+	background-color:#383838;
 	z-index:1;
 	height:100%;
 	top:0;	left:0;	right:0; bottom:0;
@@ -195,7 +205,7 @@ button::-moz-focus-inner {
 	top:50px;
 	z-index:2;
 	font-size:26px;
-	background-color:#E5E5E5;
+	background-color:#EEE;
 	color:#222;
 	transition: background-color 0.15s,margin 0.25s, z-index 0s 0.25s;
 }
@@ -215,6 +225,7 @@ button::-moz-focus-inner {
 	position:relative;
 	margin-left: 320px;
 	transition: margin 0.4s;
+	box-shadow: -5px 0px 5px -5px rgba(0, 0, 0, 0.2);
 }
 
 #navopts_top{
@@ -287,8 +298,7 @@ LATERAL MENU FOLDER STYLES
 }
 
 .tag.hidden{
-	background-color: #eee;
-	color: #444;
+	color: #aaa;
 }
 
 .feed:hover{
@@ -313,12 +323,12 @@ LATERAL MENU FOLDER STYLES
 }
 
 .feed .count, .folder .count{
-	color: #777;
+	color: #888;
 	font-weight: bold;
 }
 
 .tag .count{
-	color: #777;
+	color: #888;
 }
 
 .count.hidden{
@@ -333,8 +343,7 @@ LATERAL MENU FOLDER STYLES
 }
 
 .folderHeader.hidden .folderTitle{
-	background-color: #eee;
-	color: #777;
+	color: #aaa;
 	padding: 1px 5px 2px;
 	border-radius:3px;
 }
@@ -510,8 +519,8 @@ POSTS
 ############################################################################################################*/
 
 #posts_panel{
-	padding: 7px;
-	margin: 0;
+	padding: 3px 3px 0;
+	margin-bottom: -3px;
 }
 
 .post{
@@ -531,18 +540,17 @@ POSTS
 
 	border: solid #666;
 	border-width: 0 0 1px 0;
-	border-radius: 4px 4px 0 0;
 	padding-bottom:1px;
 }
 
 .post.selected .header{
 	padding-bottom:0px;
 	border-bottom-width: 2px;
-	box-shadow: 0 5px 14px -5px black;
+	box-shadow: 0 8px 14px -12px  black;
 }
 
 .post.selected.unread .header{
-	box-shadow: 0 5px 14px -5px <?= $dark ?>;
+	box-shadow: 0 8px 14px -12px <?= $dark ?>;
 }
 
 .post.unread .header{
@@ -595,7 +603,7 @@ POSTS
 
 .post:not(.minimized) .controller.fixed{
 	position:fixed;
-	right:47px;
+	right:43px;
 }
 
 .post .controller button{
@@ -888,9 +896,9 @@ VIDEO DIALOG
 }
 
 #youtube_viewer_dialog.selected th{
-	box-shadow: 0px 5px 14px 0px #F07602;
-	background-color: #FFE59C;
-	border-bottom-color: #F07602;
+	box-shadow: 0px 5px 14px 0px <?= $dark ?>;
+	background-color: <?= $bright ?>;
+	border-bottom-color: <?= $dark ?>;
 }
 
 #video_unread_button{
@@ -1016,9 +1024,9 @@ div.tagname button{
 
 #loadMoreLabel {
 	position:absolute; bottom: 0;
-    background-image: url("../imgs/backPosts.png");
+	box-shadow: 0px 4px 6px -7px black inset;
     background-repeat: repeat-x;
-	background-color: rgba(0,0,0,0.1);
+	background-color: #f4f4f4;
 	color: rgba(0,0,0,0.5);
 	width:100%;
 	margin: 0;
@@ -1040,7 +1048,7 @@ div.tagname button{
 }
 
 #loadMoreLabel:hover{
-	background-color: rgba(0,0,0,0.2);
+	background-color: #e0e0e0;
 }
 
 #loadMoreLabel.disabled{

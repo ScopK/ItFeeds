@@ -74,12 +74,22 @@ function situatePostControls(){
 	var idx = 0;
 	$.each(controllers.reverse(),function(){
 		var con = $(this).find(".controller");
+		if ($(this).hasClass("minimized")){
+			con.removeClass("fixed");
+			con.css("top","0");
+			return;
+		}
 		var top = this.offsetTop;
 		var bot = top + this.offsetHeight - con.height();
 		if (top < pos && pos < bot){
 			con.addClass("fixed");
+			con.css("top","0");
+		} else if (pos >= bot){
+			con.removeClass("fixed");
+			con.css("top",(this.offsetHeight - con.height()-5)+"px");
 		} else {
 			con.removeClass("fixed");
+			con.css("top","0");
 		}
 	});
 }

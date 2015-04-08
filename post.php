@@ -36,7 +36,7 @@
         <div id="profile"></div>
         <div id="post">
             <div id="title-bar">
-                <div id="feedname"><a target="_blank" href="<?= $feed->link ?>"><?= $feed->name ?></a></div>
+                <div id="feedname" onclick="event.target!=this.children[0]?this.children[0].click():undefined;"><a target="_blank" href="<?= $feed->link ?>"><?= $feed->name ?></a></div>
                 <div id="postinfo"><span><a target="_blank" href="<?= $post->link ?>"><?= $post->title ?></a><?= $post->date ?></span></div>
             </div>
             <div id="description"></div>
