@@ -35,6 +35,7 @@
         <script src="scripts/mode_control.js"></script>
         <script src="scripts/posts_control.js"></script>
         <script src="scripts/init.js"></script>
+        <script src="https://w.soundcloud.com/player/api.js"></script>
         <script>
         $(document).ready(function(){
             $(".background-modal").hide();

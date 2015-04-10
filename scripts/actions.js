@@ -114,8 +114,12 @@ function searchYoutubeVideo(findNext){
 					var post = posts[postidx-1];
 					videos=result;
 					idxVideo=0;
-					$("#youtube_viewer_dialog").fadeIn(100);
-					maxPlayer();
+					loading_run();
+					var fadeIn = function(){
+						$("#youtube_viewer_dialog").fadeIn(100);
+						maxPlayer();
+						loading_stop();
+					};
 					$("#youtube_viewer_dialog").attr("postid",postid);
 					$("#youtube_viewer_dialog").attr("postidx",postidx);
 					$("#youtube_viewer_dialog .title").html(post.title);
@@ -124,10 +128,9 @@ function searchYoutubeVideo(findNext){
 					else
 						$("#youtube_viewer_dialog").removeClass("selected");
 					if (videos[0].indexOf("/")>=0)
-						var html = "<iframe src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+videos[0]+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
+						soundcloudPlayer(videos[0],fadeIn);
 					else
-						var html = "<iframe src='http://www.youtube.com/embed/"+videos[0]+"?autoplay=1&theme=light' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
-					$("#youtube_td").html(html);
+						youtubePlayer(videos[0],fadeIn);
 					$("#counter_videos").html("Next video ("+1+"/"+videos.length+")");
 				} else {
 					showMessage("No videos were found");
@@ -157,10 +160,9 @@ function nextVideo(){
 		if (idxVideo==videos.length)
 			idxVideo=0;
 		if (videos[idxVideo].indexOf("/")>=0)
-			var html = "<iframe src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+videos[idxVideo]+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
+			soundcloudPlayer(videos[idxVideo]);
 		else
-			var html = "<iframe src='http://www.youtube.com/embed/"+videos[idxVideo]+"?autoplay=1' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
-		$("#youtube_td").html(html);
+			youtubePlayer(videos[idxVideo]);
 		$("#counter_videos").html("Next video ("+(idxVideo+1)+"/"+videos.length+")");
 	}
 }
@@ -168,6 +170,75 @@ function nextPostVideo(findNext){
 	findNext = (typeof findNext === 'undefined')? false : findNext;
 	nextPost();
 	searchYoutubeVideo(findNext);
+}
+
+var autonextvideo=false;
+function soundcloudPlayer(code,callback){
+	var html = "<iframe id='SoundCloudIframe' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+code+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
+	$("#youtube_td").html(html);
+	if (typeof callback=="function") callback();
+	var player=SC.Widget(document.getElementById("SoundCloudIframe"));
+	var isLastSong=false;
+	player.bind(SC.Widget.Events.PLAY,function(){
+		player.getSounds(function(sounds){
+			player.getCurrentSoundIndex(function(idx){
+				isLastSong=sounds.length==(idx+1);
+			});
+		});
+	});
+	player.bind(SC.Widget.Events.FINISH,function(){
+		if (autonextvideo && isLastSong){
+			if ((idxVideo+1)==videos.length){
+				nextPostVideo(true);
+			} else {
+				nextVideo();
+			}
+		}
+	});
+}
+var onYouTubeIframeAPIReady;
+function youtubePlayer(code,callback){
+	//var html = "<iframe src='http://www.youtube.com/embed/"+code+"?autoplay=1&theme=light' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
+	//$("#youtube_td").html(html);
+	//if (typeof callback=="function") callback();
+	var id = "YoutubeScriptIframe";
+	$("#youtube_td").html("<div id='"+id+"' style='display:block'></div>");
+	if ($('#youtube_viewer_dialog').css("display")=="none"){
+		$('#youtube_viewer_dialog').addClass("minimized");
+		$('#youtube_viewer_dialog').css("display","");
+	}
+	onYouTubeIframeAPIReady = function(){
+		var player = new YT.Player(id, {
+			height: '460',
+			width: '100%',
+			theme: "light",
+			videoId: code,
+			events: {
+				'onReady': function(event){
+					event.target.playVideo();
+					if (typeof callback=="function") callback();
+				},
+				'onStateChange': function(event) {
+					if (event.data == YT.PlayerState.ENDED && autonextvideo){
+						if ((idxVideo+1)==videos.length){
+							nextPostVideo(true);
+						} else {
+							nextVideo();
+						}
+					}
+				}
+			}
+		});
+	}
+	if ($("#YoutubeScript").length==0){
+		var tag = document.createElement('script');
+		tag.src = "https://www.youtube.com/iframe_api";
+		tag.id = "YoutubeScript";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	} else {
+		onYouTubeIframeAPIReady();
+	}
 }
 function minPlayer(){
 	$('#youtube_viewer_dialog').addClass("minimized");
