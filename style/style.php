@@ -715,6 +715,8 @@ button.lock-icon.highlight-color{
 	padding-bottom:50px;*/
 	padding: 25px 25px 50px;
 	overflow-x: auto;
+	overflow-y:hidden;
+	transition: all 0.1s;
 }
 
 
@@ -975,12 +977,14 @@ div.tagname button{
 }
 
 .post.minimized .description{
-	display:none;
+	/*display:none;*/
+	height:0!important;
+	padding-top:0;
+	padding-bottom:0;
 }
 
 .post.minimized .header{
 	border-bottom:1px dotted rgba(0,0,0,0.5);
-	border-top:1px solid transparent;
 	box-shadow:unset;
 }
 

@@ -112,10 +112,13 @@ function nextPost(){
 	if (postIdxSelected < posts.length){
 		var idx = postIdxSelected;
 		selectPost(++idx);
-		if (getCookie("compactedmode")!=2)
-			$(".post[idxpost='"+postIdxSelected+"']").prevAll("div.post").addClass("minimized");
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
-		focusPost(newPost,100);
+		if (getCookie("compactedmode")!=2){
+			$(".post[idxpost='"+postIdxSelected+"']").prevAll("div.post").addClass("minimized");
+			focusPostCalculated(newPost,100);
+		} else {
+			focusPost(newPost,100);
+		}
 	}
 }
 
@@ -128,6 +131,10 @@ function prevPost(){
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,100);
 	}
+}
+
+function focusPostCalculated(post,speed){
+	$('html,body').animate({scrollTop: post.prevAll("div.post").length*(post.find(".header").height()+2)+3}, speed); 
 }
 
 function focusPost(post,speed){
@@ -266,11 +273,21 @@ function toggleMinimize(idx,value){
 	var post = $(".post[idxpost='"+idx+"']");
 	value = (typeof value !== 'undefined')? value : !post.hasClass("minimized");
 
+	var desc = post.find(".description");
 	if (value){
-		post.addClass("minimized");
+		desc.css("height",desc.height());
+		setTimeout(function(){
+			post.addClass("minimized");
+		},0);
 		situatePostControls();
-	} else
+	} else {
 		post.removeClass("minimized");
+		setTimeout(function(){
+			desc.css("height","");
+		},100);
+	}
+	if ($(window).scrollTop()>post.offset().top)
+		focusPost(post,100);
 }
 
 function toogleUnreadPost(click,idx){

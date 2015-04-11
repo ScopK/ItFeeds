@@ -167,7 +167,7 @@ function change_postsmode(val,msg){
 	setCookie("compactedmode",val,3);
 	$("#posts_mode").val(val);
 	if (postIdxSelected>0)
-		focusPost($(".post[idxpost='"+postIdxSelected+"']"),100);
+		setTimeout(function(){focusPost($(".post[idxpost='"+postIdxSelected+"']"),100);},150);
 }
 
 function change_autoreadmode(val,msg){
