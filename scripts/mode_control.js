@@ -146,7 +146,7 @@ function change_postsmode(val,msg){
 	val++;val--;
 	switch(val){
 		case 0:
-			if (msg) showPopMessage("Normal Mode: Previous posts are minimized");
+			if (msg) showPopMessage("Posts Mode "+(val+1)+". Normal Mode");
 			if (postIdxSelected>0){
 				$(".post[idxpost='"+postIdxSelected+"']").prevAll("div.post").addClass("minimized");
 				$(".post[idxpost='"+(postIdxSelected-1)+"']").nextAll("div.post").removeClass("minimized");
@@ -155,12 +155,12 @@ function change_postsmode(val,msg){
 			}
 			break;
 		case 1: 
-			if (msg) showPopMessage("Minimized Mode: All unselected posts are minimized"); 
+			if (msg) showPopMessage("Posts Mode "+(val+1)+". Minimized Mode"); 
 	    	$(".post").not(".selected").addClass("minimized");
 	    	$(".post.selected").removeClass("minimized");
 			break;
 		case 2:
-			if (msg) showPopMessage("Never minimize"); 
+			if (msg) showPopMessage("Posts Mode "+(val+1)+". Never minimize"); 
 	    	$(".post").removeClass("minimized");
 			break;
 	}
@@ -180,13 +180,13 @@ function change_autoreadmode(val,msg){
 	val++;val--;
 	switch(val){
 		case 0: // On select post
-			if (msg) showPopMessage("Normal Mode: Previous posts are minimized");
+			if (msg) showPopMessage("Auto-Read Mode "+(val+1)+". On select post");
 			break;
 		case 1: // On scroll
-			if (msg) showPopMessage("Minimized Mode: All unselected posts are minimized"); 
+			if (msg) showPopMessage("Auto-Read Mode "+(val+1)+". On scroll"); 
 			break;
 		case 2: // Never
-			if (msg) showPopMessage("Never minimize"); 
+			if (msg) showPopMessage("Auto-Read Mode "+(val+1)+". Never"); 
 			break;
 	}
 	setCookie("autoreadmode",val,3);

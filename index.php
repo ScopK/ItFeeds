@@ -61,7 +61,7 @@
                             <option value="1" title="All unselected posts are minimized">Minimized Mode</option>
                             <option value="2" title="Nothing is minimized">Never minimize</option>
                         </select></td>
-                        <td style="color:#444;margin-left:5px">Key 'G'</td>
+                        <td style="color:#888;margin-left:5px">Key 'G'</td>
                     </tr><tr>
                         <td>Auto mark read</td>
                         <td><select id="autoread_mode" style="width:90%" class="select-panel" onchange="change_autoreadmode(this.value,false)">
@@ -69,7 +69,7 @@
                             <option value="1" title="Mark as read while scrolling">On scroll</option>
                             <option value="2" title="Don't mark as read automatically">Never</option>
                         </select></td>
-                        <td style="color:#444;margin-left:5px"><!--Key ''--></td>
+                        <td style="color:#888;margin-left:5px">Key 'H'</td>
                     </tr></table>
                     
                     <button class="button-panel" style="text-align:left;width:100%" onclick="showPasswordChangeDialog();return false">Change password</button>

@@ -46,6 +46,9 @@ $(document).ready(function(){
 		    case 71: //g
 		    	change_postsmode();
 		    	return false;
+		    case 72: //h
+		    	change_autoreadmode();
+		    	return false;
 		    case 76: //l
 				loadMore();
 		    	break;
