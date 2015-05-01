@@ -120,6 +120,9 @@ function nextPost(){
 		} else {
 			focusPost(newPost,100);
 		}
+		var post = posts[idx-1];
+		if (post.unread == 1 && getCookie("autoreadmode") == 1 && (typeof post.lockautomark == "undefined" || !post.lockautomark))
+			markPost(0, 0, idx);
 	}
 }
 
@@ -131,6 +134,9 @@ function prevPost(){
 		selectPost(--idx);
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,100);
+		var post = posts[idx-1];
+		if (post.unread == 1 && getCookie("autoreadmode") == 1 && (typeof post.lockautomark == "undefined" || !post.lockautomark))
+			markPost(0, 0, idx);
 	}
 }
 

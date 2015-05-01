@@ -84,6 +84,16 @@ function situatePostControls(){
 		if (top < pos && pos < bot){
 			con.addClass("fixed");
 			con.css("top","0");
+
+			//Auto-Mark Read
+			var idx = $(this).attr("idxpost");
+			var post = posts[idx-1];
+			if (getCookie("autoreadmode")==1){
+				selectPost(idx);
+				if (post.unread == 1 && (typeof post.lockautomark == "undefined" || !post.lockautomark)){
+					markPost(0, 0, idx);
+				}
+			}
 		} else if (pos >= bot){
 			con.removeClass("fixed");
 			con.css("top",(this.offsetHeight - con.height()-5)+"px");
