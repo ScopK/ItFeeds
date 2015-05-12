@@ -90,7 +90,8 @@ function situatePostControls(){
 			var post = posts[idx-1];
 			if (getCookie("autoreadmode")==1){
 				selectPost(idx);
-				if (post.unread == 1 && (typeof post.lockautomark == "undefined" || !post.lockautomark)){
+				if (post.unread == 1 && (typeof post.lockautomark == "undefined" || !post.lockautomark) && !post.autoscrolled){
+					post.autoscrolled=true;
 					markPost(0, 0, idx);
 				}
 			}
