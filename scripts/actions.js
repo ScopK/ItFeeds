@@ -128,6 +128,9 @@ function searchYoutubeVideo(findNext){
 				});
 				count++;
 			}
+			var open_dialog = true;
+		} else {
+			var open_dialog = false;
 		}
 
 		var postidx = playlist.index;
@@ -145,8 +148,10 @@ function searchYoutubeVideo(findNext){
 					idxVideo=0;
 					loading_run();
 					var fadeIn = function(){
-						$("#youtube_viewer_dialog").fadeIn(100);
-						maxPlayer();
+						if (open_dialog){
+							$("#youtube_viewer_dialog").fadeIn(100);
+							maxPlayer();
+						}
 						loading_stop();
 					};
 					$("#youtube_viewer_dialog").attr("postid",postid);
@@ -220,7 +225,7 @@ function replicateSong(id,as,val){
 	}
 }
 
-var autonextvideo=false;
+var autonextvideo=true;
 function soundcloudPlayer(code,callback){
 	var html = "<iframe id='SoundCloudIframe' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+code+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
 	$("#youtube_td").html(html);
