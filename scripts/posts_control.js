@@ -41,6 +41,7 @@ $(document).ready(function(){
 		    	toggleLateralMenu();
 		    	break;
 		    case 89: //y
+		    	resetPlaylist();
 		    	searchYoutubeVideo();
 		    	break;
 		    case 71: //g
@@ -112,7 +113,8 @@ function postsInit(scrollTop){
 	}
 }
 
-function nextPost(){
+function nextPost(mark){
+	mark = (typeof mark !== 'undefined')? mark : true;
 	if (postIdxSelected < posts.length){
 		var idx = postIdxSelected;
 		selectPost(++idx);
@@ -124,12 +126,13 @@ function nextPost(){
 			focusPost(newPost,100);
 		}
 		var post = posts[idx-1];
-		if (post.unread == 1 && getCookie("autoreadmode") == 1 && (typeof post.lockautomark == "undefined" || !post.lockautomark))
+		if (mark && post.unread == 1 && getCookie("autoreadmode") == 1 && (typeof post.lockautomark == "undefined" || !post.lockautomark))
 			markPost(0, 0, idx);
 	}
 }
 
-function prevPost(){
+function prevPost(mark){
+	mark = (typeof mark !== 'undefined')? mark : true;
 	if (postIdxSelected > 1){
 		var idx = postIdxSelected;
 		if (getCookie("compactedmode")==1)
@@ -138,7 +141,7 @@ function prevPost(){
 		var newPost = $(".post[idxpost='"+postIdxSelected+"']");
 		focusPost(newPost,100);
 		var post = posts[idx-1];
-		if (post.unread == 1 && getCookie("autoreadmode") == 1 && (typeof post.lockautomark == "undefined" || !post.lockautomark))
+		if (mark && post.unread == 1 && getCookie("autoreadmode") == 1 && (typeof post.lockautomark == "undefined" || !post.lockautomark))
 			markPost(0, 0, idx);
 	}
 }
@@ -347,22 +350,20 @@ function markPost(field, value, postidx, click){
 			result.lockautomark = posts[postidx-1].lockautomark;
 			posts[postidx-1] = result;
 			var post = posts[postidx-1];
+
 			if (field==0){ // read/unread
 				var idx = findFeedIndex(post.feedId);
+				replicateSong(post.id,"unread",value);
 				if (idx.length>0){
 					var folder = folders[idx[0]];
 					if (value==0) {
 						$(".post[idxpost='"+postidx+"']").removeClass("unread");
 						folder.unread--;
 						folder.feeds[idx[1]].unread--;
-						if ($("#youtube_viewer_dialog").attr("postid") == post.id)
-							$("#youtube_viewer_dialog").removeClass("selected");
 					} else {
 						$(".post[idxpost='"+postidx+"']").addClass("unread");
 						folder.unread++;
 						folder.feeds[idx[1]].unread++;
-						if ($("#youtube_viewer_dialog").attr("postid") == post.id)
-							$("#youtube_viewer_dialog").addClass("selected");
 					}
 					updateCounts(idx);
 				} else {
@@ -379,6 +380,7 @@ function markPost(field, value, postidx, click){
 				}
 
 			} else {	// fav/unfav 
+				replicateSong(post.id,"favorite",value);
 				if (value==0)
 					$(".post[idxpost='"+postidx+"']").removeClass("favorite");
 				else

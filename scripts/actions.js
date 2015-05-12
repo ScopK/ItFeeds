@@ -98,11 +98,40 @@ function showAddTagsDialog(idx){
 
 var videos;
 var idxVideo;
+var playlist={};
+function resetPlaylist(){
+	playlist={};
+}
+
 function searchYoutubeVideo(findNext){
 	findNext = (typeof findNext === 'undefined')? false : findNext;
-	if (postIdxSelected>0){
-		var postidx = postIdxSelected;
-		var postid = posts[postIdxSelected-1]['id'];
+	if (postIdxSelected>0 || playlist.on){
+		if (!playlist.on){
+			playlist.on=true;
+			playlist.command={};
+			playlist.songs=[];
+			var postid = posts[postIdxSelected-1].id;
+			for(var i in get){
+				playlist.command[i] = get[i];
+			}
+			var count=0;
+			for(var i in posts){
+				var p = posts[i];
+				if (p.id == postid){
+					playlist.index=count;
+				}
+				playlist.songs.push({
+					id: p.id,
+					favorite: p.favorite,
+					unread: p.unread,
+					title: p.title
+				});
+				count++;
+			}
+		}
+
+		var postidx = playlist.index;
+		var postid = playlist.songs[playlist.index].id;
 		loading_run();
 		$.ajax({
 			url: "./ajax/get_youtube_code.php",
@@ -110,8 +139,8 @@ function searchYoutubeVideo(findNext){
 			data: "postid="+postid,
 			dataType : "json",
 			success: function(result){
+				var song = playlist.songs[postidx];
 				if (result.length>0){
-					var post = posts[postidx-1];
 					videos=result;
 					idxVideo=0;
 					loading_run();
@@ -121,9 +150,9 @@ function searchYoutubeVideo(findNext){
 						loading_stop();
 					};
 					$("#youtube_viewer_dialog").attr("postid",postid);
-					$("#youtube_viewer_dialog").attr("postidx",postidx);
-					$("#youtube_viewer_dialog .title").html(post.title);
-					if (post.unread==1)
+					//$("#youtube_viewer_dialog").attr("postidx",postidx+1);
+					$("#youtube_viewer_dialog .title").html(song.title);
+					if (song.unread==1)
 						$("#youtube_viewer_dialog").addClass("selected");
 					else
 						$("#youtube_viewer_dialog").removeClass("selected");
@@ -168,8 +197,28 @@ function nextVideo(){
 }
 function nextPostVideo(findNext){
 	findNext = (typeof findNext === 'undefined')? false : findNext;
-	nextPost();
+	if (postIdxSelected>0 && playlist.songs[playlist.index].id == posts[postIdxSelected-1].id){
+		nextPost(false);
+	}
+	playlist.index++;
 	searchYoutubeVideo(findNext);
+	if (playlist.songs.length == playlist.index+1){
+		alert("NEED UPDATE!!!");
+	}
+}
+function replicateSong(id,as,val){
+	if (playlist.on){
+		var idx = findSongIndex(id);
+		if (idx>=0){
+			playlist.songs[idx][as] = val+"";
+			if (playlist.index==idx){
+				if (as=="unread"){
+					if (val==0) $("#youtube_viewer_dialog").removeClass("selected");
+					else		  $("#youtube_viewer_dialog").addClass("selected");
+				}
+			}
+		}
+	}
 }
 
 var autonextvideo=false;

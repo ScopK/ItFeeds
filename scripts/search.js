@@ -32,6 +32,21 @@ function findPostIndex(id){
 	return index;
 }
 
+function findSongIndex(id){
+	var index = -1;
+	if (playlist.on){
+		var idx = 0;
+		$.each(playlist.songs,function(){
+			if (this.id == id){
+				index = idx;
+				return;
+			}
+			idx++;
+		});
+	}
+	return index;
+}
+
 function findFolderIndex(id){
 	var index = -1;
 	var fo = 0;
