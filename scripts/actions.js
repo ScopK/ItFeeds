@@ -169,8 +169,7 @@ function searchYoutubeVideo(findNext){
 				if (request.responseText=="Code not found"){
 					showMessage("No videos were found");
 					if (findNext && postidx < posts.length){
-						nextPost();
-						searchYoutubeVideo();
+						nextPostVideo(true);
 					}
 				} else {
 					showMessage("JS Error "+request.status+": "+request.responseText);
