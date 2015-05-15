@@ -172,7 +172,7 @@ function searchYoutubeVideo(idx,overwrite,findNext){
 					case "sc":
 						soundcloudPlayer(videos[0].src,fadeIn);break;
 					case "h5":
-						showMessage("HTML5 Work in progress...");fadeIn();break;
+						html5Player(videos[0].src,fadeIn);break;
 				}
 				$("#counter_videos").html("Next video ("+1+"/"+videos.length+")");
 			} else {
@@ -206,7 +206,7 @@ function nextVideo(){
 			case "sc":
 				soundcloudPlayer(videos[idxVideo].src);break;
 			case "h5":
-				showMessage("HTML5 Work in progress...");break;
+				html5Player(videos[idxVideo].src);break;
 		}
 		$("#counter_videos").html("Next video ("+(idxVideo+1)+"/"+videos.length+")");
 	}
@@ -254,6 +254,32 @@ function replicateSong(id,as,val){
 }
 
 var autonextvideo=true;
+function html5Player(url,callback){	
+	var div = document.getElementById("youtube_td");
+	div.innerHTML="";
+	var vid = document.createElement("video");
+	vid.controls=vid.autoplay=true;
+	vid.style.width=vid.style.height="100%";
+	vid.style.display="table";
+	var src = document.createElement("source");
+	src.src = url;
+	vid.appendChild(src);
+	div.appendChild(vid);
+	if (typeof callback=="function"){
+		vid.addEventListener('loadeddata', function() {
+			callback();
+		}, false);
+	}
+	vid.onended = function(){
+		if (autonextvideo){
+			if ((idxVideo+1)==videos.length){
+				nextPostVideo(true);
+			} else {
+				nextVideo();
+			}
+		}
+	}
+}
 function soundcloudPlayer(code,callback){
 	var html = "<iframe id='SoundCloudIframe' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+code+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
 	$("#youtube_td").html(html);
