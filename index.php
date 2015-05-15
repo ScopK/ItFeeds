@@ -210,7 +210,7 @@
                 <button onclick="minPlayer()">·</button>
                 <button onclick="$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);closeModal();">×</button>
             </span></th>
-            </tr><tr><td id="youtube_td" style="margin:0;padding:0" colspan="3"></td>
+            </tr><tr><td id="youtube_td" style="margin:0;padding:0;background-color:black;" colspan="3"></td>
             </tr><tr><td class="ytv_controls">
             <button style="background-color:#aaa" onclick="prevPostVideo()">Prev</button>
                 </td><td class="ytv_controls">

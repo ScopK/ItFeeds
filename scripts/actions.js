@@ -260,6 +260,7 @@ function html5Player(url,callback){
 	var vid = document.createElement("video");
 	vid.controls=vid.autoplay=true;
 	vid.style.width=vid.style.height="100%";
+	vid.style.maxHeight="calc(100vh - 80px)";
 	vid.style.display="table";
 	var src = document.createElement("source");
 	src.src = url;
