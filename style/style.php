@@ -618,8 +618,8 @@ POSTS
 }
 
 .post .controller button:hover{
-	box-shadow: 0 0 10px -2px rgba(0,0,0,0.5);
-	background-color: rgba(0,0,0,0.1);
+	box-shadow: 0 0 4px 1px rgba(255,255,255,0.45);
+	background-color: rgba(255,255,255,0.25);
 	/*inset*/
 }
 
@@ -653,6 +653,11 @@ POSTS
 
 .post.favorite .controller button.setFav{
 	background-image: url("../imgs/starOn.png");
+}
+
+.post .controller button.moreOptions{
+	background-image: url("../imgs/moreopts.png");
+	margin-right:-4px;
 }
 
 button.lock-icon{
@@ -880,7 +885,7 @@ VIDEO DIALOG
 }
 .ytv_controls{
 	padding:0!important;
-	width:50%;
+	min-width:33.3333%;
 }
 .ytv_controls button{
 	font-weight:bold;

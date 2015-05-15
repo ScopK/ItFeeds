@@ -41,8 +41,10 @@ $(document).ready(function(){
 		    	toggleLateralMenu();
 		    	break;
 		    case 89: //y
-		    	resetPlaylist();
-		    	searchYoutubeVideo();
+		    	if (postIdxSelected>0){
+					resetPlaylist();
+					searchYoutubeVideo(postIdxSelected-1,true);
+				}
 		    	break;
 		    case 71: //g
 		    	change_postsmode();

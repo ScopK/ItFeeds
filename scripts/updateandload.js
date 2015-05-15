@@ -264,6 +264,7 @@ function getHTMLPost(post,indexPost){
 	    '<button class="setFav" onclick="toogleFavPost(true,'+indexPost+')"></button>'+
 	    '<button class="addTag" onclick="showAddTagsDialog('+indexPost+');return false;"></button>'+
 	    '<button class="maxminimize" onclick="toggleMinimize('+indexPost+')"></button>'+
+	    '<button class="moreOptions" onclick="searchYoutubeVideo('+(indexPost-1)+',true)"></button>'+
 	    '</div><div class="tagList"></div></div>';
 
 	var unreadl=(post.unread==1)? "unread":"";

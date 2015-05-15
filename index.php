@@ -204,15 +204,17 @@
         </div></div></div>
 
         <div id="youtube_viewer_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="youtube_viewer" class="dialog-dim" style="width:700px">
-            <table class="slim"><tr><th style="position:relative;" colspan="2"><span class="title">Video viewer</span>
+            <table class="slim"><tr><th style="position:relative;" colspan="3"><span class="title">Video viewer</span>
             <span id='ytv_window_controls'>
                 <button id='video_unread_button' onclick="toogleUnreadVideoPost(false,$('#youtube_viewer_dialog').attr('postid'))">&nbsp;</button>
                 <button onclick="minPlayer()">·</button>
                 <button onclick="$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);closeModal();">×</button>
             </span></th>
-            </tr><tr><td id="youtube_td" style="margin:0;padding:0" colspan="2"></td>
+            </tr><tr><td id="youtube_td" style="margin:0;padding:0" colspan="3"></td>
             </tr><tr><td class="ytv_controls">
-            <button style="background-color:#aaa" id="counter_videos" onclick="nextVideo()"></button>
+            <button style="background-color:#aaa" onclick="prevPostVideo()">Prev</button>
+                </td><td class="ytv_controls">
+            <button style="background-color:#bbb" id="counter_videos" onclick="nextVideo()"></button>
                 </td><td class="ytv_controls">
             <button style="background-color:#ccc" onclick="nextPostVideo(true)">Next</button>
             </td></tr></table>
