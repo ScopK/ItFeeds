@@ -133,6 +133,7 @@ function searchYoutubeVideo(idx,overwrite,findNext){
 			count++;
 		}
 		var open_dialog = true;
+		videolistUpdate();
 	} else {
 		var open_dialog = false;
 	}
@@ -177,15 +178,18 @@ function searchYoutubeVideo(idx,overwrite,findNext){
 				$("#counter_videos").html("Next video ("+1+"/"+videos.length+")");
 			} else {
 				showMessage("No videos were found");
+				loadingvid=false;
 			}
 		},
 		error: function (request, status, error){
+			loadingvid=false;
 			if (request.responseText=="Code not found"){
 				showMessage("No videos were found");
 				if (findNext && postidx < posts.length){
 					nextPostVideo(true);
 				}
 			} else {
+				console.log(request);
 				showMessage("JS Error "+request.status+": "+request.responseText);
 			}
 		},
@@ -219,6 +223,8 @@ function nextPostVideo(findNext){
 	}
 	if (playlist.index<playlist.songs.length-1){
 		playlist.index++;
+		$("#videolist .video.listening").removeClass("listening");
+		$("#videolist .video[idx='"+playlist.index+"']").addClass("listening");
 		loadingvid=true;
 		searchYoutubeVideo(-1,false,findNext);
 		if (playlist.songs.length == playlist.index+1){
@@ -234,8 +240,20 @@ function prevPostVideo(findPrev){
 	}
 	if (playlist.index>0){
 		playlist.index--;
+		$("#videolist .video.listening").removeClass("listening");
+		$("#videolist .video[idx='"+playlist.index+"']").addClass("listening");
 		loadingvid=true;
 		searchYoutubeVideo(-1,false,findPrev);
+	}
+}
+function selectPostVideo(idx){
+	if (loadingvid) return;
+	if (idx=>0 && idx<playlist.songs.length){
+		playlist.index=idx;
+		$("#videolist .video.listening").removeClass("listening");
+		$("#videolist .video[idx='"+idx+"']").addClass("listening");
+		loadingvid=true;
+		searchYoutubeVideo(-1,false);
 	}
 }
 function replicateSong(id,as,val){

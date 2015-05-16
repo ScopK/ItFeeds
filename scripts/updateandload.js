@@ -37,6 +37,18 @@ function displayTags() {
 
 	setTagsActions();
 }
+function videolistUpdate(){
+	if (!playlist.on) return;
+	var html="";
+	for (var i in playlist.songs){
+		var song = playlist.songs[i];
+		var classes = (i==playlist.index)?"video listening":"video";
+		var pos = i;
+		pos++;
+		html+="<div class='"+classes+"' idx='"+i+"' onclick='selectPostVideo("+i+")'><span class='idx'>"+pos+"</span><span class='tit'>"+song.title+"</span></div>";
+	}
+	$("#videolist").html(html);
+}
 
 function getHTMLFolder(folder,idx){
 	var unread="";

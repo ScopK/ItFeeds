@@ -1072,6 +1072,48 @@ div.tagname button{
 	background-position: center center;
 }
 
+#videolist{
+	position:absolute;
+	left:-249px; top:0; bottom:0;
+	background-color:black;
+	padding:10px;
+	width:230px;
+	overflow-x:hidden;
+	overflow-y:hidden;
+	transition: left 0.4s, overflow 0s 0.4s;
+}
+#videolist:hover{
+	left:0;
+	overflow-y:scroll;
+}
+
+#videolist .video{
+	color:#fff;
+	background-color:<?= $dark ?>;
+	height:50px;
+	padding:5px;
+	width:200px;
+	overflow:hidden;
+	font-size:0.86em;
+	border: 1px solid <?= $bright ?>;
+	margin-bottom:10px;
+	position:relative;
+	border-radius:4px;
+	cursor:pointer;
+}
+#videolist .video .idx{
+	position:absolute;
+	font-size:20px;
+	bottom:-3px; right:3px;
+	opacity:0.4;
+}
+
+#videolist .video.listening{
+	background-color:<?= $bright ?>;
+	color:#000;
+}
+
+
 <?php
 function hsv2rgb($hsv) {
     $H = $hsv[0]/360.;

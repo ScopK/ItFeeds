@@ -203,7 +203,7 @@
             </form>
         </div></div></div>
 
-        <div id="youtube_viewer_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div id="youtube_viewer" class="dialog-dim" style="width:700px">
+        <div id="youtube_viewer_dialog" class="background-modal"><div id="videolist"></div><div style="display:table-cell;vertical-align:middle;"><div id="youtube_viewer" class="dialog-dim" style="width:700px">
             <table class="slim"><tr><th style="position:relative;" colspan="3"><span class="title">Video viewer</span>
             <span id='ytv_window_controls'>
                 <button id='video_unread_button' onclick="toogleUnreadVideoPost(false,$('#youtube_viewer_dialog').attr('postid'))">&nbsp;</button>
@@ -295,7 +295,6 @@
             </span>
         </div></div></div>
 
-
         <div id="cleaning_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim">
             <span class="folder-tab tab">
                 <form action="" method="GET">
@@ -352,7 +351,6 @@
                 </form>
             </span>
         </div></div></div>
-
 
         <div id="delete_dialog" class="background-modal"><div style="display:table-cell;vertical-align:middle;"><div class="dialog-dim">
             <span class="folder-tab tab">
