@@ -248,7 +248,7 @@ function prevPostVideo(findPrev){
 }
 function selectPostVideo(idx){
 	if (loadingvid) return;
-	if (idx=>0 && idx<playlist.songs.length){
+	if (idx>=0 && idx<playlist.songs.length){
 		playlist.index=idx;
 		$("#videolist .video.listening").removeClass("listening");
 		$("#videolist .video[idx='"+idx+"']").addClass("listening");
