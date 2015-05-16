@@ -21,8 +21,8 @@
     <string name="order">Order</string>
     <string name="reload">Reload</string>
     <string name="unlock">Unlock</string>
-    <string name="insert_lock">Insert lock:</string>
-    <string name="remove_lock">Remove Lock</string>
+    <string name="insert_lock">Insert key:</string>
+    <string name="remove_lock">Lock content</string>
     <string name="dev_test">Test</string>
     <string name="exit">Exit</string>
     <string name="favorite">Favorite</string>

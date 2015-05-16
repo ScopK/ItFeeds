@@ -130,7 +130,7 @@ public class PostListAdapter extends BaseAdapter {
 	    	
 	        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	        date = (TextView) view.findViewById(R.id.post_date);
-	    	date.setText(df.format(item.getDate()));
+	    	date.setText("["+item.getFeed().getName()+"] "+df.format(item.getDate()));
 	    	
 	    	if (item.getFavorite()){
 		    	bar = (FrameLayout) view.findViewById(R.id.statusBar);
