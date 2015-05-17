@@ -39,15 +39,24 @@ function displayTags() {
 }
 function videolistUpdate(){
 	if (!playlist.on) return;
-	var html="";
+	$("#videolist").html("");
 	for (var i in playlist.songs){
 		var song = playlist.songs[i];
 		var classes = (i==playlist.index)?"video listening":"video";
+		if (song.unread==1) classes+=" unread";
 		var pos = i;
 		pos++;
-		html+="<div class='"+classes+"' idx='"+i+"' onclick='selectPostVideo("+i+")'><span class='idx'>"+pos+"</span><span class='tit'>"+song.title+"</span></div>";
+		var div = document.createElement("div");
+		div.className = classes;
+		div.setAttribute("idx",i);
+		div.onclick=function(){
+			selectPostVideo(this.getAttribute("idx"));
+		};
+		song.selector=div;
+		div.innerHTML="<span class='idx'>"+pos+"</span><span class='tit'>"+song.title+"</span>";
+		$("#videolist").append(div);
 	}
-	$("#videolist").html(html);
+	$("#videolist").append("<div id='moresongs' onclick='loadMoreSongs()'><p>+</p></div>");
 }
 
 function getHTMLFolder(folder,idx){
@@ -255,6 +264,50 @@ function ajaxMorePosts(args){
 		},
 		complete: function(){
 			loading_stop();
+			addToPlaylist();
+		}
+	});
+}
+
+function ajaxMoreSongs(args){
+	if (!playlist.on || playlist.songs.length<=0) return;
+	var content = playlist.command;
+
+	var params = "nextid="+(playlist.songs[playlist.songs.length-1].id)+"&";
+
+	if (content.feed != undefined)			params += "feed="+content.feed+"&";
+	else if (content.folder != undefined)	params += "folder="+content.folder+"&";
+	else if (content.tag != undefined)		params += "tag="+content.tag+"&";
+
+	if (content.search != undefined)		params+="search="+content.search+"&";
+	if (content.unread != undefined)		params+="unread="+content.unread+"&";
+	if (content.fav != undefined)			params+="fav="+content.fav+"&";
+	if (content.postspage != undefined)		params+="postspage="+content.postspage+"&";
+	if (content.sortby != undefined)		params+="sortBy="+content.sortby+"&";
+	params += args;
+
+	loading_run();
+	$.ajax({
+		url: "./ajax/get_nextPosts.php",
+		type: "GET",
+		data: params,
+		dataType : "json",
+		success: function(result){
+			$.each(result.posts,function(){
+				playlist.songs.push({
+					id: this.id,
+					favorite: this.favorite,
+					unread: this.unread,
+					title: this.title
+				});
+			});
+		},
+		error: function (request, status, error){
+			showMessage("Error getting posts<br/>"+error);
+		},
+		complete: function(){
+			loading_stop();
+			videolistUpdate();
 		}
 	});
 }

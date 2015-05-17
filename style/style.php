@@ -1089,13 +1089,13 @@ div.tagname button{
 
 #videolist .video{
 	color:#fff;
-	background-color:<?= $dark ?>;
+	background-color:#888;
 	height:50px;
 	padding:5px;
 	width:200px;
 	overflow:hidden;
 	font-size:0.86em;
-	border: 1px solid <?= $bright ?>;
+	border: 1px solid #bbb;
 	margin-bottom:10px;
 	position:relative;
 	border-radius:4px;
@@ -1107,12 +1107,36 @@ div.tagname button{
 	bottom:-3px; right:3px;
 	opacity:0.4;
 }
-
 #videolist .video.listening{
-	background-color:<?= $bright ?>;
+	background-color:#bbb;
 	color:#000;
 }
-
+#videolist .video.unread{
+	background-color:<?= $dark ?>;
+	border: 1px solid <?= $bright ?>;
+}
+#videolist .video.unread.listening{
+	background-color:<?= $bright ?>;
+}
+#moresongs{
+	background-color:#7da728;
+	text-align:center;
+	color:white;
+	height:50px;
+	vertical-align:middle;
+	display:flex;
+	width:212px;
+	font-size:2.5em;
+	border-radius:5px;
+	transition: background-color 0.2s;
+	cursor:pointer;
+}
+#moresongs:hover{
+	background-color:#9ACD32;
+}
+#moresongs p{
+	margin:auto;
+}
 
 <?php
 function hsv2rgb($hsv) {

@@ -1,5 +1,5 @@
 function readGetParameters(){
-	get = [];
+	get = {};
 	location.search.replace('?', '').split('&').forEach(function (val) {
 	    split = val.split("=", 2);
 	    get[split[0]] = split[1];
@@ -119,21 +119,9 @@ function searchYoutubeVideo(idx,overwrite,findNext){
 			playlist.command[i] = get[i];
 		}
 		var count=0;
-		for(var i in posts){
-			var p = posts[i];
-			if (p.id == postid){
-				playlist.index=count;
-			}
-			playlist.songs.push({
-				id: p.id,
-				favorite: p.favorite,
-				unread: p.unread,
-				title: p.title
-			});
-			count++;
-		}
+		addToPlaylist(postid);
 		var open_dialog = true;
-		videolistUpdate();
+
 	} else {
 		var open_dialog = false;
 	}
@@ -228,7 +216,7 @@ function nextPostVideo(findNext){
 		loadingvid=true;
 		searchYoutubeVideo(-1,false,findNext);
 		if (playlist.songs.length == playlist.index+1){
-			alert("NEED UPDATE!!!");
+			loadMoreSongs();
 		}
 	}
 }
@@ -261,15 +249,51 @@ function replicateSong(id,as,val){
 		var idx = findSongIndex(id);
 		if (idx>=0){
 			playlist.songs[idx][as] = val+"";
+			if (val==0) $("#videolist .video[idx='"+idx+"']").removeClass("unread");
+			else $("#videolist .video[idx='"+idx+"']").addClass("unread");
+
 			if (playlist.index==idx){
 				if (as=="unread"){
-					if (val==0) $("#youtube_viewer_dialog").removeClass("selected");
-					else		  $("#youtube_viewer_dialog").addClass("selected");
+					if (val==0)	$("#youtube_viewer_dialog").removeClass("selected");
+					else $("#youtube_viewer_dialog").addClass("selected");
 				}
 			}
 		}
 	}
 }
+function loadMoreSongs(){
+	if (isGet(playlist.command) && playlist.songs.length == posts.length){
+		loadMore();
+	} else {
+		ajaxMoreSongs();
+	}
+}
+function addToPlaylist(preselectid){
+	preselectid = preselectid==undefined?-1:preselectid;
+	if (playlist.on && isGet(playlist.command) && playlist.songs.length < posts.length){
+		if (playlist.songs.length==0){
+			var idx=0;
+		} else {
+			var lastId = playlist.songs[playlist.songs.length-1].id;
+			var idx = findPostIndex(lastId)+1;
+		}
+		var count=idx;
+		for (var i = idx; i<posts.length; i++){
+			var p = posts[i];
+			if (p.id == preselectid){
+				playlist.index=count;
+			}
+			playlist.songs.push({
+				id: p.id,
+				favorite: p.favorite,
+				unread: p.unread,
+				title: p.title
+			});
+			count++;
+		}
+		videolistUpdate();
+	}
+};
 
 var autonextvideo=true;
 function html5Player(url,callback){	
@@ -789,4 +813,17 @@ function blur(val){
 		val = style.filter=="";
 	}
 	style.filter = val?"blur(3px)":"";
+}
+
+function isGet(arr){
+	var counta = 0;
+	var countg = 0;
+	for (var i in arr){
+		if (get[i] != arr[i]){
+			return false;
+		}
+		if (arr[i]!=undefined) counta++;
+	}
+	for (var i in get) if (get[i]!=undefined) countg++;
+	return countg==counta;
 }

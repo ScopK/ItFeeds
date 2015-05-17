@@ -407,6 +407,7 @@ function markPost(field, value, postidx, click){
 
 function markVideoPost(field, value, postid, click){
 	click = (typeof click !== 'undefined')? click : false;
+	var idx = playlist.index;
 
 	var fieldname = (field==0)? "unread":"fav";
 	loading_run();
@@ -417,6 +418,9 @@ function markVideoPost(field, value, postid, click){
 		dataType : "json",
 		success: function(result){
 			if (field==0){ // read/unread
+				if (value==0) $("#videolist .video[idx='"+idx+"']").removeClass("unread");
+				else $("#videolist .video[idx='"+idx+"']").addClass("unread");
+
 				if ($("#youtube_viewer_dialog").attr("postid") == postid){
 					if (value==0) $("#youtube_viewer_dialog").removeClass("selected");
 					else		  $("#youtube_viewer_dialog").addClass("selected");
