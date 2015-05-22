@@ -322,8 +322,13 @@ function toogleUnreadVideoPost(click,id){
 		var val = (posts[idx].unread == 1)?0:1;
 		markPost(0,val,idx+1,click);
 	} else {
-		var val = $("#youtube_viewer_dialog").hasClass("selected")?0:1;
-		markVideoPost(0,val,id,click);
+		idx = findSongIndex(id);
+		if (idx>=0){
+			var val = $("#youtube_viewer_dialog").hasClass("selected")?0:1;
+			markVideoPost(0,val,idx,click);
+		} else {
+			alert("Error: Song not found");
+		}
 	}
 }
 
@@ -405,9 +410,10 @@ function markPost(field, value, postidx, click){
 	});
 }
 
-function markVideoPost(field, value, postid, click){
+function markVideoPost(field, value, idx, click){
 	click = (typeof click !== 'undefined')? click : false;
-	var idx = playlist.index;
+	var post = playlist.songs[idx];
+	var postid = post.id;
 
 	var fieldname = (field==0)? "unread":"fav";
 	loading_run();
@@ -420,6 +426,7 @@ function markVideoPost(field, value, postid, click){
 			if (field==0){ // read/unread
 				if (value==0) $("#videolist .video[idx='"+idx+"']").removeClass("unread");
 				else $("#videolist .video[idx='"+idx+"']").addClass("unread");
+				post.unread=value+"";
 
 				if ($("#youtube_viewer_dialog").attr("postid") == postid){
 					if (value==0) $("#youtube_viewer_dialog").removeClass("selected");
