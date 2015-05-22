@@ -387,10 +387,29 @@
 		$str = "AND (";
 		$first = true;
 		foreach ($search as $key){
+			$union="OR";
+			$startChar = substr($key,0,1);
+			$negative = false;
+			if ($startChar===";"){
+				$union="AND";
+				$key = substr($key,1);
+				$startChar = substr($key,0,1);
+			}
+			if ($startChar==="!"){
+				$negative = true;
+				$key = substr($key,1);
+
+			} elseif ($startChar==="\\"){
+				$key = substr($key,1);
+			}
 			if ($first) $first = false;
-			else 		$str.= " OR ";
+			else 		$str.= " $union ";
+
 			$val = mysqli_real_escape_string($con,"%$key%");
-			$str.= "title LIKE '$val' OR description LIKE '$val'";
+			if ($negative)
+				$str.= "(title NOT LIKE '$val' AND description NOT LIKE '$val')";
+			else
+				$str.= "(title LIKE '$val' OR description LIKE '$val')";
 		}
 		$str.= ")";
 		return $str;
