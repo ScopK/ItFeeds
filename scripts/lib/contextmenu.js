@@ -62,6 +62,7 @@ function addCMContent(root,array){
 
 			var showContext = function(){
 				clearTimeout(closeFolderTimer);
+				clearTimeout(tout);
 				var folders = root.getElementsByClassName("contextual-folder");
 				for (var i=0;i<folders.length;i++)
 					if (folders[i]!=contextFolder)
