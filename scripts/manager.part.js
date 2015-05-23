@@ -31,6 +31,7 @@ function showSettings_feed(idxf,idx){
 	$("#edit_rss_feed").val(f.rss_link);
 	$("#edit_link_feed").val(f.link);
 	$("#edit_max_feed").val(f.max_unread);
+	$("#edit_filter_feed").val(f.filter);
 	$("#edit_upd_feed").val(f.upd_time);
 	$("#edit_idx_folderfeed").val(idxf);
 	$("#edit_idx_feed").val(idx);
@@ -93,6 +94,7 @@ function editFeed(){
 	var fidx = $("#edit_idx_folderfeed").val();
 	var idx = $("#edit_idx_feed").val();
 	var updTime = $("#edit_upd_feed").val();
+	var filter = $("#edit_filter_feed").val();
 	var maxUnre = $("#edit_max_feed").val();
 	var enabled = $("#edit_enabled_feed").prop("checked");
 	var feed = folders[fidx].feeds[idx];
@@ -102,7 +104,7 @@ function editFeed(){
 	$.ajax({
 		url: "./ajax/manager/edit_feed.php",
 		type: "POST",
-		data: "feedId="+id+"&fname="+encodeURIComponent(name)+"&rlink="+encodeURIComponent(rss)+"&link="+encodeURIComponent(link)+"&uptime="+updTime+"&maxunr="+maxUnre+(enabled?"&ena=on":""),
+		data: "feedId="+id+"&fname="+encodeURIComponent(name)+"&rlink="+encodeURIComponent(rss)+"&link="+encodeURIComponent(link)+"&filter="+encodeURIComponent(filter)+"&uptime="+updTime+"&maxunr="+maxUnre+(enabled?"&ena=on":""),
 		dataType : "json",
 		success: function(result){
 			feed['name'] = result['name'];
@@ -110,6 +112,7 @@ function editFeed(){
 			feed['max_unread'] = result['max_unread'];
 			feed['link'] = result['link'];
 			feed['enabled'] = result['enabled'];
+			feed['filter'] = result['filter'];
 			feed['upd_time'] = result['upd_time'];
 			folders[fidx].feeds.sort(nameSort);
 

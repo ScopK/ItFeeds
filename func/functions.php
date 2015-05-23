@@ -131,6 +131,7 @@
 			$e->folderId = $folderId;
 			$e->upd_time = $feed['upd_time'];
 			$e->max_unread = $feed['max_unread'];
+			$e->filter = $feed['text_filter'];
 			$e->last_date_post = $feed['last_date_post'];
 
 			$e->link = $feed['link'];
@@ -166,6 +167,7 @@
 			$e->upd_time = $feed['upd_time'];
 			$e->max_unread = $feed['max_unread'];
 			$e->last_date_post = $feed['last_date_post'];
+			$e->filter = $feed['text_filter'];
 
 			$e->link = $feed['link'];
 			$e->rss_link = $feed['rss_link'];

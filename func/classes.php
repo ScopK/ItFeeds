@@ -32,6 +32,7 @@
 		public $name = "";
 		public $upd_time = "";
 		public $max_unread = "";
+		public $filter = "";
 
 		public $link = "";
 		public $rss_link = "";

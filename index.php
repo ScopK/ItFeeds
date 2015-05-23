@@ -283,6 +283,9 @@
                         <td align="right" style="width:30%;padding-right:10px">Max. unread</td>
                         <td align="left" colspan="2"><input id="edit_max_feed" type="text" name="max" autocomplete="off" style="width:40px"/></td>
                     </tr><tr>
+                        <td align="right" style="width:30%;padding-right:10px">Filter</td>
+                        <td align="left" colspan="2"><input id="edit_filter_feed" type="text" name="filter" autocomplete="off" /></td>
+                    </tr><tr>
                         <td align="right" style="width:30%;padding-right:10px"><label for="edit_enabled_feed">Enabled</label></td>
                         <td align="left" colspan="2"><input id="edit_enabled_feed" type="checkbox" name="en" /></td>
                     </tr><tr>
