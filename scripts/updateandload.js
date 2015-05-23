@@ -89,7 +89,8 @@ function getHTMLFeeds(feed_list,indexFolder){
 			unread = ' <span class="count hidden">(<span class="num">'+this.unread+'</span>)</span>';
 
 		var selected = (get.feed == this.id);
-		html += '<div class="feed'+((selected)?' selected':'')+((unread=="")?"":" unread")+'" idxFolder="'+indexFolder+'" idxFeed="'+indexFeed+'" idFeed="'+this.id+'" oncontextmenu="return cmFeed(event,this);">'+
+		var classes = ((selected)?' selected':'')+((this.unread > 0)?" unread":"")+((this.enabled==1)?"":" disabled")+((this.filter=="")?"":" filtered");
+		html += '<div class="feed'+classes+'" idxFolder="'+indexFolder+'" idxFeed="'+indexFeed+'" idFeed="'+this.id+'" oncontextmenu="return cmFeed(event,this);">'+
 					'<div class="feedTitle">'+(this.name)+unread+'</div>'+
 				'</div>';
 	});

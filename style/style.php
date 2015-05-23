@@ -322,6 +322,14 @@ LATERAL MENU FOLDER STYLES
 	font-weight:bold;
 }
 
+.feed.disabled{
+	color:red;
+}
+
+.feed.filtered{
+	font-style: italic;
+}
+
 .feed .count, .folder .count{
 	color: #888;
 	font-weight: bold;
