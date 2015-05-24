@@ -91,10 +91,10 @@
                     <div id="tags"></div>
                 </div>
                 <div id="navopts_bottom" class="options_panel">
+                    <button class="button-panel" title="Load More" id="loadMore" onclick="loadMore()">
                     <span id="pages">
-                        <span id="totalPages">10</span> (<span id="percentSeen">0</span>)
-                    </span>
-                    <button class="button-panel" id="loadMore" onclick="loadMore()">Load More</button>
+                        Posts: <span id="totalPages">10</span> | Page: <span id="percentSeen">0</span>
+                    </span></button>
                     <button class="button-panel" id="searchButton" onclick="showSearchDialog(); return false;">Search</button>
                 </div>
             </div>
