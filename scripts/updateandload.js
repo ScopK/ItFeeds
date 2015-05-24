@@ -1,18 +1,17 @@
 function displayFolders() {
-
 	var idsExtended = [];
 	$.each($("#folders .folder:not(.selected)"),function(){
 		if ($(this).find(".folderfeeds")[0].style.display=="block")
 			idsExtended.push(this.getAttribute("idfolder"));
 	});
-
+	var folderSelectedIsMinimized =$(".folder.selected .expander").html()=="+";
 	var html = '';
 	var feedHtml = '';
 	$.each(folders,function(index){
 		if (this.name == "null"){
 			feedHtml += getHTMLFeeds(this.feeds,index);
 		} else {
-			html += getHTMLFolder(this,index);
+			html += getHTMLFolder(this,index,folderSelectedIsMinimized);
 		}
 	});
 	$("#folders").html(html);
@@ -59,7 +58,7 @@ function videolistUpdate(){
 	$("#videolist").append("<div id='moresongs' onclick='loadMoreSongs()'><p>+</p></div>");
 }
 
-function getHTMLFolder(folder,idx){
+function getHTMLFolder(folder,idx,selectedMinimized){
 	var unread="";
 	if (folder.unread > 0)
 		unread = ' <span class="count">(<span class="num">'+folder.unread+'</span>)</span>';
@@ -69,10 +68,10 @@ function getHTMLFolder(folder,idx){
 	var selected = (get.folder == folder.id);
 	html = '<div class="folder'+((selected)?' selected':'')+'" idxFolder="'+idx+'" idFolder="'+folder.id+'" oncontextmenu="return cmFolder(event,this);">'+
 				'<div class="folderHeader'+((folder.hidden==1)?" hidden":"")+'">'+
-					'<button class="expander" onclick="toogleViewFeeds(this)">'+((selected)?'-':'+')+'</button>'+
+					'<button class="expander" onclick="toogleViewFeeds(this)">'+((selected && !selectedMinimized)?'-':'+')+'</button>'+
 					'<span class="folderTitle">'+(folder.name)+unread+'</span>'+
 				'</div>'+
-				'<div class="folderfeeds"'+((selected)?' style="display:block"':'')+'>';
+				'<div class="folderfeeds"'+((selected && !selectedMinimized)?' style="display:block"':'')+'>';
 
 	html += getHTMLFeeds(folder.feeds,idx);
 	html += '</div></div>';
