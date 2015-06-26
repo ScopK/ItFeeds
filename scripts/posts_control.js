@@ -149,7 +149,8 @@ function prevPost(mark){
 }
 
 function focusPostCalculated(post,speed){
-	$('html,body').animate({scrollTop: post.prevAll("div.post").length*(post.find(".header").height()+2)+3}, speed); 
+	var offset = (get.search)?29:0;
+	$('html,body').animate({scrollTop: post.prevAll("div.post").length*(post.find(".header").height()+2)+3+offset}, speed); 
 }
 
 function focusPost(post,speed){

@@ -1146,6 +1146,23 @@ div.tagname button{
 	margin:auto;
 }
 
+#searchContent{
+	background-color:#FFCC00;
+	color:#996600;
+	text-align:center;
+	padding: 6px 0;
+	font-size: 0.9em;
+	cursor:pointer;
+}
+#searchContent:hover{
+	background-color:#FF6600;
+	color:#990000;
+	text-align:center;
+	padding: 6px 0;
+	font-size: 0.9em;
+	cursor:pointer;
+}
+
 <?php
 function hsv2rgb($hsv) {
     $H = $hsv[0]/360.;

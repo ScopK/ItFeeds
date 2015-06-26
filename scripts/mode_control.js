@@ -133,8 +133,14 @@ function updateNavigationElements(){
 	if (get.sortby) $("#sortTButton").html("Older");
 	else		  	$("#sortTButton").html("Newer");
 
-	if (get.search) $("#searchButton").addClass("marked");
-	else		    $("#searchButton").removeClass("marked");
+	if (get.search){
+		$("#searchContent").text("Search query: "+unescape(get.search));
+		$("#searchContent").slideDown();
+		$("#searchButton").addClass("marked");
+	} else {
+		$("#searchButton").removeClass("marked");
+		$("#searchContent").slideUp();
+	}
 }
 
 function change_postsmode(val,msg){

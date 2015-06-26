@@ -99,6 +99,7 @@
                 </div>
             </div>
             <div id="content">
+                <div id="searchContent" style='display:none' onclick='get.search=undefined;reloadPosts();updateNavigationElements();updateUrl();'></div>
                 <div id="posts_panel"></div>
                 <div id="load_more_panel" style="margin-top:60px"><p id="loadMoreLabel" onclick="loadMore()">LOAD MORE</p></div>
             </div>
