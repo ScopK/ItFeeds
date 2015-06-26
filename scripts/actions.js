@@ -99,10 +99,10 @@ function showAddTagsDialog(idx){
 var videos;
 var idxVideo;
 var playlist={};
+var unloadVideo = function(){};
 function resetPlaylist(){
 	playlist={};
 }
-
 
 var loadingvid=false;
 function searchYoutubeVideo(idx,overwrite,findNext){
@@ -296,7 +296,8 @@ function addToPlaylist(preselectid){
 };
 
 var autonextvideo=true;
-function html5Player(url,callback){	
+function html5Player(url,callback){
+	unloadVideo();
 	var div = document.getElementById("youtube_td");
 	div.innerHTML="";
 	var vid = document.createElement("video");
@@ -322,8 +323,13 @@ function html5Player(url,callback){
 			}
 		}
 	}
+	unloadVideo = function(){
+		$("#youtube_td video")[0].pause();
+		$("#youtube_td video").remove();
+	}
 }
 function soundcloudPlayer(code,callback){
+	unloadVideo();
 	var html = "<iframe id='SoundCloudIframe' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+code+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
 	$("#youtube_td").html(html);
 	if (typeof callback=="function") callback();
@@ -345,20 +351,23 @@ function soundcloudPlayer(code,callback){
 			}
 		}
 	});
+	unloadVideo = function(){}
 }
 var onYouTubeIframeAPIReady;
 function youtubePlayer(code,callback){
 	//var html = "<iframe src='http://www.youtube.com/embed/"+code+"?autoplay=1&theme=light' allowfullscreen frameBorder='0' width='100%' height='460' style='display:block'></iframe>";
 	//$("#youtube_td").html(html);
 	//if (typeof callback=="function") callback();
+	unloadVideo();
 	var id = "YoutubeScriptIframe";
 	$("#youtube_td").html("<div id='"+id+"' style='display:block'></div>");
 	if ($('#youtube_viewer_dialog').css("display")=="none"){
 		$('#youtube_viewer_dialog').addClass("minimized");
 		$('#youtube_viewer_dialog').css("display","");
 	}
+	var player;
 	onYouTubeIframeAPIReady = function(){
-		var player = new YT.Player(id, {
+		player = new YT.Player(id, {
 			height: '460',
 			width: '100%',
 			theme: "light",
@@ -388,6 +397,9 @@ function youtubePlayer(code,callback){
 		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 	} else {
 		onYouTubeIframeAPIReady();
+	}
+	unloadVideo = function(){
+		player.stopVideo();
 	}
 }
 function minPlayer(){
