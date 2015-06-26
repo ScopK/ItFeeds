@@ -28,9 +28,9 @@ function setFeedsActions(){
 			updateUrl();
 
 			var button = $(this).closest(".folder").find("button");
-			var obuttons = $(".expander").not(button);
-			obuttons.closest(".folder").find(".folderfeeds").slideUp();
-			obuttons.html("+");
+			//var obuttons = $(".expander").not(button);
+			//obuttons.closest(".folder").find(".folderfeeds").slideUp();
+			//obuttons.html("+");
 			button.closest(".folder").find(".folderfeeds").slideDown();
 			button.html("-");
 
@@ -61,13 +61,14 @@ function setFeedsActions(){
 			} else {
 				get.folder = idf;
 				updateUrl();
-
+/*
 				var button = $(this).find("button");
 				var obuttons = $(".expander").not(button);
 				obuttons.closest(".folder").find(".folderfeeds").slideUp();
 				obuttons.html("+");
 				button.closest(".folder").find(".folderfeeds").slideDown();
 				button.html("-");
+*/
 				$(this).addClass("selected");
 
 				ajaxPosts("folder="+idf);
@@ -83,8 +84,8 @@ function setTagsActions(){
 		get.folder = undefined;
 
 		$(".feed, .tag, .folder").not(this).removeClass("selected");
-		$(".folderfeeds").slideUp();
-		$(".expander").html("+");
+		//$(".folderfeeds").slideUp();
+		//$(".expander").html("+");
 
 		var idt = $(this).attr("idTag");
 		if (idt == get.tag) {
@@ -109,10 +110,10 @@ function searchAction(){
 	get.page = undefined;
 	var query = encodeURIComponent($("#searchField").val());
 	if (query.length > 0){
-		$(".selected").removeClass("selected");
-		get.feed = undefined;
-		get.folder = undefined;
-		get.tag = undefined;
+		//$(".selected").removeClass("selected");
+		//get.feed = undefined;
+		//get.folder = undefined;
+		//get.tag = undefined;
 		get.search = query;
 	} else {
 		get.search = undefined;
