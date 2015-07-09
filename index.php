@@ -209,7 +209,8 @@
             <span id='ytv_window_controls'>
                 <button id='video_unread_button' onclick="toogleUnreadVideoPost(false,$('#youtube_viewer_dialog').attr('postid'))">&nbsp;</button>
                 <button onclick="minPlayer()">·</button>
-                <button onclick="$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);closeModal();">×</button>
+                <button onclick="togglePlayer()">-</button>
+                <button onclick="unloadVideo();unloadVideo=function(){};$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);closeModal();">×</button>
             </span></th>
             </tr><tr><td id="youtube_td" style="margin:0;padding:0;background-color:black;" colspan="3"></td>
             </tr><tr><td class="ytv_controls">

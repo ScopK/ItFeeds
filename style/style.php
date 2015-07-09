@@ -1089,6 +1089,7 @@ div.tagname button{
 	overflow-x:hidden;
 	overflow-y:hidden;
 	transition: left 0.4s, overflow 0s 0.4s;
+	z-index: 11;
 }
 #videolist:hover{
 	left:0;
