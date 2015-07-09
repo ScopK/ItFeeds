@@ -1164,6 +1164,39 @@ div.tagname button{
 	cursor:pointer;
 }
 
+#youtube_controls{
+	position:absolute;
+	z-index:1;
+	top:0; bottom:0;
+	right:0; left:0;
+	height: 70px;
+	margin: auto;
+	opacity:0;
+	pointer-events:none;
+	transition: opacity 0.4s;
+}
+
+#youtube_viewer:hover #youtube_controls{
+	opacity:1;
+}
+
+#youtube_controls > div{
+	position:absolute;
+	margin:auto;
+	bottom:0;
+	top:0;
+	height:40px;
+	width:40px;
+	color:white;
+	font-size:35px;
+	cursor:pointer;
+	line-height:1.15;
+	pointer-events:all;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 3px;
+	padding-bottom: 2px;
+}
+
 <?php
 function hsv2rgb($hsv) {
     $H = $hsv[0]/360.;

@@ -164,7 +164,7 @@ function searchYoutubeVideo(idx,overwrite,findNext){
 					case "h5":
 						html5Player(videos[0].src,fadeIn);break;
 				}
-				$("#counter_videos").html("Next video ("+1+"/"+videos.length+")");
+				$("#counter_videos").html(1+"/"+videos.length);
 			} else {
 				showMessage("No videos were found");
 				loadingvid=false;
@@ -201,7 +201,7 @@ function nextVideo(){
 			case "h5":
 				html5Player(videos[idxVideo].src);break;
 		}
-		$("#counter_videos").html("Next video ("+(idxVideo+1)+"/"+videos.length+")");
+		$("#counter_videos").html((idxVideo+1)+"/"+videos.length);
 	}
 }
 function nextPostVideo(findNext){
@@ -304,7 +304,7 @@ function html5Player(url,callback){
 	var vid = document.createElement("video");
 	vid.controls=vid.autoplay=true;
 	vid.style.width=vid.style.height="100%";
-	vid.style.maxHeight="calc(100vh - 80px)";
+	vid.style.maxHeight="calc(100vh - 41px)";
 	vid.style.display="table";
 
 	var src = document.createElement("source");
@@ -340,7 +340,7 @@ function html5Player(url,callback){
 function soundcloudPlayer(code,callback){
 	unloadVideo();
 
-	var html = "<iframe id='SoundCloudIframe' style='display:block;min-height:"+(togglePlayer(true)?"calc(100vh - 80px)":"460px")+"' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+code+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='100%'></iframe>";
+	var html = "<iframe id='SoundCloudIframe' style='display:block;min-height:"+(togglePlayer(true)?"calc(100vh - 41px)":"460px")+"' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/"+code+"?auto_play=true' allowfullscreen frameBorder='0' width='100%' height='100%'></iframe>";
 	$("#youtube_td").html(html);
 	if (typeof callback=="function") callback();
 	var player=SC.Widget(document.getElementById("SoundCloudIframe"));
@@ -371,7 +371,7 @@ function youtubePlayer(code,callback){
 	unloadVideo();
 	var id = "YoutubeScriptIframe";
 
-	$("#youtube_td").html("<div id='"+id+"' style='display:block;min-height:"+(togglePlayer(true)?"calc(100vh - 80px)":"460px")+"'></div>");
+	$("#youtube_td").html("<div id='"+id+"' style='display:block;min-height:"+(togglePlayer(true)?"calc(100vh - 41px)":"460px")+"'></div>");
 
 	if ($('#youtube_viewer_dialog').css("display")=="none"){
 		$('#youtube_viewer_dialog').addClass("minimized");
@@ -427,7 +427,7 @@ function maxPlayer(){
 function maximizePlayer(){
 	$("#youtube_viewer").css("width","100%");
 	$("#youtube_viewer").attr("maxi","1");
-	$("iframe#YoutubeScriptIframe,iframe#SoundCloudIframe").css("min-height","calc(100vh - 80px)");
+	$("iframe#YoutubeScriptIframe,iframe#SoundCloudIframe").css("min-height","calc(100vh - 41px)");
 }
 function restorePlayer(){
 	$("#youtube_viewer").css("width","700px");
