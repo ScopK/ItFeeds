@@ -1,13 +1,16 @@
 <?php
 	require_once "FeedReader.php";
 	require_once "functions.php";
+	require_once "PluginManager.php";
 
 	class PostsFetch{
 		private $con;
 		private $fr;
+		private $pm;
 
 		public function __construct(){
 			$this->fr = new FeedReader();
+			$this->pm = new PluginManager();
 		}
 
 		public function initConnection(){
@@ -58,6 +61,7 @@
 			$updatedate = true;
 			foreach($posts as $post)
 			{
+
 				$errval = $this->addIfPosible($feed,$post);
 				if ($errval == -1)
 					$updatedate = false;
@@ -129,6 +133,7 @@
 			}
 
 			if ($add){
+				$this->pm->pluginCheck($post);
 				$count =0;
 				repeat:
 				//$nid = getNewID();
