@@ -446,8 +446,9 @@ function togglePlayer(returnval){
 
 function showSearchDialog(){
 	$('#search_dialog').fadeIn(100);
-	$('#searchField').val("");
+	$('#searchField').val(get.search==undefined?"":unescape(get.search));
 	$('#searchField').focus();
+	$('#searchField').select();
 	openModal();
 }
 
