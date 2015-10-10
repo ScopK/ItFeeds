@@ -80,6 +80,15 @@ function initialize(){
 						html+='<h1 class="post-title"><a target="_blank" href="'+this.link+'">'+this.title+'</a></h1>';
 						html+='<h2 class="post-date"><a target="_blank" href="/post/'+this.id+'">'+this.date+'</a></h2>';
 					html+='</div></div>';
+
+					var jhtml = $("<span>"+this.description+"</span>");
+					jhtml.find("script").remove();
+					//jhtml.find("iframe").prop("sandbox",true);
+					jhtml.find("video").prop("controls",true);
+					jhtml.find("a").attr("target","_blank");
+					while (jhtml.children().last().prop("tagName") == "BR") jhtml.children().last().remove();
+					this.description = jhtml.html();
+
 					html+='<div class="space-used"><div class="description">'+this.description+'</div></div>';
 				html+='</div>';
 				$("#tag-content").append(html);
@@ -112,6 +121,15 @@ function loadMore(){
 						html+='<h1 class="post-title"><a target="_blank" href="'+this.link+'">'+this.title+'</a></h1>';
 						html+='<h2 class="post-date"><a target="_blank" href="/post/'+this.id+'">'+this.date+'</a></h2>';
 					html+='</div></div>';
+
+					var jhtml = $("<span>"+this.description+"</span>");
+					jhtml.find("script").remove();
+					//jhtml.find("iframe").prop("sandbox",true);
+					jhtml.find("video").prop("controls",true);
+					jhtml.find("a").attr("target","_blank");
+					while (jhtml.children().last().prop("tagName") == "BR") jhtml.children().last().remove();
+					this.description = jhtml.html();
+
 					html+='<div class="space-used"><div class="description">'+this.description+'</div></div>';
 				html+='</div>';
 				$("#tag-content").append(html);
