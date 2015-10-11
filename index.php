@@ -75,8 +75,15 @@
                     <button class="button-panel" style="text-align:left;width:100%" onclick="showPasswordChangeDialog();return false">Change password</button>
                     <button class="button-panel" style="text-align:left;width:100%" onclick="showLockPasswordChangeDialog();return false">Change Lock Password</button>
                     <div id="footer" style="position:absolute;bottom:10px;right:10px">
-                        <p>Sc-pyK</p>
+                        <p>ScopK</p>
                     </div>
+                </div>
+
+                <div id="quick_search" class="hidden">
+                    <input type="text" placeholder="Search" id="quick_search_input" onkeyup="updateQuickResults(this.value,event)"/>
+                    <button onclick="toggleQuickSearch(false)">X</button>
+                    <hr/>
+                    <span id="quick_results"></span>
                 </div>
 
                 <div id="navopts_top" class="options_panel">

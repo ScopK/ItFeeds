@@ -78,6 +78,9 @@ $(document).ready(function(){
 				$("#more-options-button").hide();
 		    	initialize();
 		    	return false;
+		    case 190: //. (dot)
+		    	toggleQuickSearch();
+		    	break;
 		    case 68: //d
 		    case 123: //f12
 		    default:

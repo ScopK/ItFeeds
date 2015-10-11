@@ -852,11 +852,122 @@ function closeModal(){
 }
 
 function blur(val){
-	var style = document.getElementById("main").style;
+	/*var style = document.getElementById("main").style;
 	if (typeof val=="undefined"){
 		val = style.filter=="";
 	}
-	style.filter = val?"blur(3px)":"";
+	style.filter = val?"blur(3px)":"";*/
+}
+
+function toggleQuickSearch(on){
+	on = on==undefined?$('#quick_search').hasClass("hidden"):on;
+
+	if (on){
+		$('#quick_search').removeClass('hidden');
+		$("#quick_search_input").val("");
+		$("#quick_results").html("");
+		setTimeout(function() {
+			$("#quick_search_input").focus();
+		}, 200);
+	} else {
+		$('#quick_search').addClass('hidden');
+	}
+}
+
+function updateQuickResults(text,ev){
+	var span = $("#quick_results")[0];
+	if (ev!=undefined && ev.keyCode!=undefined){
+		if (ev.keyCode==27){ // ESC
+			toggleQuickSearch(false);
+			$("#quick_search_input").blur();
+			return;
+		}
+		if (ev.keyCode==13){ // Enter
+			$("#quick_search_input").blur();
+			toggleQuickSearch(false);
+			if (span.children.length>0) {
+				span.children[0].click();
+			}
+			return;
+		}
+	}
+
+	text = text==undefined?$("#quick_search_input").val():text;
+	text = text.toLowerCase();
+	$("#quick_results").html("");
+
+	if (text=="") return;
+
+	var feedFunction=function(){
+		var id = this.getAttribute("feedid");
+		var elem = document.querySelector(".feed[idfeed='"+id+"']");
+		elem.click();
+		toggleQuickSearch(false);
+	}
+	var feedRightFunction=function(ev){
+		var id = this.getAttribute("feedid");
+		var elem = document.querySelector(".feed[idfeed='"+id+"']");
+		elem.oncontextmenu(ev);
+		return false;
+	}
+
+	var folderFunction=function(){
+		var id = this.getAttribute("folderid");
+		var elem = document.querySelector(".folder[idfolder='"+id+"']");
+		elem.click();
+		toggleQuickSearch(false);
+	}
+	var folderRightFunction=function(ev){
+		var id = this.getAttribute("folderid");
+		var elem = document.querySelector(".folder[idfolder='"+id+"']");
+		elem.oncontextmenu(ev);
+		return false;
+	}
+
+	var appends = [];
+	for (var i=0; i<folders.length; i++) {
+		var folder = folders[i];
+		var foldername = folder.name.toLowerCase();
+		
+		if (foldername!="null" && foldername.indexOf(text)>=0){
+			var p = document.createElement("p");
+			var elem = document.querySelector(".folder[idfolder='"+folder.id+"']");
+			p.className=elem.className;
+			p.setAttribute("folderid",folder.id);
+			p.onclick=folderFunction;
+			p.oncontextmenu=folderRightFunction;
+			p.innerHTML=folder.name;
+			appends.push(p)
+		}
+
+		for (var j=0; j<folder.feeds.length; j++) {
+			var feed = folder.feeds[j];
+			var feedname = feed.name.toLowerCase();//+feed.link.toLowerCase()+feed.rss_link.toLowerCase();
+
+			if (feedname.indexOf(text)>=0){
+				var p = document.createElement("p");
+				var elem = document.querySelector(".feed[idfeed='"+feed.id+"']");
+				p.className=elem.className;
+				p.innerHTML=feed.name;
+				p.setAttribute("feedid",feed.id);
+				p.onclick=feedFunction;
+				p.oncontextmenu=feedRightFunction;
+				appends.push(p)
+			}
+
+		}
+	}
+	appends.sort(function(a1,a2){
+		var a1l = a1.innerHTML.length;
+		var a2l = a2.innerHTML.length;
+		if (a1l > a2l)	return 1;
+		else
+		if (a1l < a2l)	return -1;
+		return 0;
+	})
+	for (var i=0; i<appends.length; i++) {
+		span.appendChild(appends[i]);
+	}
 }
 
 function isGet(arr){

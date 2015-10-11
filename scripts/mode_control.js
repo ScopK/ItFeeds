@@ -41,7 +41,7 @@ function setFeedsActions(){
 	});
 
 	$(".folder").click(function(event){
-		if ($(event.target).is(".folderHeader,.folderTitle,.folderTitle .count,.folderTitle .count .num")){
+		if ($(event.target).is(".folderHeader,.folderTitle,.folderTitle .count,.folderTitle .count .num,.folder")){
 			get.page = undefined;
 			get.feed = undefined;
 			get.tag = undefined;

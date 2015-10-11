@@ -26,6 +26,10 @@ function displayFolders() {
 		$(".feed[idFeed='"+get.feed+"']").closest(".folder").find("button").html("-");
 	}
 	setFeedsActions();
+
+	if (!$('#quick_search').hasClass("hidden")){
+		updateQuickResults();
+	}
 }
 
 function displayTags() {
