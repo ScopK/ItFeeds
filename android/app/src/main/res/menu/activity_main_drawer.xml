@@ -4,20 +4,16 @@
     <group android:checkableBehavior="single" android:id="@+id/drawer_list_group">
     </group>
 
-    <item android:title="Communicate" android:menuCategory="system">
+    <item android:title="@string/options" android:menuCategory="system">
         <menu>
-            <group android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share" />
-                <item
-                    android:id="@+id/nav_manage"
-                    android:icon="@drawable/ic_menu_settings"
-                    android:title="Tools" />
-            </group>
+            <item
+                android:id="@+id/nav_manage"
+                android:icon="@drawable/ic_settings"
+                android:title="Tools" />
         </menu>
     </item>
-
-
 </menu>

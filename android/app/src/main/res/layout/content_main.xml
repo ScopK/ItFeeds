@@ -13,8 +13,20 @@
     tools:showIn="@layout/app_bar_main"
     tools:context="com.scop.org.fydeph.MainActivity">
 
-    <TextView
-        android:text="Hello World!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/postlistview"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            tools:listitem="@android:layout/simple_list_item_2" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Fydeph</string>
+    <!--<string name="app_name">Fydeph</string>
     <string name="all_posts">All posts</string>
     <string name="empty_user">Username field can\'t be empty</string>
     <string name="empty_pass">Password field can\'t be empty</string>
@@ -43,5 +43,5 @@
     <string name="show_all">Show all</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>-->
 </resources>
