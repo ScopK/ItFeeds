@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--<item android:id="@+id/action_settings"
+        android:title="@string/settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_unlock"
+        android:orderInCategory="100"
+        android:title="@string/unlock"/>
+
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="@string/logout"/>
+
+    <item
+        android:id="@+id/action_exit"
+        android:orderInCategory="100"
+        android:title="@string/exit"/>-->
+
+    <item android:id="@+id/action_fav"
+        android:icon="@drawable/ic_heart_off"
+        android:title="@string/favorite"
+
+        app:showAsAction="always"
+        android:enabled="true" android:visible="true"/>
+
+    <item android:id="@+id/action_unread"
+        android:icon="@drawable/ic_circle_full_white"
+        android:title="@string/unread"
+
+        app:showAsAction="always"
+        android:enabled="true" android:visible="true"/>
+
+    <item android:id="@+id/action_order"
+        android:icon="@drawable/ic_arrow_down"
+        android:title="@string/order"
+
+        app:showAsAction="always"
+        android:enabled="true" android:visible="true"/>
+
+</menu>

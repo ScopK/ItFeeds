@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fydeph</string>
+    <string name="all_posts">All posts</string>
+    <string name="empty_user">Username field can\'t be empty</string>
+    <string name="empty_pass">Password field can\'t be empty</string>
+    <string name="options">Options</string>
+    <string name="settings">Settings</string>
+    <string name="greetings">Start using Fydeph</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="filters">Filters</string>
+    <string name="logingin">Logging in&#8230;</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="go">Go</string>
+    <string name="unknown_user">Unknown user</string>
+    <string name="no_connection">No connection</string>
+    <string name="loading">Loading</string>
+    <string name="unread">Unread</string>
+    <string name="order">Order</string>
+    <string name="reload">Reload</string>
+    <string name="unlock">Unlock</string>
+    <string name="insert_lock">Insert key:</string>
+    <string name="remove_lock">Lock content</string>
+    <string name="dev_test">Test</string>
+    <string name="exit">Exit</string>
+    <string name="favorite">Favorite</string>
+    <string name="next">Next</string>
+    <string name="folders">Folders</string>
+    <string name="feeds">Feeds</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="tags">Tags</string>
+    <string name="feed_prompt">Choose a feed</string>
+    <string name="prev">Prev</string>
+    <string name="load_more">Load More</string>
+
+    <string name="newer">Most recent first</string>
+    <string name="older">Least recent first</string>
+    <string name="unread_only">Unread only</string>
+    <string name="favs_only">Favorites only</string>
+    <string name="show_all">Show all</string>
+    <string name="logged_as">Logged as </string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>
