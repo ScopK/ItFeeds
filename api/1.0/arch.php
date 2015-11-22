@@ -23,5 +23,5 @@
 	$folders = getFolders($user,1,$hidden);
 	$tags = getTags($user,1,$hidden);
 	header("Content-Type: application/json; charset=utf-8");
-	echo json_encode(array('folders'=>$folders,'tags'=>$tags));
+	echo json_encode(array('user'=>$user,'folders'=>$folders,'tags'=>$tags));
 ?>

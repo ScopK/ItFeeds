@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="?attr/colorPrimaryDark">
+    android:background="?attr/colorPrimaryDark"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="4dp"
+    android:gravity="bottom">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logged_as"
+        android:textColor="#fff"
+        android:id="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="7dp"
+        android:text=""
+        android:textColor="#fff"
+        android:id="@+id/textUsername"
+        android:layout_weight="1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="@string/logout"
+        android:id="@+id/logoutButton" />
 </LinearLayout>

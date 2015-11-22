@@ -1,9 +1,14 @@
 package com.scop.org.fydeph;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.view.ContextThemeWrapper;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,7 +19,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.scop.org.fydeph.conn.APICall;
 import com.scop.org.fydeph.conn.APICallback;
@@ -38,6 +45,7 @@ public class MainActivity extends AppCompatActivity
     private static final int CONN_USER_INFO=1;
     private static final int CONN_LOAD_POSTS=2;
     private static final int CONN_LOAD_MORE_POSTS=3;
+    private static final int CONN_LOCK=4;
 
     private List<String> folderIds;
     private List<String> feedIds;
@@ -82,23 +90,13 @@ public class MainActivity extends AppCompatActivity
         rr.setAdapter(postListAdapter);
         rr.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                /*Post p = postListAdapter.getItem(arg2);
-                if (p==null){
-                    if (!swipeRefreshLayout.isRefreshing()){
-                        if (postListAdapter.getPostsCount()==0)
-                            new APICall(MainActivity.this).execute(Content.get().getQuery(),"1");
-                        else
-                            new APICall(MainActivity.this).execute(Content.get().getQuery(postListAdapter.getLastPostId()),"2");
-                        setLoading(true);
-                        postListAdapter.isLoading(true);
-                    }
-                    return;
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Post p = postListAdapter.getItem(position);
+                if (p == null) return;
+
                 Intent intentApp = new Intent(MainActivity.this, PostViewActivity.class);
-                intentApp.putExtra("postId", (String)p.getId());
-                intentApp.putExtra("color", color);
-                startActivityForResult(intentApp,37);*/
+                intentApp.putExtra("postId", (String) p.getId());
+                startActivityForResult(intentApp, 37);
             }
         });
 
@@ -113,7 +111,6 @@ public class MainActivity extends AppCompatActivity
             public void onRefresh() {
                 setLoading(true);
                 new APICall(MainActivity.this).execute("arch?token=" + Content.get().getToken() + "&lock=" + Content.get().getLock(), CONN_USER_INFO + "");
-
             }
         });
 
@@ -147,6 +144,11 @@ public class MainActivity extends AppCompatActivity
                 }
                 postListAdapter.notifyDataSetChanged();
                 setLoading(false);
+                break;
+            case CONN_LOCK:
+                String lockToken = json.getString("locktoken");
+                Content.get().setLock(lockToken);
+                new APICall(this).execute("arch?token=" + Content.get().getToken() + "&lock=" + Content.get().getLock(),CONN_USER_INFO+"");
                 break;
             default:
                 break;
@@ -202,8 +204,21 @@ public class MainActivity extends AppCompatActivity
         for (int i=0;i<tags.size();i++){
             Tag t = tags.get(i);
             tagIds.add(t.getId());
-            addTagToMenu(menu, i, t.getLabel(),fMode==filter.TAG && filter.getTag().equals(t.getId()));
+            addTagToMenu(menu, i, t.getLabel(), fMode == filter.TAG && filter.getTag().equals(t.getId()));
         }
+
+        ((TextView) findViewById(R.id.textUsername)).setText(Content.get().getUsername());
+
+        Button logoutButton = (Button) findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SharedPreferences settings = getSharedPreferences("FydephPrefsFile", 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString("tokensaved", null);
+                editor.commit();
+                finish();
+            }
+        });
     }
 
     private void addFolderToMenu(Menu menu,int idx,String name, boolean checked){
@@ -245,8 +260,21 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            moveTaskToBack(true);//super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        }
+        return super.onKeyUp(keyCode, event);
     }
 
     @Override
@@ -254,6 +282,13 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (postListAdapter!=null)
+            postListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -299,7 +334,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch(id){
-            case R.id.nav_share:
+            case R.id.nav_exit:
+                moveTaskToBack(true);
+                break;
+            case R.id.nav_unlock:
+                LockDialog cdd=new LockDialog(this);
+                cdd.show();
+                break;
             case R.id.nav_manage:
                 break;
             default:
@@ -311,9 +352,33 @@ public class MainActivity extends AppCompatActivity
                 }
                 switch (type){
                     case 0:
-                        Folder f = Content.get().getFolder(folderIds.get(id/3-1));
-                        Content.get().viewFolder(f.getId());
-                        new APICall(this).execute(Content.get().getQuery(), CONN_LOAD_POSTS+"");
+                        final Folder selectedFolder = Content.get().getFolder(folderIds.get(id/3-1));
+                        List<CharSequence> a = new ArrayList<CharSequence>();
+                        a.add("All posts");
+                        for (Feed feed:selectedFolder.getFeeds()){
+                            a.add(feed.getLabel());
+                        }
+
+                        CharSequence[] titles = a.toArray(new CharSequence[a.size()]);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(MainActivity.this, android.R.style.Theme_Holo_Dialog));
+                        builder.setTitle(R.string.feed_prompt);
+                        builder.setItems(titles, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which==0){
+                                    Content.get().viewFolder(selectedFolder.getId());
+                                } else {
+                                    Feed f = selectedFolder.getFeeds().get(which-1);
+                                    Content.get().viewFeed(f.getId());
+                                }
+                                new APICall(MainActivity.this).execute(Content.get().getQuery(),CONN_LOAD_POSTS+"");
+                                setLoading(true);
+                            }
+                        });
+                        builder.show();
+                        //Folder f = Content.get().getFolder(folderIds.get(id/3-1));
+                        //Content.get().viewFolder(f.getId());
+                        //new APICall(this).execute(Content.get().getQuery(), CONN_LOAD_POSTS+"");
                         break;
                     case 1:
                         Feed fe = Content.get().getFeed(feedIds.get(id/3-1));
@@ -333,5 +398,16 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void setLock(String lock){
+        setLoading(true);
+        new APICall(this).execute("unlock?token=" + Content.get().getToken() + "&pass=" + lock, CONN_LOCK + "");
+    }
+
+    public void removeLock(){
+        setLoading(true);
+        Content.get().setLock("");
+        new APICall(this).execute("arch?token=" + Content.get().getToken() + "&lock=" + Content.get().getLock(), CONN_USER_INFO+"");
     }
 }

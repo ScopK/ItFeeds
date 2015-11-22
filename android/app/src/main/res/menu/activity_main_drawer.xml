@@ -7,13 +7,18 @@
     <item android:title="@string/options" android:menuCategory="system">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_unlock"
+                android:icon="@android:drawable/ic_lock_idle_lock"
+                android:title="@string/unlock" />
             <item
                 android:id="@+id/nav_manage"
                 android:icon="@drawable/ic_settings"
-                android:title="Tools" />
+                android:title="@string/settings" />
+
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@android:drawable/ic_menu_close_clear_cancel"
+                android:title="@string/exit" />
         </menu>
     </item>
 </menu>

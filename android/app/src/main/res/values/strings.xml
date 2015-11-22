@@ -41,6 +41,7 @@
     <string name="unread_only">Unread only</string>
     <string name="favs_only">Favorites only</string>
     <string name="show_all">Show all</string>
+    <string name="logged_as">Logged as </string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

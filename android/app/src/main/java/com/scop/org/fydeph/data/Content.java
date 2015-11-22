@@ -18,7 +18,8 @@ public class Content {
 		if (c==null) c=new Content();
 		return c;
 	}
-	
+
+	private String loggedUsername = "";
 	private HashMap<String,Folder> folders;
 	private HashMap<String,Feed> feeds;
 	private HashMap<String,Tag> tags;
@@ -60,7 +61,8 @@ public class Content {
 		this.tags = new HashMap<String,Tag>();
 		this.posts = new HashMap<String,Post>();
 		this.postsOrdered = new ArrayList<Post>();
-		
+
+        this.loggedUsername = json.getString("user");
 		JSONArray folders = json.getJSONArray("folders");
 		for (int i=0;i<folders.length();i++){
 			JSONObject f = (JSONObject)folders.get(i);
@@ -270,5 +272,8 @@ public class Content {
 	}
 	public Filter getFilter(){
         return this.filter;
+    }
+    public String getUsername(){
+        return this.loggedUsername;
     }
 }

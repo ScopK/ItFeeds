@@ -15,8 +15,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -69,11 +67,11 @@ public class LoginActivity extends Activity implements APICallback {
                 EditText pass = (EditText) findViewById(R.id.passfield);
                 String[] loginfo = {user.getText().toString(),pass.getText().toString()};
                 if (loginfo[0].equals("")){
-                    Toast.makeText(getApplicationContext(), getString(R.string.empty_user), 5).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.empty_user), Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (loginfo[1].equals("")){
-                    Toast.makeText(getApplicationContext(), getString(R.string.empty_pass), 5).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.empty_pass), Toast.LENGTH_LONG).show();
                     return;
                 }
                 Button button = (Button) findViewById(R.id.goLogin);
@@ -93,11 +91,11 @@ public class LoginActivity extends Activity implements APICallback {
         if (json.has("error")){
             String errormsg = json.getString("error");
             if (errormsg.equals("No connection"))
-                Toast.makeText(this.getApplicationContext(), R.string.no_connection, 5).show();
+                Toast.makeText(this.getApplicationContext(), R.string.no_connection, Toast.LENGTH_LONG).show();
             else if (errormsg.equals("Incorrect login"))
-                Toast.makeText(this.getApplicationContext(), R.string.unknown_user, 5).show(); //
+                Toast.makeText(this.getApplicationContext(), R.string.unknown_user, Toast.LENGTH_LONG).show();
             else
-                Toast.makeText(this.getApplicationContext(), errormsg, 5).show();
+                Toast.makeText(this.getApplicationContext(), errormsg, Toast.LENGTH_LONG).show();
             return;
         }
         String tokenObtained = json.getString("token");
