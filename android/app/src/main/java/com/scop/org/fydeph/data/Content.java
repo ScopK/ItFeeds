@@ -62,7 +62,8 @@ public class Content {
 		this.posts = new HashMap<String,Post>();
 		this.postsOrdered = new ArrayList<Post>();
 
-        this.loggedUsername = json.getString("user");
+		if (json.has("user"))
+        	this.loggedUsername = json.getString("user");
 		JSONArray folders = json.getJSONArray("folders");
 		for (int i=0;i<folders.length();i++){
 			JSONObject f = (JSONObject)folders.get(i);

@@ -20,7 +20,7 @@ public class APICall extends AsyncTask<String, Void, String> {
     private APICallback callback;
     private int callId;
     private Object content;
-    
+
     public APICall(APICallback c){
     	super();
     	callback=c;
@@ -32,7 +32,7 @@ public class APICall extends AsyncTask<String, Void, String> {
     }
 
     protected String doInBackground(String... params) {
-    	System.out.println("JSONQUERY:"+params[0]);
+    	System.out.println("CALLQUERY:" + params[0]);
         try {
         	if (params.length>1)callId = Integer.parseInt(params[1]);
         	else				callId = 0;
@@ -50,21 +50,25 @@ public class APICall extends AsyncTask<String, Void, String> {
         	String resString = sb.toString(); // Result is here
         	is.close(); // Close the stream
 			urlConnection.disconnect();
-        	return resString;
+			return resString;
         } catch (Exception e) {
             return null;
         }
     }
 
     protected void onPostExecute(String response) {
-    	try {
+        if (response==null){
+            onPostExecute("{\"error\":\"No connection\"}");
+            return;
+        }
+        try {
 			JSONObject json = new JSONObject(response);
 			callback.APIResponse(json,callId,this);
 		} catch (JSONException e) {
         	Toast.makeText(callback.getApplicationContext(), "JSON ERROR", Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		} catch (java.lang.NullPointerException err) {
-			String errorResponse="{\"error\":\"No connection\"}";
+			String errorResponse="{\"error\":\"An error ocurred\"}";
 			if (!errorResponse.equals(response))
 				onPostExecute(errorResponse);
 		}

@@ -159,7 +159,8 @@ public class MainActivity extends AppCompatActivity
         folderIds = new ArrayList<>();
         feedIds = new ArrayList<>();
         tagIds = new ArrayList<>();
-        Menu menu = ((NavigationView) findViewById(R.id.nav_view)).getMenu();
+        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        Menu menu = navView.getMenu();
         menu.removeGroup(R.id.drawer_list_group);
 
         com.scop.org.fydeph.data.Filter filter = Content.get().getFilter();
@@ -207,19 +208,23 @@ public class MainActivity extends AppCompatActivity
             addTagToMenu(menu, i, t.getLabel(), fMode == filter.TAG && filter.getTag().equals(t.getId()));
         }
 
-        ((TextView) findViewById(R.id.textUsername)).setText(Content.get().getUsername());
+        TextView tv = ((TextView) findViewById(R.id.textUsername));
+        if (tv!=null && tv.getText().equals("")) {
+            tv.setText(Content.get().getUsername());
 
-        Button logoutButton = (Button) findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                SharedPreferences settings = getSharedPreferences("FydephPrefsFile", 0);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putString("tokensaved", null);
-                editor.commit();
-                finish();
-            }
-        });
+            Button logoutButton = (Button) findViewById(R.id.logoutButton);
+            logoutButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    SharedPreferences settings = getSharedPreferences("FydephPrefsFile", 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("tokensaved", null);
+                    editor.commit();
+                    finish();
+                }
+            });
+        }
     }
+
 
     private void addFolderToMenu(Menu menu,int idx,String name, boolean checked){
         int id = (idx+1)*3;
