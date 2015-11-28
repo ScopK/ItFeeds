@@ -357,6 +357,9 @@ public class MainActivity extends AppCompatActivity
                 cdd.show();
                 break;
             case R.id.nav_manage:
+                Intent intentApp = new Intent(MainActivity.this, SettingsActivity.class);
+                //intentApp.putExtra(,);
+                startActivityForResult(intentApp, 49);
                 break;
             default:
                 int type = id%3;

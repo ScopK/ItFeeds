@@ -277,4 +277,13 @@ public class Content {
     public String getUsername(){
         return this.loggedUsername;
     }
+	public void setShowImages(boolean showImages) {
+		this.filter.setShowImages(showImages);
+	}
+	public void setShowGif(boolean showGif) {
+		this.filter.setShowGif(showGif);
+	}
+	public void setShowVideo(boolean showVideo) {
+		this.filter.setShowVideo(showVideo);
+	}
 }

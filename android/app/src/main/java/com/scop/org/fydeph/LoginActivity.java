@@ -25,12 +25,13 @@ import android.widget.Toast;
 
 
 public class LoginActivity extends Activity implements APICallback {
-
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        preferences = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
 
         EditText pass = (EditText) findViewById(R.id.passfield);
         pass.setOnEditorActionListener(new OnEditorActionListener() {
@@ -45,16 +46,9 @@ public class LoginActivity extends Activity implements APICallback {
         });
         loginSetUp();
 
-        String tokenRead = load("tokensaved");
+        String tokenRead = preferences.getString("tokensaved", null);
         if (tokenRead != null){
-            Content.get().setToken(tokenRead);
-            save("locksaved",null);
-            String lockRead = load("locksaved");
-            if (lockRead != null){
-                Content.get().setLock(lockRead);
-            }
-            Intent intentApp = new Intent(this, MainActivity.class);
-            startActivity(intentApp);
+            login(tokenRead);
         }
     }
 
@@ -65,21 +59,37 @@ public class LoginActivity extends Activity implements APICallback {
             public void onClick(View v) {
                 EditText user = (EditText) findViewById(R.id.loginfield);
                 EditText pass = (EditText) findViewById(R.id.passfield);
-                String[] loginfo = {user.getText().toString(),pass.getText().toString()};
-                if (loginfo[0].equals("")){
+                String[] loginfo = {user.getText().toString(), pass.getText().toString()};
+                if (loginfo[0].equals("")) {
                     Toast.makeText(getApplicationContext(), getString(R.string.empty_user), Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (loginfo[1].equals("")){
+                if (loginfo[1].equals("")) {
                     Toast.makeText(getApplicationContext(), getString(R.string.empty_pass), Toast.LENGTH_LONG).show();
                     return;
                 }
                 Button button = (Button) findViewById(R.id.goLogin);
                 button.setText(R.string.logingin);
                 button.setEnabled(false);
-                new APICall(callback).execute("login?user="+loginfo[0]+"&pass="+loginfo[1]);
+                new APICall(callback).execute("login?user=" + loginfo[0] + "&pass=" + loginfo[1]);
             }
         });
+    }
+
+    private void login(String token){
+        Content.get().setToken(token);
+        save("locksaved", null);
+        /*String lockRead = preferences.getString("locksaved",null);
+        if (lockRead != null){
+            Content.get().setLock(lockRead);
+        }*/
+
+        Content.get().setShowImages(preferences.getBoolean("enable_images", true));
+        Content.get().setShowGif(preferences.getBoolean("enable_gifs", false));
+        Content.get().setShowVideo(preferences.getBoolean("enable_videos", false));
+
+        Intent intentApp = new Intent(this, MainActivity.class);
+        startActivity(intentApp);
     }
 
     @Override
@@ -99,24 +109,15 @@ public class LoginActivity extends Activity implements APICallback {
             return;
         }
         String tokenObtained = json.getString("token");
-        save("tokensaved",tokenObtained);
+        save("tokensaved", tokenObtained);
 
-        Content.get().setToken(tokenObtained);
-        Intent intentApp = new Intent(this, MainActivity.class);
-        startActivity(intentApp);
+        login(tokenObtained);
     }
 
     public void save(String s,String token){
-        SharedPreferences settings = getSharedPreferences("FydephPrefsFile", 0);
-        SharedPreferences.Editor editor = settings.edit();
+        SharedPreferences.Editor editor = preferences.edit();
         editor.putString(s, token);
         editor.commit();
     }
-
-    public String load(String s){
-        SharedPreferences settings = getSharedPreferences("FydephPrefsFile", 0);
-        return settings.getString(s, null);
-    }
-
 }
 

@@ -47,4 +47,19 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="refresh">Refresh</string>
+
+    <!-- Strings related to Settings -->
+    <string name="general_options">General Options</string>
+    <string name="opt_imgs_tit">View images</string>
+    <string name="opt_imgs_sum">Posts containing images will be retrieved</string>
+
+    <string name="opt_gifs_tit">View Gifs</string>
+    <string name="opt_gifs_sum">Posts containing GIF animations will be retrieved</string>
+
+    <string name="opt_vids_tit">View videos</string>
+    <string name="opt_vids_sum">Posts containing videos will be retrieved</string>
+
+    <string name="opt_automark_tit">Auto mark posts as read</string>
+
 </resources>

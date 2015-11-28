@@ -80,7 +80,9 @@ public class PostActivity extends AppCompatActivity implements APICallback {
         // Inflate the menu; this adds items to the action bar if it is present.
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_post, menu);
-        //menu.findItem(R.id.action_markread).setChecked(true);
+        menu.findItem(R.id.action_markread).setChecked(
+            android.preference.PreferenceManager.getDefaultSharedPreferences(this).getBoolean("automark_read",false)
+        );
         return true;
     }
 
@@ -104,6 +106,11 @@ public class PostActivity extends AppCompatActivity implements APICallback {
             case R.id.action_openlink:
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(selectedPost.getLink()));
                 startActivity(browserIntent);
+                break;
+            case R.id.action_refresh:
+                WebView wv = (WebView) postViews.get(selectedPost.getId()).findViewById(R.id.html_content);
+                wv.clearCache(true);
+                wv.reload();
                 break;
             default:
                 finish();

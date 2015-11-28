@@ -11,7 +11,11 @@ public class Filter {
 	private String feed,tag,folder;
 	private int mode;
 	private boolean newFirst;
-	
+
+	private boolean showImages = true;
+	private boolean showGif = false;
+	private boolean showVideo = false;
+
 	public Filter(String token){
 		this.mode = ALL;
 		this.unread = true;
@@ -60,6 +64,10 @@ public class Filter {
 		if (!this.unread)	q+="&unread=0";
 		if (this.favorite)	q+="&fav=1";
 
+		if (!this.showImages)	q+="&images=0";
+		if (!this.showGif)	    q+="&gifs=0";
+		if (!this.showVideo)	q+="&videos=0";
+
 		return q;
 	}
 	public boolean isUnread() {
@@ -82,5 +90,14 @@ public class Filter {
     }
     public String getFolder() {
         return folder;
+    }
+    public void setShowImages(boolean showImages) {
+        this.showImages = showImages;
+    }
+    public void setShowGif(boolean showGif) {
+        this.showGif = showGif;
+    }
+    public void setShowVideo(boolean showVideo) {
+        this.showVideo = showVideo;
     }
 }

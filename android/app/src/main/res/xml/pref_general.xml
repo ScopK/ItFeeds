@@ -1,0 +1,26 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="enable_images"
+        android:summary="@string/opt_imgs_sum"
+        android:title="@string/opt_imgs_tit" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="enable_gifs"
+        android:summary="@string/opt_gifs_sum"
+        android:title="@string/opt_gifs_tit" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="enable_videos"
+        android:summary="@string/opt_vids_sum"
+        android:title="@string/opt_vids_tit" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="automark_read"
+        android:title="@string/opt_automark_tit" />
+
+</PreferenceScreen>
