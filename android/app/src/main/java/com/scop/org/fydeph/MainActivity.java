@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity
                 Post p = postListAdapter.getItem(position);
                 if (p == null) return;
 
-                Intent intentApp = new Intent(MainActivity.this, PostViewActivity.class);
-                intentApp.putExtra("postId", (String) p.getId());
+                Intent intentApp = new Intent(MainActivity.this, PostActivity.class);
+                intentApp.putExtra("postId", p.getId());
                 startActivityForResult(intentApp, 37);
             }
         });
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity
         menu.findItem(1)
                 .setIcon(R.drawable.ic_circle_full)
                 .setCheckable(true)
-                .setChecked(fMode==filter.ALL);
+                .setChecked(fMode == filter.ALL);
 
         Collection<Folder> content = Content.get().getFolders().values();
         List<Folder> folders = new ArrayList<>();
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity
             else
                 folders.add(f);
         }
-        Collections.sort(folders, new LabelComparator() );
+        Collections.sort(folders, new LabelComparator());
         for (int i=0;i<folders.size();i++){
             Folder f = folders.get(i);
             folderIds.add(f.getId());
@@ -290,10 +290,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
-        if (postListAdapter!=null)
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 37) {
+            if (resultCode==21) {
+                int idx = postListAdapter.getCount();//Content.get().getOrderedPosts().size();
+                List<Post> posts = Content.get().getOrderedPosts();
+                for (int j = idx; j < posts.size(); j++) {
+                    postListAdapter.add(posts.get(j));
+                }
+            }
             postListAdapter.notifyDataSetChanged();
+            updateDrawer();
+        }
     }
 
     @Override

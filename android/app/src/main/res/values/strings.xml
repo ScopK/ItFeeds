@@ -35,6 +35,8 @@
     <string name="feed_prompt">Choose a feed</string>
     <string name="prev">Prev</string>
     <string name="load_more">Load More</string>
+    <string name="automark_read">Auto mark as read</string>
+    <string name="open_link">Open link</string>
 
     <string name="newer">Most recent first</string>
     <string name="older">Least recent first</string>
