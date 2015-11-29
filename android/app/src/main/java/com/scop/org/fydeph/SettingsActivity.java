@@ -3,6 +3,7 @@ package com.scop.org.fydeph;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
@@ -128,6 +129,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object value) {
                     Content.get().setShowVideo((boolean) value);
+                    return true;
+                }
+            });
+            findPreference("enable_iframes").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object value) {
+                    Content.get().setShowIframe((boolean) value);
+                    return true;
+                }
+            });
+            findPreference("enable_others").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object value) {
+                    Content.get().setShowOther((boolean) value);
                     return true;
                 }
             });

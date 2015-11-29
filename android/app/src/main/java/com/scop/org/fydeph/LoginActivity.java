@@ -84,9 +84,12 @@ public class LoginActivity extends Activity implements APICallback {
             Content.get().setLock(lockRead);
         }*/
 
-        Content.get().setShowImages(preferences.getBoolean("enable_images", true));
-        Content.get().setShowGif(preferences.getBoolean("enable_gifs", false));
-        Content.get().setShowVideo(preferences.getBoolean("enable_videos", false));
+        Content c = Content.get();
+        c.setShowImages(preferences.getBoolean("enable_images", true));
+        c.setShowGif(preferences.getBoolean("enable_gifs", false));
+        c.setShowVideo(preferences.getBoolean("enable_videos", false));
+        c.setShowIframe(preferences.getBoolean("enable_iframes", false));
+        c.setShowOther(preferences.getBoolean("enable_others", false));
 
         Intent intentApp = new Intent(this, MainActivity.class);
         startActivity(intentApp);

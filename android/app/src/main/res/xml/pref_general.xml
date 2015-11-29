@@ -7,16 +7,28 @@
         android:title="@string/opt_imgs_tit" />
 
     <SwitchPreference
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:key="enable_gifs"
         android:summary="@string/opt_gifs_sum"
         android:title="@string/opt_gifs_tit" />
 
     <SwitchPreference
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:key="enable_videos"
         android:summary="@string/opt_vids_sum"
         android:title="@string/opt_vids_tit" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="enable_iframes"
+        android:summary="@string/opt_ifrs_sum"
+        android:title="@string/opt_ifrs_tit" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="enable_others"
+        android:summary="@string/opt_oths_sum"
+        android:title="@string/opt_oths_tit" />
 
     <SwitchPreference
         android:defaultValue="true"

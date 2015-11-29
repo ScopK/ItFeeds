@@ -286,4 +286,10 @@ public class Content {
 	public void setShowVideo(boolean showVideo) {
 		this.filter.setShowVideo(showVideo);
 	}
+	public void setShowOther(boolean showOther) {
+		this.filter.setShowOther(showOther);
+	}
+	public void setShowIframe(boolean showIframe) {
+		this.filter.setShowIframe(showIframe);
+	}
 }

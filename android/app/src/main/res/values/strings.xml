@@ -52,13 +52,19 @@
     <!-- Strings related to Settings -->
     <string name="general_options">General Options</string>
     <string name="opt_imgs_tit">View images</string>
-    <string name="opt_imgs_sum">Posts containing images will be retrieved</string>
+    <string name="opt_imgs_sum"></string>
 
     <string name="opt_gifs_tit">View Gifs</string>
-    <string name="opt_gifs_sum">Posts containing GIF animations will be retrieved</string>
+    <string name="opt_gifs_sum"></string>
 
     <string name="opt_vids_tit">View videos</string>
-    <string name="opt_vids_sum">Posts containing videos will be retrieved</string>
+    <string name="opt_vids_sum"></string>
+
+    <string name="opt_ifrs_tit">View Iframes</string>
+    <string name="opt_ifrs_sum"></string>
+
+    <string name="opt_oths_tit">View others</string>
+    <string name="opt_oths_sum"></string>
 
     <string name="opt_automark_tit">Auto mark posts as read</string>
 

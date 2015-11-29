@@ -70,8 +70,44 @@ public class PostActivity extends AppCompatActivity implements APICallback {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        mViewPager.setCurrentItem(Content.get().getOrderedPosts().indexOf(selectedPost));
+        int preselected = Content.get().getOrderedPosts().indexOf(selectedPost);
+        mViewPager.setCurrentItem(preselected);
         //mViewPager.setOffscreenPageLimit(0);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                PostActivity.this.onPageSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
+
+    public void onPageSelected(int position){
+        List<Post> posts = mSectionsPagerAdapter.getPosts();
+        selectedPost = posts.get(position);
+        updateIcons();
+        if (selectedPost.getUnread() && menu!=null && menu.findItem(R.id.action_markread).isChecked()){
+            toggleUnread();
+        }
+
+        getSupportActionBar().setTitle(selectedPost.getTitle());
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        getSupportActionBar().setSubtitle(df.format(selectedPost.getDate()));
+
+        if (position == posts.size()-1){
+            if (!loadingMorePosts){
+                new APICall(this).execute(Content.get().getQuery(selectedPost.getId()), CONN_LOAD_MORE + "");
+                loadingMorePosts=true;
+            }
+        }
     }
 
 
@@ -198,6 +234,7 @@ public class PostActivity extends AppCompatActivity implements APICallback {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         private List<Post> posts;
+        private boolean firstOpened = false;
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
             this.posts = Content.get().getOrderedPosts();
@@ -213,20 +250,10 @@ public class PostActivity extends AppCompatActivity implements APICallback {
         @Override
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
-            selectedPost = posts.get(position);
-            updateIcons();
-            if (selectedPost.getUnread() && menu!=null && menu.findItem(R.id.action_markread).isChecked()){
-                toggleUnread();
-            }
-
-            getSupportActionBar().setTitle(getPageTitle(position));
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            getSupportActionBar().setSubtitle(df.format(selectedPost.getDate()));
-
-            if (position == getCount()-1){
-                if (!loadingMorePosts){
-                    new APICall(PostActivity.this).execute(Content.get().getQuery(selectedPost.getId()),CONN_LOAD_MORE+"");
-                    loadingMorePosts=true;
+            if (!firstOpened){
+                if (postViews.containsKey(posts.get(position).getId())) {
+                    firstOpened=true;
+                    onPageSelected(position);
                 }
             }
         }
@@ -245,7 +272,9 @@ public class PostActivity extends AppCompatActivity implements APICallback {
         public CharSequence getPageTitle(int position) {
             return posts.get(position).getTitle();
         }
-
+        public List<Post> getPosts(){
+            return this.posts;
+        }
     }
 
     /**
@@ -295,7 +324,7 @@ public class PostActivity extends AppCompatActivity implements APICallback {
             ws.setDisplayZoomControls(false);
 
             wv.setBackgroundColor(Color.rgb(34,34,34)); // #222
-            final String style = "<style>*{background-color:transparent!important;color:#fff!important}body{font-size:2em;}p,b,h1,h2,h3,h4,h5,h6,div,img{height:auto;width:100%;background-color:#fff;}table{width:100wv;}table img{width:initial}</style>";//,unset
+            final String style = "<style>*{background-color:transparent!important;color:#fff!important}body{font-size:2em;}p,b,h1,h2,h3,h4,h5,h6,div,img,video{height:auto;width:100%;background-color:#fff;}video{max-height:98vh}table{width:100wv;}table img{width:initial}</style>";//,unset
             wv.loadData(style + "<p>" + getArguments().getString(ARG_POST_DESCRIPTION) + "</p>", "text/html", "UTF-8");
 
             return rootView;

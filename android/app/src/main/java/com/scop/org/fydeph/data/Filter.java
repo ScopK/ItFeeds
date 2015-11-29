@@ -15,6 +15,8 @@ public class Filter {
 	private boolean showImages = true;
 	private boolean showGif = false;
 	private boolean showVideo = false;
+	private boolean showIframe = false;
+	private boolean showOther = false;
 
 	public Filter(String token){
 		this.mode = ALL;
@@ -64,12 +66,45 @@ public class Filter {
 		if (!this.unread)	q+="&unread=0";
 		if (this.favorite)	q+="&fav=1";
 
-		if (!this.showImages)	q+="&images=0";
-		if (!this.showGif)	    q+="&gifs=0";
-		if (!this.showVideo)	q+="&videos=0";
+		q+="&search="+getSearchString();
 
 		return q;
 	}
+	private String getSearchString(){
+		String str = "";
+
+		if (showOther){
+			if (!this.showImages)
+				str += "::;!.jpg::;!.png::;!.jpeg";
+			if (!this.showGif)
+				str += "::;!.gif";
+			if (!this.showVideo)
+				str += "::;!<video";
+            if (!this.showIframe)
+                str += "::;!<iframe";
+
+            if (str.length()>0) {
+                str = str.replace("!.jpg::;!.png::;!.jpeg::;!.gif", "!<img");
+                str = str.substring(3);
+            }
+		} else {
+			if (this.showImages)
+				str += "::.jpg::.png::.jpeg";
+			if (this.showGif)
+				str += "::.gif";
+			if (this.showVideo)
+                str += "::<video";
+            if (this.showIframe)
+                str += "::<iframe";
+
+            if (str.length()>0) {
+                str = str.replace(".jpg::.png::.jpeg::.gif", "<img");
+                str = str.substring(2);
+            }
+		}
+		return str;
+	}
+
 	public boolean isUnread() {
 		return unread;
 	}
@@ -99,5 +134,11 @@ public class Filter {
     }
     public void setShowVideo(boolean showVideo) {
         this.showVideo = showVideo;
+    }
+    public void setShowIframe(boolean showIframe) {
+        this.showIframe = showIframe;
+    }
+    public void setShowOther(boolean showOther) {
+        this.showOther = showOther;
     }
 }
