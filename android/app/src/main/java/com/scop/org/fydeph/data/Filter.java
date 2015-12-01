@@ -88,17 +88,16 @@ public class Filter {
                 str = str.substring(3);
             }
 		} else {
-			if (this.showImages)
-				str += "::.jpg::.png::.jpeg";
 			if (this.showGif)
 				str += "::.gif";
 			if (this.showVideo)
                 str += "::<video";
             if (this.showIframe)
                 str += "::<iframe";
+			if (this.showImages)
+				str += "::<img::;!.gif::;!<video::;!<iframe";
 
             if (str.length()>0) {
-                str = str.replace(".jpg::.png::.jpeg::.gif", "<img");
                 str = str.substring(2);
             }
 		}
