@@ -383,38 +383,33 @@
 		return $hid<=$hidden && $username==$user;
 	}
 
-	function searchQueryFromArray($con, $search){
-		if (count($search)<1)
+	function searchQueryFromArray($con,$vars){
+		if (count($vars)<1)
 			return "";
-		$str = "AND (";
-		$first = true;
-		foreach ($search as $key){
-			$union="OR";
-			$startChar = substr($key,0,1);
-			$negative = false;
-			if ($startChar===";"){
-				$union="AND";
-				$key = substr($key,1);
-				$startChar = substr($key,0,1);
-			}
-			if ($startChar==="!"){
-				$negative = true;
-				$key = substr($key,1);
 
-			} elseif ($startChar==="\\"){
-				$key = substr($key,1);
-			}
-			if ($first) $first = false;
-			else 		$str.= " $union ";
-
-			$val = mysqli_real_escape_string($con,"%$key%");
-			if ($negative)
-				$str.= "(title NOT LIKE '$val' AND description NOT LIKE '$val')";
-			else
-				$str.= "(title LIKE '$val' OR description LIKE '$val')";
+		$mapping = array();
+		foreach ($vars as &$v) {
+			$v2 = preg_replace('/^[;!\(]*(.*?)\)?$/',"$1",$v);
+			$v = str_replace($v2,"^-".count($mapping)."-^",$v);
+			array_push($mapping,$v2);
 		}
-		$str.= ")";
-		return $str;
+		$search = implode("::",$vars);
+
+		if (substr_count($search,"(")!=substr_count($search,")")) return "";
+
+		$search = str_replace('::;'," AND ",$search);
+		$search = str_replace('::'," OR ",$search);
+		$search = str_replace('!'," NOT ",$search);
+
+		foreach ($mapping as $key => $value) {
+			$value = htmlentities($value);
+			$value = str_replace('&lt;',"<",$value);
+			$value = str_replace('&gt;',">",$value);
+			$value = mysqli_real_escape_string($con,"%$value%");
+			$search = str_replace('^-'.$key.'-^',"(title LIKE '$value' OR description LIKE '$value')",$search);
+		}
+
+		return "AND (".$search.")";
 	}
 
  	/**
