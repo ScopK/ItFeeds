@@ -20,7 +20,8 @@
 	$time->sub(new DateInterval('P'.$days.'D'));
 	$date = date("Y-m-d H:i:s", $time->format('U')); 
 
-	$sql = "DELETE FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder=?) AND favorite='0' $unreadSQL AND date < '$date' AND id NOT IN (SELECT id_post FROM post_tags)";
+	//$sql = "DELETE FROM posts WHERE id_feed IN (SELECT id FROM feeds WHERE id_folder=?) AND favorite='0' $unreadSQL AND date < '$date' AND id NOT IN (SELECT id_post FROM post_tags)";
+	$sql = "UPDATE posts SET deleted=1 WHERE deleted=0 AND id_feed IN (SELECT id FROM feeds WHERE id_folder=?) AND favorite='0' $unreadSQL AND date < '$date' AND id NOT IN (SELECT id_post FROM post_tags)";
 
 	$stmt=mysqli_stmt_init($con);
 	if (mysqli_stmt_prepare($stmt,$sql)){

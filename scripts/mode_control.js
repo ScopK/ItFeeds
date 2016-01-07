@@ -134,7 +134,7 @@ function updateNavigationElements(){
 	else		  	$("#sortTButton").html("Newer");
 
 	if (get.search){
-		$("#searchContent").text("Search query: "+unescape(get.search));
+		$("#searchContent").text("Search query: "+decodeURIComponent(get.search));
 		$("#searchContent").slideDown();
 		$("#searchButton").addClass("marked");
 	} else {

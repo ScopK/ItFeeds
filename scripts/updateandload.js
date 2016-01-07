@@ -326,7 +326,7 @@ function getHTMLPost(post,indexPost){
 		var folder = folders[ixs[0]];
 		var folderInfo = (folder.name == "null")?"":folder.name+" | ";
 		var feed = folder.feeds[ixs[1]];
-		subtitle = '<div class="subtitle">[ '+folderInfo+'<a target="_blank" href="'+feed.link+'">'+feed.name+'</a> ] <a class="date" target="_blank" href="/post/'+post.id+'">'+post.date+'</a></div>';
+		subtitle = '<div class="subtitle">[ '+folderInfo+'<a target="_blank" href="'+feed.link+'">'+feed.name+'</a> ] <a class="date" target="_blank" href="post/'+post.id+'">'+post.date+'</a></div>';
 	}
 	var controller = '<div class="controller"><div class="control_panel">'+
 	    '<button class="setUnread" onclick="toogleUnreadPost(true,'+indexPost+')"></button>'+

@@ -1,6 +1,7 @@
 RewriteEngine on
 
 RedirectMatch 404 /\.git
+RedirectMatch 404 /.cronfig
 RedirectMatch 404 /func
 RedirectMatch 404 /MySQL
 

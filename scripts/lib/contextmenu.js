@@ -60,6 +60,7 @@ function addCMContent(root,array){
 			var contextFolder = document.createElement('div');
 			var di = document.createElement('div');
 
+			var tout;
 			var showContext = function(){
 				clearTimeout(closeFolderTimer);
 				clearTimeout(tout);
@@ -85,7 +86,6 @@ function addCMContent(root,array){
 			contextFolder.className="contextual-folder";
 			root.appendChild(contextFolder);
 
-			var tout;
 			di.onmouseenter = function(){
 				clearTimeout(closeFolderTimer);
 				tout=setTimeout(showContext,500);

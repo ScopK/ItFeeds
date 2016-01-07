@@ -16,7 +16,7 @@ class PluginManager{
 		$description = $post->description;
 		if ($description==""){
 			$link = $post->link;
-			if (preg_match('/https?:\/\/(?:(?!\/).)*youtube\.com\/watch\?.*?v=[\w-]*?(?:$|&)/',$link,$matches)){
+			if (preg_match('/https?:\/\/(?:(?!\/).)*youtube\.com\/watch\?.*?v=([\w-]*)?(?:$|&)/',$link,$matches)){
 				$code = $matches[1];
 
 				if ($this->youtubeapi==null){
@@ -54,7 +54,6 @@ class PluginManager{
 		return false;
 	}
 
-
 	// Support function
 	private function split2($string,$needle,$nth){
 		$max = strlen($string);
@@ -91,11 +90,10 @@ class YoutubeAPI{
 		// Info: https://developers.google.com/youtube/v3/docs/videos/list?hl=en
 		$urlDurat = "https://www.googleapis.com/youtube/v3/videos?id=".$id."&part=snippet,contentDetails&key=".(self::$googleApiKey);
 		$jsonDurat = json_decode(file_get_contents($urlDurat));
-		print_r($jsonDurat);
-		return false;
 		if (isset($jsonDurat->items) && isset($jsonDurat->items[0]))
 			return $jsonDurat->items[0];//->snippet;
 		else
 			return false;
 	}
 }
+

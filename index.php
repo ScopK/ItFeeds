@@ -16,7 +16,7 @@
 <html>
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <title>Fydeph - <?=$log_user?></title>
+        <title>FeedIt - <?=$log_user?></title>
         <link rel="shortcut icon" href="imgs/icon.png" />
         <link rel="stylesheet" type="text/css" href="style/anims.css">
     <?php if (isset($_GET['old'])) { ?>
@@ -217,12 +217,12 @@
                 <div style='right:0' onclick="nextPostVideo(true)">&#10097;</div>
                 <div style='right:40px' onclick="nextVideo()"><span id="counter_videos" style='font-size:9px;vertical-align:middle'></span>&#10093;</div>
             </div>
-            <table class="slim"><tr><th style="position:relative;" colspan="3"><span class="title">Video viewer</span>
+            <table class="slim"><tr class='row-header'><th style="position:relative;" colspan="3"><span class="title">Video viewer</span>
             <span id='ytv_window_controls'>
                 <button id='video_unread_button' onclick="toogleUnreadVideoPost(false,$('#youtube_viewer_dialog').attr('postid'))">&nbsp;</button>
                 <button onclick="minPlayer()">·</button>
                 <button onclick="togglePlayer()">-</button>
-                <button onclick="unloadVideo();unloadVideo=function(){};$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);closeModal();">×</button>
+                <button class='close-button' onclick="unloadVideo();unloadVideo=function(){};$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);closeModal();">×</button>
             </span></th>
             </tr><tr><td id="youtube_td" style="margin:0;padding:0;background-color:black;" colspan="3"></td>
             </tr></table>

@@ -28,8 +28,9 @@
 	$time->sub(new DateInterval('P'.$days.'D'));
 	$date = date("Y-m-d H:i:s", $time->format('U')); 
 
-	$sql = "DELETE p.* FROM posts p JOIN feeds fe ON fe.id=p.id_feed JOIN folders fo ON fo.id=fe.id_folder WHERE fo.user=? AND p.favorite='0' $unreadSQL $hiddenSQL AND p.date < '$date' AND p.id NOT IN (SELECT id_post FROM post_tags)";
-
+	//$sql = "DELETE p.* FROM posts p JOIN feeds fe ON fe.id=p.id_feed JOIN folders fo ON fo.id=fe.id_folder WHERE fo.user=? AND p.favorite='0' $unreadSQL $hiddenSQL AND p.date < '$date' AND p.id NOT IN (SELECT id_post FROM post_tags)";
+	$sql = "UPDATE posts p JOIN feeds fe ON fe.id=p.id_feed JOIN folders fo ON fo.id=fe.id_folder SET p.deleted=1 WHERE p.deleted=0 AND fo.user=? AND p.favorite='0' $unreadSQL $hiddenSQL AND p.date < '$date' AND p.id NOT IN (SELECT id_post FROM post_tags)";
+	
 	$stmt=mysqli_stmt_init($con);
 	if (mysqli_stmt_prepare($stmt,$sql)){
 

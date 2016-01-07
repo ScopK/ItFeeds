@@ -20,12 +20,19 @@
 		echo date('Y-d-m H:i:s', time())."\r";
 		$feeds = mysqli_query($con,$sql);
 		foreach($feeds as $feed){
-			if (controlFeed($feed['id'],$feed['upd_time'])){
+			//if (controlFeed($feed['id'],$feed['upd_time'])){
 				$pf->fetchFeed($feed);
 				$pf->markUnread($feed);
-			}
+			//}
 		}
+		$pf->finalDelete();
 		mysqli_free_result($feeds);
+
+		//############ SUDDEN DEATH ##############
+							die(); //<-###########
+		//########################################						
+
+
 		$left = ($time+60)-time();
 		if ($left>0){
 			echo date('Y-d-m H:i:s', time())."\r";

@@ -29,7 +29,7 @@ DELIMITER $$
 -- Funciones
 --
 DROP FUNCTION IF EXISTS `newID`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `newID`(`num` INT, `tabname` CHAR(40)) RETURNS varchar(100) CHARSET utf8 COLLATE utf8_spanish_ci
+CREATE FUNCTION `newID`(`num` INT, `tabname` CHAR(40)) RETURNS varchar(100) CHARSET utf8 COLLATE utf8_spanish_ci
 BEGIN
   DECLARE `password` VARCHAR(100);
   DECLARE characters VARCHAR(100);

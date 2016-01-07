@@ -945,17 +945,26 @@ VIDEO DIALOG
 	border: 1px solid transparent;
 	background-color: rgba(255,255,255,0.7);
 	height:30px;
-	width:30px;
+	width:35px;
 	text-align:center;
 	font-weight:bold;
 	font-size:20px;
 	margin-top:1px;
-	border-radius:3px;
+	border-radius:1px;
 }
-
 #ytv_window_controls button:hover{
 	background-color: rgba(255,255,255,0.9);
 }
+
+#ytv_window_controls > .close-button{
+  background-color:#F98484;
+  border: 1px solid #EC5454;
+}
+
+#ytv_window_controls > .close-button:hover{
+  background-color:#FF7C7C;
+}
+
 .ytv_controls{
 	padding:0!important;
 	min-width:33.3333%;
@@ -981,12 +990,10 @@ VIDEO DIALOG
 	border-bottom-color: <?= $dark ?>;
 }
 
-#video_unread_button{
-	background-position: 1px 1px;
-}
-
 #youtube_viewer_dialog #video_unread_button{
 	background-image: url("../imgs/read.png");
+	background-position: center 1px;
+	background-repeat: no-repeat;
 }
 
 #youtube_viewer_dialog.selected #video_unread_button{
@@ -1154,7 +1161,7 @@ div.tagname button{
 	overflow-x:hidden;
 	overflow-y:hidden;
 	transition: left 0.4s, overflow 0s 0.4s;
-	z-index: 11;
+	z-index:11;
 }
 #videolist:hover{
 	left:0;
@@ -1243,6 +1250,25 @@ div.tagname button{
 
 #youtube_viewer:hover #youtube_controls{
 	opacity:1;
+}
+
+#youtube_viewer[maxi="1"] .row-header{
+  position:absolute;
+  top:-41px;
+  box-shadow:none;
+  z-index:1;
+  transition: all 0.2s;
+}
+#youtube_viewer[maxi="1"] th{
+  box-shadow:inset 0 30px 40px -30px black;
+  border-bottom:0;
+  position:absolute;
+  width:100vw;
+  background-color:transparent;
+  color:white;
+}
+#youtube_viewer[maxi="1"]:hover .row-header{
+  top:0;
 }
 
 #youtube_controls > div{

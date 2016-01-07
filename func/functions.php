@@ -75,7 +75,7 @@
 			$e->hidden = $folder['hidden'];
 			$e->feeds = getFeeds($e->id,$depth);
 
-			$sql = "SELECT count(*) AS c, IFNULL(sum(p.unread), 0) AS u FROM posts p JOIN feeds f ON p.id_feed=f.id WHERE f.id_folder='".$e->id."'";
+			$sql = "SELECT count(*) AS c, IFNULL(sum(p.unread), 0) AS u FROM posts p JOIN feeds f ON p.id_feed=f.id WHERE p.deleted='0' AND f.id_folder='".$e->id."'";
 			$res = mysqli_query($con,$sql);
 			$countQ = mysqli_fetch_array($res);
 			$e->unread = $countQ['u'];
@@ -103,7 +103,7 @@
 			$e->hidden = $folder['hidden'];
 			$e->feeds = getFeeds($e->id,$depth);
 
-			$sql = "SELECT count(*) AS c, IFNULL(sum(p.unread), 0) AS u FROM posts p JOIN feeds f ON p.id_feed=f.id WHERE f.id_folder='".$e->id."'";
+			$sql = "SELECT count(*) AS c, IFNULL(sum(p.unread), 0) AS u FROM posts p JOIN feeds f ON p.id_feed=f.id WHERE p.deleted='0' AND f.id_folder='".$e->id."'";
 			$res = mysqli_query($con,$sql);
 			$countQ = mysqli_fetch_array($res);
 			$e->unread = $countQ['u'];
@@ -141,7 +141,7 @@
 			$e->deleted = $feed['deleted'];
 			$e->posts = array(); //getPostsFeed($e->id,$depth);
 
-			$sql = "SELECT count(*) AS c, IFNULL(sum(p.unread), 0) AS u FROM posts p WHERE p.id_feed='".$e->id."'";
+			$sql = "SELECT count(*) AS c, IFNULL(sum(p.unread), 0) AS u FROM posts p WHERE p.deleted='0' AND p.id_feed='".$e->id."'";
 			$res = mysqli_query($con,$sql);
 			$countQ = mysqli_fetch_array($res);
 			$e->unread = $countQ['u'];
@@ -176,7 +176,7 @@
 			$e->deleted = $feed['deleted'];
 			$e->posts = array();
 /*
-			$sql = "SELECT count(*) AS c, IFNULL(sum(p.unread), 0) AS u FROM posts p WHERE p.id_feed='".$e->id."'";
+			$sql = "SELECT count(*) AS c, IFNULL(sum(p.unread), 0) AS u FROM posts p WHERE p.deleted='0' AND p.id_feed='".$e->id."'";
 			$res = mysqli_query($con,$sql);
 			$countQ = mysqli_fetch_array($res);
 			$e->unread = $countQ['u'];
@@ -592,13 +592,13 @@
 		global $con;
 		global $hidden;
 		if ($nextId == -1){
-			$sql = "SELECT * FROM posts WHERE $whereSQL ORDER BY `idx` $sort LIMIT $page,$postspage";
+			$sql = "SELECT * FROM posts WHERE deleted='0' AND $whereSQL ORDER BY `idx` $sort LIMIT $page,$postspage";
 		} else {
 			$threshold = "(SELECT idx FROM posts WHERE id='$nextId')";
 			if ($sort == "ASC")
-				$sql = "SELECT * FROM posts WHERE idx > $threshold AND $whereSQL ORDER BY `idx` ASC LIMIT 0,$postspage";
+				$sql = "SELECT * FROM posts WHERE idx > $threshold AND deleted='0' AND $whereSQL ORDER BY `idx` ASC LIMIT 0,$postspage";
 			else
-				$sql = "SELECT * FROM posts WHERE idx < $threshold AND $whereSQL ORDER BY `idx` DESC LIMIT 0,$postspage";
+				$sql = "SELECT * FROM posts WHERE idx < $threshold AND deleted='0' AND $whereSQL ORDER BY `idx` DESC LIMIT 0,$postspage";
 		}
 		$posts = mysqli_query($con,$sql);
 		$lista = array();
@@ -627,7 +627,7 @@
 
 	function getPostsCount($whereSQL){
 		global $con;
-		$countsql = "SELECT count(*) AS c FROM posts WHERE $whereSQL";
+		$countsql = "SELECT count(*) AS c FROM posts WHERE deleted='0' AND $whereSQL";
 		$result = mysqli_query($con,$countsql);
 		$rows = mysqli_fetch_assoc($result);
 

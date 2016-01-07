@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <title>Fydeph Manager</title>
+        <title>FeedIt Manager</title>
         <link rel="shortcut icon" href="imgs/icon.png" />
 
         <link rel="stylesheet" type="text/css" href="style/manager.css">

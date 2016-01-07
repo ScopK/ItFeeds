@@ -3,10 +3,22 @@
 	if ($info!==false){
 	$snippet = $info->snippet;
 	$duration = $info->contentDetails->duration;
-	$duration = str_replace("M",":",$duration);
-	$duration = str_replace("H",":",$duration);
-	$duration = str_replace("PT","",$duration);
-	$duration = str_replace("S","",$duration);
+
+	preg_match('/(\d*)S/',$duration,$matches);
+	$ss = count($matches)==0? "00" :($matches[1]<10? "0".$matches[1] : $matches[1]);
+	preg_match('/(\d*)M/',$duration,$matches);
+	$mm = count($matches)==0? "0" : $matches[1];
+	preg_match('/(\d*)H/',$duration,$matches);
+	$hh = count($matches)==0? "0" : $matches[1];
+
+	if ($hh==0){
+		$duration = "$mm:$ss";
+	} else {
+		if ($mm<10){
+			$mm = "0".$mm;
+		}
+		$duration = "$hh:$mm:$ss";
+	}
 
 	$description = $snippet->description;
 	$arr = $this->split2($description,"\n",10);
@@ -21,7 +33,7 @@
 			<a target="_blank" href="<?php echo $post->link ?>"><img style='width:300px;border:0px' src="http://i.ytimg.com/vi/<?php echo $code ?>/0.jpg"/></a>
 		</td>
 		<td style='padding:0 5px; height:1px; font-size:14px'>
-			<b><a target="_blank" href="<?php echo $post->link ?>"><?php echo utf8_decode($snippet->title) ?></a></b>
+			<b><a target="_blank" href="<?php echo $post->link ?>"><?php echo mb_convert_encoding($snippet->title, "HTML-ENTITIES" ,"utf-8") ?></a></b>
 		</td>
 	</tr>
 	<tr>

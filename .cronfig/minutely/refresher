@@ -1,0 +1,16 @@
+#! /bin/bash
+cd /var/www/html/feedit;
+if [ ! -f .busy ]
+then
+	date +%s>.busy;
+	php func/Server.php;
+	rm .busy;
+else
+	timed=`date --date="$(cat .busy) seconds ago" +%s`;
+	if [ $timed -gt 300 ]
+	then
+		date +%s>.busy;
+		php func/Server.php;
+		rm .busy;
+	fi
+fi
