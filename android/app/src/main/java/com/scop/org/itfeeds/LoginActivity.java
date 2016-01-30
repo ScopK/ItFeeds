@@ -1,4 +1,4 @@
-package com.scop.org.fydeph;
+package com.scop.org.itfeeds;
 
 /**
  * Created by Oscar on 22/11/2015.
@@ -6,9 +6,9 @@ package com.scop.org.fydeph;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.scop.org.fydeph.conn.APICall;
-import com.scop.org.fydeph.conn.APICallback;
-import com.scop.org.fydeph.data.Content;
+import com.scop.org.itfeeds.conn.APICall;
+import com.scop.org.itfeeds.conn.APICallback;
+import com.scop.org.itfeeds.data.Content;
 
 import android.app.Activity;
 import android.content.Intent;

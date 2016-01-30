@@ -1,4 +1,4 @@
-package com.scop.org.fydeph;
+package com.scop.org.itfeeds;
 
 import org.junit.Test;
 

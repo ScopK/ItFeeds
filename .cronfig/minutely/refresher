@@ -1,5 +1,5 @@
 #! /bin/bash
-cd /var/www/html/feedit;
+cd /var/www/html/itfeeds;
 if [ ! -f .busy ]
 then
 	date +%s>.busy;

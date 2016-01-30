@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Fydeph.iml" filepath="$PROJECT_DIR$/Fydeph.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ItFeeds.iml" filepath="$PROJECT_DIR$/ItFeeds.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

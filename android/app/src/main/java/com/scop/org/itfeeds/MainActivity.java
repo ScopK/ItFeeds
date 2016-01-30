@@ -1,4 +1,4 @@
-package com.scop.org.fydeph;
+package com.scop.org.itfeeds;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,14 +23,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.scop.org.fydeph.conn.APICall;
-import com.scop.org.fydeph.conn.APICallback;
-import com.scop.org.fydeph.data.Content;
-import com.scop.org.fydeph.data.Folder;
-import com.scop.org.fydeph.data.Feed;
-import com.scop.org.fydeph.data.LabelComparator;
-import com.scop.org.fydeph.data.Post;
-import com.scop.org.fydeph.data.Tag;
+import com.scop.org.itfeeds.conn.APICall;
+import com.scop.org.itfeeds.conn.APICallback;
+import com.scop.org.itfeeds.data.Content;
+import com.scop.org.itfeeds.data.Folder;
+import com.scop.org.itfeeds.data.Feed;
+import com.scop.org.itfeeds.data.LabelComparator;
+import com.scop.org.itfeeds.data.Post;
+import com.scop.org.itfeeds.data.Tag;
+import com.scop.org.itfeeds.data.Filter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity
         Menu menu = navView.getMenu();
         menu.removeGroup(R.id.drawer_list_group);
 
-        com.scop.org.fydeph.data.Filter filter = Content.get().getFilter();
+        Filter filter = Content.get().getFilter();
         int fMode = filter.getMode();
 
         menu.add(R.id.drawer_list_group, 1, Menu.CATEGORY_ALTERNATIVE, R.string.all_posts);
@@ -215,7 +216,7 @@ public class MainActivity extends AppCompatActivity
             Button logoutButton = (Button) findViewById(R.id.logoutButton);
             logoutButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    SharedPreferences settings = getSharedPreferences("FydephPrefsFile", 0);
+                    SharedPreferences settings = android.preference.PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("tokensaved", null);
                     editor.commit();

@@ -2,7 +2,7 @@
 
     <!-- These settings headers are only used on tablets. -->
     <header
-        android:fragment="com.scop.org.fydeph.SettingsActivity$GeneralPreferenceFragment"
+        android:fragment="com.scop.org.itfeeds.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_settings"
         android:title="@string/general_options" />
 

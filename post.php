@@ -17,7 +17,7 @@
 <html>
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <title>FeedIt Post - <?= $post->title ?></title>
+        <title>itFeeds Post - <?= $post->title ?></title>
         <link rel="shortcut icon" href="imgs/icon.png" />
         <link rel="stylesheet" type="text/css" href="style/postalone.css?color=<?= isset($_SESSION['log_color'])?$_SESSION['log_color']:'3386C6' ?>">
 

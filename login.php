@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<title>FeedIt Login</title>
+		<title>itFeeds Login</title>
 		<link rel="shortcut icon" href="imgs/icon.png" />
 		<script src="scripts/lib/messages.js"></script>
 		<link rel="stylesheet" type="text/css" href="style/login.css">

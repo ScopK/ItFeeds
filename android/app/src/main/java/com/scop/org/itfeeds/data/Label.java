@@ -1,4 +1,4 @@
-package com.scop.org.fydeph.data;
+package com.scop.org.itfeeds.data;
 
 public class Label implements MenuLabel {
 	private String label;

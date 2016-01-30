@@ -1,4 +1,4 @@
-package com.scop.org.fydeph.conn;
+package com.scop.org.itfeeds.conn;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

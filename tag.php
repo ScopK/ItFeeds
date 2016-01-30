@@ -15,7 +15,7 @@
 <html>
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-	<title>FeedIt Tag - <?= $tag->name ?></title>
+	<title>itFeeds Tag - <?= $tag->name ?></title>
     <link rel="shortcut icon" href="imgs/icon.png" />
 
     <link rel="stylesheet" type="text/css" href="style/poststandalone.css">

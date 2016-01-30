@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<string name="app_name">Fydeph</string>
+    <!--<string name="app_name">ItFeeds</string>
     <string name="all_posts">All posts</string>
     <string name="empty_user">Username field can\'t be empty</string>
     <string name="empty_pass">Password field can\'t be empty</string>
     <string name="options">Options</string>
     <string name="settings">Settings</string>
-    <string name="greetings">Start using Fydeph</string>
+    <string name="greetings">Start using ItFeeds</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="filters">Filters</string>
@@ -35,13 +35,36 @@
     <string name="feed_prompt">Choose a feed</string>
     <string name="prev">Prev</string>
     <string name="load_more">Load More</string>
+    <string name="automark_read">Auto mark as read</string>
+    <string name="open_link">Open link</string>
 
     <string name="newer">Most recent first</string>
     <string name="older">Least recent first</string>
     <string name="unread_only">Unread only</string>
     <string name="favs_only">Favorites only</string>
     <string name="show_all">Show all</string>
+    <string name="logged_as">Logged as </string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>-->
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="refresh">Refresh</string>
+
+    <!- Strings related to Settings ->
+    <string name="general_options">General Options</string>
+    <string name="opt_imgs_tit">View images</string>
+    <string name="opt_imgs_sum"></string>
+
+    <string name="opt_gifs_tit">View Gifs</string>
+    <string name="opt_gifs_sum"></string>
+
+    <string name="opt_vids_tit">View videos</string>
+    <string name="opt_vids_sum"></string>
+
+    <string name="opt_ifrs_tit">View Iframes</string>
+    <string name="opt_ifrs_sum"></string>
+
+    <string name="opt_oths_tit">View others</string>
+    <string name="opt_oths_sum"></string>
+
+    <string name="opt_automark_tit">Auto mark posts as read</string>-->
 </resources>

@@ -1,4 +1,4 @@
-package com.scop.org.fydeph;
+package com.scop.org.itfeeds;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,10 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.scop.org.fydeph.data.Post;
-
-import com.scop.org.fydeph.R;
-import com.scop.org.fydeph.data.Post;
+import com.scop.org.itfeeds.data.Post;
 
 /**
  * Created by Oscar on 22/11/2015.

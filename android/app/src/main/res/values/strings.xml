@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FeedIt</string>
+    <string name="app_name">ItFeeds</string>
     <string name="all_posts">All posts</string>
     <string name="empty_user">Username field can\'t be empty</string>
     <string name="empty_pass">Password field can\'t be empty</string>
     <string name="options">Options</string>
     <string name="settings">Settings</string>
-    <string name="greetings">Start using Fydeph</string>
+    <string name="greetings">Start using ItFeeds</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="filters">Filters</string>

@@ -2,7 +2,7 @@
 /log.txt
 cons.txt
 
-main
+/main
 
 ## Android ##
 android/*.apk
@@ -31,3 +31,5 @@ android/.cproject
 android/.buildpath
 android/.target
 android/.texlipse
+
+android/app/src/main/java/com/scop/org/itfeeds

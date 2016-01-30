@@ -1,4 +1,4 @@
-package com.scop.org.fydeph.data;
+package com.scop.org.itfeeds.data;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,10 +1,8 @@
-package com.scop.org.fydeph;
+package com.scop.org.itfeeds;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -21,13 +19,11 @@ import android.view.ViewGroup;
 
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.scop.org.fydeph.conn.APICall;
-import com.scop.org.fydeph.conn.APICallback;
-import com.scop.org.fydeph.data.Content;
-import com.scop.org.fydeph.data.Post;
+import com.scop.org.itfeeds.conn.APICall;
+import com.scop.org.itfeeds.conn.APICallback;
+import com.scop.org.itfeeds.data.Content;
+import com.scop.org.itfeeds.data.Post;
 
 import org.json.JSONException;
 import org.json.JSONObject;
