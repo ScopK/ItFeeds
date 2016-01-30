@@ -37,7 +37,6 @@ $(document).ready(function(){
 		var c = 1;
 		$.each($(".post"),function(){
 			if (pos < (this.offsetTop+this.offsetHeight)){
-				console.log(c);
 				selectPost(c);
 				return false;
 			}

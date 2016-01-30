@@ -407,13 +407,14 @@
 			if ($first) $first = false;
 			else 		$str.= " $union ";
 
-			$val = mysqli_real_escape_string($con,"%$key%");
+			$val = mysqli_real_escape_string($con,"%".htmlentities($key)."%");
 			if ($negative)
 				$str.= "(title NOT LIKE '$val' AND description NOT LIKE '$val')";
 			else
 				$str.= "(title LIKE '$val' OR description LIKE '$val')";
 		}
 		$str.= ")";
+
 		return $str;
 	}
 

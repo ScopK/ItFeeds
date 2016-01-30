@@ -28,14 +28,15 @@
         <script src="scripts/lib/jsanims.js"></script>
         <script src="scripts/lib/contextmenu.js"></script>
         <script src="scripts/lib/messages.js"></script>
-        <script src="scripts/manager.part.js"></script>
-        <script src="scripts/updateandload.js"></script>
-        <script src="scripts/actions.js"></script>
-        <script src="scripts/search.js"></script>
-        <script src="scripts/mode_control.js"></script>
-        <script src="scripts/posts_control.js"></script>
-        <script src="scripts/init.js"></script>
+        <script src="scripts/context_actions.js"></script>
+        <script src="scripts/init_structure.js"></script>
+        <script src="scripts/code_utils.js"></script>
+        <script src="scripts/calls.js"></script>
+        <script src="scripts/dialogs.js"></script>
+        <script src="scripts/lateral.js"></script>
+        <script src="scripts/player.js"></script>
         <script src="https://w.soundcloud.com/player/api.js"></script>
+
         <script>
         $(document).ready(function(){
             $(".background-modal").hide();
@@ -47,16 +48,16 @@
         <div id="page">
             <div id="lateral_menu">
                 <div id="settings_panel" class="hidden">
-                    <button class="button-panel" style="position:absolute;top:0;right:0;width:35px;margin:10px" onclick="$('#settings_panel').addClass('hidden')">X</button>
+                    <button class="button-panel button_close_settings" style="position:absolute;top:0;right:0;width:35px;margin:10px">X</button>
 
                     <p style="margin-left:6px"><b>Logged as <?=$log_user?></b></p>
-                    <button class="button-panel <?= ($hid_user)?"highlight-color":"";?> lock-icon" id="unlockButton" style="padding-right:30px" onclick="showUnlockDialog();return false"><?= ($hid_user)?"Unlocked":"Unlock";?></button>
-                    <button class="button-panel" style="float:right" onclick="logout()">Logout</button>
+                    <button class="button-panel <?= ($hid_user)?"highlight-color":"";?> lock-icon" id="unlockButton" style="padding-right:30px"><?= ($hid_user)?"Unlocked":"Unlock";?></button>
+                    <button class="button-panel" style="float:right" id="logoutButton">Logout</button>
                     <hr/>
 
                     <table style="width:100%;margin:10px 5px 5px;border-collapse:collapse"><tr>
                         <td>Posts mode</td>
-                        <td><select id="posts_mode" style="width:90%" class="select-panel" onchange="change_postsmode(this.value,false)">
+                        <td><select id="posts_mode" style="width:90%" class="select-panel" onchange="cookie.actions.postsmode(this.value,false)">
                             <option value="0" title="Previous posts are minimized">Normal Mode</option>
                             <option value="1" title="All unselected posts are minimized">Minimized Mode</option>
                             <option value="2" title="Nothing is minimized">Never minimize</option>
@@ -64,7 +65,7 @@
                         <td style="color:#888;margin-left:5px">Key 'G'</td>
                     </tr><tr>
                         <td>Auto mark read</td>
-                        <td><select id="autoread_mode" style="width:90%" class="select-panel" onchange="change_autoreadmode(this.value,false)">
+                        <td><select id="autoread_mode" style="width:90%" class="select-panel" onchange="cookie.actions.autoreadmode(this.value,false)">
                             <option value="0" title="Mark read when selecting a post">On select post</option>
                             <option value="1" title="Mark as read while scrolling">On scroll</option>
                             <option value="2" title="Don't mark as read automatically">Never</option>
@@ -72,25 +73,25 @@
                         <td style="color:#888;margin-left:5px">Key 'H'</td>
                     </tr></table>
                     
-                    <button class="button-panel" style="text-align:left;width:100%" onclick="showPasswordChangeDialog();return false">Change password</button>
-                    <button class="button-panel" style="text-align:left;width:100%" onclick="showLockPasswordChangeDialog();return false">Change Lock Password</button>
+                    <button class="button-panel" style="text-align:left;width:100%" id="changePassBtn">Change password</button>
+                    <button class="button-panel" style="text-align:left;width:100%" id="changeLPassBtn">Change Lock Password</button>
                     <div id="footer" style="position:absolute;bottom:10px;right:10px">
                         <p>ScopK</p>
                     </div>
                 </div>
 
                 <div id="quick_search" class="hidden">
-                    <input type="text" placeholder="Search" id="quick_search_input" onkeyup="updateQuickResults(this.value,event)"/>
-                    <button onclick="toggleQuickSearch(false)">X</button>
+                    <input type="text" placeholder="Search" id="quick_search_input"/>
+                    <button class='button_close_quickSearch'>X</button>
                     <hr/>
                     <span id="quick_results"></span>
                 </div>
 
                 <div id="navopts_top" class="options_panel">
-                    <button class="button-panel highlight-color" id="settingsButton" onclick="$('#settings_panel').toggleClass('hidden')"><?=$log_user?></button>
-                    <button class="button-panel" id="favsTButton" onclick="toggleFavs(this)">Favs</button>
-                    <button class="button-panel" id="unreadTButton" onclick="toggleUnread(this)">Unread</button>
-                    <button class="button-panel" id="sortTButton" onclick="toggleSort(this)"></button>
+                    <button class="button-panel highlight-color" id="settingsButton"><?=$log_user?></button>
+                    <button class="button-panel" id="favsTButton">Favs</button>
+                    <button class="button-panel" id="unreadTButton">Unread</button>
+                    <button class="button-panel" id="sortTButton"></button>
                 </div>
                 <div id="navigation_panel" style="overflow-y: auto;">
                     <div id="folders"></div>
@@ -98,28 +99,29 @@
                     <div id="tags"></div>
                 </div>
                 <div id="navopts_bottom" class="options_panel">
-                    <button class="button-panel" title="Load More" id="loadMore" onclick="loadMore()">
+                    <button class="button-panel" title="Load More" id="loadMore">
                     <span id="pages">
                         Posts: <span id="totalPages">10</span> | Page: <span id="percentSeen">0</span>
                     </span></button>
-                    <button class="button-panel" id="searchButton" onclick="showSearchDialog(); return false;">Search</button>
+                    <button class="button-panel" id="searchButton">Search</button>
                 </div>
             </div>
+            <!-- #################################################################################################### -->
             <div id="content">
-                <div id="searchContent" style='display:none' onclick='get.search=undefined;reloadPosts();updateNavigationElements();updateUrl();'></div>
+                <div id="searchContent" style='display:none'></div>
                 <div id="posts_panel"></div>
-                <div id="load_more_panel" style="margin-top:60px"><p id="loadMoreLabel" onclick="loadMore()">LOAD MORE</p></div>
+                <div id="load_more_panel" style="margin-top:60px"><p id="loadMoreLabel">LOAD MORE</p></div>
             </div>
         </div>
 
-        <button id="show-lateral-button" class="mouse-button" onclick="toggleLateralMenu();">&lsaquo;</button>
+        <button id="show-lateral-button" class="mouse-button" onclick="lateral.toggle.all();">&lsaquo;</button>
         <button id="more-options-button" class="mouse-button" onclick="return cmMore(event,this);" oncontextmenu="return cmMore(event,this);">+</button>
-        <button id="show-video-button" class="mouse-button" style="display:none;padding:0" onclick="maxPlayer()">Video Viewer</button>
+        <button id="show-video-button" class="mouse-button" style="display:none;padding:0" onclick="player.toggleMin(false)">Video Viewer</button>
         <button id="mouse_nav" oncontextmenu="return false;"></button>
         <div id="mouse_bottom" style="display:none">
-            <button class="markunread mouse-button colored" onclick="toogleUnreadPost(true)"></button>
-            <button class="markfav mouse-button" onclick="toogleFavPost(true)"></button>
-            <button class="addtag mouse-button" onclick="showAddTagsDialog();"></button>
+            <button class="markunread mouse-button colored" onclick="markUnread(null,null,true)"></button>
+            <button class="markfav mouse-button" onclick="markFavorite(null,null,true)"></button>
+            <button class="addtag mouse-button" onclick="dialog.addTags.show();"></button>
         </div>
     </div>
         <div id="loading_panel" style="pointer-events:none;">
@@ -135,8 +137,8 @@
                 <tr><td class="taglist" colspan="2"></td></tr>
                 <tr><td><input id="newtagField" type="text" name="newtagname" autocomplete="off" /></td></tr>
                 <tr><td colspan="2" class="dialog_buttons">
-                    <button class="addTag" onclick="addTag(); return false;">Add</button>
-                    <button class="cancelAddTag" onclick="$('#add_tag').fadeOut(100);closeModal();return false;">Cancel</button>
+                    <button class="confirm">Add</button>
+                    <button class="cancel">Cancel</button>
                 </td></tr>
                 </table>
             </form>
@@ -147,8 +149,8 @@
                 <table><tr><th colspan="2">Search</th></tr>
                 <tr><td><input id="searchField" type="text" name="newtagname" autocomplete="off" /></td></tr>
                 <tr><td colspan="2" class="dialog_buttons">
-                    <button class="searchButton" onclick="searchAction(); return false;">Add</button>
-                    <button class="cancelAddTag" onclick="$('#search_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                    <button class="confirm">Add</button>
+                    <button class="cancel">Cancel</button>
                 </td></tr>
                 </table>
             </form>
@@ -168,8 +170,8 @@
                     <td align="left"><input id="newPass2Field" type="password" autocomplete="off" /></td>
                 </tr><tr>
                 <td colspan="2" class="dialog_buttons">
-                    <button class="searchButton" onclick="changePasswordAction(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#pwchange_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                    <button class="confirm">Confirm</button>
+                    <button class="cancel">Cancel</button>
                 </td></tr>
                 </table>
             </form>
@@ -189,8 +191,8 @@
                     <td align="left"><input id="newLPass2Field" type="password" autocomplete="off" /></td>
                 </tr><tr>
                 <td colspan="2" class="dialog_buttons">
-                    <button class="searchButton" onclick="changeLockPasswordAction(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#pwlchange_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                    <button class="confirm">Confirm</button>
+                    <button class="cancel">Cancel</button>
                 </td></tr>
                 </table>
             </form>
@@ -204,27 +206,31 @@
                     <td align="left"><input id="lockPassField" type="password" name="hiddenPass" autocomplete="off" /></td>
                 </tr><tr>
                 <tr><td colspan="2" class="dialog_buttons">
-                    <button class="searchButton" onclick="unlockAction(); return false;">Confirm</button>
-                    <button class="cancelAddTag" onclick="$('#unlock_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                    <button class="confirm">Confirm</button>
+                    <button class="cancel">Cancel</button>
                 </td></tr>
                 </table>
             </form>
         </div></div></div>
 
-        <div id="youtube_viewer_dialog" class="background-modal"><div id="videolist"></div><div style="display:table-cell;vertical-align:middle;"><div id="youtube_viewer" class="dialog-dim" style="width:700px;position:relative">
-            <div id='youtube_controls'>
-                <div style='left:0' onclick="prevPostVideo()">&#10096;</div>
-                <div style='right:0' onclick="nextPostVideo(true)">&#10097;</div>
-                <div style='right:40px' onclick="nextVideo()"><span id="counter_videos" style='font-size:9px;vertical-align:middle'></span>&#10093;</div>
+        <div id="video_viewer_dialog" class="background-modal">
+        <div class="left-bar">
+            <div id="nextprevcontroller" oncontextmenu="return false;"></div><div id="videolist"></div>
+        </div>
+        <div id="videospace" style="transition:padding 0.3s;display:table-cell;vertical-align:middle;"><div id="video_viewer" class="dialog-dim" style="width:700px;position:relative">
+            <div id='video_controls'>
+                <div style='left:0' onclick="player.prev()">&#10096;</div>
+                <div style='right:0' onclick="player.next(true)">&#10097;</div>
+                <div style='right:40px' onclick="player.nextElement()"><span id="counter_videos" style='font-size:9px;vertical-align:middle'></span>&#10093;</div>
             </div>
-            <table class="slim"><tr><th style="position:relative;" colspan="3"><span class="title">Video viewer</span>
-            <span id='ytv_window_controls'>
-                <button id='video_unread_button' onclick="toogleUnreadVideoPost(false,$('#youtube_viewer_dialog').attr('postid'))">&nbsp;</button>
-                <button onclick="minPlayer()">·</button>
-                <button onclick="togglePlayer()">-</button>
-                <button onclick="unloadVideo();unloadVideo=function(){};$('#youtube_td').html('');$('#youtube_viewer_dialog').fadeOut(100);closeModal();">×</button>
+            <table class="slim"><tr class='row-header'><th style="position:relative;" colspan="3"><span class="title">Video viewer</span>
+            <span id='video_window_controls'>
+                <button id='video_unread_button' onclick="player.playing.setUnread(!player.playing.unread)">&nbsp;</button>
+                <button onclick="player.toggleMin(true)">·</button>
+                <button onclick="player.toggleMax()">-</button>
+                <button class='close-button' onclick="player.close()">×</button>
             </span></th>
-            </tr><tr><td id="youtube_td" style="margin:0;padding:0;background-color:black;" colspan="3"></td>
+            </tr><tr><td id="video_td" style="margin:0;padding:0;background-color:black;" colspan="3"></td>
             </tr></table>
         </div></div></div>
 
@@ -242,7 +248,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="editFolder(); return false;">Confirm</button>
-                        <button onclick="$('#settings_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                        <button class="cancel">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -263,7 +269,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="editTag(); return false;">Confirm</button>
-                        <button onclick="$('#settings_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                        <button class="cancel">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -299,7 +305,7 @@
                     </tr><tr>
                     <td colspan="3" class="dialog_buttons">
                         <button class="confirmButton" onclick="editFeed(); return false;">Confirm</button>
-                        <button onclick="$('#settings_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                        <button class="cancel">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -320,7 +326,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="cleanFolder(); return false;">Confirm</button>
-                        <button onclick="$('#cleaning_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                        <button class="cancel">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -339,7 +345,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="cleanFeed(); return false;">Confirm</button>
-                        <button onclick="$('#cleaning_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                        <button class="cancel">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -356,7 +362,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="cleanAll(); return false;">Confirm</button>
-                        <button onclick="$('#cleaning_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                        <button class="cancel">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -374,7 +380,7 @@
                 </tr><tr>
                 <td class="dialog_buttons">
                     <button class="confirmButton" onclick="deleteFolder(); return false;">Confirm</button>
-                    <button onclick="$('#delete_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                    <button class="cancel">Cancel</button>
                 </td></tr>
                 </table>
             </span>
@@ -387,7 +393,7 @@
                 </tr><tr>
                 <td class="dialog_buttons">
                     <button class="confirmButton" onclick="deleteFeed(); return false;">Confirm</button>
-                    <button onclick="$('#delete_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                    <button class="cancel">Cancel</button>
                 </td></tr>
                 </table>
             </span>
@@ -399,7 +405,7 @@
                 </tr><tr>
                 <td class="dialog_buttons">
                     <button class="confirmButton" onclick="deleteTagMan(); return false;">Confirm</button>
-                    <button onclick="$('#delete_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                    <button class="cancel">Cancel</button>
                 </td></tr>
                 </table>
             </span>
@@ -415,7 +421,7 @@
                     </tr><tr>
                     <td class="dialog_buttons" colspan="2">
                         <button class="confirmButton" onclick="createFolder(); return false;">Confirm</button>
-                        <button onclick="$('#create_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                        <button class="cancel">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -436,7 +442,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="createFeed(); return false;">Confirm</button>
-                        <button onclick="$('#create_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                        <button class="cancel">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
@@ -455,7 +461,7 @@
                     </tr><tr>
                     <td colspan="2" class="dialog_buttons">
                         <button class="confirmButton" onclick="moveFeed(); return false;">Confirm</button>
-                        <button onclick="$('#move_dialog').fadeOut(100);closeModal();return false;">Cancel</button>
+                        <button class="cancel">Cancel</button>
                     </td></tr>
                     </table>
                 </form>
