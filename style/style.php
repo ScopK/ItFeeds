@@ -925,23 +925,23 @@ VIDEO DIALOG
 ###################################################################
 #################################################################*/
 
-#youtube_viewer_dialog.minimized{
+#video_viewer_dialog.minimized{
 	opacity:0;
 	visibility:hidden;
 	pointer-events:none;
 }
 
-#youtube_viewer_dialog tr{
+#video_viewer_dialog tr{
 	position:relative;
 }
 
-#ytv_window_controls{
+#video_window_controls{
 	position:absolute;
 	right:5px;
 	top:4px;
 }
 
-#ytv_window_controls button{
+#video_window_controls button{
 	border: 1px solid transparent;
 	background-color: rgba(255,255,255,0.7);
 	height:30px;
@@ -952,16 +952,17 @@ VIDEO DIALOG
 	margin-top:1px;
 	border-radius:1px;
 }
-#ytv_window_controls button:hover{
+
+#video_window_controls button:hover{
 	background-color: rgba(255,255,255,0.9);
 }
 
-#ytv_window_controls > .close-button{
+#video_window_controls > .close-button{
   background-color:#F98484;
   border: 1px solid #EC5454;
 }
 
-#ytv_window_controls > .close-button:hover{
+#video_window_controls > .close-button:hover{
   background-color:#FF7C7C;
 }
 
@@ -984,19 +985,19 @@ VIDEO DIALOG
 	color: #333;
 }
 
-#youtube_viewer_dialog.selected th{
+#video_viewer_dialog.selected th{
 	box-shadow: 0px 5px 14px 0px <?= $dark ?>;
 	background-color: <?= $bright ?>;
 	border-bottom-color: <?= $dark ?>;
 }
 
-#youtube_viewer_dialog #video_unread_button{
+#video_viewer_dialog #video_unread_button{
 	background-image: url("../imgs/read.png");
 	background-position: center 1px;
 	background-repeat: no-repeat;
 }
 
-#youtube_viewer_dialog.selected #video_unread_button{
+#video_viewer_dialog.selected #video_unread_button{
 	background-image: url("../imgs/unread.png");
 }
 
@@ -1152,65 +1153,81 @@ div.tagname button{
 	background-position: center center;
 }
 
+#nextprevcontroller{
+	position:absolute;
+	background-color:transparent;
+	left:-19px; top:0; bottom:0;
+	width:20px;
+	transition: left 0.2s 0.3s, background-color 0s 0.5s;
+	z-index: 12;
+}
+
+#video_viewer_dialog .left-bar:hover #nextprevcontroller{
+	background-color:#383838;
+	left:0;
+	transition-delay:0s,0s;
+}
+
+#video_viewer_dialog .left-bar:hover #videolist{
+	left:20px;
+	transition-delay:0s;
+}
+
+#video_viewer_dialog .left-bar:hover ~ #videospace{
+	padding-left:310px;
+}
+
 #videolist{
 	position:absolute;
-	left:-249px; top:0; bottom:0;
-	background-color:black;
-	padding:10px;
-	width:230px;
-	overflow-x:hidden;
-	overflow-y:hidden;
-	transition: left 0.4s, overflow 0s 0.4s;
-	z-index:11;
-}
-#videolist:hover{
-	left:0;
+	left:-290px; top:0;
+	height:calc(100vh - 10px);
+	background-color:#fff;
+	padding:5px;
+	width:280px;
 	overflow-y:scroll;
+	transition: left 0.3s;
+	z-index: 11;
 }
 
 #videolist .video{
-	color:#fff;
-	background-color:#888;
-	height:50px;
-	padding:5px;
-	width:200px;
+	color:#000;
+	background-color:#bbb;
+	height:33px;
+	padding:3px 5px;
+	width:250px;
 	overflow:hidden;
-	font-size:0.86em;
-	border: 1px solid #bbb;
-	margin-bottom:10px;
+	font-size:0.8em;
+	margin:0px 0 5px;
 	position:relative;
-	border-radius:4px;
+	border: solid #888;
+	border-width: 1px 1px 1px 1px;
 	cursor:pointer;
-}
-#videolist .video .idx{
-	position:absolute;
-	font-size:20px;
-	bottom:-3px; right:3px;
-	opacity:0.4;
 }
 #videolist .video.listening{
-	background-color:#bbb;
-	color:#000;
+	border-top-width:3px;
+	border-bottom-width:3px;
+	/*width:248px;*/
+}
+#videolist .video .idx{
+	display:none;
 }
 #videolist .video.unread{
-	background-color:<?= $dark ?>;
-	border: 1px solid <?= $bright ?>;
-}
-#videolist .video.unread.listening{
 	background-color:<?= $bright ?>;
+	border-color: <?= $dark ?>;
 }
 #moresongs{
-	background-color:#7da728;
+	background-color:#C3E977;/*#7da728;*/
 	text-align:center;
-	color:white;
-	height:50px;
+	color:green;
+	height:33px;
 	vertical-align:middle;
 	display:flex;
-	width:212px;
-	font-size:2.5em;
-	border-radius:5px;
+	width:260px;
+	font-size:1.5em;
+	border: 1px solid #7da728;
 	transition: background-color 0.2s;
 	cursor:pointer;
+	margin-bottom:6px;
 }
 #moresongs:hover{
 	background-color:#9ACD32;
@@ -1236,7 +1253,15 @@ div.tagname button{
 	cursor:pointer;
 }
 
-#youtube_controls{
+#video_viewer_dialog .dialog-dim:not(.maximized) .row-header{
+  text-align:left;
+}
+
+#video_viewer_dialog .dialog-dim:not(.maximized) .title{
+  margin-left:10px;
+}
+
+#video_controls{
 	position:absolute;
 	z-index:1;
 	top:0; bottom:0;
@@ -1248,18 +1273,18 @@ div.tagname button{
 	transition: opacity 0.4s;
 }
 
-#youtube_viewer:hover #youtube_controls{
+#video_viewer:hover #video_controls{
 	opacity:1;
 }
 
-#youtube_viewer[maxi="1"] .row-header{
+#video_viewer.maximized .row-header{
   position:absolute;
   top:-41px;
   box-shadow:none;
   z-index:1;
   transition: all 0.2s;
 }
-#youtube_viewer[maxi="1"] th{
+#video_viewer.maximized th{
   box-shadow:inset 0 30px 40px -30px black;
   border-bottom:0;
   position:absolute;
@@ -1267,11 +1292,11 @@ div.tagname button{
   background-color:transparent;
   color:white;
 }
-#youtube_viewer[maxi="1"]:hover .row-header{
+#video_viewer.maximized:hover .row-header{
   top:0;
 }
 
-#youtube_controls > div{
+#video_controls > div{
 	position:absolute;
 	margin:auto;
 	bottom:0;

@@ -865,17 +865,17 @@ div.tagname button{
 	background-position: center center;
 }
 
-#youtube_viewer_dialog tr{
+#video_viewer_dialog tr{
 	position:relative;
 }
 
-#ytv_window_controls{
+#video_window_controls{
 	position:absolute;
 	right:5px;
 	top:4px;
 }
 
-#ytv_window_controls button{
+#video_window_controls button{
 	border: 1px solid #000;
 	background-color: #111;
 	color:white;
@@ -886,7 +886,7 @@ div.tagname button{
 	font-size:20px;
 }
 
-#ytv_window_controls button:hover{
+#video_window_controls button:hover{
 	background-color: #333;
 
 }

@@ -1,3 +1,236 @@
+//#################### CONTEXT MENU
+//#################### CONTEXT MENU
+//#################### CONTEXT MENU
+//#################### CONTEXT MENU
+//#################### CONTEXT MENU
+function cmTag(e,context){
+	var arr = [{
+		name: "Open in new window",
+		function: function(){
+			openNewWindowTag($(this).attr("idtag"));
+		},
+		context: context
+	},{
+		type: "separator"
+	}];
+
+	if ($(context).hasClass("public"))
+		arr.push({
+			name: "Open with public tag viewer",
+			function: function(){
+				var id = $(this).attr("idtag");
+				window.open('tag/'+id, '_blank', '');
+			},
+			context: context
+		});
+	arr.push({
+		name: "Edit options",
+		type: "folder",
+		options: [
+			{
+				name: "Settings",
+				function: function(){
+					var idx = this.getAttribute("idxtag");
+					showSettings_tag(idx);
+				},
+				context: context
+			},{ type : "separator" },{
+				name: "Delete",
+				function: function(){
+					var idx = this.getAttribute("idxtag");
+					showDelete_tag(idx);
+				},
+				context: context
+			}]
+	});
+	setCMContent(arr);
+	showCM(e.clientX,e.clientY)
+	return false;
+}
+
+function cmFeed(e,context){
+	var arr = [{
+		name: "Open in new window",
+		function: function(){
+			openNewWindowFeed($(this).attr("idfeed"));
+		},
+		context: context
+	},{ type: "separator" },{
+		name: "Open website",
+		function: function(){
+			var fo = $(this).attr("idxfolder");
+			var fe = $(this).attr("idxfeed");
+			window.open(folders[fo].feeds[fe].link, '_blank', '');
+		},
+		context: context
+	},{
+		name: "Open RSS link",
+		function: function(){
+			var fo = $(this).attr("idxfolder");
+			var fe = $(this).attr("idxfeed");
+			window.open(folders[fo].feeds[fe].rss_link, '_blank', '');
+		},
+		context: context
+	},{
+		type: "separator"
+	},{
+		name: "Edit options",
+		type: "folder",
+		options: [
+			{
+				name: "Settings",
+				function: function(){
+					var fidx = this.getAttribute("idxfolder");
+					var idx = this.getAttribute("idxfeed");
+					showSettings_feed(fidx,idx);
+				},
+				context: context
+			},{
+				name: "Move",
+				function: function(){
+					var fidx = this.getAttribute("idxfolder");
+					var idx = this.getAttribute("idxfeed");
+					showMove_feed(fidx,idx);
+				},
+				context: context
+			},{
+				name: "Clean",
+				function: function(){
+					var fidx = this.getAttribute("idxfolder");
+					var idx = this.getAttribute("idxfeed");
+					showClean_feed(fidx,idx);
+				},
+				context: context
+			},{ type : "separator" },{
+				name: "Delete",
+				function: function(){
+					var fidx = this.getAttribute("idxfolder");
+					var idx = this.getAttribute("idxfeed");
+					showDelete_feed(fidx,idx);
+				},
+				context: context
+			}]
+		}];
+
+	setCMContent(arr);
+	showCM(e.clientX,e.clientY);
+	e.stopPropagation();
+	return false;
+}
+
+function cmFolder(e,context){
+	var arr = [{
+		name: "Open in new window",
+		function: function(){
+			openNewWindowFolder($(this).attr("idfolder"));
+		},
+		context: context
+	},{
+		type: "separator"
+	},{
+		name: "Edit options",
+		type: "folder",
+		options: [
+			{
+				name: "Add Feed",
+				function: function(){
+					var idx = this.getAttribute("idxfolder");
+					showCreate_feed(idx);
+				},
+				context: context
+			},{
+				name: "Settings",
+				function: function(){
+					var idx = this.getAttribute("idxfolder");
+					showSettings_folder(idx);
+				},
+				context: context
+			},{
+				name: "Clean",
+				function: function(){
+					var idx = this.getAttribute("idxfolder");
+					showClean_folder(idx);
+				},
+				context: context
+			},{ type : "separator" },{
+				name: "Delete",
+				function: function(){
+					var idx = this.getAttribute("idxfolder");
+					showDelete_folder(idx);
+				},
+				context: context
+			}]
+		}];
+
+	setCMContent(arr);
+	showCM(e.clientX,e.clientY)
+	return false;
+}
+
+function cmMore(e,context){
+	var arr = [
+		{
+			name: "Add Folder",
+			function: function(){
+				showCreate_folder();
+			},
+			context: context
+		},{
+			name: "Add Feed",
+			function: function(){
+				var idx = 0;
+				folders.some(function(el){
+					if (el.name == "null")
+						return true;
+					idx++;
+				});
+				showCreate_feed(idx);
+			},
+			context: context
+		},{
+			name: "Clean",
+			function: function(){
+				showClean_all();
+			},
+			context: context
+		}];
+
+	setCMContent(arr);
+	showCM(e.clientX,e.clientY)
+	return false;
+}
+
+
+function openNewWindowTag(tagid){
+	var res = location.search.replace(/&?(feed|folder|tag|unread)=[\w-]*/g, "");
+	var url = window.location.pathname;
+	if (res.length<2)
+		url+="?tag="+tagid+"&unread=0";
+	else
+		url+=res+"&tag="+tagid+"&unread=0";
+	window.open(url, '_blank', '');
+}
+
+function openNewWindowFeed(feedid){
+	var res = location.search.replace(/&?(feed|folder|tag)=[\w-]*/g, "");
+	var url = window.location.pathname;
+	if (res.length<2)
+		url+="?feed="+feedid;
+	else
+		url+=res+"&feed="+feedid;
+	window.open(url, '_blank', '');
+}
+
+function openNewWindowFolder(folderid){
+	var res = location.search.replace(/&?(feed|folder|tag)=[\w-]*/g, "");
+	var url = window.location.pathname;
+	if (res.length<2)
+		url+="?folder="+folderid;
+	else
+		url+=res+"&folder="+folderid;
+	window.open(url, '_blank', '');
+}
+
 //###############################################
 //###############################################
 //###############################################
@@ -11,7 +244,7 @@ function showSettings_folder(idx){
 	$("#settings_dialog .tab:not(.folder-tab)").hide();
 	$("#settings_dialog .folder-tab").show();
 	$("#settings_dialog").fadeIn(100);
-	openModal();
+	dialog.effects.show();
 
 	$("#settings_dialog .folder-tab .title").html("Edit folder: "+f.name);
 	$("#edit_name_folder").val(f.name);
@@ -24,7 +257,7 @@ function showSettings_feed(idxf,idx){
 	$("#settings_dialog .tab:not(.feed-tab)").hide();
 	$("#settings_dialog .feed-tab").show();
 	$("#settings_dialog").fadeIn(100);
-	openModal();
+	dialog.effects.show();
 
 	$("#settings_dialog .feed-tab .title").html("Edit Feed: "+f.name);
 	$("#edit_name_feed").val(f.name);
@@ -43,7 +276,7 @@ function showSettings_tag(idx){
 	$("#settings_dialog .tab:not(.tag-tab)").hide();
 	$("#settings_dialog .tag-tab").show();
 	$("#settings_dialog").fadeIn(100);
-	openModal();
+	dialog.effects.show();
 
 	$("#settings_dialog .tag-tab .title").html("Edit Tag: "+t.name);
 	$("#edit_name_tag").val(t.name);
@@ -70,9 +303,9 @@ function editFolder(){
 		success: function(result){
 			folder['name'] = result['name'];
 			folder['hidden'] = result['hidden'];
-			folders.sort(nameSort);
+			folders.sort(utils.nameSort);
 
-			displayFolders();
+			lateral.refresh.folders();
 
 			showMessage("Folder edited correctly",true);
 		},
@@ -84,7 +317,7 @@ function editFolder(){
 		}
 	});
 	$('#settings_dialog').fadeOut(100);
-	closeModal();
+	dialog.effects.hide();
 }
 
 function editFeed(){
@@ -114,9 +347,9 @@ function editFeed(){
 			feed['enabled'] = result['enabled'];
 			feed['filter'] = result['filter'];
 			feed['upd_time'] = result['upd_time'];
-			folders[fidx].feeds.sort(nameSort);
+			folders[fidx].feeds.sort(utils.nameSort);
 
-			displayFolders();
+			lateral.refresh.folders();
 
 			showMessage("Feed edited correctly",true);
 		},
@@ -128,7 +361,7 @@ function editFeed(){
 		}
 	});
 	$('#settings_dialog').fadeOut(100);
-	closeModal();
+	dialog.effects.hide();
 }
 
 function editTag(){
@@ -149,9 +382,9 @@ function editTag(){
 			tag['name'] = result['name'];
 			tag['hidden'] = result['hidden'];
 			tag['public'] = result['public'];
-			tags.sort(nameSort);
+			tags.sort(utils.nameSort);
 
-			displayTags();
+			lateral.refresh.tags();
 
 			showMessage("Tag edited correctly",true);
 		},
@@ -163,7 +396,7 @@ function editTag(){
 		}
 	});
 	$('#settings_dialog').fadeOut(100);
-	closeModal();
+	dialog.effects.hide();
 }
 
 //###############################################
@@ -179,7 +412,7 @@ function showClean_folder(idx){
 	$("#cleaning_dialog .tab:not(.folder-tab)").hide();
 	$("#cleaning_dialog .folder-tab").show();
 	$("#cleaning_dialog").fadeIn(100);
-	openModal();
+	dialog.effects.show();
 
 	$("#clean_idx_folder").val(idx);
 	$("#cleaning_dialog .folder-tab .title").html("Clean folder posts: "+f.name);
@@ -192,7 +425,7 @@ function showClean_feed(idxf,idx){
 	$("#cleaning_dialog .tab:not(.feed-tab)").hide();
 	$("#cleaning_dialog .feed-tab").show();
 	$("#cleaning_dialog").fadeIn(100);
-	openModal();
+	dialog.effects.show();
 
 	$("#clean_idx_folderfeed").val(idxf);
 	$("#clean_idx_feed").val(idx);
@@ -205,7 +438,7 @@ function showClean_all(){
 	$("#cleaning_dialog .tab:not(.all-tab)").hide();
 	$("#cleaning_dialog .all-tab").show();
 	$("#cleaning_dialog").fadeIn(100);
-	openModal();
+	dialog.effects.show();
 
 	$("#clean_all_days").val("3");
 	$("#clean_all_unread").prop("checked",false);
@@ -231,7 +464,7 @@ function cleanFolder(){
 			var cleaned = folder.count-result.count;
 			folders[idx] = result;
 
-			displayFolders();
+			lateral.refresh.folders();
 
 			showMessage("Cleaned "+cleaned+" posts",true);
 		},
@@ -243,7 +476,7 @@ function cleanFolder(){
 		}		
 	});
 	$('#cleaning_dialog').fadeOut(100);
-	closeModal();
+	dialog.effects.hide();
 }
 
 function cleanAll(){
@@ -256,7 +489,7 @@ function cleanAll(){
 		data: "days="+days+(unread?"&unread=on":""),
 		dataType : "json",
 		success: function(result){
-			initialize(false);
+			call.userContent(false);
 
 			showMessage("Cleaned "+result.postsDeleted+" posts",true);
 		},
@@ -268,7 +501,7 @@ function cleanAll(){
 		}
 	});
 	$('#cleaning_dialog').fadeOut(100);
-	closeModal();
+	dialog.effects.hide();
 }
 
 function cleanFeed(){
@@ -294,7 +527,7 @@ function cleanFeed(){
 			folder.unread = result.folderUnread;
 			folder.count = result.folderCount;
 
-			displayFolders();
+			lateral.refresh.folders();
 
 			showMessage("Cleaned "+cleaned+" posts",true);
 		},
@@ -306,7 +539,7 @@ function cleanFeed(){
 		}
 	});
 	$('#cleaning_dialog').fadeOut(100);
-	closeModal();
+	dialog.effects.hide();
 }
 
 
@@ -323,7 +556,7 @@ function showDelete_folder(idx){
 	$("#delete_dialog .tab:not(.folder-tab)").hide();
 	$("#delete_dialog .folder-tab").show();
 	$("#delete_dialog").fadeIn(100);
-	openModal();
+	dialog.effects.show();
 
 	$("#delete_idx_folder").val(idx);
 	$("#delete_folder_pass").val("");
@@ -336,7 +569,7 @@ function showDelete_feed(idxf,idx){
 	$("#delete_dialog .tab:not(.feed-tab)").hide();
 	$("#delete_dialog .feed-tab").show();
 	$("#delete_dialog").fadeIn(100);
-	openModal();
+	dialog.effects.show();
 
 	$("#delete_idx_folderfeed").val(idxf);
 	$("#delete_idx_feed").val(idx);
@@ -349,7 +582,7 @@ function showDelete_tag(idx){
 	$("#delete_dialog .tab:not(.tag-tab)").hide();
 	$("#delete_dialog .tag-tab").show();
 	$("#delete_dialog").fadeIn(100);
-	openModal();
+	dialog.effects.show();
 
 	$("#delete_idx_tag").val(idx);
 	$("#delete_dialog .tag-tab .title").html("Delete tag: "+t.name);
@@ -375,7 +608,7 @@ function deleteFeed(){
 		success: function(result){
 			if (result == "oK"){
 				folders[fidx].feeds.splice(idx,1);
-				displayFolders();
+				lateral.refresh.folders();
 				showMessage("Feed deleted correctly",true);
 			} else
 				showMessage(result);
@@ -388,7 +621,7 @@ function deleteFeed(){
 		}
 	});
 	$('#delete_dialog').fadeOut(100);
-	closeModal();
+	dialog.effects.hide();
 }
 
 function deleteFolder(){
@@ -406,7 +639,7 @@ function deleteFolder(){
 		success: function(result){
 			if (result == "oK"){
 				folders.splice(idx,1);
-				displayFolders();
+				lateral.refresh.folders();
 				showMessage("Folder deleted correctly",true);
 			} else
 				showMessage(result);
@@ -419,7 +652,7 @@ function deleteFolder(){
 		}
 	});
 	$('#delete_dialog').fadeOut(100);
-	closeModal();
+	dialog.effects.hide();
 }
 
 function deleteTagMan(){
@@ -436,7 +669,7 @@ function deleteTagMan(){
 		success: function(result){
 			if (result == "oK"){
 				tags.splice(idx,1);
-				displayTags();
+				lateral.refresh.tags();
 				showMessage("Tag deleted correctly",true);
 			} else
 				showMessage(result);
@@ -449,7 +682,7 @@ function deleteTagMan(){
 		}
 	});
 	$('#delete_dialog').fadeOut(100);
-	closeModal();
+	dialog.effects.hide();
 }
 
 //###############################################
@@ -464,7 +697,7 @@ function showCreate_folder(){
 	$("#create_dialog .tab:not(.folder-tab)").hide();
 	$("#create_dialog .folder-tab").show();
 	$("#create_dialog").fadeIn(100);
-	openModal();
+	dialog.effects.show();
 
 	$("#create_folder_name").val("");
 }
@@ -474,7 +707,7 @@ function showCreate_feed(folder_idx){
 	$("#create_dialog .tab:not(.feed-tab)").hide();
 	$("#create_dialog .feed-tab").show();
 	$("#create_dialog").fadeIn(100);
-	openModal();
+	dialog.effects.show();
 
 	if (f.name=="null")
 		$("#create_dialog .feed-tab .title").html("Create new feed");
@@ -500,9 +733,9 @@ function createFolder(){
 		dataType : "json",
 		success: function(result){
 			folders.push(result);
-			folders.sort(nameSort);
+			folders.sort(utils.nameSort);
 
-			displayFolders();
+			lateral.refresh.folders();
 			showMessage("Folder added correctly",true);
 		},
 		error: function (request, status, error){
@@ -515,7 +748,7 @@ function createFolder(){
 		}
 	});
 	$("#create_dialog").fadeOut(100);
-	closeModal();
+	dialog.effects.hide();
 }
 
 function createFeed(){
@@ -534,9 +767,9 @@ function createFeed(){
 		dataType : "json",
 		success: function(result){
 			folders[idx].feeds.push(result);
-			folders[idx].feeds.sort(nameSort);
+			folders[idx].feeds.sort(utils.nameSort);
 
-			displayFolders();
+			lateral.refresh.folders();
 			showMessage("Feed added correctly",true);
 		},
 		error: function (request, status, error){
@@ -549,7 +782,7 @@ function createFeed(){
 		}
 	});
 	$("#create_dialog").fadeOut(100);
-	closeModal();
+	dialog.effects.hide();
 }
 
 //###############################################
@@ -566,7 +799,7 @@ function showMove_feed(idxf,idx){
 	//$("#move_dialog .tab:not(.feed-tab)").hide();
 	//$("#move_dialog .feed-tab").show();
 	$("#move_dialog").fadeIn(100);
-	openModal();
+	dialog.effects.show();
 
 	$("#move_dialog .feed-tab .title").html("Move Feed: "+f.name);
 	$("#move_idx_folderfeed").val(idxf);
@@ -603,9 +836,9 @@ function moveFeed(){
 		success: function(result){
 			if (result=="oK"){
 				folders[newFolderIdx].feeds.push(folders[fidx].feeds.splice(idx,1)[0]);
-				folders[newFolderIdx].feeds.sort(nameSort);
+				folders[newFolderIdx].feeds.sort(utils.nameSort);
 
-				displayFolders();
+				lateral.refresh.folders();
 				showMessage("Feed moved correctly",true);
 			}
 			else alert("ERROR MOVING FEED: "+result);
@@ -620,5 +853,5 @@ function moveFeed(){
 		}
 	});
 	$("#move_dialog").fadeOut(100);
-	closeModal();
+	dialog.effects.hide();
 }
