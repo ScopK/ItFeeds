@@ -57,7 +57,7 @@
 
                     <table style="width:100%;margin:10px 5px 5px;border-collapse:collapse"><tr>
                         <td>Posts mode</td>
-                        <td><select id="posts_mode" style="width:90%" class="select-panel" onchange="cookie.actions.postsmode(this.value,false)">
+                        <td><select id="posts_mode" style="width:90%" class="select-panel" onchange="window.cookie.actions.postsmode(this.value,false)">
                             <option value="0" title="Previous posts are minimized">Normal Mode</option>
                             <option value="1" title="All unselected posts are minimized">Minimized Mode</option>
                             <option value="2" title="Nothing is minimized">Never minimize</option>
@@ -65,7 +65,7 @@
                         <td style="color:#888;margin-left:5px">Key 'G'</td>
                     </tr><tr>
                         <td>Auto mark read</td>
-                        <td><select id="autoread_mode" style="width:90%" class="select-panel" onchange="cookie.actions.autoreadmode(this.value,false)">
+                        <td><select id="autoread_mode" style="width:90%" class="select-panel" onchange="window.cookie.actions.autoreadmode(this.value,false)">
                             <option value="0" title="Mark read when selecting a post">On select post</option>
                             <option value="1" title="Mark as read while scrolling">On scroll</option>
                             <option value="2" title="Don't mark as read automatically">Never</option>
@@ -217,7 +217,7 @@
         <div class="left-bar">
             <div id="nextprevcontroller" oncontextmenu="return false;"></div><div id="videolist"></div>
         </div>
-        <div id="videospace" style="transition:padding 0.3s;display:table-cell;vertical-align:middle;"><div id="video_viewer" class="dialog-dim" style="width:700px;position:relative">
+        <div id="videospace" style="display:table-cell;vertical-align:middle;"><div id="video_viewer" class="dialog-dim" style="width:700px;position:relative">
             <div id='video_controls'>
                 <div style='left:0' onclick="player.prev()">&#10096;</div>
                 <div style='right:0' onclick="player.next(true)">&#10097;</div>

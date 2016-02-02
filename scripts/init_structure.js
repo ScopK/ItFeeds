@@ -109,7 +109,6 @@ Post.prototype.setUnread = function(unread,showMessage) {
 			if (value){
 				if (post == player.playing){
 					$("#video_viewer_dialog").addClass("selected");
-					player.list.update();
 				}
 				$(post.element).addClass("unread");
 				if (showMessage)
@@ -133,6 +132,9 @@ Post.prototype.setUnread = function(unread,showMessage) {
 					post.feed.folder.unread--;
 					lateral.refresh.updateCounts(post.feed);
 				}
+			}
+			if (player.playlist.includes(post)){
+				player.list.update();
 			}
 		}
 	});
@@ -401,6 +403,25 @@ function removeTag(idTag){
 // #################################################### INITIALIZATION
 
 $(document).ready(function(){
+	call.userContent();
+
+	//Polling
+	var idleTime = 0;
+	var reloadTime = 0;
+	$(document).mousemove(function(e){ idleTime = 0; });
+	$(document).click(function(e){ idleTime = 0; });
+	$(document).keypress(function(e){ idleTime = 0; });
+
+	setInterval(function(){
+		idleTime++;
+		reloadTime++;
+		if (reloadTime >= 4){ //2 minutes
+			call.userContent(selectedPost==undefined && idleTime>=4);
+			reloadTime=0;
+			idleTime=0;
+		}
+	},30000);
+
 	$("#more-options-button").hide();
 	$("#page").hide();
 

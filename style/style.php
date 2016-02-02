@@ -401,6 +401,7 @@ LATERAL MENU FOLDER STYLES
 }
 
 .tag .count{
+	display: none;
 	color: #888;
 }
 
@@ -1158,23 +1159,29 @@ div.tagname button{
 	background-color:transparent;
 	left:-19px; top:0; bottom:0;
 	width:20px;
+	cursor:pointer;
 	transition: left 0.2s 0.3s, background-color 0s 0.5s;
 	z-index: 12;
+}
+
+#videospace{
+	transition:padding 0.3s;
 }
 
 #video_viewer_dialog .left-bar:hover #nextprevcontroller{
 	background-color:#383838;
 	left:0;
-	transition-delay:0s,0s;
+	transition-delay:0.1s,0.1s;
 }
 
 #video_viewer_dialog .left-bar:hover #videolist{
 	left:20px;
-	transition-delay:0s;
+	transition-delay:0.2s;
 }
 
 #video_viewer_dialog .left-bar:hover ~ #videospace{
 	padding-left:310px;
+	transition-delay:0.2s;
 }
 
 #videolist{

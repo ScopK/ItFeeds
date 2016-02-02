@@ -208,9 +208,13 @@ var lateral = {
 			$('#quick_search').removeClass('hidden');
 			$("#quick_search_input").val("");
 			$("#quick_results").html("");
-			setTimeout(function() {
+			var tryfocus = function(){
 				$("#quick_search_input").focus();
-			}, 200);
+				if (!$("#quick_search_input").is(":focus")){
+					setTimeout(tryfocus, 10);
+				}
+			}
+			setTimeout(tryfocus, 10);
 			lateral.hide.settings();
 		},
 		all: function(){

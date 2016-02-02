@@ -202,6 +202,7 @@
 				mysqli_stmt_bind_result($stmt,$idxLimit);
 				mysqli_stmt_fetch($stmt);
 			}
+			mysqli_stmt_close($stmt);
 			if (isset($idxLimit)){
 				$sql = "UPDATE posts SET unread='0' WHERE id_feed=? AND unread='1' AND idx <= ?";
 				$stmt=mysqli_stmt_init($this->con);
@@ -212,6 +213,7 @@
 					//mysqli_stmt_bind_result($stmt,$idxLimit);
 					mysqli_stmt_fetch($stmt);
 				}
+				mysqli_stmt_close($stmt);
 			}
 			return isset($done)?$done:0;
 		}
@@ -241,9 +243,20 @@
 				//mysqli_stmt_bind_result($stmt,$idxLimit);
 				mysqli_stmt_fetch($stmt);
 			}
+			mysqli_stmt_close($stmt);
 		}
 
 		public function finalDelete(){
+			$sql = "UPDATE posts SET deleted=0 WHERE deleted>0 AND (favorite=1 OR id IN (SELECT id_post FROM post_tags))";
+			$stmt=mysqli_stmt_init($this->con);
+			if (mysqli_stmt_prepare($stmt,$sql)){
+				mysqli_stmt_execute($stmt);
+				//$done = mysqli_affected_rows($this->con);
+				//mysqli_stmt_bind_result($stmt,$idxLimit);
+				mysqli_stmt_fetch($stmt);
+			}
+			mysqli_stmt_close($stmt);
+
 			$sql = "DELETE FROM posts WHERE deleted>=2880";
 			$stmt=mysqli_stmt_init($this->con);
 			if (mysqli_stmt_prepare($stmt,$sql)){
@@ -252,6 +265,7 @@
 				//mysqli_stmt_bind_result($stmt,$idxLimit);
 				mysqli_stmt_fetch($stmt);
 			}
+			mysqli_stmt_close($stmt);
 		}
 	}
 ?>

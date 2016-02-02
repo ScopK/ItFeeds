@@ -1,6 +1,7 @@
 var code = {
 	lateralFolder: function(idx,selectedMinimized){
 		var folder = folders[idx];
+		var selected = (get.folder == folder.id);
 
 		var content = document.createElement("div");
 		content.className='folder'+((selected)?' selected':'');
@@ -13,7 +14,6 @@ var code = {
 		else
 			unread = ' <span class="count hidden">(<span class="num">'+folder.unread+'</span>)</span>';
 
-		var selected = (get.folder == folder.id);
 		html = '<div class="folderHeader'+((folder.hidden==1)?" hidden":"")+'">'+
 					'<button class="expander"">'+((selected && !selectedMinimized)?'-':'+')+'</button>'+
 					'<span class="folderTitle">'+(folder.name)+unread+'</span>'+
@@ -98,7 +98,7 @@ var code = {
 		    '<button class="setFav" onclick="markFavorite('+indexPost+',null,true)"></button>'+
 		    '<button class="addTag" onclick="dialog.addTags.show('+indexPost+');return false;"></button>'+
 		    '<button class="maxminimize" onclick="minimizeButtonAction('+indexPost+')"></button>'+
-		    '<button class="moreOptions" onclick="player.startfromId('+(indexPost)+',true)"></button>'+
+		    '<button class="moreOptions" onclick="player.start(posts['+indexPost+']);"></button>'+
 		    '</div><div class="tagList"></div></div>';
 
 		var unreadl=(post.unread)? "unread":"";

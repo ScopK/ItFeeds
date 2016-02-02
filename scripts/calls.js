@@ -308,6 +308,13 @@ var call = {
 			data: "postid="+id,
 			dataType : "json",
 			success: function(result){
+				for(var i=0;i<result.length;i++){
+					if ($.inArray(result[i].src,player.blacklist)>=0){
+						result.splice(i,1);
+						i--;
+					}
+				}
+
 				if (result.length>0){
 					if (callback) callback(true,result);
 				} else {
@@ -367,29 +374,6 @@ var call = {
 		});
 	}
 }
-
-
-$(document).ready(function(){
-	call.userContent();
-
-	//Polling
-	var idleTime = 0;
-	var reloadTime = 0;
-	$(document).mousemove(function(e){ idleTime = 0; });
-	$(document).click(function(e){ idleTime = 0; });
-	$(document).keypress(function(e){ idleTime = 0; });
-
-	setInterval(function(){
-		idleTime++;
-		reloadTime++;
-		if (reloadTime >= 4){ //2 minutes
-			call.userContent(selectedPost==undefined && idleTime>=4);
-			reloadTime=0;
-			idleTime=0;
-		}
-	},30000);
-});
-
 
 // Global VARS:
 var folders;

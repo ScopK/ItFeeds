@@ -1,4 +1,5 @@
 var player = {
+	blacklist: [],
 	size: [1280,720],//[700,460]
 	object: undefined,
 	playing: undefined,
@@ -66,10 +67,6 @@ var player = {
 			player.show();
 			$('#show-video-button').hide();
 		}
-	},
-
-	startfromId: function(postIdx){
-		player.start(posts[postIdx]);
 	},
 
 	start: function(post){
@@ -173,25 +170,6 @@ var player = {
 				}
 			});
 		}
-
-
-		/*
-		if (loadingvid) return;
-		findNext = (typeof findNext === 'undefined')? false : findNext;
-		if (selectedPost!=undefined && player.playlist[player.vars.playlistIndex].id == selectedPost.id){
-			selectNextPost();
-		}
-		if (player.vars.playlistIndex<player.playlist.length-1){
-			player.vars.playlistIndex++;
-			$("#videolist .video.listening").removeClass("listening");
-			$("#videolist .video[idx='"+player.vars.playlistIndex+"']").addClass("listening");
-			loadingvid=true;
-			searchYoutubeVideo(-1,false,findNext);
-			if (player.playlist.length == player.vars.playlistIndex+1){
-				calls.loadMoreVideos();
-			}
-		}
-		*/
 	},
 	prev: function(findPrev){
 		if (player.playlistIndex > 0){
@@ -224,31 +202,43 @@ var player = {
 				}
 			});
 		}
-
-
-		/*
-		if (loadingvid) return;
-		findPrev = (typeof findPrev === 'undefined')? false : findPrev;
-		if (selectedPost!=undefined && player.playlist[player.vars.playlistIndex].id == selectedPost.id){
-			selectPrevPost();
-		}
-		if (player.vars.playlistIndex>0){
-			player.vars.playlistIndex--;
-			$("#videolist .video.listening").removeClass("listening");
-			$("#videolist .video[idx='"+player.vars.playlistIndex+"']").addClass("listening");
-			loadingvid=true;
-			searchYoutubeVideo(-1,false,findPrev);
-		}
-		*/
 	},
+
+	selectFromIdx: function(playlistIdx){
+		if (player.busy) return;
+		player.busy = true;
+		
+		var post = player.playlist[playlistIdx];
+
+		call.videoFind(post.id,function(success,values){
+			player.queueIndex = 0;
+			player.queue = values;
+			if (success){
+				if (post.unread){
+					$("#video_viewer_dialog").addClass("selected");
+				} else {
+					$("#video_viewer_dialog").removeClass("selected");
+				}
+				player.playlistIndex = playlistIdx;
+				player.playing = post;
+				var video = values[0];
+				player.load(video);
+				$("#counter_videos").html((player.queueIndex+1)+"/"+player.queue.length);
+				$("#video_viewer_dialog .title").html(post.title);
+			} else {
+				player.busy = false;
+			}
+		});
+	},
+
 
 	resize: function(ww,hh){
 		var tw = $(window).width();
 		var th = $(window).height()-41;
 		if (ww>tw) ww=tw;
-		else if (ww<200) ww=200;
+		else if (ww<640) ww=640;
 		if (hh>th) hh=th;
-		else if (hh<200) hh=200;
+		else if (hh<360) hh=360;
 		player.size = [ww,hh];
 		var wpx = ww+"px";
 		var hpx = hh+"px";
@@ -281,7 +271,7 @@ var player = {
 				div.className = classes;
 				div.setAttribute("idx",i);
 				div.onclick=function(){
-					player.startfromId(this.getAttribute("idx"));
+					player.selectFromIdx(this.getAttribute("idx"));
 				};
 				div.innerHTML="<span class='idx'>"+pos+"</span><span class='tit'>"+video.title+"</span>";
 				$("#videolist").append(div);
