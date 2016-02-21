@@ -987,7 +987,7 @@ VIDEO DIALOG
 }
 
 #video_viewer_dialog.selected th{
-	box-shadow: 0px 5px 14px 0px <?= $dark ?>;
+	box-shadow: 0px 0px 13px 0px <?= $dark ?>;
 	background-color: <?= $bright ?>;
 	border-bottom-color: <?= $dark ?>;
 }
@@ -1171,17 +1171,17 @@ div.tagname button{
 #video_viewer_dialog .left-bar:hover #nextprevcontroller{
 	background-color:#383838;
 	left:0;
-	transition-delay:0.1s,0.1s;
+	transition-delay:0s,0s;
 }
 
 #video_viewer_dialog .left-bar:hover #videolist{
 	left:20px;
-	transition-delay:0.2s;
+	transition-delay:0.3s;
 }
 
 #video_viewer_dialog .left-bar:hover ~ #videospace{
 	padding-left:310px;
-	transition-delay:0.2s;
+	transition-delay:0.3s;
 }
 
 #videolist{

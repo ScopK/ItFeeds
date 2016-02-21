@@ -200,6 +200,20 @@ function cmMore(e,context){
 	return false;
 }
 
+function cmPostOptions(e,context,idx){
+	var arr = [
+		{
+			name: "Look for videos",
+			function: function(){
+				player.start(posts[idx]);
+			},
+			context: context
+		}];
+
+	setCMContent(arr);
+	showCM(e.clientX,e.clientY)
+	return false;
+}
 
 function openNewWindowTag(tagid){
 	var res = location.search.replace(/&?(feed|folder|tag|unread)=[\w-]*/g, "");

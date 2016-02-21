@@ -16,6 +16,7 @@
 ?><!DOCTYPE html>
 <html>
     <head>
+        <meta name="robots" content="noarchive">
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
         <title>itFeeds Post - <?= $post->title ?></title>
         <link rel="shortcut icon" href="imgs/icon.png" />

@@ -94,12 +94,12 @@ var code = {
 		}
 
 		var controller = '<div class="controller"><div class="control_panel">'+
-		    '<button class="setUnread" onclick="markUnread('+indexPost+',null,true)"></button>'+
-		    '<button class="setFav" onclick="markFavorite('+indexPost+',null,true)"></button>'+
-		    '<button class="addTag" onclick="dialog.addTags.show('+indexPost+');return false;"></button>'+
-		    '<button class="maxminimize" onclick="minimizeButtonAction('+indexPost+')"></button>'+
-		    '<button class="moreOptions" onclick="player.start(posts['+indexPost+']);"></button>'+
-		    '</div><div class="tagList"></div></div>';
+			'<button class="setUnread" onclick="markUnread('+indexPost+',null,true)"></button>'+
+			'<button class="setFav" onclick="markFavorite('+indexPost+',null,true)"></button>'+
+			'<button class="addTag" onclick="dialog.addTags.show('+indexPost+');return false;"></button>'+
+			'<button class="maxminimize" onclick="minimizeButtonAction('+indexPost+')"></button>'+
+			'<button class="moreOptions" onclick="cmPostOptions(event,this,'+indexPost+');"></button>'+
+			'</div><div class="tagList"></div></div>';
 
 		var unreadl=(post.unread)? "unread":"";
 		var favoritel=(post.favorite)? "favorite":"";
@@ -173,12 +173,12 @@ var cookie = {
 					break;
 				case 1: 
 					if (msg) showPopMessage("Posts Mode "+(val+1)+". Minimized Mode"); 
-			    	$(".post").not(".selected").addClass("minimized");
-			    	$(".post.selected").removeClass("minimized");
+					$(".post").not(".selected").addClass("minimized");
+					$(".post.selected").removeClass("minimized");
 					break;
 				case 2:
 					if (msg) showPopMessage("Posts Mode "+(val+1)+". Never minimize"); 
-			    	$(".post").removeClass("minimized");
+					$(".post").removeClass("minimized");
 					break;
 			}
 			cookie.set("compactedmode",val,3);
