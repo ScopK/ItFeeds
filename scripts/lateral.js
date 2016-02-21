@@ -45,7 +45,7 @@ var lateral = {
 
 			var html = "";
 			$.each(tags,function(index){
-				html += '<p '+((this.hidden==1)?'class="hiddenTag"':'')+' onclick="$(this).toggleClass(\'selected\')">'+(this.name)+'</p>';
+				html += '<p '+((this.hidden==1)?'class="hiddenTag"':'')+' onclick="$(this).toggleClass(\'selected\')" idtag="'+(this.id)+'">'+(this.name)+'</p>';
 			});
 			$("#add_tag .taglist").html(html);
 

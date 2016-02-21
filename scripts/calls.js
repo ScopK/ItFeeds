@@ -253,6 +253,41 @@ var call = {
 			}
 		});
 	},
+	editTag: function(post,tagadd,tagrem,callback){
+		loading_run();
+		$.ajax({
+			url: "./ajax/edit_posttag.php",
+			type: "POST",
+			data: "postid="+post.id+"&addtagname="+tagadd+"&remtagname="+tagrem,
+			dataType : "json",
+			success: function(result){
+				var newTags = [];
+
+				$.each(result.added,function(){
+					var tagObj = new Tag(this);
+					newTags.push(tagObj);
+				});
+				addTags(newTags);
+
+				$.each(result.emptyTags,function(){
+					removeTag(this.id);
+				});
+
+				if (callback) callback(true,result);
+				var text="";
+				if (result.added.length>0) text+="<br/>"+result.added.length+" tags added";
+				if (result.removed.length>0) text+="<br/>"+result.removed.length+" tags removed";
+				showMessage(text.substring(5),true);
+			},
+			error: function (request, status, error){
+				if (callback) callback(false);
+				showMessage("An error ocurred adding tags<br/>"+error);
+			},
+			complete: function(){
+				loading_stop();
+			}
+		});
+	},
 	addTag: function(post,tag,callback){
 		loading_run();
 		$.ajax({

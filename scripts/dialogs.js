@@ -182,19 +182,49 @@ var dialog = {
 				$('#newtagField').val("");
 				$('#newtagField').focus();
 				dialog.effects.show();
+
+				$("#add_tag .taglist").removeClass("selected");
+				var tags = post.tags;
+				for (var i=0; i<tags.length; i++){
+					var tag = tags[i];
+					var a = "#add_tag .taglist p[idtag='"+tag.id+"']";
+					$("#add_tag .taglist p[idtag='"+tag.id+"']").addClass("selected");
+				}
 			}
 		},
 		submit: function(){
-			var tag = "";
+			var selectedtag = "";
 			$("#add_tag .taglist p.selected").each(function(){
-				tag += " "+this.innerHTML;
+				selectedtag += " "+this.innerHTML;
 			});
 			if ($("#newtagField").val())
-				tag += " "+$("#newtagField").val();
-			tag = encodeURIComponent(tag.substring(1));
-			if (tag.length > 0) {
-				var p = dialog.addTags.post;
-				p.addTag(tag);
+				selectedtag += " "+$("#newtagField").val();
+			selectedtag = selectedtag.substring(1);
+
+			taglist = selectedtag.split(" ");
+			var add = "";
+			var p = dialog.addTags.post;
+
+			for (var i=0; i<taglist.length; i++) {
+				var tag = taglist[i];
+				var obj = p.tags.findBy("name",tag);
+				if (obj===-1){
+					add += " "+tag;
+				}
+			}
+			var del = "";
+			for (var i=0; i<p.tags.length; i++) {
+				var tag = p.tags[i].name;
+				var obj = taglist.indexOf(tag);
+				if (obj===-1){
+					del += " "+tag;
+				}
+			}
+
+			add = encodeURIComponent(add.substring(1));
+			del = encodeURIComponent(del.substring(1));
+			if ( (add+del ).length > 0) {
+				p.editTag(add,del);
 				$("#newtagField").val("");
 				$('#add_tag').fadeOut(100);
 				dialog.effects.hide();

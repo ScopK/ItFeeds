@@ -74,6 +74,23 @@ Post.prototype.refreshTagList = function() {
 	$(this.element).find(".tagList").html(jhtml);
 };
 
+Post.prototype.editTag = function(addTags,delTags) {
+	var post = this;
+	call.editTag(this,addTags,delTags,function(success,data){
+		if (success){
+			for (var i=0; i<data.added.length; i++) {
+				var t = tags.findBy("id",data.added[i].id);
+				post.tags.push(t);
+			}
+			for (var i=0; i<data.removed.length; i++) {
+				var t = post.tags.findIndexBy("id",data.removed[i].id);
+				post.tags.splice(t, 1);
+			}
+			post.refreshTagList();
+		}
+	});
+};
+
 Post.prototype.addTag = function(tagName) {
 	var post = this;
 	call.addTag(this,tagName,function(success,data){
@@ -368,15 +385,9 @@ function Tag(json){
 function addTags(newTags){
 	for (var i=0;i<newTags.length;i++){
 		var t = newTags[i];
-		var found = undefined;
-		for (var j=0; j<tags.length; j++){
-			var v = tags[j];
-			if (v.id == t.id){
-				found = v;
-				break;
-			}
-		}
-		if (found==undefined){
+
+		var found = tags.findBy("id",t.id);
+		if (found===-1){
 			tags.push(t);
 		} else {
 			found.count = t.count;
