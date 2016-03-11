@@ -120,7 +120,7 @@ var lateral = {
 
 				for (var j=0; j<folder.feeds.length; j++) {
 					var feed = folder.feeds[j];
-					var feedname = feed.name.toLowerCase();//+feed.link.toLowerCase()+feed.rss_link.toLowerCase();
+					var feedname = feed.name.toLowerCase()+"\\/"+feed.link.toLowerCase()+"\\/"+feed.rss_link.toLowerCase();
 
 					if (feedname.indexOf(text)>=0){
 						var p = document.createElement("p");
