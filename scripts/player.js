@@ -455,7 +455,7 @@ SoundCloudPlayer.prototype.loadVideo = function(code,show){
 	});
 	this.playerSC.bind(SC.Widget.Events.FINISH,function(){
 		if (player.autonext && pl.isLastSong){
-			if ((player.vars.queueIndex+1)==player.queue.length){
+			if ((player.queueIndex+1)==player.queue.length){
 				player.next(true);
 			} else {
 				player.nextElement();
