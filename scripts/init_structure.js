@@ -457,7 +457,15 @@ $(document).ready(function(){
 		}
 	});
 
+
+	$("#video_viewer_dialog .left-bar").mouseenter(function(){
+		$(this).addClass("playlist");
+	});
+	$("#video_viewer_dialog .left-bar").mouseleave(function(){
+		$(this).removeClass("playlist");
+	});
 	$('#nextprevcontroller').mousedown(function(event) {
+		$("#video_viewer_dialog .left-bar").removeClass("playlist");
 		switch (event.which) {
 			case 1:
 				player.next();
@@ -569,7 +577,6 @@ $(document).ready(function(){
 	$(document).keyup(function(e) { 
 		allowed = true;
 	});
-
 });
 
 

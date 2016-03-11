@@ -1174,12 +1174,12 @@ div.tagname button{
 	transition-delay:0s,0s;
 }
 
-#video_viewer_dialog .left-bar:hover #videolist{
+#video_viewer_dialog .left-bar.playlist #videolist{
 	left:20px;
 	transition-delay:0.3s;
 }
 
-#video_viewer_dialog .left-bar:hover ~ #videospace{
+#video_viewer_dialog .left-bar.playlist ~ #videospace{
 	padding-left:310px;
 	transition-delay:0.3s;
 }
