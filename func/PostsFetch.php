@@ -1,16 +1,18 @@
 <?php
-	require_once "FeedReader.php";
+	$isServer=true;
+	require_once "classes.php";
 	require_once "functions.php";
-	require_once "PluginManager.php";
+
+	$_fetchers = array();
+	require_once "plugin/none.php";
+	require_once "plugin/default.php";
+	require_once "plugin/codinglove.php";
+	require_once "plugin/youtube.php";
 
 	class PostsFetch{
 		private $con;
-		private $fr;
-		private $pm;
 
 		public function __construct(){
-			$this->fr = new FeedReader();
-			$this->pm = new PluginManager();
 		}
 
 		public function initConnection(){
@@ -40,14 +42,19 @@
 		}
 
 		public function fetchFeed($feed){
-			$feed = array_map('utf8_encode',$feed);
+			global $_fetchers;
 
+			$feed = array_map('utf8_encode',$feed);
 			$link = $feed['rss_link'];
 
-			$this->fr->setUrl($link);
+			foreach ($_fetchers as $f) {
+				if ($f->feedMatch($link))
+					break;
+			}
+			$feed['pluginUsed'] = &$f;
 
 			try {
-				$posts = $this->fr->getFeeds();
+				$posts = $f->getContent($link);
 				$posts = array_reverse($posts);
 			} catch (Exception $e) {
 			    echo date('Y-d-m H:i:s', time()).": ".$e->getMessage()."\n";
@@ -134,7 +141,9 @@
 				return 0;
 			}
 			$count =0;
-			$this->pm->pluginCheck($post);
+
+			$feed['pluginUsed']->correctDescription($post);
+
 			repeat:
 			//$nid = getNewID();
 			$sql = "INSERT INTO posts(id,id_feed,title,description,link,unread,favorite,date,post_id,updated) VALUES(newID(36,\"posts\"),?,?,?,?,'1','0',?,?,?)";
